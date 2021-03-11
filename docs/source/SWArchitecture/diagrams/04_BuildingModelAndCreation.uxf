@@ -1,0 +1,1376 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text>Space for diagram notes</help_text>
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1460</x>
+      <y>580</y>
+      <w>190</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>BldgModelFactory
+--
+- mgr_config
+- year_of_constr_per_bldg
+--
+create_bldg_model(bldg_fid)
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1670</x>
+      <y>980</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>BuildingModel
+--
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1080</x>
+      <y>410</y>
+      <w>460</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>NeighbouringBldgConstructionFactoryProtocol
+--
+
+--
+get_shading_surface_construction_props(window_glass_construction): Dict
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1570</x>
+      <y>680</y>
+      <w>220</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;creates&gt;&gt;</panel_attributes>
+    <additional_attributes>200.0;300.0;200.0;90.0;10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2250</x>
+      <y>630</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>SingleSiteFactory
+--
+- weather_file_path
+--
+get_site(bldg_fid): Site
+
+fg=#ba7a19</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>560</y>
+      <w>420</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ArchetypicalConstructionFactoryProtocol
+--
+
+--
+get_archetype_for(bldg_fid): ArchetypicalBuildingConstructionProtocol
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1420</x>
+      <y>600</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1490</x>
+      <y>470</y>
+      <w>40</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1640</x>
+      <y>650</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1690</x>
+      <y>500</y>
+      <w>430</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>GeometryBuilderFactoryProtocol
+--
+
+--
+get_geometry_builder(bldg_fid, glazing_ratio): GeombetryBuilderProtocol
+
+fg=#018220</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1640</x>
+      <y>570</y>
+      <w>100</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>70.0;10.0;70.0;50.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1580</x>
+      <y>50</y>
+      <w>360</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>GeometryBuilder
+--
+- bldg_fid
+- site_bldgs
+- glazing_ratio
+--
+get_bldg_shape_detailed(): BldgSchapeDetailed
+get_bldg_shape_of_neighbours(): List[BldgShapeEnvelope]
+fg=#018220</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>730</y>
+      <w>310</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>BuildingOperationFactoryProtocol
+--
+
+--
+get_building_operation(bldg_fid): BuildingOperation
+
+fg=magenta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1310</x>
+      <y>680</y>
+      <w>210</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;90.0;190.0;90.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>640</y>
+      <w>260</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>ConstructionBuilder
+--
+- bldg_fid
+- do_randomize
+--
+set_external_glazing_ratio(callable)
+set_external_infiltration_params(callable)
+set_external_infiltration_profile(callable)
+build(): BuildingConstruction
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>380</y>
+      <w>340</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>ArchetypicalBuildingConstructionProtocol
+--
+set_construction_selection_strategy(random_selection:bool)
+get_window_glass_construction()
+get_window_frame_construction()
+get_window_divider_construction()
+get_roof_construction()
+get_groundfloor_construction()
+get_wall_construction()
+get_internal_ceiling_construction()
+get_internal_floor_construction()
+get_glazing_ratio()
+get_infiltration_rate()
+get_infiltration_profile()
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>590</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+fg=blue</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1690</x>
+      <y>1200</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>BuildingConstruction
+--
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1760</x>
+      <y>1060</y>
+      <w>30</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1470</x>
+      <y>1200</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>BuildingOperationMapping
+--
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1580</x>
+      <y>1060</y>
+      <w>140</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;90.0;120.0;90.0;118.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1710</x>
+      <y>320</y>
+      <w>360</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>GeometryBuilderProtocol
+--
+
+--
+get_bldg_shape_detailed(): BldgSchapeDetailed
+get_bldg_shape_of_neighbours(): List[BldgShapeEnvelope]
+
+fg=#018220</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1810</x>
+      <y>150</y>
+      <w>120</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1960</x>
+      <y>70</y>
+      <w>400</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>GeometryBuilderFactory
+--
+- site_bldg_footprints: pandas.Dataframe
+- custom_config: Dict
+--
+get_geometry_builder(bldg_fid, glazing_ratio): GeometryBuilder
+fg=#018220</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2080</x>
+      <y>140</y>
+      <w>120</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;360.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1570</x>
+      <y>0</y>
+      <w>810</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>cesar.geometry
+--
+
+fg=#018220</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>110</y>
+      <w>380</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>NeighbouringBldgConstructionFactory
+--
+
+--
+get_shading_surface_construction_props(
+     window_glass_construction: WindowGlassConstruction,
+     ): Mapping[BldgElement, ShadingObjectConstruction]
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
+      <y>940</y>
+      <w>310</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>FixedMFHInternalConditionsFactory
+--
+
+--
+get_building_operation(bldg_fid): BuildingOperation
+
+fg=magenta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1020</x>
+      <y>800</y>
+      <w>100</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>460</x>
+      <y>70</y>
+      <w>460</w>
+      <h>720</h>
+    </coordinates>
+    <panel_attributes>cesar.construction
+--
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>890</x>
+      <y>140</y>
+      <w>210</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>190.0;320.0;80.0;320.0;80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>270</y>
+      <w>420</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ArchetypicalConstructionFactoryProtocol
+--
+
+--
+get_archetype_for(bldg_fid): ArchetypicalBuildingConstructionProtocol
+
+layer=1
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>890</x>
+      <y>300</y>
+      <w>170</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>120.0;300.0;60.0;300.0;60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>990</x>
+      <y>240</y>
+      <w>1180</w>
+      <h>600</h>
+    </coordinates>
+    <panel_attributes>cesar.manager
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>780</x>
+      <y>900</y>
+      <w>330</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>cesar.operation
+--
+
+fg=magenta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>2230</x>
+      <y>970</y>
+      <w>280</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>cesar.weather
+--
+
+fg=#ba7a19</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2260</x>
+      <y>1010</y>
+      <w>220</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>SwissCommunityWeatherChooser
+--
+
+--
+get_weather_file_for(bldg_fid)
+
+layer=1
+fg=#ba7a19</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>690</x>
+      <y>1070</y>
+      <w>610</w>
+      <h>650</h>
+    </coordinates>
+    <panel_attributes>cesar.SIA2024
+--
+
+fg=magenta
+
+transparency=70</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1470</x>
+      <y>280</y>
+      <w>220</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>GlazingRatioProviderProtocol
+--
+
+--
+get_glazing_ratio(bldg_fid): numeric
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1570</x>
+      <y>340</y>
+      <w>60</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0...1
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>1120</y>
+      <w>460</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>SIA2024Facade
+--
+- params_manager: SIA2024ParamsManager
+--
+generate_new_parameters(bldg_types, variability_active)
+load_parameters(bldg_types, variability_active)
+get_building_operation(bldg_fid): BuildingOperation
+get_infiltration_rate(bldg_fid): float
+get_infiltration_profile(bldg_fid): Schedule
+
+fg=magenta
+bg=white
+layer=1
+transparency=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1130</x>
+      <y>800</y>
+      <w>100</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;320.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1130</x>
+      <y>280</y>
+      <w>220</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>GlazingRatioBldgSpecific
+--
+-glz_ratio_per_fid: Dict
+--
+get_glazing_ratio(bldg_fid): numeric
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1340</x>
+      <y>300</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1610</x>
+      <y>380</y>
+      <w>120</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>100.0;20.0;10.0;20.0;10.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>870</x>
+      <y>640</y>
+      <w>610</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;590.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>750</x>
+      <y>1470</y>
+      <w>480</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>SIA2024ParametersFactory
+--
+
+--
+get_sia2024_parameters(bldg_type_key, variability_active):SIA2024Parameters
+
+--
+
+
+fg=magenta
+bg=white
+layer=1
+transparency=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>1300</y>
+      <w>310</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>SIA2024ParamsManager
+--
+-params_cache
+--
+get_param_set(bldg_type)
+create_and_save_nominal_param_sets(bldg_types)
+load_nominal_param_sets(bldg_types)
+create_and_save_variable_param_sets(bldg_types)
+load_variable_param_sets(bldg_types)
+
+
+
+fg=magenta
+bg=white
+layer=1
+transparency=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>1260</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>1420</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>1600</y>
+      <w>280</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>SIA2024DataAccessor
+--
+...
+get_dhw_demand(room_type)
+get_unoccupied_setback_heating(room_type)
+get_infiltration_rate(room_type)
+....
+....
+
+--
+
+
+fg=magenta
+bg=white
+layer=1
+transparency=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>1560</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1150</x>
+      <y>1330</y>
+      <w>130</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>SIA2024Parameters
+--
+building_operation
+infiltration_params
+data_descr
+--
+
+
+fg=magenta
+bg=white
+layer=1
+transparency=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1070</x>
+      <y>1350</y>
+      <w>100</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1760</x>
+      <y>620</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>SiteFactoryProtocol
+--
+
+--
+get_site(bldg_fid): Site
+
+fg=#ba7a19</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>2210</x>
+      <y>580</y>
+      <w>280</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>cesar.site
+--
+
+fg=#ba7a19</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1950</x>
+      <y>640</y>
+      <w>320</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0;300.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2250</x>
+      <y>720</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>SitePerSwissCommunityFactory
+--
+
+--
+get_site(bldg_fid): Site
+
+fg=#ba7a19</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2230</x>
+      <y>830</y>
+      <w>240</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>WeatherChooserProtocol
+--
+-bldg_fid_to_community_mapping
+--
+get_weather_file(community)
+
+fg=#ba7a19</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1950</x>
+      <y>670</y>
+      <w>320</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0;130.0;90.0;300.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2340</x>
+      <y>790</y>
+      <w>40</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2360</x>
+      <y>900</y>
+      <w>100</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1410</x>
+      <y>870</y>
+      <w>740</w>
+      <h>550</h>
+    </coordinates>
+    <panel_attributes>cesar.model
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1430</x>
+      <y>1050</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Site
+--
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1520</x>
+      <y>1010</y>
+      <w>170</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0;148.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2000</x>
+      <y>1130</y>
+      <w>30</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1950</x>
+      <y>1060</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>BldgShapeEnvelope: Dict
+--
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1910</x>
+      <y>1200</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>BldgShapeDetailed
+--
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1860</x>
+      <y>1010</y>
+      <w>270</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+neighbours
+m2=0..n</panel_attributes>
+    <additional_attributes>180.0;50.0;180.0;10.0;18.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1820</x>
+      <y>1060</y>
+      <w>140</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>120.0;140.0;120.0;90.0;20.0;90.0;18.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>560</y>
+      <w>170</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;returns&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0;40.0;60.0;150.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>830</y>
+      <w>440</w>
+      <h>470</h>
+    </coordinates>
+    <panel_attributes>cesar.idf_constructions_db_access
+--
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>170</x>
+      <y>1020</y>
+      <w>260</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>ArchetypicalConstructionIDFBased
+--
+...
+--
+...
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>1130</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ConstructionAsIDF
+--
++ idf_file_path
++ materials_idf_file_path
+--
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>290</x>
+      <y>1080</y>
+      <w>40</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=n
+fg=blue</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>880</y>
+      <w>400</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>IDFConstructionArchetypeFactory
+--
+- bldg_fid_to_year_of_constr_lookup: Dict[int, int]
+- bldg_fid_to_dhw_ecarrier_lookup: Dict[int, EnergySource]
+- bldg_fid_to_heating_ecarrier_lookup: Dict[int, EnergySource]
+--
++ get_archetype_for(bldg_fid: int):
+                       ArchetypicalBuildingConstructionIDFBased
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>100</x>
+      <y>1220</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>input_parser &lt;module&gt;
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>100</x>
+      <y>980</y>
+      <w>70</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;uses&gt;&gt;
+fg=blue</panel_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>980</y>
+      <w>110</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+fg=blue
+&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>90.0;200.0;10.0;200.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>340</y>
+      <w>260</w>
+      <h>560</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+fg=blue</panel_attributes>
+    <additional_attributes>240.0;10.0;240.0;480.0;10.0;480.0;10.0;540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>590</y>
+      <w>180</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+fg=blue</panel_attributes>
+    <additional_attributes>160.0;10.0;160.0;460.0;10.0;460.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>670</y>
+      <w>1070</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;240.0;330.0;240.0;330.0;170.0;550.0;170.0;550.0;10.0;1050.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>980</y>
+      <w>90</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+fg=blue
+&lt;&lt;creates&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>630</y>
+      <w>260</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>ArchetypicalConstructionGraphDBBased
+--
+...
+--
+...
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>200</y>
+      <w>400</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>GraphDBFacade
+--
+
+--
+get_graph_construction_archetype_factory(
+        bldg_fid_to_year_of_constr_lookup: Dict[int, int],
+        bldg_fid_to_dhw_ecarrier_lookup: Dict[int, EnergySource],
+        bldg_fid_to_heating_ecarrier_lookup: Dict[int, EnergySource])
+get_graph_construction_retrofitter()
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>460</y>
+      <w>370</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>GraphDBArchetypicalConstructionFactory
+--
+- bldg_fid_to_year_of_constr_lookup: Dict[int, int]
+- bldg_fid_to_dhw_ecarrier_lookup: Dict[int, EnergySource]
+- bldg_fid_to_heating_ecarrier_lookup: Dict[int, EnergySource]
+- ....
+--
++ get_archetype_for(bldg_fid: int): 
+         ArchetypicalBuildingConstructionGraphDBBased
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>70</x>
+      <y>320</y>
+      <w>90</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;creates&gt;&gt;
+fg=blue</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>590</y>
+      <w>90</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+fg=blue
+&lt;&lt;creates&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>380</x>
+      <y>430</y>
+      <w>170</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+fg=blue</panel_attributes>
+    <additional_attributes>150.0;10.0;60.0;10.0;60.0;240.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>160</y>
+      <w>420</w>
+      <h>560</h>
+    </coordinates>
+    <panel_attributes>cesar.graphdb_access
+--
+for further details on the package 
+see separate diagram
+
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1470</x>
+      <y>1330</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>BuildingOperation
+--
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1540</x>
+      <y>1270</y>
+      <w>130</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=1..nr_of_floors</panel_attributes>
+    <additional_attributes>20.0;60.0;18.0;10.0</additional_attributes>
+  </element>
+</diagram>

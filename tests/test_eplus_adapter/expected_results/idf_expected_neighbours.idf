@@ -1,0 +1,136 @@
+!- Windows Line endings
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+SHADOWCALCULATION,
+    PolygonClipping,          !- Shading Calculation Method
+    Periodic,                 !- Shading Calculation Update Frequency Method
+    7,                        !- Shading Calculation Update Frequency
+    15000,                    !- Maximum Figures in Shadow Overlap Calculations
+    SutherlandHodgman,        !- Polygon Clipping Algorithm
+    512,                      !- Pixel Counting Resolution
+    SimpleSkyDiffuseModeling,    !- Sky Diffuse Modeling Algorithm
+    No,                       !- Output External Shading Calculation Results
+    No,                       !- Disable SelfShading Within Shading Zone Groups
+    No;                       !- Disable SelfShading From Shading Zone Groups to Other Zones
+
+SHADING:BUILDING:DETAILED,
+    Ext1_Wall0,                   !- Name
+    ,                         !- Transmittance Schedule Name
+    4,                        !- Number of Vertices
+    -35.00000,                !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    -35.00000,                !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    -35.00000,                !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    12.50000,                 !- Vertex 3 Zcoordinate
+    -35.00000,                !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    12.50000;                 !- Vertex 4 Zcoordinate
+
+SHADING:BUILDING:DETAILED,
+    Ext1_Wall1,                   !- Name
+    ,                         !- Transmittance Schedule Name
+    4,                        !- Number of Vertices
+    -10.00000,                !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    -35.00000,                !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    -35.00000,                !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    12.50000,                 !- Vertex 3 Zcoordinate
+    -10.00000,                !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    12.50000;                 !- Vertex 4 Zcoordinate
+
+ SHADING:BUILDING:DETAILED,
+    Ext1_Wall2,                   !- Name
+    ,                         !- Transmittance Schedule Name
+    4,                        !- Number of Vertices
+    -10.00000,                !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    -10.00000,                !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    -10.00000,                !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    12.50000,                 !- Vertex 3 Zcoordinate
+    -10.00000,                !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    12.50000;                 !- Vertex 4 Zcoordinate
+
+SHADING:BUILDING:DETAILED,
+    Ext1_Wall3,                   !- Name
+    ,                         !- Transmittance Schedule Name
+    4,                        !- Number of Vertices
+    -35.00000,                !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    -10.00000,                !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    -10.00000,                !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    12.50000,                 !- Vertex 3 Zcoordinate
+    -35.00000,                !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    12.50000;                 !- Vertex 4 Zcoordinate
+
+SHADING:BUILDING:DETAILED,
+    Ext1_Roof,                   !- Name
+    ,                         !- Transmittance Schedule Name
+    4,                        !- Number of Vertices
+    -10.00000,                !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    12.50000,                 !- Vertex 1 Zcoordinate
+    -10.00000,                !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    12.50000,                 !- Vertex 2 Zcoordinate
+    -35.00000,                !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    12.50000,                 !- Vertex 3 Zcoordinate
+    -35.00000,                !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    12.50000;                 !- Vertex 4 Zcoordinate
+
+SHADINGPROPERTY:REFLECTANCE,
+    Ext1_Wall0,                   !- Shading Surface Name
+    0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Fraction of Shading Surface That Is Glazed
+    Window0201;               !- Glazing Construction Name
+
+SHADINGPROPERTY:REFLECTANCE,
+    Ext1_Wall1,                   !- Shading Surface Name
+    0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Fraction of Shading Surface That Is Glazed
+    Window0201;               !- Glazing Construction Name
+
+SHADINGPROPERTY:REFLECTANCE,
+    Ext1_Wall2,                   !- Shading Surface Name
+    0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Fraction of Shading Surface That Is Glazed
+    Window0201;               !- Glazing Construction Name
+
+SHADINGPROPERTY:REFLECTANCE,
+    Ext1_Wall3,               !- Shading Surface Name
+    0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
+    0.3,                      !- Fraction of Shading Surface That Is Glazed
+    Window0201;               !- Glazing Construction Name
+
+SHADINGPROPERTY:REFLECTANCE,
+    Ext1_Roof,                !- Shading Surface Name
+    0.15,                     !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
+    0.1,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
+    0,                        !- Fraction of Shading Surface That Is Glazed
+    Window0201;               !- Glazing Construction Name

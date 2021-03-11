@@ -1,0 +1,94 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+MANAGER:    
+    NR_OF_PARALLEL_WORKERS: -1  # -1 means half of the available processors will be used
+    # all following folders are relative to BASEPATH, which is passed when initializing SimulationManager
+    OUTPUT_FOLDER_REL: "eplus_output"
+    SUMMARY_OUTPUT:
+        PATH_REL: "./site_result_summary.csvy"
+        CSV_SEPARATOR: ";"
+        CSV_FLOAT_FORMAT: "%.4f"
+    EPLUS_ERROR_SUMMARY_REL: "eplus_error_summary.err"
+    IDF_FOLDER_REL: "idfs"
+    WEATHER_FILES_MAPPED_REL: "weather_files_mapped.csvy"
+    COPY_PROFILES:
+        ACTIVE: True
+        PROFILES_FOLDER_NAME_REL: "profiles" # nome of folder where the profile should be stored, will be created as subfolder of IDF_FOLDER_REL
+    IDF_FILENAME_REL: "fid_{}.idf"
+    BATCH_OUT_DIR_TEMPLATE_REL: "fid_{}"
+    BLDG_CONTAINERS_FOLDER_REL: "bldg_containers"
+    BLDG_CONTAINER_FILENAME_REL: "bldg_container_fid_{}.json"
+    BLDG_INFO_REPORT_FILENAME_REL: "bldg_infos_model_generation.csvy"
+    SITE_VERTICES_FILE:
+        PATH: "./SiteVertices.csv" # you can specify a *.shp file here, but be aware that you need to have geopandas installed when reading from shape file
+        SEPARATOR: ","
+        LABELS: # only effective for csv files
+            gis_fid:  "TARGET_FID"
+            height:   "HEIGHT"
+            x:        "POINT_X"
+            y:        "POINT_Y"
+    BLDG_FID_FILE:
+        PATH: "TBD_BLDG_FID_FILE.csv"
+        SEPARATOR: ","
+        LABELS:
+            gis_fid: "ORIG_FID"
+    BLDG_AGE_FILE:
+        PATH: "TBD_BLDG_AGE_FILE.csv"
+        SEPARATOR: ","
+        LABELS:
+            gis_fid: "ORIG_FID"
+            year_of_construction: "BuildingAge"
+    BLDG_TYPE_PER_BLDG_FILE:
+      PATH: "TBD_BLDG_TYPE_PER_BLDG_FILE.csv"
+      SEPARATOR: ","
+      LABELS:
+        gis_fid: "ORIG_FID"
+        sia_bldg_type: "SIA2024BuildingType"
+    DO_CALC_OP_EMISSIONS_AND_COSTS: True
+    BLDG_INSTALLATION_FILE: # used for operational emission & cost calculation, no influence on model for EnergyPlus. Not needed if MANAGER - DO_CALC_OP_EMISSIONS_AND_COSTS set to False
+        PATH: "TBD_BLDG_INSTALLATION_FILE.csv"
+        SEPARATOR: ","
+        LABELS:
+            gis_fid: "ORIG_FID"
+            dhw_energy_carrier: "ECarrierDHW"
+            heating_energy_carrier: "ECarrierHeating"
+    GLAZING_RATIO_PER_BLDG_FILE:
+      ACTIVE: False # if not active glazing ratio from Constructional Archetype (based on age class of building) is used
+      PATH: "TBD_GLAZING_RATIO_PER_BLDG_FILE.csv"
+      SEPARATOR: ","
+      LABELS:
+        gis_fid: "ORIG_FID"
+        glazing_ratio: "GlazingRatio"
+    INFILTRATION_RATE_SOURCE: "Archetype" # either "Archetype" or "SIA2024"
+    RANDOM_CONSTRUCTIONS: False # selecting bldg construction elements randomly within certain age class, add variability to glz ratio
+    BUILDING_OPERATION_FACTORY_CLASS: "cesarp.SIA2024.SIA2024Facade.SIA2024Facade" # either "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory" or "cesarp.SIA2024.SIA2024Facade.SIA2024Facade"
+    SINGLE_SITE:
+        ACTIVE: True # if False, SITE_PER_CH_COMMUNITY must be active
+        WEATHER_FILE: "./Zurich_1.epw"
+    SITE_PER_CH_COMMUNITY:
+        ACTIVE: False # if False, SINGLE_SITE must be active
+        BLDG_TO_COMMUNITY_FILE:
+            PATH: "TBD_BLDG_TO_COMMUNITY_FILE.csv"
+            SEPARATOR: ","
+            LABELS:
+                bldg_fid: "bldg_fid"
+                community_id: "community_id" # numeric id should match with community ids defined in cesar.weather.swiss_communities Gemeinde_to_WeatherStation.csvy
+

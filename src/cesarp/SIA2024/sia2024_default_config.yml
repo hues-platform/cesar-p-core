@@ -1,0 +1,54 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+
+# coding=utf-8
+SIA2024: # to use operational params/infiltration rate from SIA2024 set config MANAGER - BUILDING_OPERATION_SOURCE resp INFILTRATION_RATE_SOURCE to "SIA2024"
+  USE_VARIABLE_PARAMSETS: False # if True, use the variable parameter sets, otherwise use nominal parameter sets
+  PARAMSETS_VARIABLE_SAVE_FOLDER: "./generated_params/variable/" # set to folder outside of cesar-p sources
+  PARAMSETS_NOMINAL_SAVE_FOLDER: "./generated_params/nominal/" # set to folder outside of cesar-p sources
+  CSV_SEPARATOR: ";" # using semicolon instead of comma as separator to be able to use commas in the YAML block which will not be split to different cells when read by Excel or the like
+  CSV_FLOAT_FORMAT: "%.4f"
+  PROFILE_NOMINAL_FILENAME_PATTERN_REL: 'SIA2024_{0}_nominal.csvy' # {0} -> bldg type name, {1} profile name, see PROFILE_NAMES
+  PROFILE_VARIABLE_FILENAME_PATTERN_REL: 'SIA2024_{0}_variable_{1}.csvy' # {0} -> bldg type name, {1} param set nr
+  PROFILE_GENERATION:
+    ACTIVE: False
+    SIA_SHEET_CONFIG_FILE: "CHECKOUT_PATH_OF_cesar-p-sia2024-data/ressources/sia2024_2016_edited_excel_config.yml"
+    BUILDING_TYPES_CONFIG_FILE: "CHECKOUT_PATH_OF_cesar-p-sia2024-data/ressources/building_types.yml"
+    MAX_NR_PARAMSETS_PER_RESIDENTIAL_BLDG_TYPE: 100
+    MAX_NR_PARAMSETS_PER_NON_RESIDENTIAL_BLDG_TYPE: 10
+    VARIABILITY_SETTINGS:
+      LIGHTING_SETPOINT_VARIABILITY_PRC: 0.1 dimensionless 
+      VERTICAL_VARIABILITY_THERMOSTAT_SETPOINT: 1 delta_degC 
+      INFILTRATION_RATE_VARIABILITY_PRC: 0.2 dimensionless 
+      VERTICAL_VARIABILITY_FRACTION_PROFILES: 0.15  
+      DAILY_ROUTINE_VARIABILITY: 1 # hour, variability for wakeup and sleeptime hour
+      DO_HORIZONTAL_VARIABILTY: True # do horizontal variability/shuffling for occupancy and appliances profiles for rooms where breaks are defined in SIA Excel
+    PROFILE_SETTINGS:
+      WAKEUP_HOUR: 6 # wakeup at 6 o'clock 
+      SLEEPTIME_HOUR: 22 # bedtime at 22 o'clock
+      DHW_NIGHT_VALUE: 0 dimensionless
+      LIGHTING_OFF_VALUE: 0 dimensionless
+      INFILTRATION_RATE_FRACTION_BASE_VALUE: 1 dimensionless
+      OCCUPANCY_RESTDAY_VALUE: 0 dimensionless
+    DHW_BASED_ON_LITER_PER_DAY:
+      ACTIVE: True # if not active, then the DHW power demand stated in the excel sheet is used, as in Matlab CESAR
+      NOMINAL_TEMPERATURE: 60°C
+      COLD_WATER_TEMPERATURE: 10°C

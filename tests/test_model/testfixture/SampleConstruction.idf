@@ -1,0 +1,4 @@
+Construction,
+    Sample,  !- Name
+    Cast Concrete (Dense)_0.1;  !- Outside Layer
+

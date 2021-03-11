@@ -1,0 +1,86 @@
+variables:
+  ENERGYPLUS_DOWNLOAD_FILENAME: EnergyPlus-9.3.0-baff08990c-Linux-x86_64.sh
+  ENERGYPLUS_EXE: /usr/local/bin/EnergyPlus
+  ENERGYPLUS_VER: "9.3.0"
+  POETRY_VIRTUALENVS_IN_PROJECT: "True"
+
+image: "python:3.8"
+
+before_script:
+  - chmod +x $ENERGYPLUS_DOWNLOAD_FILENAME
+  - echo "y\r" | ./$ENERGYPLUS_DOWNLOAD_FILENAME  
+  - /usr/local/bin/EnergyPlus --version
+  - python3 --version
+  - which python3
+  - pip3 install poetry
+  - poetry install -E geopandas
+
+stages:
+  - Test
+  - Deploy
+
+static_tests:
+  stage: Test
+  allow_failure: false
+  script:
+  - poetry run flake8 src --output-file style-guide-check-flake8-report.txt
+  - poetry run mypy src --junit-xml typing-check-mypy-report.xml
+  artifacts:
+    paths:
+    - style-guide-check-flake8-report.txt
+    expire_in: 1 week
+    when: always
+  timeout: 5 minutes
+
+unit_test:
+  stage: Test
+  script:  
+  - poetry run pytest --cov --html=unit_test_report.html --self-contained-html --capture=sys
+  - poetry run coverage html
+  artifacts:
+    paths:
+    - unit_test_report.html
+    - ./htmlcov
+    expire_in: 1 week
+    when: always
+  timeout: 20 minutes
+
+publish:
+  stage: Deploy
+  variables:
+    TWINE_USERNAME: gitlab-ci-token
+    TWINE_PASSWORD: ${CI_JOB_TOKEN}
+  script:
+    - poetry build
+    - pip3 install twine
+    - python3 -m twine upload --repository-url https://gitlab.empa.ch/api/v4/projects/805/packages/pypi dist/*
+  artifacts:
+    paths:
+      - dist/*
+  only:
+    - production
+
+pages:
+  stage: Deploy
+  script:
+    - mkdir public
+    - poetry run sphinx-apidoc -efM -o docs/source/api src/cesarp
+    - poetry run sphinx-build docs/source public
+  artifacts:
+    paths:
+      - public
+
+publish:
+  stage: Deploy
+  variables:
+    TWINE_USERNAME: gitlab-ci-token
+    TWINE_PASSWORD: ${CI_JOB_TOKEN}
+  script:
+    - poetry build
+    - pip3 install twine
+    - python3 -m twine upload --repository-url https://gitlab.empa.ch/api/v4/projects/805/packages/pypi dist/*
+  artifacts:
+    paths:
+      - dist/*
+  only:
+    - production

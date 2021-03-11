@@ -1,0 +1,21 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3;                      !- Version Identifier
+
+WINDOWMATERIAL:SHADE,
+    Shade0801,                !- Name
+    0.28,                     !- Solar Transmittance
+    0.6,                      !- Solar Reflectance
+    0.28,                     !- Visible Transmittance
+    0.6,                      !- Visible Reflectance
+    0.9,                      !- Infrared Hemispherical Emissivity
+    0,                        !- Infrared Transmittance
+    0.001,                    !- Thickness
+    0.9,                      !- Conductivity
+    0.1,                      !- Shade to Glass Distance
+    0,                        !- Top Opening Multiplier
+    0,                        !- Bottom Opening Multiplier
+    0,                        !- LeftSide Opening Multiplier
+    0,                        !- RightSide Opening Multiplier
+    0;                        !- Airflow Permeability

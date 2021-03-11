@@ -1,0 +1,15 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+MATERIAL,
+    Glasswool_TEST.2500,      !- Name
+    Rough,                    !- Roughness
+    0.25,                     !- Thickness
+    0.04,                    !- Conductivity
+    22,                       !- Density
+    830,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance

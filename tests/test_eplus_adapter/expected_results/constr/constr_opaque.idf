@@ -1,0 +1,46 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+MATERIAL,
+    sample_mat.250,          !- Name
+    Rough,                    !- Roughness
+    0.25,                     !- Thickness
+    0.04,                     !- Conductivity
+    22,                       !- Density
+    830,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    sample_mat.150,          !- Name
+    Rough,                    !- Roughness
+    0.15,                     !- Thickness
+    0.04,                     !- Conductivity
+    22,                       !- Density
+    830,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL:NOMASS,
+    vapour_barrier_.0.004,    !- Name
+    Rough,                    !- Roughness
+    2.105263e-02,             !- Thermal Resistance
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+MATERIAL:AIRGAP,
+    cavity,                   !- Name
+    0.075;                    !- Thermal Resistance
+
+CONSTRUCTION,
+    the_sample_construction,    !- Name
+    sample_mat.250,          !- Outside Layer
+    sample_mat.150,          !- Layer 2
+    vapour_barrier_.0.004,    !- Layer 3
+    cavity,                   !- Layer 4
+    sample_mat.250;           !- Layer 5

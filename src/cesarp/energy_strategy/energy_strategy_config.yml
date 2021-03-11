@@ -1,0 +1,86 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+ENERGY_STRATEGY:
+  ENERGY_STRATEGY_SELECTION: WWB # WWB - Business as Usual or NEP - New Energy Policy
+  WWB:
+    TIME_PERIODS: [2015, 2020, 2030, 2035, 2040, 2050]
+    PRIMARY_ENERGY_FACTORS_FILE: "ressources/general/PrimaryEnergyFactors.xlsx"
+    ENERGYMIX:
+      GAS_MIX_FILE: "ressources/business_as_usual/energymix/GasMix.xlsx"
+      WOOD_MIX_FILE: "ressources/business_as_usual/energymix/WoodMix.xlsx"
+      DHW_SYSTEM_MIX_FILE: "ressources/business_as_usual/energymix/DHWSystemMix.xlsx"
+      HEATING_SYSTEM_MIX_FILE: "ressources/business_as_usual/energymix/HeatingSystemMix.xlsx"
+      ELECTRICITY_FACTORS:
+        PATH: "ressources/business_as_usual/energymix/ElectricityFactors.xlsx"
+        MIX_WITH_TRADE: True # if false, factors without trade are used
+    FUEL:
+      FUEL_COST_FACTORS_FILE: "ressources/business_as_usual/fuel/FuelCostFactors.xlsx"
+    EFFICIENCIES:
+      DHW_SYSTEM_EFFICIENCY_FILE: "ressources/business_as_usual/efficiencies/DHWSystemEfficiencies.xlsx"
+      HEATING_SYSTEM_EFFICIENCY_FILE: "ressources/business_as_usual/efficiencies/HeatingSystemEfficiencies.xlsx"
+      HEATING_VALUE_FACTOR_FILE: "ressources/general/HvFactors.xlsx"
+    RETROFIT:
+      FULL_RATES:
+        SFH:
+          PATH: "./ressources/business_as_usual/retrofit/FullyRetrofitRates_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/business_as_usual/retrofit/FullyRetrofitRates_MFH.csv"
+          SEPARATOR: ";"
+      PARTIAL_SHARES:
+        SFH:
+          PATH: "./ressources/business_as_usual/retrofit/PartialRetrofitShares_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/business_as_usual/retrofit/PartialRetrofitShares_MFH.csv"
+          SEPARATOR: ";"
+  NEP:
+    TIME_PERIODS: [2015, 2020, 2030, 2035, 2040, 2050]
+    PRIMARY_ENERGY_FACTORS_FILE: "ressources/general/PrimaryEnergyFactors.xlsx"
+    ENERGYMIX:
+      GAS_MIX_FILE: "ressources/new_energy_policy/energymix/GasMix.xlsx"
+      WOOD_MIX_FILE: "ressources/new_energy_policy/energymix/WoodMix.xlsx"
+      DHW_SYSTEM_MIX_FILE: "ressources/new_energy_policy/energymix/DHWSystemMix.xlsx"
+      HEATING_SYSTEM_MIX_FILE: "ressources/new_energy_policy/energymix/HeatingSystemMix.xlsx"
+      ELECTRICITY_FACTORS:
+        PATH: "ressources/new_energy_policy/energymix/ElectricityFactors.xlsx"
+        MIX_WITH_TRADE: True # if false, factors without trade are used
+    FUEL:
+      FUEL_COST_FACTORS_FILE: "ressources/new_energy_policy/fuel/FuelCostFactors.xlsx"
+    EFFICIENCIES:
+      DHW_SYSTEM_EFFICIENCY_FILE: "ressources/new_energy_policy/efficiencies/DHWSystemEfficiencies.xlsx"
+      HEATING_SYSTEM_EFFICIENCY_FILE: "ressources/new_energy_policy/efficiencies/HeatingSystemEfficiencies.xlsx"
+      HEATING_VALUE_FACTOR_FILE: "ressources/general/HvFactors.xlsx"
+    RETROFIT:
+      FULL_RATES:
+        SFH:
+          PATH: "./ressources/new_energy_policy/retrofit/FullyRetrofitRates_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/new_energy_policy/retrofit/FullyRetrofitRates_MFH.csv"
+          SEPARATOR: ";"
+      PARTIAL_SHARES:
+        SFH:
+          PATH: "./ressources/new_energy_policy/retrofit/PartialRetrofitShares_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/new_energy_policy/retrofit/PartialRetrofitShares_MFH.csv"
+          SEPARATOR: ";"

@@ -1,0 +1,107 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+SIMULATIONCONTROL,
+    No,                       !- Do Zone Sizing Calculation
+    No,                       !- Do System Sizing Calculation
+    No,                       !- Do Plant Sizing Calculation
+    No,                       !- Run Simulation for Sizing Periods
+    Yes,                      !- Run Simulation for Weather File Run Periods
+    No,                       !- Do HVAC Sizing Simulation for Sizing Periods
+    1;                        !- Maximum Number of HVAC Sizing Simulation Passes
+
+BUILDING,
+    Building,                 !- Name
+    0,                        !- North Axis
+    Suburbs,                  !- Terrain
+    0.04,                     !- Loads Convergence Tolerance Value
+    0.4,                      !- Temperature Convergence Tolerance Value
+    FullExterior,             !- Solar Distribution
+    25,                       !- Maximum Number of Warmup Days
+    1;                        !- Minimum Number of Warmup Days
+
+ZONEAIRHEATBALANCEALGORITHM,
+    AnalyticalSolution;       !- Algorithm
+
+TIMESTEP,
+    4;                        !- Number of Timesteps per Hour
+
+CONVERGENCELIMITS,
+    2,                        !- Minimum System Timestep
+    25,                       !- Maximum HVAC Iterations
+    2,                        !- Minimum Plant Iterations
+    8;                        !- Maximum Plant Iterations
+
+RUNPERIOD,
+    DefaultRunPeriod,         !- Name
+    1,                        !- Begin Month
+    1,                        !- Begin Day of Month
+    ,                         !- Begin Year
+    12,                       !- End Month
+    31,                       !- End Day of Month
+    ,                         !- End Year
+    Sunday,                   !- Day of Week for Start Day
+    No,                       !- Use Weather File Holidays and Special Days
+    No,                       !- Use Weather File Daylight Saving Period
+    No,                       !- Apply Weekend Holiday Rule
+    Yes,                      !- Use Weather File Rain Indicators
+    Yes,                      !- Use Weather File Snow Indicators
+    No;                       !- Treat Weather as Actual
+
+SITE:GROUNDTEMPERATURE:BUILDINGSURFACE,
+    18,                       !- January Ground Temperature
+    18,                       !- February Ground Temperature
+    18,                       !- March Ground Temperature
+    18,                       !- April Ground Temperature
+    18,                       !- May Ground Temperature
+    18,                       !- June Ground Temperature
+    18,                       !- July Ground Temperature
+    18,                       !- August Ground Temperature
+    18,                       !- September Ground Temperature
+    18,                       !- October Ground Temperature
+    18,                       !- November Ground Temperature
+    18;                       !- December Ground Temperature
+
+SITE:GROUNDTEMPERATURE:FCFACTORMETHOD,
+    1.6,                      !- January Ground Temperature
+    0.7,                      !- February Ground Temperature
+    2.3,                      !- March Ground Temperature
+    4.8,                      !- April Ground Temperature
+    11.2,                     !- May Ground Temperature
+    16.2,                     !- June Ground Temperature
+    19.6,                     !- July Ground Temperature
+    20.6,                     !- August Ground Temperature
+    18.9,                     !- September Ground Temperature
+    15,                       !- October Ground Temperature
+    9.8,                      !- November Ground Temperature
+    5;                        !- December Ground Temperature
+
+SITE:GROUNDTEMPERATURE:SHALLOW,
+    14,                       !- January Surface Ground Temperature
+    14,                       !- February Surface Ground Temperature
+    14,                       !- March Surface Ground Temperature
+    14,                       !- April Surface Ground Temperature
+    14,                       !- May Surface Ground Temperature
+    14,                       !- June Surface Ground Temperature
+    14,                       !- July Surface Ground Temperature
+    14,                       !- August Surface Ground Temperature
+    14,                       !- September Surface Ground Temperature
+    14,                       !- October Surface Ground Temperature
+    14,                       !- November Surface Ground Temperature
+    14;                       !- December Surface Ground Temperature
+
+SITE:GROUNDTEMPERATURE:DEEP,
+    14,                       !- January Deep Ground Temperature
+    14,                       !- February Deep Ground Temperature
+    14,                       !- March Deep Ground Temperature
+    14,                       !- April Deep Ground Temperature
+    14,                       !- May Deep Ground Temperature
+    14,                       !- June Deep Ground Temperature
+    14,                       !- July Deep Ground Temperature
+    14,                       !- August Deep Ground Temperature
+    14,                       !- September Deep Ground Temperature
+    14,                       !- October Deep Ground Temperature
+    14,                       !- November Deep Ground Temperature
+    14;                       !- December Deep Ground Temperature

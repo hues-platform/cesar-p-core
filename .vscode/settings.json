@@ -1,0 +1,28 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.testing.pytestArgs": ["tests"],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length=180 "
+    ],
+    "[python]": {
+        "files.trimTrailingWhitespace": true,
+    },
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src:${workspaceFolder}/",
+    },
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src:${workspaceFolder}/",
+    },
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${env:PYTHONPATH};${workspaceFolder}/src;${workspaceFolder}/",
+    },
+    "python.envFile": "${workspaceFolder}/.env",
+    "outline.showVariables": false,
+    "diffEditor.ignoreTrimWhitespace": true,
+}

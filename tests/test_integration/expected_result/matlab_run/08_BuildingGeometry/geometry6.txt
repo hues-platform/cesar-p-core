@@ -1,0 +1,1537 @@
+!-   ===========  ALL OBJECTS IN CLASS: BUILDINGSURFACE:DETAILED =========== 
+! Block 1, zone1, wall 1
+ BuildingSurface:Detailed,                      !- Surface
+ Block1:Zone1_Wall_1_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block1:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 10.00000, 0.00000,                         !-Vertex 1
+ 0.00000, 0.00000, 0.00000,                         !-Vertex 2
+ 0.00000, 0.00000, 2.50000,                         !-Vertex 3
+ 0.00000, 10.00000, 2.50000;                         !-Vertex 4
+  
+ 
+! Block 1, zone1, wall 2
+ BuildingSurface:Detailed,                      !- Surface
+ Block1:Zone1_Wall_2_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block1:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 10.00000, 0.00000,                         !-Vertex 1
+ 0.00000, 10.00000, 0.00000,                         !-Vertex 2
+ 0.00000, 10.00000, 2.50000,                         !-Vertex 3
+ 25.00000, 10.00000, 2.50000;                         !-Vertex 4
+  
+ 
+! Block 1, zone1, wall 3
+ BuildingSurface:Detailed,                      !- Surface
+ Block1:Zone1_Wall_3_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block1:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 0.00000, 0.00000,                         !-Vertex 1
+ 25.00000, 10.00000, 0.00000,                         !-Vertex 2
+ 25.00000, 10.00000, 2.50000,                         !-Vertex 3
+ 25.00000, 0.00000, 2.50000;                         !-Vertex 4
+  
+ 
+! Block 1, zone1, wall 4
+ BuildingSurface:Detailed,                      !- Surface
+ Block1:Zone1_Wall_4_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block1:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 0.00000, 0.00000,                         !-Vertex 1
+ 25.00000, 0.00000, 0.00000,                         !-Vertex 2
+ 25.00000, 0.00000, 2.50000,                         !-Vertex 3
+ 0.00000, 0.00000, 2.50000;                         !-Vertex 4
+  
+ 
+! Block 2, zone1, wall 1
+ BuildingSurface:Detailed,                      !- Surface
+ Block2:Zone1_Wall_1_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block2:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 10.00000, 2.50000,                         !-Vertex 1
+ 0.00000, 0.00000, 2.50000,                         !-Vertex 2
+ 0.00000, 0.00000, 5.00000,                         !-Vertex 3
+ 0.00000, 10.00000, 5.00000;                         !-Vertex 4
+  
+ 
+! Block 2, zone1, wall 2
+ BuildingSurface:Detailed,                      !- Surface
+ Block2:Zone1_Wall_2_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block2:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 10.00000, 2.50000,                         !-Vertex 1
+ 0.00000, 10.00000, 2.50000,                         !-Vertex 2
+ 0.00000, 10.00000, 5.00000,                         !-Vertex 3
+ 25.00000, 10.00000, 5.00000;                         !-Vertex 4
+  
+ 
+! Block 2, zone1, wall 3
+ BuildingSurface:Detailed,                      !- Surface
+ Block2:Zone1_Wall_3_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block2:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 0.00000, 2.50000,                         !-Vertex 1
+ 25.00000, 10.00000, 2.50000,                         !-Vertex 2
+ 25.00000, 10.00000, 5.00000,                         !-Vertex 3
+ 25.00000, 0.00000, 5.00000;                         !-Vertex 4
+  
+ 
+! Block 2, zone1, wall 4
+ BuildingSurface:Detailed,                      !- Surface
+ Block2:Zone1_Wall_4_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block2:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 0.00000, 2.50000,                         !-Vertex 1
+ 25.00000, 0.00000, 2.50000,                         !-Vertex 2
+ 25.00000, 0.00000, 5.00000,                         !-Vertex 3
+ 0.00000, 0.00000, 5.00000;                         !-Vertex 4
+  
+ 
+! Block 3, zone1, wall 1
+ BuildingSurface:Detailed,                      !- Surface
+ Block3:Zone1_Wall_1_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block3:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 10.00000, 5.00000,                         !-Vertex 1
+ 0.00000, 0.00000, 5.00000,                         !-Vertex 2
+ 0.00000, 0.00000, 7.50000,                         !-Vertex 3
+ 0.00000, 10.00000, 7.50000;                         !-Vertex 4
+  
+ 
+! Block 3, zone1, wall 2
+ BuildingSurface:Detailed,                      !- Surface
+ Block3:Zone1_Wall_2_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block3:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 10.00000, 5.00000,                         !-Vertex 1
+ 0.00000, 10.00000, 5.00000,                         !-Vertex 2
+ 0.00000, 10.00000, 7.50000,                         !-Vertex 3
+ 25.00000, 10.00000, 7.50000;                         !-Vertex 4
+  
+ 
+! Block 3, zone1, wall 3
+ BuildingSurface:Detailed,                      !- Surface
+ Block3:Zone1_Wall_3_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block3:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 0.00000, 5.00000,                         !-Vertex 1
+ 25.00000, 10.00000, 5.00000,                         !-Vertex 2
+ 25.00000, 10.00000, 7.50000,                         !-Vertex 3
+ 25.00000, 0.00000, 7.50000;                         !-Vertex 4
+  
+ 
+! Block 3, zone1, wall 4
+ BuildingSurface:Detailed,                      !- Surface
+ Block3:Zone1_Wall_4_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block3:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 0.00000, 5.00000,                         !-Vertex 1
+ 25.00000, 0.00000, 5.00000,                         !-Vertex 2
+ 25.00000, 0.00000, 7.50000,                         !-Vertex 3
+ 0.00000, 0.00000, 7.50000;                         !-Vertex 4
+  
+ 
+! Block 4, zone1, wall 1
+ BuildingSurface:Detailed,                      !- Surface
+ Block4:Zone1_Wall_1_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block4:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 10.00000, 7.50000,                         !-Vertex 1
+ 0.00000, 0.00000, 7.50000,                         !-Vertex 2
+ 0.00000, 0.00000, 10.00000,                         !-Vertex 3
+ 0.00000, 10.00000, 10.00000;                         !-Vertex 4
+  
+ 
+! Block 4, zone1, wall 2
+ BuildingSurface:Detailed,                      !- Surface
+ Block4:Zone1_Wall_2_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block4:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 10.00000, 7.50000,                         !-Vertex 1
+ 0.00000, 10.00000, 7.50000,                         !-Vertex 2
+ 0.00000, 10.00000, 10.00000,                         !-Vertex 3
+ 25.00000, 10.00000, 10.00000;                         !-Vertex 4
+  
+ 
+! Block 4, zone1, wall 3
+ BuildingSurface:Detailed,                      !- Surface
+ Block4:Zone1_Wall_3_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block4:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 0.00000, 7.50000,                         !-Vertex 1
+ 25.00000, 10.00000, 7.50000,                         !-Vertex 2
+ 25.00000, 10.00000, 10.00000,                         !-Vertex 3
+ 25.00000, 0.00000, 10.00000;                         !-Vertex 4
+  
+ 
+! Block 4, zone1, wall 4
+ BuildingSurface:Detailed,                      !- Surface
+ Block4:Zone1_Wall_4_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block4:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 0.00000, 7.50000,                         !-Vertex 1
+ 25.00000, 0.00000, 7.50000,                         !-Vertex 2
+ 25.00000, 0.00000, 10.00000,                         !-Vertex 3
+ 0.00000, 0.00000, 10.00000;                         !-Vertex 4
+  
+ 
+! Block 5, zone1, wall 1
+ BuildingSurface:Detailed,                      !- Surface
+ Block5:Zone1_Wall_1_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block5:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 10.00000, 10.00000,                         !-Vertex 1
+ 0.00000, 0.00000, 10.00000,                         !-Vertex 2
+ 0.00000, 0.00000, 12.50000,                         !-Vertex 3
+ 0.00000, 10.00000, 12.50000;                         !-Vertex 4
+  
+ 
+! Block 5, zone1, wall 2
+ BuildingSurface:Detailed,                      !- Surface
+ Block5:Zone1_Wall_2_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block5:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 10.00000, 10.00000,                         !-Vertex 1
+ 0.00000, 10.00000, 10.00000,                         !-Vertex 2
+ 0.00000, 10.00000, 12.50000,                         !-Vertex 3
+ 25.00000, 10.00000, 12.50000;                         !-Vertex 4
+  
+ 
+! Block 5, zone1, wall 3
+ BuildingSurface:Detailed,                      !- Surface
+ Block5:Zone1_Wall_3_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block5:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 0.00000, 10.00000,                         !-Vertex 1
+ 25.00000, 10.00000, 10.00000,                         !-Vertex 2
+ 25.00000, 10.00000, 12.50000,                         !-Vertex 3
+ 25.00000, 0.00000, 12.50000;                         !-Vertex 4
+  
+ 
+! Block 5, zone1, wall 4
+ BuildingSurface:Detailed,                      !- Surface
+ Block5:Zone1_Wall_4_0_0,                   !- Surface name
+ Wall,Wall0602,                         !- Class and Construction Name
+ Block5:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ AutoCalculate,                              !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 0.00000, 10.00000,                         !-Vertex 1
+ 25.00000, 0.00000, 10.00000,                         !-Vertex 2
+ 25.00000, 0.00000, 12.50000,                         !-Vertex 3
+ 0.00000, 0.00000, 12.50000;                         !-Vertex 4
+  
+ 
+! Block 1, Zone 1, Ground floor
+ BuildingSurface:Detailed,                      !- Surface
+ Block1:Zone1_GroundFloor_0_0_0,             !- Surface name
+ Floor,Ground0601,                                   !- Class and Construction Name
+ Block1:Zone1,                               !- Zone Name
+ Ground, ,                                   !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 1,                                          !- View Factor to Ground
+ 4,                                          !- Number vertices
+0.00000, 0.00000, 0.00000,                         !-Vertex 1
+ 0.00000, 10.00000, 0.00000,                         !-Vertex 2
+ 25.00000, 10.00000, 0.00000,                         !-Vertex 3
+ 25.00000, 0.00000, 0.00000;                         !-Vertex 4
+  
+ 
+! Block 5, roof
+ BuildingSurface:Detailed,                       !- Surface
+ Block5:Zone1_Roof_1_0_0,                    !- Surface name
+ Roof,Roof0602,                                     !- Class and Construction Name
+ Block5:Zone1,                               !- Zone Name
+ Outdoors,,                                  !- Outside Face Environment
+ SunExposed,                                 !- Sun Exposure
+ WindExposed,                                !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                          !- Number vertices
+25.00000, 0.00000, 12.50000,                         !-Vertex 1
+ 25.00000, 10.00000, 12.50000,                         !-Vertex 2
+ 0.00000, 10.00000, 12.50000,                         !-Vertex 3
+ 0.00000, 0.00000, 12.50000;                         !-Vertex 4
+  
+ 
+! Block 1, ceiling
+ BuildingSurface:Detailed,                       !- Surface
+ Block1:Zone1_Ceiling_1_0_0,                 !- Surface name
+ Ceiling,Internal Ceiling,                                  !- Class and Construction Name
+ Block1:Zone1,                               !- Zone Name
+ Surface, Block2:Zone1_Floor_0_0_10000,      !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+25.00000, 0.00000, 2.50000,                         !-Vertex 1
+ 25.00000, 10.00000, 2.50000,                         !-Vertex 2
+ 0.00000, 10.00000, 2.50000,                         !-Vertex 3
+ 0.00000, 0.00000, 2.50000;                         !-Vertex 4
+  
+ 
+! Block 1, ceiling(other side)
+ BuildingSurface:Detailed,                      !- Surface
+ Block2:Zone1_Floor_0_0_10000,               !- Surface name
+ Floor,Internal Floor,                                    !- Class and Construction Name
+ Block2:Zone1,                               !- Zone Name
+ Surface, Block1:Zone1_Ceiling_1_0_0,        !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+0.00000, 0.00000, 2.50000,                         !-Vertex 1
+ 0.00000, 10.00000, 2.50000,                         !-Vertex 2
+ 25.00000, 10.00000, 2.50000,                         !-Vertex 3
+ 25.00000, 0.00000, 2.50000;                         !-Vertex 4
+  
+ 
+! Block 2, ceiling
+ BuildingSurface:Detailed,                       !- Surface
+ Block2:Zone1_Ceiling_1_0_0,                 !- Surface name
+ Ceiling,Internal Ceiling,                                  !- Class and Construction Name
+ Block2:Zone1,                               !- Zone Name
+ Surface, Block3:Zone1_Floor_0_0_10000,      !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+25.00000, 0.00000, 5.00000,                         !-Vertex 1
+ 25.00000, 10.00000, 5.00000,                         !-Vertex 2
+ 0.00000, 10.00000, 5.00000,                         !-Vertex 3
+ 0.00000, 0.00000, 5.00000;                         !-Vertex 4
+  
+ 
+! Block 2, ceiling(other side)
+ BuildingSurface:Detailed,                      !- Surface
+ Block3:Zone1_Floor_0_0_10000,               !- Surface name
+ Floor,Internal Floor,                                    !- Class and Construction Name
+ Block3:Zone1,                               !- Zone Name
+ Surface, Block2:Zone1_Ceiling_1_0_0,        !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+0.00000, 0.00000, 5.00000,                         !-Vertex 1
+ 0.00000, 10.00000, 5.00000,                         !-Vertex 2
+ 25.00000, 10.00000, 5.00000,                         !-Vertex 3
+ 25.00000, 0.00000, 5.00000;                         !-Vertex 4
+  
+ 
+! Block 3, ceiling
+ BuildingSurface:Detailed,                       !- Surface
+ Block3:Zone1_Ceiling_1_0_0,                 !- Surface name
+ Ceiling,Internal Ceiling,                                  !- Class and Construction Name
+ Block3:Zone1,                               !- Zone Name
+ Surface, Block4:Zone1_Floor_0_0_10000,      !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+25.00000, 0.00000, 7.50000,                         !-Vertex 1
+ 25.00000, 10.00000, 7.50000,                         !-Vertex 2
+ 0.00000, 10.00000, 7.50000,                         !-Vertex 3
+ 0.00000, 0.00000, 7.50000;                         !-Vertex 4
+  
+ 
+! Block 3, ceiling(other side)
+ BuildingSurface:Detailed,                      !- Surface
+ Block4:Zone1_Floor_0_0_10000,               !- Surface name
+ Floor,Internal Floor,                                    !- Class and Construction Name
+ Block4:Zone1,                               !- Zone Name
+ Surface, Block3:Zone1_Ceiling_1_0_0,        !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+0.00000, 0.00000, 7.50000,                         !-Vertex 1
+ 0.00000, 10.00000, 7.50000,                         !-Vertex 2
+ 25.00000, 10.00000, 7.50000,                         !-Vertex 3
+ 25.00000, 0.00000, 7.50000;                         !-Vertex 4
+  
+ 
+! Block 4, ceiling
+ BuildingSurface:Detailed,                       !- Surface
+ Block4:Zone1_Ceiling_1_0_0,                 !- Surface name
+ Ceiling,Internal Ceiling,                                  !- Class and Construction Name
+ Block4:Zone1,                               !- Zone Name
+ Surface, Block5:Zone1_Floor_0_0_10000,      !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+25.00000, 0.00000, 10.00000,                         !-Vertex 1
+ 25.00000, 10.00000, 10.00000,                         !-Vertex 2
+ 0.00000, 10.00000, 10.00000,                         !-Vertex 3
+ 0.00000, 0.00000, 10.00000;                         !-Vertex 4
+  
+ 
+! Block 4, ceiling(other side)
+ BuildingSurface:Detailed,                      !- Surface
+ Block5:Zone1_Floor_0_0_10000,               !- Surface name
+ Floor,Internal Floor,                                    !- Class and Construction Name
+ Block5:Zone1,                               !- Zone Name
+ Surface, Block4:Zone1_Ceiling_1_0_0,        !- Outside Face Environment
+ NoSun,                                      !- Sun Exposure
+ NoWind,                                     !- Wind Exposure
+ 0,                                          !- View Factor to Ground
+ 4,                                         !- Number vertices
+0.00000, 0.00000, 10.00000,                         !-Vertex 1
+ 0.00000, 10.00000, 10.00000,                         !-Vertex 2
+ 25.00000, 10.00000, 10.00000,                         !-Vertex 3
+ 25.00000, 0.00000, 10.00000;                         !-Vertex 4
+  
+ 
+!-   ===========  ALL OBJECTS IN CLASS: FENESTRATIONSURFACE:DETAILED ===========
+!Block1,window
+  FenestrationSurface:Detailed,Block1:Zone1_Wall_1_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block1:Zone1_Wall_1_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+0.00000, 7.75000, 0.50000,                         !-Vertex 1
+ 0.00000, 2.25000, 0.50000,                         !-Vertex 2
+ 0.00000, 2.25000, 2.00000,                         !-Vertex 3
+ 0.00000, 7.75000, 2.00000;                         !-Vertex 4
+  
+ 
+!Block1,window
+  FenestrationSurface:Detailed,Block1:Zone1_Wall_2_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block1:Zone1_Wall_2_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+19.37500, 10.00000, 0.50000,                         !-Vertex 1
+ 5.62500, 10.00000, 0.50000,                         !-Vertex 2
+ 5.62500, 10.00000, 2.00000,                         !-Vertex 3
+ 19.37500, 10.00000, 2.00000;                         !-Vertex 4
+  
+ 
+!Block1,window
+  FenestrationSurface:Detailed,Block1:Zone1_Wall_3_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block1:Zone1_Wall_3_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+25.00000, 2.25000, 0.50000,                         !-Vertex 1
+ 25.00000, 7.75000, 0.50000,                         !-Vertex 2
+ 25.00000, 7.75000, 2.00000,                         !-Vertex 3
+ 25.00000, 2.25000, 2.00000;                         !-Vertex 4
+  
+ 
+!Block1,window
+  FenestrationSurface:Detailed,Block1:Zone1_Wall_4_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block1:Zone1_Wall_4_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+5.62500, 0.00000, 0.50000,                         !-Vertex 1
+ 19.37500, 0.00000, 0.50000,                         !-Vertex 2
+ 19.37500, 0.00000, 2.00000,                         !-Vertex 3
+ 5.62500, 0.00000, 2.00000;                         !-Vertex 4
+  
+ 
+!Block2,window
+  FenestrationSurface:Detailed,Block2:Zone1_Wall_1_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block2:Zone1_Wall_1_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+0.00000, 7.75000, 3.00000,                         !-Vertex 1
+ 0.00000, 2.25000, 3.00000,                         !-Vertex 2
+ 0.00000, 2.25000, 4.50000,                         !-Vertex 3
+ 0.00000, 7.75000, 4.50000;                         !-Vertex 4
+  
+ 
+!Block2,window
+  FenestrationSurface:Detailed,Block2:Zone1_Wall_2_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block2:Zone1_Wall_2_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+19.37500, 10.00000, 3.00000,                         !-Vertex 1
+ 5.62500, 10.00000, 3.00000,                         !-Vertex 2
+ 5.62500, 10.00000, 4.50000,                         !-Vertex 3
+ 19.37500, 10.00000, 4.50000;                         !-Vertex 4
+  
+ 
+!Block2,window
+  FenestrationSurface:Detailed,Block2:Zone1_Wall_3_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block2:Zone1_Wall_3_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+25.00000, 2.25000, 3.00000,                         !-Vertex 1
+ 25.00000, 7.75000, 3.00000,                         !-Vertex 2
+ 25.00000, 7.75000, 4.50000,                         !-Vertex 3
+ 25.00000, 2.25000, 4.50000;                         !-Vertex 4
+  
+ 
+!Block2,window
+  FenestrationSurface:Detailed,Block2:Zone1_Wall_4_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block2:Zone1_Wall_4_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+5.62500, 0.00000, 3.00000,                         !-Vertex 1
+ 19.37500, 0.00000, 3.00000,                         !-Vertex 2
+ 19.37500, 0.00000, 4.50000,                         !-Vertex 3
+ 5.62500, 0.00000, 4.50000;                         !-Vertex 4
+  
+ 
+!Block3,window
+  FenestrationSurface:Detailed,Block3:Zone1_Wall_1_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block3:Zone1_Wall_1_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+0.00000, 7.75000, 5.50000,                         !-Vertex 1
+ 0.00000, 2.25000, 5.50000,                         !-Vertex 2
+ 0.00000, 2.25000, 7.00000,                         !-Vertex 3
+ 0.00000, 7.75000, 7.00000;                         !-Vertex 4
+  
+ 
+!Block3,window
+  FenestrationSurface:Detailed,Block3:Zone1_Wall_2_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block3:Zone1_Wall_2_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+19.37500, 10.00000, 5.50000,                         !-Vertex 1
+ 5.62500, 10.00000, 5.50000,                         !-Vertex 2
+ 5.62500, 10.00000, 7.00000,                         !-Vertex 3
+ 19.37500, 10.00000, 7.00000;                         !-Vertex 4
+  
+ 
+!Block3,window
+  FenestrationSurface:Detailed,Block3:Zone1_Wall_3_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block3:Zone1_Wall_3_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+25.00000, 2.25000, 5.50000,                         !-Vertex 1
+ 25.00000, 7.75000, 5.50000,                         !-Vertex 2
+ 25.00000, 7.75000, 7.00000,                         !-Vertex 3
+ 25.00000, 2.25000, 7.00000;                         !-Vertex 4
+  
+ 
+!Block3,window
+  FenestrationSurface:Detailed,Block3:Zone1_Wall_4_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block3:Zone1_Wall_4_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+5.62500, 0.00000, 5.50000,                         !-Vertex 1
+ 19.37500, 0.00000, 5.50000,                         !-Vertex 2
+ 19.37500, 0.00000, 7.00000,                         !-Vertex 3
+ 5.62500, 0.00000, 7.00000;                         !-Vertex 4
+  
+ 
+!Block4,window
+  FenestrationSurface:Detailed,Block4:Zone1_Wall_1_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block4:Zone1_Wall_1_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+0.00000, 7.75000, 8.00000,                         !-Vertex 1
+ 0.00000, 2.25000, 8.00000,                         !-Vertex 2
+ 0.00000, 2.25000, 9.50000,                         !-Vertex 3
+ 0.00000, 7.75000, 9.50000;                         !-Vertex 4
+  
+ 
+!Block4,window
+  FenestrationSurface:Detailed,Block4:Zone1_Wall_2_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block4:Zone1_Wall_2_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+19.37500, 10.00000, 8.00000,                         !-Vertex 1
+ 5.62500, 10.00000, 8.00000,                         !-Vertex 2
+ 5.62500, 10.00000, 9.50000,                         !-Vertex 3
+ 19.37500, 10.00000, 9.50000;                         !-Vertex 4
+  
+ 
+!Block4,window
+  FenestrationSurface:Detailed,Block4:Zone1_Wall_3_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block4:Zone1_Wall_3_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+25.00000, 2.25000, 8.00000,                         !-Vertex 1
+ 25.00000, 7.75000, 8.00000,                         !-Vertex 2
+ 25.00000, 7.75000, 9.50000,                         !-Vertex 3
+ 25.00000, 2.25000, 9.50000;                         !-Vertex 4
+  
+ 
+!Block4,window
+  FenestrationSurface:Detailed,Block4:Zone1_Wall_4_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block4:Zone1_Wall_4_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+5.62500, 0.00000, 8.00000,                         !-Vertex 1
+ 19.37500, 0.00000, 8.00000,                         !-Vertex 2
+ 19.37500, 0.00000, 9.50000,                         !-Vertex 3
+ 5.62500, 0.00000, 9.50000;                         !-Vertex 4
+  
+ 
+!Block5,window
+  FenestrationSurface:Detailed,Block5:Zone1_Wall_1_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block5:Zone1_Wall_1_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+0.00000, 7.75000, 10.50000,                         !-Vertex 1
+ 0.00000, 2.25000, 10.50000,                         !-Vertex 2
+ 0.00000, 2.25000, 12.00000,                         !-Vertex 3
+ 0.00000, 7.75000, 12.00000;                         !-Vertex 4
+  
+ 
+!Block5,window
+  FenestrationSurface:Detailed,Block5:Zone1_Wall_2_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block5:Zone1_Wall_2_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+19.37500, 10.00000, 10.50000,                         !-Vertex 1
+ 5.62500, 10.00000, 10.50000,                         !-Vertex 2
+ 5.62500, 10.00000, 12.00000,                         !-Vertex 3
+ 19.37500, 10.00000, 12.00000;                         !-Vertex 4
+  
+ 
+!Block5,window
+  FenestrationSurface:Detailed,Block5:Zone1_Wall_3_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block5:Zone1_Wall_3_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+25.00000, 2.25000, 10.50000,                         !-Vertex 1
+ 25.00000, 7.75000, 10.50000,                         !-Vertex 2
+ 25.00000, 7.75000, 12.00000,                         !-Vertex 3
+ 25.00000, 2.25000, 12.00000;                         !-Vertex 4
+  
+ 
+!Block5,window
+  FenestrationSurface:Detailed,Block5:Zone1_Wall_4_Win,    !- Window name
+ Window,                         !- Class
+ Window0601,                             !- Construction Name
+ Block5:Zone1_Wall_4_0_0,                  !- Base Surface
+ ,                                          !- corresponding other window subsurface
+ 0.5,                                          !- View Factor to Ground
+ ,                                          !- Window shading control
+ 1,                                         !- Frame divider name
+ 1,                                         !- Multiplier
+ 4,                                          !- Number vertices
+5.62500, 0.00000, 10.50000,                         !-Vertex 1
+ 19.37500, 0.00000, 10.50000,                         !-Vertex 2
+ 19.37500, 0.00000, 12.00000,                         !-Vertex 3
+ 5.62500, 0.00000, 12.00000;                         !-Vertex 4
+  
+ 
+!-   ===========  ALL OBJECTS IN CLASS: ZONE =========== 
+! Block 1 - Zone1
+ Zone, Block1:Zone1,                               !- Zone Name
+ 0,                                             !- Relative North (to building)
+ 0,                                             !- X Origin (M)
+ 0,                                             !- Y Origin (M)
+ 0,                                             !- Z Origin (M)
+ 1 ,                                            !- Zone Type
+ 1,                                             !- Zone multiplier
+ ,                                              !- Zone ceiling height - Let EnergyPlus work it out
+ ,                                              !- Zone Volumn- Let EnergyPlus work it out
+ ,                                              !- Floor Area- Let EnergyPlus work it out
+ TARP;                                           !- Zone inside convection algorism
+ 
+ 
+! Block 2 - Zone1
+ Zone, Block2:Zone1,                               !- Zone Name
+ 0,                                             !- Relative North (to building)
+ 0,                                             !- X Origin (M)
+ 0,                                             !- Y Origin (M)
+ 0,                                             !- Z Origin (M)
+ 1 ,                                            !- Zone Type
+ 1,                                             !- Zone multiplier
+ ,                                              !- Zone ceiling height - Let EnergyPlus work it out
+ ,                                              !- Zone Volumn- Let EnergyPlus work it out
+ ,                                              !- Floor Area- Let EnergyPlus work it out
+ TARP;                                           !- Zone inside convection algorism
+ 
+ 
+! Block 3 - Zone1
+ Zone, Block3:Zone1,                               !- Zone Name
+ 0,                                             !- Relative North (to building)
+ 0,                                             !- X Origin (M)
+ 0,                                             !- Y Origin (M)
+ 0,                                             !- Z Origin (M)
+ 1 ,                                            !- Zone Type
+ 1,                                             !- Zone multiplier
+ ,                                              !- Zone ceiling height - Let EnergyPlus work it out
+ ,                                              !- Zone Volumn- Let EnergyPlus work it out
+ ,                                              !- Floor Area- Let EnergyPlus work it out
+ TARP;                                           !- Zone inside convection algorism
+ 
+ 
+! Block 4 - Zone1
+ Zone, Block4:Zone1,                               !- Zone Name
+ 0,                                             !- Relative North (to building)
+ 0,                                             !- X Origin (M)
+ 0,                                             !- Y Origin (M)
+ 0,                                             !- Z Origin (M)
+ 1 ,                                            !- Zone Type
+ 1,                                             !- Zone multiplier
+ ,                                              !- Zone ceiling height - Let EnergyPlus work it out
+ ,                                              !- Zone Volumn- Let EnergyPlus work it out
+ ,                                              !- Floor Area- Let EnergyPlus work it out
+ TARP;                                           !- Zone inside convection algorism
+ 
+ 
+! Block 5 - Zone1
+ Zone, Block5:Zone1,                               !- Zone Name
+ 0,                                             !- Relative North (to building)
+ 0,                                             !- X Origin (M)
+ 0,                                             !- Y Origin (M)
+ 0,                                             !- Z Origin (M)
+ 1 ,                                            !- Zone Type
+ 1,                                             !- Zone multiplier
+ ,                                              !- Zone ceiling height - Let EnergyPlus work it out
+ ,                                              !- Zone Volumn- Let EnergyPlus work it out
+ ,                                              !- Floor Area- Let EnergyPlus work it out
+ TARP;                                           !- Zone inside convection algorism
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: ZONEINFILTRATION:DESIGNFLOWRATE =========== 
+ZoneInfiltration:DesignFlowRate, Block1:Zone1 Infiltration,  !- Name
+Block1:Zone1,                               !- Zone Name
+resi_infiltration_sch,                       !- Schedule Name
+AirChanges/Hour,                            !- Design Volume Flow Rate calculation method
+,                                           !- Design Volume Flow Rate (m3/s)
+,                                           !- Flow per Zone Floor Area {m3/s/m2}
+,                                           !- Flow per Exterior Surface Area {m3/s/m2}
+2.775000e-01,                                           !- Air Changes Per Hour
+1,                                          !- Constant Term Coefficient
+0,                                          !- Temperature Term Coefficient
+0,                                          !- Velocity Squared Term Coefficient
+0;                                          !- Velocity Squared Term Coefficient
+ 
+ 
+ZoneInfiltration:DesignFlowRate, Block2:Zone1 Infiltration,  !- Name
+Block2:Zone1,                               !- Zone Name
+resi_infiltration_sch,                       !- Schedule Name
+AirChanges/Hour,                            !- Design Volume Flow Rate calculation method
+,                                           !- Design Volume Flow Rate (m3/s)
+,                                           !- Flow per Zone Floor Area {m3/s/m2}
+,                                           !- Flow per Exterior Surface Area {m3/s/m2}
+2.775000e-01,                                           !- Air Changes Per Hour
+1,                                          !- Constant Term Coefficient
+0,                                          !- Temperature Term Coefficient
+0,                                          !- Velocity Squared Term Coefficient
+0;                                          !- Velocity Squared Term Coefficient
+ 
+ 
+ZoneInfiltration:DesignFlowRate, Block3:Zone1 Infiltration,  !- Name
+Block3:Zone1,                               !- Zone Name
+resi_infiltration_sch,                       !- Schedule Name
+AirChanges/Hour,                            !- Design Volume Flow Rate calculation method
+,                                           !- Design Volume Flow Rate (m3/s)
+,                                           !- Flow per Zone Floor Area {m3/s/m2}
+,                                           !- Flow per Exterior Surface Area {m3/s/m2}
+2.775000e-01,                                           !- Air Changes Per Hour
+1,                                          !- Constant Term Coefficient
+0,                                          !- Temperature Term Coefficient
+0,                                          !- Velocity Squared Term Coefficient
+0;                                          !- Velocity Squared Term Coefficient
+ 
+ 
+ZoneInfiltration:DesignFlowRate, Block4:Zone1 Infiltration,  !- Name
+Block4:Zone1,                               !- Zone Name
+resi_infiltration_sch,                       !- Schedule Name
+AirChanges/Hour,                            !- Design Volume Flow Rate calculation method
+,                                           !- Design Volume Flow Rate (m3/s)
+,                                           !- Flow per Zone Floor Area {m3/s/m2}
+,                                           !- Flow per Exterior Surface Area {m3/s/m2}
+2.775000e-01,                                           !- Air Changes Per Hour
+1,                                          !- Constant Term Coefficient
+0,                                          !- Temperature Term Coefficient
+0,                                          !- Velocity Squared Term Coefficient
+0;                                          !- Velocity Squared Term Coefficient
+ 
+ 
+ZoneInfiltration:DesignFlowRate, Block5:Zone1 Infiltration,  !- Name
+Block5:Zone1,                               !- Zone Name
+resi_infiltration_sch,                       !- Schedule Name
+AirChanges/Hour,                            !- Design Volume Flow Rate calculation method
+,                                           !- Design Volume Flow Rate (m3/s)
+,                                           !- Flow per Zone Floor Area {m3/s/m2}
+,                                           !- Flow per Exterior Surface Area {m3/s/m2}
+2.775000e-01,                                           !- Air Changes Per Hour
+1,                                          !- Constant Term Coefficient
+0,                                          !- Temperature Term Coefficient
+0,                                          !- Velocity Squared Term Coefficient
+0;                                          !- Velocity Squared Term Coefficient
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: PEOPLE =========== 
+PEOPLE, People Block1:Zone1,                   !- Name
+ Block1:Zone1,                               !- Zone Name
+resi_occupancy_sch,                          !- Number of People Schedule Name
+Area/Person,                                 !- Number of People Calculation Method
+,                                           !- number of people
+,                                           !- People per Zone Area
+2.564103e+01,                        !- Zone Floor Area per Person {m2/person}
+0.3000,                  !- Fraction Radiant
+AUTOCALCULATE,           !- Sensible Heat Fraction
+resi_activity_sch;       !- Activity Level Schedule Name
+ 
+ 
+PEOPLE, People Block2:Zone1,                   !- Name
+ Block2:Zone1,                               !- Zone Name
+resi_occupancy_sch,                          !- Number of People Schedule Name
+Area/Person,                                 !- Number of People Calculation Method
+,                                           !- number of people
+,                                           !- People per Zone Area
+2.564103e+01,                        !- Zone Floor Area per Person {m2/person}
+0.3000,                  !- Fraction Radiant
+AUTOCALCULATE,           !- Sensible Heat Fraction
+resi_activity_sch;       !- Activity Level Schedule Name
+ 
+ 
+PEOPLE, People Block3:Zone1,                   !- Name
+ Block3:Zone1,                               !- Zone Name
+resi_occupancy_sch,                          !- Number of People Schedule Name
+Area/Person,                                 !- Number of People Calculation Method
+,                                           !- number of people
+,                                           !- People per Zone Area
+2.564103e+01,                        !- Zone Floor Area per Person {m2/person}
+0.3000,                  !- Fraction Radiant
+AUTOCALCULATE,           !- Sensible Heat Fraction
+resi_activity_sch;       !- Activity Level Schedule Name
+ 
+ 
+PEOPLE, People Block4:Zone1,                   !- Name
+ Block4:Zone1,                               !- Zone Name
+resi_occupancy_sch,                          !- Number of People Schedule Name
+Area/Person,                                 !- Number of People Calculation Method
+,                                           !- number of people
+,                                           !- People per Zone Area
+2.564103e+01,                        !- Zone Floor Area per Person {m2/person}
+0.3000,                  !- Fraction Radiant
+AUTOCALCULATE,           !- Sensible Heat Fraction
+resi_activity_sch;       !- Activity Level Schedule Name
+ 
+ 
+PEOPLE, People Block5:Zone1,                   !- Name
+ Block5:Zone1,                               !- Zone Name
+resi_occupancy_sch,                          !- Number of People Schedule Name
+Area/Person,                                 !- Number of People Calculation Method
+,                                           !- number of people
+,                                           !- People per Zone Area
+2.564103e+01,                        !- Zone Floor Area per Person {m2/person}
+0.3000,                  !- Fraction Radiant
+AUTOCALCULATE,           !- Sensible Heat Fraction
+resi_activity_sch;       !- Activity Level Schedule Name
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: ELECTRICEQUIPMENT =========== 
+ElectricEquipment,
+Block1Appliances,        !- Name 
+Block1:Zone1,           !- Zone Name
+resi_appliances_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+6.400000e+00,                     !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0,                       !- Fraction Latent
+0.75,                    !- Fraction Radiant
+0,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+ElectricEquipment,
+Block2Appliances,        !- Name 
+Block2:Zone1,           !- Zone Name
+resi_appliances_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+6.400000e+00,                     !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0,                       !- Fraction Latent
+0.75,                    !- Fraction Radiant
+0,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+ElectricEquipment,
+Block3Appliances,        !- Name 
+Block3:Zone1,           !- Zone Name
+resi_appliances_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+6.400000e+00,                     !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0,                       !- Fraction Latent
+0.75,                    !- Fraction Radiant
+0,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+ElectricEquipment,
+Block4Appliances,        !- Name 
+Block4:Zone1,           !- Zone Name
+resi_appliances_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+6.400000e+00,                     !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0,                       !- Fraction Latent
+0.75,                    !- Fraction Radiant
+0,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+ElectricEquipment,
+Block5Appliances,        !- Name 
+Block5:Zone1,           !- Zone Name
+resi_appliances_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+6.400000e+00,                     !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0,                       !- Fraction Latent
+0.75,                    !- Fraction Radiant
+0,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: LIGHTS ===========
+Lights,
+Block1Light,        !- Name 
+Block1:Zone1,           !- Zone Name
+resi_lighting_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+1.031045e+01,                    !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0.4,                     !- Return Air Fraction
+0.4,                     !- Fraction Radiant
+0.2,                     !- Fraction visible
+1,                       !- Fraction Replaceable
+General,                 !- End-Use Subcategory
+No;                      !- Return Air Fraction Calculated from Plenum Temperature 
+ 
+ 
+Lights,
+Block2Light,        !- Name 
+Block2:Zone1,           !- Zone Name
+resi_lighting_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+1.031045e+01,                    !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0.4,                     !- Return Air Fraction
+0.4,                     !- Fraction Radiant
+0.2,                     !- Fraction visible
+1,                       !- Fraction Replaceable
+General,                 !- End-Use Subcategory
+No;                      !- Return Air Fraction Calculated from Plenum Temperature 
+ 
+ 
+Lights,
+Block3Light,        !- Name 
+Block3:Zone1,           !- Zone Name
+resi_lighting_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+1.031045e+01,                    !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0.4,                     !- Return Air Fraction
+0.4,                     !- Fraction Radiant
+0.2,                     !- Fraction visible
+1,                       !- Fraction Replaceable
+General,                 !- End-Use Subcategory
+No;                      !- Return Air Fraction Calculated from Plenum Temperature 
+ 
+ 
+Lights,
+Block4Light,        !- Name 
+Block4:Zone1,           !- Zone Name
+resi_lighting_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+1.031045e+01,                    !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0.4,                     !- Return Air Fraction
+0.4,                     !- Fraction Radiant
+0.2,                     !- Fraction visible
+1,                       !- Fraction Replaceable
+General,                 !- End-Use Subcategory
+No;                      !- Return Air Fraction Calculated from Plenum Temperature 
+ 
+ 
+Lights,
+Block5Light,        !- Name 
+Block5:Zone1,           !- Zone Name
+resi_lighting_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+1.031045e+01,                    !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+0.4,                     !- Return Air Fraction
+0.4,                     !- Fraction Radiant
+0.2,                     !- Fraction visible
+1,                       !- Fraction Replaceable
+General,                 !- End-Use Subcategory
+No;                      !- Return Air Fraction Calculated from Plenum Temperature 
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: HOTWATEREQUIPMENT ===========
+HotWaterEquipment,
+Block1DHW,        !- Name 
+Block1:Zone1,           !- Zone Name
+resi_dhw_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+4.216667e+00,                  !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+,                        !- Fraction Latent
+,                        !- Fraction Radiant
+1,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+HotWaterEquipment,
+Block2DHW,        !- Name 
+Block2:Zone1,           !- Zone Name
+resi_dhw_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+4.216667e+00,                  !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+,                        !- Fraction Latent
+,                        !- Fraction Radiant
+1,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+HotWaterEquipment,
+Block3DHW,        !- Name 
+Block3:Zone1,           !- Zone Name
+resi_dhw_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+4.216667e+00,                  !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+,                        !- Fraction Latent
+,                        !- Fraction Radiant
+1,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+HotWaterEquipment,
+Block4DHW,        !- Name 
+Block4:Zone1,           !- Zone Name
+resi_dhw_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+4.216667e+00,                  !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+,                        !- Fraction Latent
+,                        !- Fraction Radiant
+1,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+HotWaterEquipment,
+Block5DHW,        !- Name 
+Block5:Zone1,           !- Zone Name
+resi_dhw_sch,     !- Schedule Name
+Watts/Area,              !- Design Level Calculation Method
+,                        !- Design Level {W}
+4.216667e+00,                  !- Watts per Zone Floor Area {W/m2}
+,                        !- Watts per Person {W/person}
+,                        !- Fraction Latent
+,                        !- Fraction Radiant
+1,                       !- Fraction Lost
+General;                 !- End-Use Subcategory
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM ===========
+HVACTemplate:Zone:IdealLoadsAirSystem,
+Block1:Zone1,           !- Zone Name
+Residential_thermostat,  !- Template Thermostat Name
+,                        !- System Availability Schedule Name 
+50,                      !- Maximum Heating Supply Air Temperature {C} 
+13,                      !- Minimum Cooling Supply Air Temperature {C} 
+0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir} 
+0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir} 
+NoLimit,                 !- Heating Limit 
+,                        !- Maximum Heating Air Flow Rate {m3/s} 
+,                        !- Maximum Sensible Heating Capacity {W} 
+NoLimit,                 !- Cooling Limit 
+,                        !- Maximum Cooling Air Flow Rate {m3/s} 
+,                        !- Maximum Total Cooling Capacity {W} 
+,                        !- Heating Availability Schedule Name 
+,                        !- Cooling Availability Schedule Name 
+ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+0.7,                     !- Cooling Sensible Heat Ratio {dimensionless} 
+60,                      !- Dehumidification Setpoint {percent} 
+None,                    !- Humidification Control Type 
+30,                      !- Humidification Setpoint {percent} 
+DetailedSpecification,   !- Outdoor Air Method 
+,                        !- Outdoor Air Flow Rate per Person {m3/s} 
+,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2} 
+,                        !- Outdoor Air Flow Rate per Zone {m3/s} 
+Block1:Zone1,            !- Design Specification Outdoor Air Object Name 
+None,                    !- Demand Controlled Ventilation Type 
+NoEconomizer,            !- Outdoor Air Economizer Type 
+None;                    !- Heat Recovery Type 
+ 
+ 
+HVACTemplate:Zone:IdealLoadsAirSystem,
+Block2:Zone1,           !- Zone Name
+Residential_thermostat,  !- Template Thermostat Name
+,                        !- System Availability Schedule Name 
+50,                      !- Maximum Heating Supply Air Temperature {C} 
+13,                      !- Minimum Cooling Supply Air Temperature {C} 
+0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir} 
+0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir} 
+NoLimit,                 !- Heating Limit 
+,                        !- Maximum Heating Air Flow Rate {m3/s} 
+,                        !- Maximum Sensible Heating Capacity {W} 
+NoLimit,                 !- Cooling Limit 
+,                        !- Maximum Cooling Air Flow Rate {m3/s} 
+,                        !- Maximum Total Cooling Capacity {W} 
+,                        !- Heating Availability Schedule Name 
+,                        !- Cooling Availability Schedule Name 
+ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+0.7,                     !- Cooling Sensible Heat Ratio {dimensionless} 
+60,                      !- Dehumidification Setpoint {percent} 
+None,                    !- Humidification Control Type 
+30,                      !- Humidification Setpoint {percent} 
+DetailedSpecification,   !- Outdoor Air Method 
+,                        !- Outdoor Air Flow Rate per Person {m3/s} 
+,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2} 
+,                        !- Outdoor Air Flow Rate per Zone {m3/s} 
+Block2:Zone1,            !- Design Specification Outdoor Air Object Name 
+None,                    !- Demand Controlled Ventilation Type 
+NoEconomizer,            !- Outdoor Air Economizer Type 
+None;                    !- Heat Recovery Type 
+ 
+ 
+HVACTemplate:Zone:IdealLoadsAirSystem,
+Block3:Zone1,           !- Zone Name
+Residential_thermostat,  !- Template Thermostat Name
+,                        !- System Availability Schedule Name 
+50,                      !- Maximum Heating Supply Air Temperature {C} 
+13,                      !- Minimum Cooling Supply Air Temperature {C} 
+0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir} 
+0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir} 
+NoLimit,                 !- Heating Limit 
+,                        !- Maximum Heating Air Flow Rate {m3/s} 
+,                        !- Maximum Sensible Heating Capacity {W} 
+NoLimit,                 !- Cooling Limit 
+,                        !- Maximum Cooling Air Flow Rate {m3/s} 
+,                        !- Maximum Total Cooling Capacity {W} 
+,                        !- Heating Availability Schedule Name 
+,                        !- Cooling Availability Schedule Name 
+ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+0.7,                     !- Cooling Sensible Heat Ratio {dimensionless} 
+60,                      !- Dehumidification Setpoint {percent} 
+None,                    !- Humidification Control Type 
+30,                      !- Humidification Setpoint {percent} 
+DetailedSpecification,   !- Outdoor Air Method 
+,                        !- Outdoor Air Flow Rate per Person {m3/s} 
+,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2} 
+,                        !- Outdoor Air Flow Rate per Zone {m3/s} 
+Block3:Zone1,            !- Design Specification Outdoor Air Object Name 
+None,                    !- Demand Controlled Ventilation Type 
+NoEconomizer,            !- Outdoor Air Economizer Type 
+None;                    !- Heat Recovery Type 
+ 
+ 
+HVACTemplate:Zone:IdealLoadsAirSystem,
+Block4:Zone1,           !- Zone Name
+Residential_thermostat,  !- Template Thermostat Name
+,                        !- System Availability Schedule Name 
+50,                      !- Maximum Heating Supply Air Temperature {C} 
+13,                      !- Minimum Cooling Supply Air Temperature {C} 
+0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir} 
+0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir} 
+NoLimit,                 !- Heating Limit 
+,                        !- Maximum Heating Air Flow Rate {m3/s} 
+,                        !- Maximum Sensible Heating Capacity {W} 
+NoLimit,                 !- Cooling Limit 
+,                        !- Maximum Cooling Air Flow Rate {m3/s} 
+,                        !- Maximum Total Cooling Capacity {W} 
+,                        !- Heating Availability Schedule Name 
+,                        !- Cooling Availability Schedule Name 
+ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+0.7,                     !- Cooling Sensible Heat Ratio {dimensionless} 
+60,                      !- Dehumidification Setpoint {percent} 
+None,                    !- Humidification Control Type 
+30,                      !- Humidification Setpoint {percent} 
+DetailedSpecification,   !- Outdoor Air Method 
+,                        !- Outdoor Air Flow Rate per Person {m3/s} 
+,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2} 
+,                        !- Outdoor Air Flow Rate per Zone {m3/s} 
+Block4:Zone1,            !- Design Specification Outdoor Air Object Name 
+None,                    !- Demand Controlled Ventilation Type 
+NoEconomizer,            !- Outdoor Air Economizer Type 
+None;                    !- Heat Recovery Type 
+ 
+ 
+HVACTemplate:Zone:IdealLoadsAirSystem,
+Block5:Zone1,           !- Zone Name
+Residential_thermostat,  !- Template Thermostat Name
+,                        !- System Availability Schedule Name 
+50,                      !- Maximum Heating Supply Air Temperature {C} 
+13,                      !- Minimum Cooling Supply Air Temperature {C} 
+0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir} 
+0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir} 
+NoLimit,                 !- Heating Limit 
+,                        !- Maximum Heating Air Flow Rate {m3/s} 
+,                        !- Maximum Sensible Heating Capacity {W} 
+NoLimit,                 !- Cooling Limit 
+,                        !- Maximum Cooling Air Flow Rate {m3/s} 
+,                        !- Maximum Total Cooling Capacity {W} 
+,                        !- Heating Availability Schedule Name 
+,                        !- Cooling Availability Schedule Name 
+ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+0.7,                     !- Cooling Sensible Heat Ratio {dimensionless} 
+60,                      !- Dehumidification Setpoint {percent} 
+None,                    !- Humidification Control Type 
+30,                      !- Humidification Setpoint {percent} 
+DetailedSpecification,   !- Outdoor Air Method 
+,                        !- Outdoor Air Flow Rate per Person {m3/s} 
+,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2} 
+,                        !- Outdoor Air Flow Rate per Zone {m3/s} 
+Block5:Zone1,            !- Design Specification Outdoor Air Object Name 
+None,                    !- Demand Controlled Ventilation Type 
+NoEconomizer,            !- Outdoor Air Economizer Type 
+None;                    !- Heat Recovery Type 
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: DESIGNSPECIFICATION:OUTDOORAIR ===========
+DesignSpecification:OutdoorAir,
+Block1:Zone1,           !- Zone Name
+Flow/Area,             !- Outdoor Air Method
+,                !- Outdoor Air Flow per Person {m3/s-person}
+1.297222e-03,                        !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
+,                        !- Outdoor Air Flow per Zone {m3/s}
+,                        !- Outdoor Air Flow Air Changes per Hour {1/hr}
+resi_ventilation_sch;    !- Outdoor Air Flow Rate Fraction Schedule Name
+ 
+ 
+DesignSpecification:OutdoorAir,
+Block2:Zone1,           !- Zone Name
+Flow/Area,             !- Outdoor Air Method
+,                !- Outdoor Air Flow per Person {m3/s-person}
+1.297222e-03,                        !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
+,                        !- Outdoor Air Flow per Zone {m3/s}
+,                        !- Outdoor Air Flow Air Changes per Hour {1/hr}
+resi_ventilation_sch;    !- Outdoor Air Flow Rate Fraction Schedule Name
+ 
+ 
+DesignSpecification:OutdoorAir,
+Block3:Zone1,           !- Zone Name
+Flow/Area,             !- Outdoor Air Method
+,                !- Outdoor Air Flow per Person {m3/s-person}
+1.297222e-03,                        !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
+,                        !- Outdoor Air Flow per Zone {m3/s}
+,                        !- Outdoor Air Flow Air Changes per Hour {1/hr}
+resi_ventilation_sch;    !- Outdoor Air Flow Rate Fraction Schedule Name
+ 
+ 
+DesignSpecification:OutdoorAir,
+Block4:Zone1,           !- Zone Name
+Flow/Area,             !- Outdoor Air Method
+,                !- Outdoor Air Flow per Person {m3/s-person}
+1.297222e-03,                        !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
+,                        !- Outdoor Air Flow per Zone {m3/s}
+,                        !- Outdoor Air Flow Air Changes per Hour {1/hr}
+resi_ventilation_sch;    !- Outdoor Air Flow Rate Fraction Schedule Name
+ 
+ 
+DesignSpecification:OutdoorAir,
+Block5:Zone1,           !- Zone Name
+Flow/Area,             !- Outdoor Air Method
+,                !- Outdoor Air Flow per Person {m3/s-person}
+1.297222e-03,                        !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
+,                        !- Outdoor Air Flow per Zone {m3/s}
+,                        !- Outdoor Air Flow Air Changes per Hour {1/hr}
+resi_ventilation_sch;    !- Outdoor Air Flow Rate Fraction Schedule Name
+ 
+ 
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:FILE ===========
+Schedule:File,
+resi_activity_sch,       !- Name
+Any Number,              !- Schedule Type Limits Name
+mfh_nominal_activity.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_occupancy_sch,      !- Name
+Fraction,                !- Schedule Type Limits Name
+mfh_nominal_occupancy.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_ventilation_sch,    !- Name
+Fraction,                !- Schedule Type Limits Name
+mfh_nominal_ventilation.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_infiltration_sch,   !- Name
+Fraction,                !- Schedule Type Limits Name
+mfh_nominal_infiltration.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_htg_therm_sch,      !- Name
+Temperature,             !- Schedule Type Limits Name
+mfh_nominal_thermostat_heating.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_clg_therm_sch,      !- Name
+Temperature,             !- Schedule Type Limits Name
+mfh_nominal_thermostat_cooling.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_lighting_sch,       !- Name
+Fraction,                !- Schedule Type Limits Name
+mfh_nominal_lighting.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_appliances_sch,     !- Name
+Fraction,                !- Schedule Type Limits Name
+mfh_nominal_appliances.csv,  !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep
+Schedule:File,
+resi_dhw_sch,            !- Name
+Fraction,                !- Schedule Type Limits Name
+mfh_nominal_dhw.csv,    !- File Name
+1,                       !- Column Number
+0,                       !- Rows to Skip at Top
+8760,                    !- Number of Hours of Data
+Comma,                   !- Column Separator
+No;                      !- Interpolate to Timestep

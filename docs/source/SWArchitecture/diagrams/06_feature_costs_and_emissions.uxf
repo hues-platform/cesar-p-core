@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>909</x>
+      <y>171</y>
+      <w>459</w>
+      <h>540</h>
+    </coordinates>
+    <panel_attributes>cesar.costs_and_emissions
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>72</x>
+      <y>162</y>
+      <w>774</w>
+      <h>594</h>
+    </coordinates>
+    <panel_attributes>cesar.energy_strategy
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>495</x>
+      <y>288</y>
+      <w>189</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>EnergyStrategy
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>207</y>
+      <w>189</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>EnergyMix
+--
+get_pen_factor(
+     carrier: EnergySource, 
+     time_period: int) -&gt; float
+get_co2_coeff(
+     carrier: EnergySource, 
+     time_period: int) -&gt; float </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>351</y>
+      <w>189</w>
+      <h>153</h>
+    </coordinates>
+    <panel_attributes>SystemEfficiencies
+--
+get_dhw_system_efficiency(
+     carrier: EnergySource, 
+     time_period: int)
+get_heating_system_efficiency(
+     carrier: EnergySource, 
+     time_period: int)
+get_heating_value_factor(
+     carrier: EnergySource, 
+     time_period: int)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>531</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>FuelCosts &lt;&lt;data&gt;&gt;
+--
+get_fuel_cost_factor(
+     carrier: EnergySource, 
+     time_period: int)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>90</x>
+      <y>621</y>
+      <w>216</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>Reading and some pre-processing 
+of data from different Excel sheets. 
+Pathes are set in configuration,
+defautl parameters see 
+energy_strategy_config.yml
+time_period are also fixed in the config 
+and must be consistent across all the 
+input files.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>108</x>
+      <y>234</y>
+      <w>90</w>
+      <h>405</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;430.0;10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>126</x>
+      <y>378</y>
+      <w>72</w>
+      <h>261</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;270.0;10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>144</x>
+      <y>558</y>
+      <w>54</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>495</x>
+      <y>459</y>
+      <w>189</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>EnergySource &lt;&lt;Enum&gt;&gt;
+--
+NO
+HEATING_OIL
+COAL
+GAS
+ELECTRICITY
+WOOD
+HEAT_PUMP
+SOLAR_THERMAL
+DISTRICT_HEATING
+HEATING_OTHER
+DHW_OTHER</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>252</y>
+      <w>153</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;90.0;50.0;90.0;50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>351</y>
+      <w>153</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;10.0;50.0;10.0;50.0;100.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>378</y>
+      <w>153</w>
+      <h>207</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;10.0;80.0;10.0;80.0;210.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>963</x>
+      <y>225</y>
+      <w>378</w>
+      <h>153</h>
+    </coordinates>
+    <panel_attributes>OperationalEmissionsAndCosts
+--
+get_operational_emissions_and_costs(
+     ...energy demand data for dhw, heating, electricity
+        from E+ sim results...,
+     ...energy carrieres for dhw, heating...
+     ) -&gt; OperationalEmissionsAndCostsResult</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>675</x>
+      <y>333</y>
+      <w>306</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>320.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>972</x>
+      <y>423</y>
+      <w>234</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>OperationalEmissionsAndCostsResult
+--
++ total_pen: pint.Quantity
++ total_co2_emission: pint.Quantity
++ heating_system: PerSystemResults
++ dhw_system: PerSystemResults
++ electricity: PerSystemResults
++ simulation_year: int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>972</x>
+      <y>567</y>
+      <w>198</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>PerSystemResults
+--
++ pen: pint.Quantity
++ co2_emission: pint.Quantity
++ fuel_demand: pint.Quantity
++ fuel_cost: pint.Quantity
++ energy_carrier: EnergySource</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1062</x>
+      <y>522</y>
+      <w>27</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1053</x>
+      <y>369</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>675</x>
+      <y>351</y>
+      <w>306</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;220.0;320.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>567</y>
+      <w>153</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>468</y>
+      <w>153</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>150.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>288</y>
+      <w>153</w>
+      <h>225</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>150.0;230.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

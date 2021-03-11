@@ -1,0 +1,6 @@
+BFS Gde-nummer,Gemeindename,WeatherStationID,WeatherStationName
+191,Dübendorf,1,Zürich-SMA
+152,Herrliberg,1,Zürich-SMA
+3681,Avers,20,Davos
+751,Täuffelen,4,Bern
+99999,TestOrt,99,NonExisting

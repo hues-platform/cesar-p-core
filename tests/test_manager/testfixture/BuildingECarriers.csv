@@ -1,0 +1,10 @@
+ORIG_FID,ECarrierDHW,ECarrierHeating
+1,SOLAR_THERMAL,Solar Thermal
+2,DHW_OTHER, Other (heating)
+3,HEATING_OIL,heating oil
+4,COAL,Coal
+5,GAS,Gas
+6,ELECTRICITY, DISTRICT_HEATING
+7,HEAT_PUMP,heat pump
+8,ELECTRICITY, 2
+9,2,2

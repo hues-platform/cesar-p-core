@@ -1,0 +1,24 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+WINDOWMATERIAL:GLAZING,
+    my_test_win_mat,          !- Name
+    SpectralAverage,          !- Optical Data Type
+    ,                         !- Window Glass Spectral Data Set Name
+    0.006,                    !- Thickness
+    0.775,                    !- Solar Transmittance at Normal Incidence
+    0.071,                    !- Front Side Solar Reflectance at Normal Incidence
+    0.071,                    !- Back Side Solar Reflectance at Normal Incidence
+    0.881,                    !- Visible Transmittance at Normal Incidence
+    0.08,                     !- Front Side Visible Reflectance at Normal Incidence
+    0.08,                     !- Back Side Visible Reflectance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
+    0.84,                     !- Front Side Infrared Hemispherical Emissivity
+    0.84,                     !- Back Side Infrared Hemispherical Emissivity
+    0.9,                      !- Conductivity
+    1,                        !- Dirt Correction Factor for Solar and Visible Transmittance
+    No,                       !- Solar Diffusing
+    72000000000,              !- Youngs modulus
+    0.22;                     !- Poissons ratio

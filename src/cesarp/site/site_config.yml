@@ -1,0 +1,28 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+SITE:
+  GROUND_TEMPERATURES:
+    BUILDING_SURFACE: 18 degreeC
+    SHALLOW: 14 degreeC
+    DEEP: 14 degreeC
+    GROUND_TEMP_PER_MONTH: [1.6, 0.7, 2.3, 4.8, 11.2, 16.2, 19.6, 20.6, 18.9, 15, 9.8, 5]
+    GROUND_TEMP_PER_MONTH_UNIT: degreeC
+  SIMULATION_YEAR: 2015 # should match one of defined period/year in config ENERGY_STRATEGY - XXX - TIME_PERIODS

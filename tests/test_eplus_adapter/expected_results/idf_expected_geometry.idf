@@ -1,0 +1,540 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+GLOBALGEOMETRYRULES,
+    LowerLeftCorner,          !- Starting Vertex Position
+    CounterClockWise,         !- Vertex Entry Direction
+    Relative,                 !- Coordinate System
+    Relative,                 !- Daylighting Reference Point Coordinate System
+    Relative;                 !- Rectangular Surface Coordinate System
+
+ZONE,
+    ZoneFloor0,               !- Name
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
+    1,                        !- Type
+    1,                        !- Multiplier
+    autocalculate,            !- Ceiling Height
+    autocalculate,            !- Volume
+    autocalculate,            !- Floor Area
+    ,                         !- Zone Inside Convection Algorithm
+    ,                         !- Zone Outside Convection Algorithm
+    Yes;                      !- Part of Total Floor Area
+
+ZONE,
+    ZoneFloor1,               !- Name
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
+    1,                        !- Type
+    1,                        !- Multiplier
+    autocalculate,            !- Ceiling Height
+    autocalculate,            !- Volume
+    autocalculate,            !- Floor Area
+    ,                         !- Zone Inside Convection Algorithm
+    ,                         !- Zone Outside Convection Algorithm
+    Yes;                      !- Part of Total Floor Area
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_GroundFloor,    !- Name
+    Floor,                    !- Surface Type
+    Ground0202,               !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Ground,                   !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    1,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    0.00000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    0.00000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_0,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    2.50000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    2.50000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_1,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    2.50000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    2.50000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_2,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    2.50000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    2.50000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_3,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    2.50000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    2.50000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Ceiling,       !- Name
+    Ceiling,                  !- Surface Type
+    Internal Ceiling,         !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor1_Floor,         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    2.50000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    2.50000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    2.50000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    2.50000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Floor,         !- Name
+    Floor,                    !- Surface Type
+    Internal Ceiling,         !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor0_Ceiling,       !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    2.50000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    2.50000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    2.50000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    2.50000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_0,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    2.50000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    2.50000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    5.00000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    5.00000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_1,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    2.50000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    2.50000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    5.00000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    5.00000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_2,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    2.50000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    2.50000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    5.00000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    5.00000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_3,        !- Name
+    Wall,                     !- Surface Type
+    Wall0207,                 !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    2.50000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    2.50000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    5.00000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    5.00000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Roof,          !- Name
+    Roof,                     !- Surface Type
+    Roof0204,                 !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    5.00000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    5.00000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    5.00000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    5.00000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_0_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor0_Wall_0,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    6.33333,                  !- Vertex 1 Ycoordinate
+    0.50000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    3.66667,                  !- Vertex 2 Ycoordinate
+    0.50000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    3.66667,                  !- Vertex 3 Ycoordinate
+    2.00000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    6.33333,                  !- Vertex 4 Ycoordinate
+    2.00000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_1_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor0_Wall_1,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    15.83333,                 !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    0.50000,                  !- Vertex 1 Zcoordinate
+    9.16667,                  !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    0.50000,                  !- Vertex 2 Zcoordinate
+    9.16667,                  !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    2.00000,                  !- Vertex 3 Zcoordinate
+    15.83333,                 !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    2.00000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_2_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor0_Wall_2,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    3.66667,                  !- Vertex 1 Ycoordinate
+    0.50000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    6.33333,                  !- Vertex 2 Ycoordinate
+    0.50000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    6.33333,                  !- Vertex 3 Ycoordinate
+    2.00000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    3.66667,                  !- Vertex 4 Ycoordinate
+    2.00000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_3_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor0_Wall_3,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    9.16667,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.50000,                  !- Vertex 1 Zcoordinate
+    15.83333,                 !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    0.50000,                  !- Vertex 2 Zcoordinate
+    15.83333,                 !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    2.00000,                  !- Vertex 3 Zcoordinate
+    9.16667,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    2.00000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_0_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor1_Wall_0,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    6.33333,                  !- Vertex 1 Ycoordinate
+    3.00000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    3.66667,                  !- Vertex 2 Ycoordinate
+    3.00000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    3.66667,                  !- Vertex 3 Ycoordinate
+    4.50000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    6.33333,                  !- Vertex 4 Ycoordinate
+    4.50000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_1_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor1_Wall_1,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    15.83333,                 !- Vertex 1 Xcoordinate
+    10.00000,                 !- Vertex 1 Ycoordinate
+    3.00000,                  !- Vertex 1 Zcoordinate
+    9.16667,                  !- Vertex 2 Xcoordinate
+    10.00000,                 !- Vertex 2 Ycoordinate
+    3.00000,                  !- Vertex 2 Zcoordinate
+    9.16667,                  !- Vertex 3 Xcoordinate
+    10.00000,                 !- Vertex 3 Ycoordinate
+    4.50000,                  !- Vertex 3 Zcoordinate
+    15.83333,                 !- Vertex 4 Xcoordinate
+    10.00000,                 !- Vertex 4 Ycoordinate
+    4.50000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_2_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor1_Wall_2,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    25.00000,                 !- Vertex 1 Xcoordinate
+    3.66667,                  !- Vertex 1 Ycoordinate
+    3.00000,                  !- Vertex 1 Zcoordinate
+    25.00000,                 !- Vertex 2 Xcoordinate
+    6.33333,                  !- Vertex 2 Ycoordinate
+    3.00000,                  !- Vertex 2 Zcoordinate
+    25.00000,                 !- Vertex 3 Xcoordinate
+    6.33333,                  !- Vertex 3 Ycoordinate
+    4.50000,                  !- Vertex 3 Zcoordinate
+    25.00000,                 !- Vertex 4 Xcoordinate
+    3.66667,                  !- Vertex 4 Ycoordinate
+    4.50000;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_3_Win,    !- Name
+    Window,                   !- Surface Type
+    Window0201,               !- Construction Name
+    ZoneFloor1_Wall_3,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    9.16667,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    3.00000,                  !- Vertex 1 Zcoordinate
+    15.83333,                 !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    3.00000,                  !- Vertex 2 Zcoordinate
+    15.83333,                 !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    4.50000,                  !- Vertex 3 Zcoordinate
+    9.16667,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    4.50000;                  !- Vertex 4 Zcoordinate
+
+WINDOWPROPERTY:FRAMEANDDIVIDER,
+    cesar-wood-aluminium-default,    !- Name
+    0.04,                     !- Frame Width
+    0,                        !- Frame Outside Projection
+    0,                        !- Frame Inside Projection
+    9.5,                      !- Frame Conductance
+    1,                        !- Ratio of FrameEdge Glass Conductance to CenterOfGlass Conductance
+    0.5,                      !- Frame Solar Absorptance
+    0.5,                      !- Frame Visible Absorptance
+    0.9,                      !- Frame Thermal Hemispherical Emissivity
+    DividedLite,              !- Divider Type
+    0,                        !- Divider Width
+    0,                        !- Number of Horizontal Dividers
+    0,                        !- Number of Vertical Dividers
+    0,                        !- Divider Outside Projection
+    0,                        !- Divider Inside Projection
+    0,                        !- Divider Conductance
+    1,                        !- Ratio of DividerEdge Glass Conductance to CenterOfGlass Conductance
+    0,                        !- Divider Solar Absorptance
+    0,                        !- Divider Visible Absorptance
+    0.9,                      !- Divider Thermal Hemispherical Emissivity
+    0.5,                      !- Outside Reveal Solar Absorptance
+    0,                        !- Inside Sill Depth
+    0,                        !- Inside Sill Solar Absorptance
+    0,                        !- Inside Reveal Depth
+    0;                        !- Inside Reveal Solar Absorptance

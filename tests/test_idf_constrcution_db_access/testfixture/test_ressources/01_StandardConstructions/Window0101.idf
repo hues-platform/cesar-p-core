@@ -1,0 +1,4 @@
+ !-   ===========  WINDOW CONSTRUCTION ===========	
+Construction,	
+   Window0101,			!-Name	
+   Standard Glazing_1918_0.0060	;			!- Outside Layer

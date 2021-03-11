@@ -1,0 +1,13 @@
+---
+DESCRIPTION: community to  community_id mapping according to community_id/community_name listed in cesar.weather.ressources "Gemeinde_to_WeatherStation.csvy"
+---
+bldg_fid,community_id,community
+1,230,Winterthur
+2,4021,Baden
+3,942,Thun
+4,6300,Zermatt
+5,3236,St. Margrethen
+6,5586,Lausanne
+7,3574,Ilanz
+8,6024,Nendaz
+9,1058,Horw

@@ -1,0 +1,78 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+MANAGER:
+    NR_OF_PARALLEL_WORKERS: 1  # -1 means half of the available processors will be used
+    SITE_VERTICES_FILE:
+        PATH: "./SiteVertices.csv"
+        SEPARATOR: ","
+    BLDG_FID_FILE:
+        PATH: "./BuildingInformation.csv"
+        SEPARATOR: ","
+    BLDG_AGE_FILE:
+        PATH: "./BuildingInformation.csv"
+        SEPARATOR: ","
+    BLDG_TYPE_PER_BLDG_FILE:
+        PATH: "./BuildingInformation.csv"
+        SEPARATOR: ","
+    GLAZING_RATIO_PER_BLDG_FILE:
+        ACTIVE: True
+        PATH: "./BuildingInformation.csv"
+        SEPARATOR: ","
+    BLDG_INSTALLATION_FILE:
+        PATH: "./BuildingInformation.csv"
+        SEPARATOR: ","
+    SINGLE_SITE:
+        ACTIVE: True
+        WEATHER_FILE: "./Zurich_2015.epw"
+    BUILDING_OPERATION_FACTORY_CLASS: "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
+SITE:
+    SIMULATION_YEAR: 2015
+
+EPLUS_ADAPTER:
+    EPLUS_RUN_VERBOSE: False
+    
+GEOMETRY:
+    NEIGHBOURHOOD:
+        RADIUS: 200  # meter
+        
+OPERATION:
+  FIXED:
+    FLOOR_AREA_PER_PERSON: 25.64103 m**2
+    SCHED_OCCUPANCY_PATH: "./mfh_nominal_occupancy.csv"
+    SCHED_ACTIVITY_PATH: "./mfh_nominal_activity.csv"
+    SCHED_APPLIANCES_PATH: "./mfh_nominal_appliances.csv"
+    APPLIANCES_WATT_PER_ZONE_AREA: 6.4 W/m**2
+    SCHED_LIGHTING_PATH: "./mfh_nominal_lighting.csv"
+    LIGHTING_WATT_PER_ZONE_AREA: 10.3104 W/m**2
+    SCHED_DHW_PATH: "./mfh_nominal_dhw.csv"
+    DHW_WATTS_PER_ZONE_AREA: 4.216667 W/m**2
+    SCHED_THERMOSTAT_HEATING: "./mfh_nominal_thermostat_heating.csv"
+    SCHED_THERMOSTAT_COOLING: "./mfh_nominal_thermostat_cooling.csv"
+    OUTDOOR_AIR_FLOW_PER_ZONE_FLOOR_AREA: 1.297222e-03 m**3/(s * m**2)
+    SCHED_VENTILATION: "./mfh_nominal_ventilation.csv"
+    SCHED_PROPS:
+      NUM_OF_HOURS: 8760
+      SEPARATOR: ","
+      NUM_OF_HEADER_ROWS: 0
+      DATA_COLUMN: 1
+  WINDOW_SHADING:
+    is_exterior: 1               # type of shading device  [0-interior 1-exterior]
+    rad_min_set: 90 W/m2         # minimum radiation set point [W/m2]

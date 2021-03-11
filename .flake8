@@ -1,0 +1,6 @@
+[flake8]
+max-line-length = 180
+ignore = E203, E266, E501, W503
+max-complexity = 18
+select = B,C,C9,E,F,N8,W,T4,B9
+exclude = docs/*, tests/*, dist/*, htmlcov/* .venv/*

@@ -1,0 +1,15 @@
+---
+SOURCE: Cesar Matlab, script energymix.m, el_mix=1 (Swiss Consumption Mix (with trade)), Energy Strategy "New Energy Policy"
+---
+EnergySource;2015;2020;2030;2035;2040;2050
+No Energy Carrier;0;0;0;0;0;0
+Heating Oil;0.083;0.083;0.083;0.083;0.083;0.083
+Coal;0.12;0.12;0.12;0.12;0.12;0.12
+Gas;0.0654;0.0649;0.0636;0.0629;0.0622;0.0608
+Electricity;0.0413;0.0393;0.0354;0.0334;0.0314;0.0275
+Wood;0.0043;0.0043;0.0043;0.0043;0.0043;0.0043
+Heat Pump;0.0413;0.0393;0.0354;0.0334;0.0314;0.0275
+Solar Thermal;0;0;0;0;0;0
+District Heating;0.045;0.045;0.045;0.045;0.045;0.045
+Other (Heating);0.0614;0.0574;0.0496;0.0466;0.044;0.0394
+Other (DHW);0.0583;0.054;0.0425;0.0375;0.0326;0.0231

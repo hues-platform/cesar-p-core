@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = src/
+omit = src/cesarp/SIA2024/*
+
+[report]
+fail_under = 75
+
+[html]
+directory = htmlcov
+

@@ -1,0 +1,107 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>310</x><y>360</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+geometry
+
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>280</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+construction
+
+bg=cyan
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>440</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+operation
+bg=cyan
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>400</y><w>140</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+eplus_adapter
+
+
+bg=pink</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>640</x><y>390</y><w>190</w><h>80</h></coordinates><panel_attributes>
+&lt;&lt;package&gt;&gt; 
+manager
+
+
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>380</y><w>210</w><h>50</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;60;10;60;30;190;30</additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>300</y><w>210</w><h>120</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;120;10;120;100;190;100</additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>420</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>50;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>410</y><w>210</w><h>80</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;60;60;60;60;10;190;10</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>230</y><w>30</w><h>180</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>90</x><y>300</y><w>140</w><h>100</h></coordinates><panel_attributes>&lt;&lt;data store&gt;&gt;
+IDF Construction files
+GlazingRatio
+InfiltrationRate
+
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>510</y><w>110</w><h>70</h></coordinates><panel_attributes>&lt;&lt;data store&gt;&gt;
+SIA specs for 
+usage demand, 
+infiltration rate
+
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>150</x><y>260</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>540</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>120</x><y>600</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt;
+weather
+
+
+bg=cyan
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>260</x><y>620</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>520</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt;
+SIA2024
+
+
+bg=cyan
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>600</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt;
+site
+
+
+bg=cyan
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>430</y><w>210</w><h>220</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;200;120;200;120;10;190;10</additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>420</y><w>210</w><h>150</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;90;130;90;10;190;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>730</x><y>270</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+model
+
+
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>320</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>870</x><y>280</y><w>90</w><h>140</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;70;10;70;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>210</y><w>180</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+idf_constructions_db_access
+
+bg=cyan
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>170</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+graphdb_access
+
+bg=cyan
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>540</y><w>140</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+emissions_cost
+
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>180</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+retrofit
+
+bg=cyan
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1020</x><y>180</y><w>170</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+energy_strategy
+
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>540</y><w>150</w><h>60</h></coordinates><panel_attributes>&lt;&lt;package&gt;&gt; 
+results
+
+
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>460</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>560</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>200</y><w>310</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>290;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1000</x><y>200</y><w>260</w><h>390</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>190;10;240;10;240;370;10;370</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1030</x><y>60</y><w>150</w><h>80</h></coordinates><panel_attributes>&lt;&lt;data store&gt;&gt;
+energy strategy data
+"business as usual" and
+"new energy policy"
+
+
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1100</x><y>130</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>230</y><w>430</w><h>180</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;270;10;270;60;410;60;410;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>20</y><w>140</w><h>180</h></coordinates><panel_attributes>&lt;&lt;data store&gt;&gt;
+GraphDB Sever
+(local/remot)
+OR
+GraphData as 
+TurtleFile (TTL)
+
+Construction, 
+Retrofit Construction,
+Glazing Ratio, 
+Infiltration Rate
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>90</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>120</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>120</y><w>140</w><h>290</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;150;120;150;120;270</additional_attributes></element><element><id>UMLClass</id><coordinates><x>10</x><y>50</y><w>140</w><h>50</h></coordinates><panel_attributes>packages creating 
+or modifing parts of
+building model
+
+bg=cyan
+fontsize=10
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>10</x><y>110</y><w>140</w><h>50</h></coordinates><panel_attributes>Interfacing with
+EnergyPlus
+
+bg=pink
+fontsize=10</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>50</y><w>130</w><h>50</h></coordinates><panel_attributes>CESAR-P datastructures
+and sequence control
+
+bg=green
+fontsize=10</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>110</y><w>130</w><h>50</h></coordinates><panel_attributes>data sources and 
+packages only reading 
+data
+
+bg=blue
+fontsize=10</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>10</x><y>10</y><w>100</w><h>30</h></coordinates><panel_attributes>Legend</panel_attributes><additional_attributes></additional_attributes></element></diagram>

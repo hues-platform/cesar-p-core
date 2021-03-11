@@ -1,0 +1,61 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3;                      !- Version Identifier
+
+SCHEDULETYPELIMITS,
+    TEMPERATURE,              !- Name
+    -60,                      !- Lower Limit Value
+    200,                      !- Upper Limit Value
+    DISCRETE;                 !- Numeric Type
+
+SCHEDULETYPELIMITS,
+    FRACTION,                 !- Name
+    0,                        !- Lower Limit Value
+    1,                        !- Upper Limit Value
+    CONTINUOUS;               !- Numeric Type
+
+SCHEDULE:COMPACT,
+    night_vent_schedule,      !- Name
+    FRACTION,                 !- Schedule Type Limits Name
+    Through: 12 / 31,         !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 6:00,              !- Field 3
+    1,                        !- Field 4
+    until: 20:00,             !- Field 5
+    0,                        !- Field 6
+    until: 24:00,             !- Field 7
+    1;                        !- Field 8
+
+SCHEDULE:CONSTANT,
+    Constant_25,              !- Name
+    TEMPERATURE,              !- Schedule Type Limits Name
+    25;                       !- Hourly Value
+
+ZONEVENTILATION:DESIGNFLOWRATE,
+    myzone_night_vent,        !- Name
+    myzone,                   !- Zone or ZoneList Name
+    night_vent_schedule,      !- Schedule Name
+    AirChanges/Hour,          !- Design Flow Rate Calculation Method
+    ,                         !- Design Flow Rate
+    ,                         !- Flow Rate per Zone Floor Area
+    ,                         !- Flow Rate per Person
+    2.5,                      !- Air Changes per Hour
+    Natural,                  !- Ventilation Type
+    0,                        !- Fan Pressure Rise
+    1,                        !- Fan Total Efficiency
+    1,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
+    0,                        !- Velocity Term Coefficient
+    0,                        !- Velocity Squared Term Coefficient
+    24,                       !- Minimum Indoor Temperature
+    ,                         !- Minimum Indoor Temperature Schedule Name
+    100,                      !- Maximum Indoor Temperature
+    Constant_25,              !- Maximum Indoor Temperature Schedule Name
+    2,                        !- Delta Temperature
+    ,                         !- Delta Temperature Schedule Name
+    -100,                     !- Minimum Outdoor Temperature
+    ,                         !- Minimum Outdoor Temperature Schedule Name
+    100,                      !- Maximum Outdoor Temperature
+    ,                         !- Maximum Outdoor Temperature Schedule Name
+    40;                       !- Maximum Wind Speed

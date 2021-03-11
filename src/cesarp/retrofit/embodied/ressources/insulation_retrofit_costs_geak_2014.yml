@@ -1,0 +1,75 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+METADATA:
+  DESCRIPTION: groups for costs are fixed, if you need other groups you just need to adapt reading in retrofit_input_parser.py
+  SOURCE: GEAK 2014
+  LINK: see Material_Construction_RetrofitDatabase_TarReq.xlsx in CESAR Matlab
+WALL_OUTSIDE_COMPACT:
+  4  cm: 220.00 CHF/m**2
+  10 cm: 240.00 CHF/m**2
+  12 cm: 270.00 CHF/m**2
+  14 cm: 290.00 CHF/m**2
+  16 cm: 320.00 CHF/m**2
+  18 cm: 350.00 CHF/m**2
+  20 cm: 370.00 CHF/m**2
+  22 cm: 400.00 CHF/m**2
+WALL_OUTSIDE_BACK_VENTILATED:
+  10 cm: 290.00 CHF/m**2
+  12 cm: 325.00 CHF/m**2
+  14 cm: 365.00 CHF/m**2
+  16 cm: 385.00 CHF/m**2
+  18 cm: 420.00 CHF/m**2
+  20 cm: 440.00 CHF/m**2
+  22 cm: 460.00 CHF/m**2
+ROOF_INSIDE:
+  10 cm: 140.00 CHF/m**2
+  12 cm: 150.00 CHF/m**2
+  16 cm: 160.00 CHF/m**2
+  18 cm: 180.00 CHF/m**2
+  20 cm: 220.00 CHF/m**2
+  22 cm: 240.00 CHF/m**2
+  24 cm: 260.00 CHF/m**2
+  26 cm: 280.00 CHF/m**2
+ROOF_OUTSIDE:
+  6 cm: 480.00 CHF/m**2
+  8 cm: 500.00 CHF/m**2
+  10 cm: 550.00 CHF/m**2
+  12 cm: 600.00 CHF/m**2
+  14 cm: 620.00 CHF/m**2
+  16 cm: 640.00 CHF/m**2
+  18 cm: 660.00 CHF/m**2
+  20 cm: 680.00 CHF/m**2
+  22 cm: 700.00 CHF/m**2
+  24 cm: 720.00 CHF/m**2
+WALL_ROOF_GROUNDFLOOR_INBETWEEN:
+  10 cm: 70.00 CHF/m**2
+  12 cm: 80.00 CHF/m**2
+  16 cm: 90.00 CHF/m**2
+  18 cm: 100.00 CHF/m**2
+  20 cm: 110.00 CHF/m**2
+  22 cm: 120.00 CHF/m**2
+GROUNDFLOOR_INSULATION_TO_UNHEATED_SPACE:
+  6 cm: 80.00  CHF/m**2
+  8 cm: 100.00 CHF/m**2
+  10 cm: 110.00 CHF/m**2
+  12 cm: 120.00 CHF/m**2
+  14 cm: 130.00 CHF/m**2
+  16 cm: 140.00 CHF/m**2

@@ -1,0 +1,34 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+OPERATION:
+  NIGHT_VENTILATION:
+    ACTIVE: FALSE
+    flow_rate: 2.5 ACH             # night ventilation nominal air flow rate - in air-changes-per-hour (ACH)
+    min_indoor_temperature: 24 °C  # minimum indoor temperature for the space to require cooling (C) - above this value the window can be opened
+    maximum_in_out_deltaT: 2 °C    # maximum indoor-outdoor temperature differential in (C) to ensure that the occupant only opens the window when the ambient can provide cooling, i.e., when the outdoor temperature is lower than the inside temperature by a given number of degrees
+    max_wind_speed: 40 m/s         # maximum wind speed threshold (m/s) - above this value the occupant closes the window - 40m/s is default in EnergyPlus Version 8.5
+    start_hour: "20:00"            # night ventilation starting hour (00:00 format)
+    end_hour: "6:00"               # night ventilation ending hour (00:00 format)
+  WINDOW_SHADING_CONTROL:
+    ACTIVE: True
+    is_exterior: True  # type of shading device [False-interior True-exterior]
+    rad_min_set: 90 W/m2   # minimum radiation set point 
+    shading_control_type: OnIfHighSolarOnWindow  # note that When changeing to not solar based, you have to adapt code to handle the Setpoint when writing the IDF correctly

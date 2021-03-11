@@ -1,0 +1,62 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+WINDOWMATERIAL:GLAZING,
+    TestGlazing,              !- Name
+    SpectralAverage,          !- Optical Data Type
+    ,                         !- Window Glass Spectral Data Set Name
+    0.006,                    !- Thickness
+    0.775,                    !- Solar Transmittance at Normal Incidence
+    0.071,                    !- Front Side Solar Reflectance at Normal Incidence
+    0.071,                    !- Back Side Solar Reflectance at Normal Incidence
+    0.881,                    !- Visible Transmittance at Normal Incidence
+    0.08,                     !- Front Side Visible Reflectance at Normal Incidence
+    0.08,                     !- Back Side Visible Reflectance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
+    0.84,                     !- Front Side Infrared Hemispherical Emissivity
+    0.84,                     !- Back Side Infrared Hemispherical Emissivity
+    0.9,                      !- Conductivity
+    1,                        !- Dirt Correction Factor for Solar and Visible Transmittance
+    No,                       !- Solar Diffusing
+    72000000000,              !- Youngs modulus
+    0.22;                     !- Poissons ratio
+
+WINDOWMATERIAL:GAS,
+    WindowAirGap,             !- Name
+    Air,                      !- Gas Type
+    0.02;                     !- Thickness
+
+CONSTRUCTION,
+    My_Window_Glass_Constr_Test,    !- Name
+    TestGlazing,              !- Outside Layer
+    WindowAirGap,             !- Layer 2
+    TestGlazing;              !- Layer 3
+
+WINDOWPROPERTY:FRAMEANDDIVIDER,
+    window_frame_fixed_cesar-p,    !- Name
+    0,                        !- Frame Width
+    0,                        !- Frame Outside Projection
+    0,                        !- Frame Inside Projection
+    9.5,                      !- Frame Conductance
+    1,                        !- Ratio of FrameEdge Glass Conductance to CenterOfGlass Conductance
+    0.5,                      !- Frame Solar Absorptance
+    0.5,                      !- Frame Visible Absorptance
+    0.9,                      !- Frame Thermal Hemispherical Emissivity
+    DividedLite,              !- Divider Type
+    0,                        !- Divider Width
+    0,                        !- Number of Horizontal Dividers
+    0,                        !- Number of Vertical Dividers
+    0,                        !- Divider Outside Projection
+    0,                        !- Divider Inside Projection
+    0,                        !- Divider Conductance
+    1,                        !- Ratio of DividerEdge Glass Conductance to CenterOfGlass Conductance
+    0,                        !- Divider Solar Absorptance
+    0,                        !- Divider Visible Absorptance
+    0.9,                      !- Divider Thermal Hemispherical Emissivity
+    0.5,                      !- Outside Reveal Solar Absorptance
+    0,                        !- Inside Sill Depth
+    0,                        !- Inside Sill Solar Absorptance
+    0,                        !- Inside Reveal Depth
+    0;                        !- Inside Reveal Solar Absorptance

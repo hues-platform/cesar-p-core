@@ -1,0 +1,37 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+GEOMETRY:
+    NEIGHBOURHOOD:
+        RADIUS:                     100  # meter
+        MAX_DISTANCE_ADJACENCY:     0.1  # meter
+
+    MAIN_BLDG_SHAPE:
+        MINIMAL_STORY_HEIGHT:          2.4  # meter
+        WINDOW:
+            HEIGHT:                     1.5  # meter
+            MIN_WALL_WIDTH_FOR_WINDOW:  0.1  # meter
+            MIN_WINDOW_WIDTH:           0.08 # meter
+            WINDOW_FRAME:
+                WIDTH: 0.04
+        GLAZING_RATIO_CHECK:  # check if overall building ratio is equal to set per-wall building ratio
+            ALLOWED_GLZ_RATIO_DEV: 0.02  # percentage deviation allowed between the set glazing ratio applied per wall and the resulting overall building glazing ratio
+            EXCEPTION_ON_MISMATCH: True  # raise exception if glazing ratio mismatch is out of allowed deviation, if false only log a warning
+            DO_CHECK_BLD_WITH_ADJACENCIES: False  # if true, check is on also if some of the walls of the building are adjacent and thus have no windows

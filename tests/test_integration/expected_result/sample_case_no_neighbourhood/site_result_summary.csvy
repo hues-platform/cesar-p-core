@@ -1,0 +1,198 @@
+---
+# this is a csvy file with a header block formatted as YAML followed by csv data, see csvy.org
+METADATA:
+  CONFIG_ENTRIES:
+    CUSTOM_CONFIG:
+      CONSTRUCTION:
+        CONSTRUCTION_DB: GRAPH_DB
+      GEOMETRY:
+        NEIGHBOURHOOD:
+          RADIUS: 0
+      MANAGER:
+        BLDG_AGE_FILE:
+          PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        BLDG_FID_FILE:
+          PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        BLDG_INSTALLATION_FILE:
+          PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        BLDG_TYPE_PER_BLDG_FILE:
+          PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        BUILDING_OPERATION_FACTORY_CLASS: cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory
+        COPY_PROFILES:
+          ACTIVE: true
+          PROFILES_FOLDER_NAME_REL: profiles
+        SINGLE_SITE:
+          WEATHER_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\Zurich_1.epw
+        SITE_VERTICES_FILE:
+          PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\SiteVertices.csv
+      OPERATION:
+        NIGHT_VENTILATION:
+          ACTIVE: false
+        WINDOW_SHADING_CONTROL:
+          ACTIVE: false
+    ENERGY_STRATEGY_CONFIG:
+      ENERGY_STRATEGY_SELECTION: WWB
+      NEP:
+        EFFICIENCIES:
+          DHW_SYSTEM_EFFICIENCY_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\efficiencies\DHWSystemEfficiencies.xlsx
+          HEATING_SYSTEM_EFFICIENCY_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\efficiencies\HeatingSystemEfficiencies.xlsx
+          HEATING_VALUE_FACTOR_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\general\HvFactors.xlsx
+        ENERGYMIX:
+          DHW_SYSTEM_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\energymix\DHWSystemMix.xlsx
+          ELECTRICITY_FACTORS:
+            MIX_WITH_TRADE: true
+            PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\energymix\ElectricityFactors.xlsx
+          GAS_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\energymix\GasMix.xlsx
+          HEATING_SYSTEM_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\energymix\HeatingSystemMix.xlsx
+          WOOD_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\energymix\WoodMix.xlsx
+        FUEL:
+          FUEL_COST_FACTORS_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\fuel\FuelCostFactors.xlsx
+        PRIMARY_ENERGY_FACTORS_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\general\PrimaryEnergyFactors.xlsx
+        RETROFIT:
+          FULL_RATES:
+            MFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\retrofit\FullyRetrofitRates_MFH.csv
+              SEPARATOR: ;
+            SFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\retrofit\FullyRetrofitRates_EFH.csv
+              SEPARATOR: ;
+          PARTIAL_SHARES:
+            MFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\retrofit\PartialRetrofitShares_MFH.csv
+              SEPARATOR: ;
+            SFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\new_energy_policy\retrofit\PartialRetrofitShares_EFH.csv
+              SEPARATOR: ;
+        TIME_PERIODS:
+        - 2015
+        - 2020
+        - 2030
+        - 2035
+        - 2040
+        - 2050
+      WWB:
+        EFFICIENCIES:
+          DHW_SYSTEM_EFFICIENCY_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\efficiencies\DHWSystemEfficiencies.xlsx
+          HEATING_SYSTEM_EFFICIENCY_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\efficiencies\HeatingSystemEfficiencies.xlsx
+          HEATING_VALUE_FACTOR_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\general\HvFactors.xlsx
+        ENERGYMIX:
+          DHW_SYSTEM_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\energymix\DHWSystemMix.xlsx
+          ELECTRICITY_FACTORS:
+            MIX_WITH_TRADE: true
+            PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\energymix\ElectricityFactors.xlsx
+          GAS_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\energymix\GasMix.xlsx
+          HEATING_SYSTEM_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\energymix\HeatingSystemMix.xlsx
+          WOOD_MIX_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\energymix\WoodMix.xlsx
+        FUEL:
+          FUEL_COST_FACTORS_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\fuel\FuelCostFactors.xlsx
+        PRIMARY_ENERGY_FACTORS_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\general\PrimaryEnergyFactors.xlsx
+        RETROFIT:
+          FULL_RATES:
+            MFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\retrofit\FullyRetrofitRates_MFH.csv
+              SEPARATOR: ;
+            SFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\retrofit\FullyRetrofitRates_EFH.csv
+              SEPARATOR: ;
+          PARTIAL_SHARES:
+            MFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\retrofit\PartialRetrofitShares_MFH.csv
+              SEPARATOR: ;
+            SFH:
+              PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\energy_strategy\ressources\business_as_usual\retrofit\PartialRetrofitShares_EFH.csv
+              SEPARATOR: ;
+        TIME_PERIODS:
+        - 2015
+        - 2020
+        - 2030
+        - 2035
+        - 2040
+        - 2050
+    MANAGER_CONFIG:
+      BATCH_OUT_DIR_TEMPLATE_REL: fid_{}
+      BLDG_AGE_FILE:
+        LABELS:
+          gis_fid: ORIG_FID
+          year_of_construction: BuildingAge
+        PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        SEPARATOR: ','
+      BLDG_CONTAINERS_FOLDER_REL: bldg_containers
+      BLDG_CONTAINER_FILENAME_REL: bldg_container_fid_{}.json
+      BLDG_FID_FILE:
+        LABELS:
+          gis_fid: ORIG_FID
+        PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        SEPARATOR: ','
+      BLDG_INFO_REPORT_FILENAME_REL: bldg_infos_model_generation.csvy
+      BLDG_INSTALLATION_FILE:
+        LABELS:
+          dhw_energy_carrier: ECarrierDHW
+          gis_fid: ORIG_FID
+          heating_energy_carrier: ECarrierHeating
+        PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        SEPARATOR: ','
+      BLDG_TYPE_PER_BLDG_FILE:
+        LABELS:
+          gis_fid: ORIG_FID
+          sia_bldg_type: SIA2024BuildingType
+        PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\BuildingInformation.csv
+        SEPARATOR: ','
+      BUILDING_OPERATION_FACTORY_CLASS: cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory
+      COPY_PROFILES:
+        ACTIVE: true
+        PROFILES_FOLDER_NAME_REL: profiles
+      DO_CALC_OP_EMISSIONS_AND_COSTS: true
+      EPLUS_ERROR_SUMMARY_REL: eplus_error_summary.err
+      GLAZING_RATIO_PER_BLDG_FILE:
+        ACTIVE: false
+        LABELS:
+          gis_fid: ORIG_FID
+          glazing_ratio: GlazingRatio
+        PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\manager\TBD_GLAZING_RATIO_PER_BLDG_FILE.csv
+        SEPARATOR: ','
+      IDF_FILENAME_REL: fid_{}.idf
+      IDF_FOLDER_REL: idfs
+      INFILTRATION_RATE_SOURCE: Archetype
+      NR_OF_PARALLEL_WORKERS: -1
+      OUTPUT_FOLDER_REL: eplus_output
+      RANDOM_CONSTRUCTIONS: false
+      SINGLE_SITE:
+        ACTIVE: true
+        WEATHER_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\Zurich_1.epw
+      SITE_PER_CH_COMMUNITY:
+        ACTIVE: false
+        BLDG_TO_COMMUNITY_FILE:
+          LABELS:
+            bldg_fid: bldg_fid
+            community_id: community_id
+          PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\src\cesarp\manager\TBD_BLDG_TO_COMMUNITY_FILE.csv
+          SEPARATOR: ','
+      SITE_VERTICES_FILE:
+        LABELS:
+          gis_fid: TARGET_FID
+          height: HEIGHT
+          x: POINT_X
+          y: POINT_Y
+        PATH: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\SiteVertices.csv
+        SEPARATOR: ','
+      SUMMARY_OUTPUT:
+        CSV_FLOAT_FORMAT: '%.4f'
+        CSV_SEPARATOR: ;
+        PATH_REL: ./site_result_summary.csvy
+      WEATHER_FILES_MAPPED_REL: weather_files_mapped.csvy
+  DATE_CREATED: 2021-01-25 17:48:26.286860
+  DESCRIPTION: idf generation, simualtion run and results aggregation with cesar-p.
+    See configuration settings dumped above for top level and custom settings
+  SOURCE: energy plus simulation results EnergyPlus Version 9.3.0 and calculated emissions
+    and fuel costs with cesar-p using emisson and cost data input files listed in
+    the configuration entries for ENERGY_STRATEGY
+  SOURCE_LINK: null
+  VERSION_INFO:
+    Cesar-P Version: 1.3.0
+    GIT-BRANCH: development
+    GIT-INFO: CESAR-P-V1.1.0-112-g0dc5d6a
+    GIT-REMOTE: https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-core.git
+---
+unit;FATAL|SEVERE|WARNING|IP_NOTE|NO_ERRORS|UNKNOWN;h * kiloW / year;h * kiloW / year;h * kiloW / year;h * kiloW / year;h * kiloW / meter ** 2 / year;h * kiloW / meter ** 2 / year;h * kiloW / meter ** 2 / year;h * kiloW / meter ** 2 / year;meter ** 2;Oileq * megajoule / meter ** 2 / year;Oileq * megajoule / meter ** 2 / year;Oileq * megajoule / meter ** 2 / year;Oileq * megajoule / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;;CHF / year;CHF / year;CHF / year;
+var_name;EnergyPlus error level;Heating Annual;DHW Annual;Electricity Annual;Cooling Annual;Heating Annual specific;DHW Annual specific;Electricity Annual specific;Cooling Annual specific;Total bldg floor area;Total PEN;PEN Heating;PEN DHW;PEN Elec;Total CO2;CO2 Heating;CO2 DHW;CO2 Elec;Year used for lookup of cost factors;Heating - Fuel Costs;DHW - Fuel Costs;Electricity - Costs;Year used for lookup of cost factors
+2;NO_ERRORS;161334.6962;10351.5661;71952.9883;1808.4632;129.0678;8.2813;57.5624;1.4468;1250.0000;1315.5169;711.0673;59.4489;545.0007;60.5526;47.9826;4.0116;8.5584;2015;18395.0736;1537.9221;18348.0120;2015

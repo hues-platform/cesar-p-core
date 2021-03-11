@@ -1,0 +1,135 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>130</x><y>580</y><w>350</w><h>110</h></coordinates><panel_attributes>SimpleRetrofitManager
+--
+
+--
++ add_retrofit_case(str, List[BuildingElement])
++ run_simulations()
+
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>800</y><w>340</w><h>140</h></coordinates><panel_attributes>BuildingElementsRetrofitter
+--
+
+--
++ reset_retrofit_log() -&gt; None
++ set_year_of_retrofit(int)
++ set_bldg_elems_to_retrofit([cesarp.model.BuildingElement])
++ retrofit_bldg_construction(bldg_fid:int, 
+             cesarp.model.BuildingConstruction, 
+             cesarp.model.BldgShapeDetailed) -&gt; None
+
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1210</x><y>790</y><w>390</w><h>130</h></coordinates><panel_attributes>ConstructionRetrofitCosts
+--
+- window_cost_lookup
+--
++ get_costs_for_construction_retrofit(constr: Construction) 
+        -&gt; cost in CHF/m2
++ get_costs_for_window_retrofit(window_constr: WindowConstruction)
+       -&gt; cost in CHF/m2
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1140</x><y>960</y><w>460</w><h>180</h></coordinates><panel_attributes>RetrofitEmbodiedEmissions
+--
+
+--
++ get_constr_ret_emb_co2(constr: cesarp.model.Construction) 
+           -&gt; emission in [kg CO2-eq / m2]
++ get_const_ret_emb_non_renewable_pen(constr: cesarp.model.Construction)
+           -&gt; in kg Oil-eq / m2
++ get_win_ret_emb_co2(win: cesarp.model.WindowConstruction)
+           -&gt; in kg Oil-eq / m2
++ get_win_ret_emb_non_renewable_pen(win: cesarp.model.WindowConstruction)
+           -&gt; in kg Oil-eq / m2
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>0</x><y>480</y><w>1630</w><h>790</h></coordinates><panel_attributes>cesar.retrofit
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>700</x><y>1020</y><w>320</w><h>130</h></coordinates><panel_attributes>RetrofitLog
+--
++ my_log_entries: List[Dict[LOG_KEYS, Any]]
+--
++ log_retrofit_measure(fid, .....) -&gt; None
++ was_construction_retrofitted_in(year, bldg_fid) -&gt; bool
++ append_log(ret_log_to_append: RetrofitLog) -&gt; None
++ save(filepath) -&gt; None
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>90</x><y>820</y><w>480</w><h>150</h></coordinates><panel_attributes>EnergyPerspective2050BldgElementsRetrofitter
+--
+- all_buildings_retrofit_log: RetrofitLog
+--
++ retrofit_site(year_of_retrofit: int, 
+                     bldg_containers_current: Dict[int, BuildingContainer], 
+                      bldg_containers_prev_period: Dict[int, BuildingContainer])  -&gt; RetrofitLog
++ get_retrofit_periods()  -&gt; [int|
++ get_retrofit_log()  -&gt; RetrofitLog
++ reset_retrofit_log()  -&gt; None
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1120</x><y>590</y><w>490</w><h>590</h></coordinates><panel_attributes>embodied
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>630</y><w>270</w><h>80</h></coordinates><panel_attributes>InsulationCosts
+--
++ cost_per_thickness: OrderedDict
++ applicable_to: [cesarp.model.BuildingElement]
++ layer_function: [cesarp.model.LayerFunction|
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1440</x><y>700</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1...n
+- insulation_cost_lookup</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>0</x><y>0</y><w>1120</w><h>460</h></coordinates><panel_attributes>cesar.graphdb_access
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>130</x><y>280</y><w>570</w><h>110</h></coordinates><panel_attributes>ConstructionRetrofitter
+--
+
+--
++ get_retrofitted_construction(cesarp.model.Construction) -&gt; cesarp.model.Construction
++ get_retrofitted_window(cesarp.model.WindowConstruction) -&gt; cesarp.model.WindowConstruction
+
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>90</y><w>640</w><h>110</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; GraphReaderRetrofitProtocol 
+--
+
+--
++ get_retrofitted_construction(cesarp.model.Construction) -&gt; cesarp.model.Construction
++ get_retrofitted_window_glass(cesarp.model.WindowGlassConstruction) -&gt; cesarp.model.WindowGlassConstruction
++ get_retrofit_target_info()  -&gt; str
+
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>280</y><w>270</w><h>110</h></coordinates><panel_attributes>BldgElementConstructionReader
+
+
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>850</x><y>195</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>195</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>880</x><y>355</y><w>200</w><h>70</h></coordinates><panel_attributes>Retrofit goal 
+"minimal" or "target" 
+can be chosen in config options
+bg=gray
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1040</x><y>885</y><w>120</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;40;10;40;140;100;140</additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>385</y><w>270</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>250;410;250;40;10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1040</x><y>835</y><w>190</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;170;10</additional_attributes></element><element><id>Relation</id><coordinates><x>850</x><y>935</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>70</x><y>510</y><w>460</w><h>210</h></coordinates><panel_attributes>all_bldgs
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>50</x><y>760</y><w>540</w><h>470</h></coordinates><panel_attributes>energy_perspective_2050
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>615</y><w>260</w><h>290</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;170;10;170;270;240;270</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>0</x><y>1310</y><w>350</w><h>210</h></coordinates><panel_attributes>cesarp.manager
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>100</x><y>1380</y><w>180</w><h>110</h></coordinates><panel_attributes>ProjectManager
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>1205</y><w>30</w><h>190</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;170</additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>1020</y><w>310</w><h>80</h></coordinates><panel_attributes>EnergyTargetLookup
+--
+
+--
++ get_resi_op_pen_target(new_bldg: bool)  -&gt; Quantity
++ get_resi_op_co2_target(new_bldg: bool)  -&gt; Quantity
+
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>10</x><y>615</y><w>140</w><h>840</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>120;10;10;10;10;820;90;820</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>380</x><y>1310</y><w>280</w><h>210</h></coordinates><panel_attributes>cesarp.emissons_cost
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>420</x><y>1380</y><w>180</w><h>110</h></coordinates><panel_attributes>OperationalEmissionsAndCosts
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>690</x><y>1310</y><w>280</w><h>210</h></coordinates><panel_attributes>cesarp.energy_strategy
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>1380</y><w>180</w><h>110</h></coordinates><panel_attributes>RetrofitRates
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>80</x><y>1130</y><w>230</w><h>80</h></coordinates><panel_attributes>EnergyPerspective2050RetrofitManager
+--
+
+--
++ run()
+
+
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>965</y><w>30</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>965</y><w>330</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;240;310;240;310;410</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>965</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLNote</id><coordinates><x>480</x><y>795</y><w>120</w><h>50</h></coordinates><panel_attributes>Works only for 
+residential buildings
+(type SFH and MFH)
+bg=gray
+fg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>915</y><w>170</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;10</additional_attributes></element></diagram>

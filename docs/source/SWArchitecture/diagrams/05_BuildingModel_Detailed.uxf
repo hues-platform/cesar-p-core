@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text>If there
+name
+short_name is the plain of the element, without reference to </help_text>
+  <zoom_level>13</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>845</x>
+      <y>429</y>
+      <w>273</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>BuildingModel
+--
++fid: int
++year_of_construction: int
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>728</x>
+      <y>676</y>
+      <w>273</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>BuildingConstruction
+--
++glazing_ratio: Quantity
++infiltration_rate: Quantity
++infiltration_schedule: Any Schedule
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>884</x>
+      <y>533</y>
+      <w>117</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;70.0;70.0;70.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>611</y>
+      <w>416</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>BuildingOperation
+--
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>91</x>
+      <y>806</y>
+      <w>416</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>HVACOperation
+--
++heating_setpoint_schedule: Schedule
++cooling_setpoint_schedule: Schedule
++ventilation_schedule: Schedule
++outdoor_air_flow_per_zone_floor_area: numeric
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>676</y>
+      <w>78</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+hvac</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>637</x>
+      <y>455</y>
+      <w>234</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;20.0;158.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>455</x>
+      <y>195</y>
+      <w>208</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>Site
+--
++ weather_file_path
++ simulation_year
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>533</x>
+      <y>273</y>
+      <w>377</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;270.0;60.0;268.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1417</x>
+      <y>377</y>
+      <w>39</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1313</x>
+      <y>286</y>
+      <w>234</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>BldgShapeEnvelope: Dict
+--
++groundfloor
++roof
++walls
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1313</x>
+      <y>442</y>
+      <w>234</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>BldgShapeDetailed
+--
++windows
++adjacent_walls_bool
++window_frame
++window_divider
++internal_floors
+--
++get_bldg_height()
++get_nr_of_floors()
++get_floor_height()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1092</x>
+      <y>325</y>
+      <w>247</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=0..n
+neighbours</panel_attributes>
+    <additional_attributes>170.0;10.0;90.0;10.0;90.0;110.0;18.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1092</x>
+      <y>494</y>
+      <w>247</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>170.0;20.0;18.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>169</y>
+      <w>234</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>SiteGroundTemperatures
+--
++ building_surface
++ shallow
++ deep
++ ground_temp_per_month
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>351</x>
+      <y>208</y>
+      <w>130</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;20.0;78.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>702</x>
+      <y>910</y>
+      <w>351</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>InstallationCharacteristics
+--
++ fraction_radiant_from_activity: Quantity
++ dhw_fraction_lost: Quantity
++ electric_appliances_fraction_radiant: Quantity
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>832</x>
+      <y>1170</y>
+      <w>260</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>LightingCharacteristics
+--
++ return_air_fraction: Quantity
++ fraction_radiant: Quantity
++ fraction_visible: Quantity
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>832</x>
+      <y>832</y>
+      <w>52</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>20.0;60.0;18.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>962</x>
+      <y>1040</y>
+      <w>52</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>20.0;100.0;18.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1222</x>
+      <y>676</y>
+      <w>520</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>Construction
+--
++ name: str
++ short_name: str
++ bldg_element: BuildingElement
++ co2_emission_per_m2: Quantity, optional
++ non_renewable_primary_energy_per_m2: Quantity, optional
++ retrofitted: bool
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>988</x>
+      <y>689</y>
+      <w>260</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=5
+roof_constr
+groundfloor_constr
+wall_constr
+internal_ceiling_constr
+internal_floor_constr</panel_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1807</x>
+      <y>676</y>
+      <w>234</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>Layer
+--
++ name: str
++ thickness: Quantity
++ retrofitted: bool
+--
++ short_name: str
++ thermal_resistance: Quantity</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2093</x>
+      <y>572</y>
+      <w>533</w>
+      <h>364</h>
+    </coordinates>
+    <panel_attributes>OpaqueMaterial
+--
++ name: str
++ density: Quantity
++ roughness: Quantity
++ solar_absorptance: Quantity
++ specific_heat: Quantity
++ thermal_absorptance: Quantity
++ conductivity: Quantity
++ visible_absorptance: Quantity
++ co2_emission_per_kg: Quantity, optional
++ non_renewable_primary_energy_per_kg: Quantity, optional
+--
++ co2_emission_per_m3: Quantity, optional
++ non_renewable_primary_energy_per_m3: Quantity, optional
++ short_name: str
++ is_mass_fully_specified(): bool
++ are_emissions_fully_specified(): bool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2106</x>
+      <y>1027</y>
+      <w>520</w>
+      <h>325</h>
+    </coordinates>
+    <panel_attributes>TransparentMaterial
+--
++  name: str
++  back_side_infrared_hemispherical_emissivity: Quantity
++  back_side_solar_reflectance: Quantity
++  back_side_visible_reflectance: Quantity
++  conductivity: Quantity
++  dirt_correction_factor: Quantity
++  front_side_infrared_hemispherical_emissivity: Quantity
++  front_side_solar_reflectance: Quantity
++  front_side_visible_reflectance: Quantity
++  infrared_transmittance: Quantity
++  solar_transmittance: Quantity
++  visible_transmittance: Quantity
+--
++  short_name: str
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1157</x>
+      <y>1144</y>
+      <w>234</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>WindowConstruction
+--
+
+--
++ name: str
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>988</x>
+      <y>806</y>
+      <w>338</w>
+      <h>364</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+window_constr</panel_attributes>
+    <additional_attributes>150.0;260.0;150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1846</x>
+      <y>1313</y>
+      <w>65</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1716</x>
+      <y>715</y>
+      <w>117</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=1..n
+</panel_attributes>
+    <additional_attributes>70.0;20.0;18.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2015</x>
+      <y>715</y>
+      <w>104</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+
+</panel_attributes>
+    <additional_attributes>60.0;20.0;18.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>884</x>
+      <y>130</y>
+      <w>143</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>BldgType: Enum
+--
+SFH
+MFH
+OFFICE
+SCHOOL
+SHOP
+RESTAURANT
+HOSPITAL
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>936</x>
+      <y>299</y>
+      <w>39</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1222</x>
+      <y>117</y>
+      <w>442</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>ShadingObjectConstruction
+--
++diffuse_solar_reflectance_unglazed_part: Quantity
++diffuse_visible_reflectance_unglazed_part: Quantity
++glazing_ratio: Quantity
++window_glass_construction: WindowGlassConstruction
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1066</x>
+      <y>169</y>
+      <w>182</w>
+      <h>286</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=0..n</panel_attributes>
+    <additional_attributes>120.0;10.0;20.0;10.0;18.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>208</x>
+      <y>949</y>
+      <w>390</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>Occupancy
+--
++floor_area_per_person: Quantity
++occupancy_fraction_schedule: Any Schedule
++activity_schedule: Any Schedule
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>507</x>
+      <y>676</y>
+      <w>130</w>
+      <h>299</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+occupancy</panel_attributes>
+    <additional_attributes>10.0;210.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>247</x>
+      <y>1066</y>
+      <w>390</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>InstallationOperation
+--
++power_demand_per_area: Quantity
++fraction_schedule: Any Schedule</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>598</x>
+      <y>676</y>
+      <w>195</w>
+      <h>416</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=3
+lighting
+dhw
+electric_appliances</panel_attributes>
+    <additional_attributes>10.0;300.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1417</x>
+      <y>910</y>
+      <w>195</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>BuildingElement: Enum
+--
+WINDOW
+WALL
+GROUNDFLOOR
+ROOF
+INTERNAL_FLOOR
+INTERNAL_CEILING
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1508</x>
+      <y>845</y>
+      <w>39</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1651</x>
+      <y>429</y>
+      <w>403</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>LayerFunction: Enum
+--
+OUTSIDE_FINISH
+INSULATION_OUTSIDE
+INSULATION_OUTSIDE_BACK_VENTILATED
+INSULATION_INSIDE
+INSULATION_IN_BETWEEN
+INSIDE_FINISH
+UNKNOWN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1911</x>
+      <y>598</y>
+      <w>39</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>585</x>
+      <y>1170</y>
+      <w>208</w>
+      <h>273</h>
+    </coordinates>
+    <panel_attributes>EnergySource: Enum
+--
+NO
+HEATING_OIL
+COAL
+GAS
+ELECTRICITY
+WOOD
+HEAT_PUMP
+SOLAR_THERMAL
+DISTRICT_HEATING
+HEATING_OTHER
+DHW_OTHER</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>728</x>
+      <y>1040</y>
+      <w>260</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+e_carrier_dhw (optional)
+e_carrier_heating (optional)</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1326</x>
+      <y>1066</y>
+      <w>169</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+set to &lt;&lt;WINDOW&gt;&gt;</panel_attributes>
+    <additional_attributes>90.0;10.0;30.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1586</x>
+      <y>1170</y>
+      <w>429</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>WindowGlassConstruction
+--
++ name: str
++ emb_co2_emission_per_m2:  Quantity
++ emb_non_ren_primary_energy_per_m2: Quantity
++ retrofitted: bool
+--
++ short_name: str
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1586</x>
+      <y>1066</y>
+      <w>221</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+set to &lt;&lt;WINDOW&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1729</x>
+      <y>1378</y>
+      <w>234</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>WindowLayer
+--
++ name: str
++ thickness: Quantity
+--
++ short_name: str
++ thermal_resistance: Quantity
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>832</x>
+      <y>1352</y>
+      <w>442</w>
+      <h>403</h>
+    </coordinates>
+    <panel_attributes>WindowShadingMaterial
+--
++ is_shading_available: bool
++ name: str
++ solar_transmittance: pint.Quantity
++ solar_reflectance: pint.Quantity
++ visible_transmittance: pint.Quantity
++ visible_reflectance: pint.Quantity
++ infrared_hemispherical_emissivity: pint.Quantity
++ infrared_transmittance: pint.Quantity
++ conductivity: pint.Quantity
++ thickness: pint.Quantity
++ shade_to_glass_distance: pint.Quantity
++ top_opening_multiplier: float
++ bottom_opening_multiplier: float
++ leftside_opening_multiplier: float
++ rightside_opening_multiplier: float
++ airflow_permeability: float
+--
++ short_name: str
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2106</x>
+      <y>1417</y>
+      <w>520</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>Gas
+--
++ name: str
++ conductiviry: Quantity
++ thermal_resistance: Quantity
++ co2_emission_per_m3: Quantity, optional
++ non_renewable_primary_energy_per_m3: Quantity, optional
+--
++ short_name: str
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>2106</x>
+      <y>130</y>
+      <w>507</w>
+      <h>325</h>
+    </coordinates>
+    <panel_attributes>--
+If there is a name and short_name property:
+  name: fully qaulified name from graphdb
+  short_name: only the elements name
+
+--
+
+If a (optional) is stated on the connection, 
+that reference might be set to None
+
+--
+
+Properties in the method part are derived properties
+implemented with a method annotated with @property
+
+bg=gray
+fontsize=16
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1950</x>
+      <y>1157</y>
+      <w>182</w>
+      <h>312</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>120.0;10.0;70.0;10.0;70.0;220.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>13</x>
+      <y>78</y>
+      <w>2652</w>
+      <h>1703</h>
+    </coordinates>
+    <panel_attributes>cesar.model
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1950</x>
+      <y>1430</y>
+      <w>182</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>120.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1976</x>
+      <y>1378</y>
+      <w>208</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>type of reference is
+Union[Gas, TransparentMaterial|
+
+bg=gray
+fontsize=10
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1079</x>
+      <y>1222</y>
+      <w>182</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;70.0;120.0;70.0;118.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1287</x>
+      <y>1222</y>
+      <w>325</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>230.0;50.0;20.0;50.0;18.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>182</x>
+      <y>416</y>
+      <w>468</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>BuildingOperationMapping
+--
+- op_assignments: List[Tuple[List[int], BuildingOperation]
+- all_assigned_floor_nrs: List[int] 
+--
++ get_operation_assignments(...)
++ add_operation_assignment(...)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>403</x>
+      <y>533</y>
+      <w>169</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m2=1...nr_of_floors</panel_attributes>
+    <additional_attributes>20.0;60.0;18.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1313</x>
+      <y>1378</y>
+      <w>390</w>
+      <h>221</h>
+    </coordinates>
+    <panel_attributes>WindowFrameConstruction
+--
++ name: str
++ frame_conductance: Quantity
++ frame_solar_absorptance: Quantity
++ frame_visible_absorptance: Quantity
++ frame_visible_absorptance: Quantity
++ emb_co2_emission_per_m2:  Quantity
++ emb_non_ren_primary_energy_per_m2: Quantity
+--
++ short_name: str
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1248</x>
+      <y>1222</y>
+      <w>195</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>130.0;120.0;130.0;70.0;20.0;70.0;18.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>39</x>
+      <y>1417</y>
+      <w>351</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>WindowShadingControl
+--
++ is_active: bool
++ is_exterior: bool
++ radiation_min_setpoint: pint.Quantity
++ shading_control_type: str</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>65</x>
+      <y>1170</y>
+      <w>403</w>
+      <h>221</h>
+    </coordinates>
+    <panel_attributes>NightVent
+--
++ is_active: bool
++ flow_rate: pint.Quantity
++ min_indoor_temperature: pint.Quantity
++ maximum_in_out_deltaT: pint.Quantity
++ max_wind_speed: pint.Quantity
++ start_hour: str
++ end_hour: str
++ maximum_indoor_temp_profile: Any Schedule</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>65</x>
+      <y>650</y>
+      <w>195</w>
+      <h>546</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;400.0;10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>39</x>
+      <y>624</y>
+      <w>221</w>
+      <h>819</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;610.0;10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+</diagram>

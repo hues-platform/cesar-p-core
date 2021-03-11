@@ -1,0 +1,78 @@
+##
+## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+##
+## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## Contact: https://www.empa.ch/web/s313
+##
+
+ # for files and pathes, use either a path relative to the location of cesar/construction/ or absolute path
+METADATA:
+  SOURCE:
+    - embodied co2 and pen for window frame were looked up in KBOB 2014, assuming wood-aluminium frame
+    - Installation characteristic, shading parameters, frame properties were transfered from hard-coded values
+      in matlab cesar version.
+      Window dividers were removed from the model (as most buildings probably have
+      no frame dividers nowadays and adding fixed dividers for all buildings adds thus more inaccuracy and uncertainity
+      than it helps to get more accurate results.)
+CONSTRUCTION:
+    CONSTRUCTION_DB: "GRAPH_DB" # "IDF_FILES_DB", "GRAPH_DB"; for graph db options see package graph_db_access
+    FIXED_WINDOW_FRAME_CONSTRUCTION_PARAMETERS:
+        name: "cesar-wood-aluminium-default"
+        frame_conductance: 9.5 W/m**2/K
+        frame_solar_absorptance: 0.5 solar_absorptance
+        frame_visible_absorptance: 0.5 visible_absorptance
+        outside_reveal_solar_absorptance: 0.5 solar_absorptance # TODO correct to still set that value? check in E+ reference
+        embodied_co2_emission_per_m2: 256 kg*CO2eq/m**2 # SOURCE: KBOB 2014
+        embodied_non_renewable_primary_energy_per_m2: 3740 MJ*Oileq/m**2 # SOURCE: KBOB 2014
+    FIXED_INSTALLATION_CHARACTERISTICS: # SOURCE: those parameters where constants in cesar matlab version
+        FRACTION_RADIANT_FROM_ACTIVITY: 0.3 dimensionless
+        LIGHTING_RETURN_AIR_FRACTION: 0.0 dimensionless
+        LIGHTING_FRACTION_RADIANT: 0.4 dimensionless
+        LIGHTING_FRACTION_VISIBLE: 0.2 dimensionless
+        DHW_FRACTION_LOST: 1 dimensionless
+        ELECTRIC_APPLIANCES_FRACTION_RADIANT: 0.75 dimensionless
+    FIXED_NEIGHBOUR_BLDG_PARAMETERS: # SOURCE: those parameters where constants in cesar matlab version
+        SHADING_OBJ_WALL:
+            diffuse_solar_reflectance_unglazed_part: 0.3 diffuse_solar_reflectance
+            diffuse_visible_reflectance_unglazed_part: 0.3 diffuse_visible_reflectance
+            glazing_ratio: 0.3 dimensionless
+        SHADING_OBJ_ROOF:
+            diffuse_solar_reflectance_unglazed_part: 0.15 diffuse_solar_reflectance
+            diffuse_visible_reflectance_unglazed_part: 0.1 diffuse_visible_reflectance
+            glazing_ratio: 0 dimensionless
+    FIXED_INTERNAL_FLOOR_CONSTRUCTION_PARAMETERS:
+        name: "cesar_default_internal_floor"
+        layers:
+            layer1:
+                thickness: 0.1 m
+                material: "cast_concrete_dense"
+    FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS:
+        name: "cesar_default_internal_ceiling"
+        layers:
+            layer1:
+                thickness: 0.1 m
+                material: "cast_concrete_dense"
+    MATERIALS:
+        cast_concrete_dense:
+            name: "cast_concrete_dense"
+            roughness: "Rough"
+            conductivity: 1.4 W/m/K
+            density: 2100 kg/m**3
+            specific_heat: 840 J/kg/K
+            thermal_absorptance: 0.9 thermal_absorptance
+            solar_absorptance: 0.6 solar_absorptance
+            visible_absorptance: 0.6 visible_absorptance

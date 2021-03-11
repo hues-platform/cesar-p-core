@@ -1,0 +1,1970 @@
+!- Windows Line endings 
+
+VERSION,
+    9.3.0;                    !- Version Identifier
+
+SIMULATIONCONTROL,
+    No,                       !- Do Zone Sizing Calculation
+    No,                       !- Do System Sizing Calculation
+    No,                       !- Do Plant Sizing Calculation
+    No,                       !- Run Simulation for Sizing Periods
+    Yes,                      !- Run Simulation for Weather File Run Periods
+    No,                       !- Do HVAC Sizing Simulation for Sizing Periods
+    1;                        !- Maximum Number of HVAC Sizing Simulation Passes
+
+BUILDING,
+    Building,                 !- Name
+    0,                        !- North Axis
+    Suburbs,                  !- Terrain
+    0.04,                     !- Loads Convergence Tolerance Value
+    0.4,                      !- Temperature Convergence Tolerance Value
+    FullExterior,             !- Solar Distribution
+    25,                       !- Maximum Number of Warmup Days
+    1;                        !- Minimum Number of Warmup Days
+
+SHADOWCALCULATION,
+    PolygonClipping,          !- Shading Calculation Method
+    Periodic,                 !- Shading Calculation Update Frequency Method
+    7,                        !- Shading Calculation Update Frequency
+    15000,                    !- Maximum Figures in Shadow Overlap Calculations
+    SutherlandHodgman,        !- Polygon Clipping Algorithm
+    512,                      !- Pixel Counting Resolution
+    SimpleSkyDiffuseModeling,    !- Sky Diffuse Modeling Algorithm
+    No,                       !- Output External Shading Calculation Results
+    No,                       !- Disable SelfShading Within Shading Zone Groups
+    No;                       !- Disable SelfShading From Shading Zone Groups to Other Zones
+
+ZONEAIRHEATBALANCEALGORITHM,
+    AnalyticalSolution;       !- Algorithm
+
+TIMESTEP,
+    4;                        !- Number of Timesteps per Hour
+
+CONVERGENCELIMITS,
+    2,                        !- Minimum System Timestep
+    25,                       !- Maximum HVAC Iterations
+    2,                        !- Minimum Plant Iterations
+    8;                        !- Maximum Plant Iterations
+
+RUNPERIOD,
+    DefaultRunPeriod,         !- Name
+    1,                        !- Begin Month
+    1,                        !- Begin Day of Month
+    ,                         !- Begin Year
+    12,                       !- End Month
+    31,                       !- End Day of Month
+    ,                         !- End Year
+    Sunday,                   !- Day of Week for Start Day
+    No,                       !- Use Weather File Holidays and Special Days
+    No,                       !- Use Weather File Daylight Saving Period
+    No,                       !- Apply Weekend Holiday Rule
+    Yes,                      !- Use Weather File Rain Indicators
+    Yes,                      !- Use Weather File Snow Indicators
+    No;                       !- Treat Weather as Actual
+
+SITE:GROUNDTEMPERATURE:BUILDINGSURFACE,
+    18,                       !- January Ground Temperature
+    18,                       !- February Ground Temperature
+    18,                       !- March Ground Temperature
+    18,                       !- April Ground Temperature
+    18,                       !- May Ground Temperature
+    18,                       !- June Ground Temperature
+    18,                       !- July Ground Temperature
+    18,                       !- August Ground Temperature
+    18,                       !- September Ground Temperature
+    18,                       !- October Ground Temperature
+    18,                       !- November Ground Temperature
+    18;                       !- December Ground Temperature
+
+SITE:GROUNDTEMPERATURE:FCFACTORMETHOD,
+    1.6,                      !- January Ground Temperature
+    0.7,                      !- February Ground Temperature
+    2.3,                      !- March Ground Temperature
+    4.8,                      !- April Ground Temperature
+    11.2,                     !- May Ground Temperature
+    16.2,                     !- June Ground Temperature
+    19.6,                     !- July Ground Temperature
+    20.6,                     !- August Ground Temperature
+    18.9,                     !- September Ground Temperature
+    15,                       !- October Ground Temperature
+    9.8,                      !- November Ground Temperature
+    5;                        !- December Ground Temperature
+
+SITE:GROUNDTEMPERATURE:SHALLOW,
+    14,                       !- January Surface Ground Temperature
+    14,                       !- February Surface Ground Temperature
+    14,                       !- March Surface Ground Temperature
+    14,                       !- April Surface Ground Temperature
+    14,                       !- May Surface Ground Temperature
+    14,                       !- June Surface Ground Temperature
+    14,                       !- July Surface Ground Temperature
+    14,                       !- August Surface Ground Temperature
+    14,                       !- September Surface Ground Temperature
+    14,                       !- October Surface Ground Temperature
+    14,                       !- November Surface Ground Temperature
+    14;                       !- December Surface Ground Temperature
+
+SITE:GROUNDTEMPERATURE:DEEP,
+    14,                       !- January Deep Ground Temperature
+    14,                       !- February Deep Ground Temperature
+    14,                       !- March Deep Ground Temperature
+    14,                       !- April Deep Ground Temperature
+    14,                       !- May Deep Ground Temperature
+    14,                       !- June Deep Ground Temperature
+    14,                       !- July Deep Ground Temperature
+    14,                       !- August Deep Ground Temperature
+    14,                       !- September Deep Ground Temperature
+    14,                       !- October Deep Ground Temperature
+    14,                       !- November Deep Ground Temperature
+    14;                       !- December Deep Ground Temperature
+
+SCHEDULETYPELIMITS,
+    FRACTION,                 !- Name
+    0,                        !- Lower Limit Value
+    1,                        !- Upper Limit Value
+    CONTINUOUS;               !- Numeric Type
+
+SCHEDULETYPELIMITS,
+    ANY;                      !- Name
+
+SCHEDULETYPELIMITS,
+    TEMPERATURE,              !- Name
+    -60,                      !- Lower Limit Value
+    200,                      !- Upper Limit Value
+    DISCRETE;                 !- Numeric Type
+
+SCHEDULE:CONSTANT,
+    Constant_1,               !- Name
+    FRACTION,                 !- Schedule Type Limits Name
+    1;                        !- Hourly Value
+
+SCHEDULE:FILE,
+    mfh_nominal_occupancy,    !- Name
+    FRACTION,                 !- Schedule Type Limits Name
+    profiles\mfh_nominal_occupancy.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+SCHEDULE:FILE,
+    mfh_nominal_activity,     !- Name
+    ANY,                      !- Schedule Type Limits Name
+    profiles\mfh_nominal_activity.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+SCHEDULE:FILE,
+    mfh_nominal_lighting,     !- Name
+    FRACTION,                 !- Schedule Type Limits Name
+    profiles\mfh_nominal_lighting.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+SCHEDULE:FILE,
+    mfh_nominal_appliances,    !- Name
+    FRACTION,                 !- Schedule Type Limits Name
+    profiles\mfh_nominal_appliances.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+SCHEDULE:FILE,
+    mfh_nominal_dhw,          !- Name
+    FRACTION,                 !- Schedule Type Limits Name
+    profiles\mfh_nominal_dhw.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+SCHEDULE:FILE,
+    mfh_nominal_thermostat_heating,    !- Name
+    TEMPERATURE,              !- Schedule Type Limits Name
+    profiles\mfh_nominal_thermostat_heating.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+SCHEDULE:FILE,
+    mfh_nominal_thermostat_cooling,    !- Name
+    TEMPERATURE,              !- Schedule Type Limits Name
+    profiles\mfh_nominal_thermostat_cooling.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+SCHEDULE:FILE,
+    mfh_nominal_ventilation,    !- Name
+    FRACTION,                 !- Schedule Type Limits Name
+    profiles\mfh_nominal_ventilation.csv,    !- File Name
+    1,                        !- Column Number
+    0,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No;                       !- Interpolate to Timestep
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L1,    !- Name
+    Rough,                    !- Roughness
+    0.015,                    !- Thickness
+    0.87,                     !- Conductivity
+    1600,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L2,    !- Name
+    Rough,                    !- Roughness
+    0.16,                     !- Thickness
+    2.3,                      !- Conductivity
+    2300,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L3,    !- Name
+    Rough,                    !- Roughness
+    0.03,                     !- Thickness
+    0.047,                    !- Conductivity
+    250,                      !- Density
+    1300,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L4,    !- Name
+    Rough,                    !- Roughness
+    0.02,                     !- Thickness
+    0.7,                      !- Conductivity
+    1600,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L5,    !- Name
+    Rough,                    !- Roughness
+    0.025,                    !- Thickness
+    0.14,                     !- Conductivity
+    550,                      !- Density
+    2300,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_L1,    !- Name
+    Rough,                    !- Roughness
+    0.1,                      !- Thickness
+    1.4,                      !- Conductivity
+    2100,                     !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L1,    !- Name
+    Rough,                    !- Roughness
+    0.115,                    !- Thickness
+    0.96,                     !- Conductivity
+    2000,                     !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L3,    !- Name
+    Rough,                    !- Roughness
+    0.115,                    !- Thickness
+    0.81,                     !- Conductivity
+    1500,                     !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L4,    !- Name
+    Rough,                    !- Roughness
+    0.015,                    !- Thickness
+    0.7,                      !- Conductivity
+    1100,                     !- Density
+    900,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Ro1_L1,    !- Name
+    Rough,                    !- Roughness
+    0.02,                     !- Thickness
+    0.14,                     !- Conductivity
+    550,                      !- Density
+    2300,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Ro1_L2,    !- Name
+    Rough,                    !- Roughness
+    0.04,                     !- Thickness
+    0.047,                    !- Conductivity
+    250,                      !- Density
+    1300,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Ro1_L3,    !- Name
+    Rough,                    !- Roughness
+    0.015,                    !- Thickness
+    0.87,                     !- Conductivity
+    1600,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL:AIRGAP,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L2,    !- Name
+    0.17500000000000002;      !- Thermal Resistance
+
+WINDOWMATERIAL:GLAZING,
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wi1_L1,    !- Name
+    SpectralAverage,          !- Optical Data Type
+    ,                         !- Window Glass Spectral Data Set Name
+    0.006,                    !- Thickness
+    0.775,                    !- Solar Transmittance at Normal Incidence
+    0.071,                    !- Front Side Solar Reflectance at Normal Incidence
+    0.071,                    !- Back Side Solar Reflectance at Normal Incidence
+    0.881,                    !- Visible Transmittance at Normal Incidence
+    0.08,                     !- Front Side Visible Reflectance at Normal Incidence
+    0.08,                     !- Back Side Visible Reflectance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
+    0.84,                     !- Front Side Infrared Hemispherical Emissivity
+    0.84,                     !- Back Side Infrared Hemispherical Emissivity
+    0.9,                      !- Conductivity
+    1,                        !- Dirt Correction Factor for Solar and Visible Transmittance
+    No,                       !- Solar Diffusing
+    72000000000,              !- Youngs modulus
+    0.22;                     !- Poissons ratio
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/grounds/Ground1918_concrete_medium,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L1,    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L2,    !- Layer 2
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L3,    !- Layer 3
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L4,    !- Layer 4
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Gr2_L5;    !- Layer 5
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling,    !- Name
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_L1;    !- Outside Layer
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_mirrored,    !- Name
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_L1;    !- Outside Layer
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L1,    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L2,    !- Layer 2
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L3,    !- Layer 3
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wa4_L4;    !- Layer 4
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/roofs/Roof1918_peatfiber_medium,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Ro1_L1,    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Ro1_L2,    !- Layer 2
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Ro1_L3;    !- Layer 3
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1918_Wi1_L1;    !- Outside Layer
+
+GLOBALGEOMETRYRULES,
+    LowerLeftCorner,          !- Starting Vertex Position
+    CounterClockWise,         !- Vertex Entry Direction
+    Relative,                 !- Coordinate System
+    Relative,                 !- Daylighting Reference Point Coordinate System
+    Relative;                 !- Rectangular Surface Coordinate System
+
+ZONE,
+    ZoneFloor0,               !- Name
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
+    1,                        !- Type
+    1,                        !- Multiplier
+    autocalculate,            !- Ceiling Height
+    autocalculate,            !- Volume
+    autocalculate,            !- Floor Area
+    ,                         !- Zone Inside Convection Algorithm
+    ,                         !- Zone Outside Convection Algorithm
+    Yes;                      !- Part of Total Floor Area
+
+ZONE,
+    ZoneFloor1,               !- Name
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
+    1,                        !- Type
+    1,                        !- Multiplier
+    autocalculate,            !- Ceiling Height
+    autocalculate,            !- Volume
+    autocalculate,            !- Floor Area
+    ,                         !- Zone Inside Convection Algorithm
+    ,                         !- Zone Outside Convection Algorithm
+    Yes;                      !- Part of Total Floor Area
+
+ZONE,
+    ZoneFloor2,               !- Name
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
+    1,                        !- Type
+    1,                        !- Multiplier
+    autocalculate,            !- Ceiling Height
+    autocalculate,            !- Volume
+    autocalculate,            !- Floor Area
+    ,                         !- Zone Inside Convection Algorithm
+    ,                         !- Zone Outside Convection Algorithm
+    Yes;                      !- Part of Total Floor Area
+
+ZONE,
+    ZoneFloor3,               !- Name
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
+    1,                        !- Type
+    1,                        !- Multiplier
+    autocalculate,            !- Ceiling Height
+    autocalculate,            !- Volume
+    autocalculate,            !- Floor Area
+    ,                         !- Zone Inside Convection Algorithm
+    ,                         !- Zone Outside Convection Algorithm
+    Yes;                      !- Part of Total Floor Area
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_GroundFloor,    !- Name
+    Floor,                    !- Surface Type
+    http://uesl_data/sources/archetypes/grounds/Ground1918_concrete_medium,    !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Ground,                   !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    1,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    0.00000,                  !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    0.00000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_0,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    -3.29090,                 !- Vertex 1 Xcoordinate
+    18.34030,                 !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    2.85000,                  !- Vertex 3 Zcoordinate
+    -3.29090,                 !- Vertex 4 Xcoordinate
+    18.34030,                 !- Vertex 4 Ycoordinate
+    2.85000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_1,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    14.02950,                 !- Vertex 1 Xcoordinate
+    21.42030,                 !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    2.85000,                  !- Vertex 3 Zcoordinate
+    14.02950,                 !- Vertex 4 Xcoordinate
+    21.42030,                 !- Vertex 4 Ycoordinate
+    2.85000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_2,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    2.85000,                  !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    2.85000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Wall_3,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    0.00000,                  !- Vertex 1 Zcoordinate
+    17.30040,                 !- Vertex 2 Xcoordinate
+    3.19000,                  !- Vertex 2 Ycoordinate
+    0.00000,                  !- Vertex 2 Zcoordinate
+    17.30040,                 !- Vertex 3 Xcoordinate
+    3.19000,                  !- Vertex 3 Ycoordinate
+    2.85000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    2.85000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor0_Ceiling,       !- Name
+    Ceiling,                  !- Surface Type
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling,    !- Construction Name
+    ZoneFloor0,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor1_Floor,         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    2.85000,                  !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    2.85000,                  !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    2.85000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    2.85000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Floor,         !- Name
+    Floor,                    !- Surface Type
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_mirrored,    !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor0_Ceiling,       !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    2.85000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    2.85000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    2.85000,                  !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    2.85000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_0,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    -3.29090,                 !- Vertex 1 Xcoordinate
+    18.34030,                 !- Vertex 1 Ycoordinate
+    2.85000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    2.85000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    5.70000,                  !- Vertex 3 Zcoordinate
+    -3.29090,                 !- Vertex 4 Xcoordinate
+    18.34030,                 !- Vertex 4 Ycoordinate
+    5.70000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_1,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    14.02950,                 !- Vertex 1 Xcoordinate
+    21.42030,                 !- Vertex 1 Ycoordinate
+    2.85000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    2.85000,                  !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    5.70000,                  !- Vertex 3 Zcoordinate
+    14.02950,                 !- Vertex 4 Xcoordinate
+    21.42030,                 !- Vertex 4 Ycoordinate
+    5.70000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_2,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    2.85000,                  !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    2.85000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    5.70000,                  !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    5.70000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Wall_3,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    2.85000,                  !- Vertex 1 Zcoordinate
+    17.30040,                 !- Vertex 2 Xcoordinate
+    3.19000,                  !- Vertex 2 Ycoordinate
+    2.85000,                  !- Vertex 2 Zcoordinate
+    17.30040,                 !- Vertex 3 Xcoordinate
+    3.19000,                  !- Vertex 3 Ycoordinate
+    5.70000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    5.70000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor1_Ceiling,       !- Name
+    Ceiling,                  !- Surface Type
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling,    !- Construction Name
+    ZoneFloor1,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor2_Floor,         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    5.70000,                  !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    5.70000,                  !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    5.70000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    5.70000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor2_Floor,         !- Name
+    Floor,                    !- Surface Type
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_mirrored,    !- Construction Name
+    ZoneFloor2,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor1_Ceiling,       !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    5.70000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    5.70000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    5.70000,                  !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    5.70000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor2_Wall_0,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor2,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    -3.29090,                 !- Vertex 1 Xcoordinate
+    18.34030,                 !- Vertex 1 Ycoordinate
+    5.70000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    5.70000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    8.55000,                  !- Vertex 3 Zcoordinate
+    -3.29090,                 !- Vertex 4 Xcoordinate
+    18.34030,                 !- Vertex 4 Ycoordinate
+    8.55000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor2_Wall_1,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor2,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    14.02950,                 !- Vertex 1 Xcoordinate
+    21.42030,                 !- Vertex 1 Ycoordinate
+    5.70000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    5.70000,                  !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    8.55000,                  !- Vertex 3 Zcoordinate
+    14.02950,                 !- Vertex 4 Xcoordinate
+    21.42030,                 !- Vertex 4 Ycoordinate
+    8.55000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor2_Wall_2,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor2,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    5.70000,                  !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    5.70000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    8.55000,                  !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    8.55000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor2_Wall_3,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor2,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    5.70000,                  !- Vertex 1 Zcoordinate
+    17.30040,                 !- Vertex 2 Xcoordinate
+    3.19000,                  !- Vertex 2 Ycoordinate
+    5.70000,                  !- Vertex 2 Zcoordinate
+    17.30040,                 !- Vertex 3 Xcoordinate
+    3.19000,                  !- Vertex 3 Ycoordinate
+    8.55000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    8.55000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor2_Ceiling,       !- Name
+    Ceiling,                  !- Surface Type
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling,    !- Construction Name
+    ZoneFloor2,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor3_Floor,         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    8.55000,                  !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    8.55000,                  !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    8.55000,                  !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    8.55000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor3_Floor,         !- Name
+    Floor,                    !- Surface Type
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_mirrored,    !- Construction Name
+    ZoneFloor3,               !- Zone Name
+    Surface,                  !- Outside Boundary Condition
+    ZoneFloor2_Ceiling,       !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    8.55000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    8.55000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    8.55000,                  !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    8.55000;                  !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor3_Wall_0,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor3,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    -3.29090,                 !- Vertex 1 Xcoordinate
+    18.34030,                 !- Vertex 1 Ycoordinate
+    8.55000,                  !- Vertex 1 Zcoordinate
+    0.00000,                  !- Vertex 2 Xcoordinate
+    0.00000,                  !- Vertex 2 Ycoordinate
+    8.55000,                  !- Vertex 2 Zcoordinate
+    0.00000,                  !- Vertex 3 Xcoordinate
+    0.00000,                  !- Vertex 3 Ycoordinate
+    11.40000,                 !- Vertex 3 Zcoordinate
+    -3.29090,                 !- Vertex 4 Xcoordinate
+    18.34030,                 !- Vertex 4 Ycoordinate
+    11.40000;                 !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor3_Wall_1,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor3,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    14.02950,                 !- Vertex 1 Xcoordinate
+    21.42030,                 !- Vertex 1 Ycoordinate
+    8.55000,                  !- Vertex 1 Zcoordinate
+    -3.29090,                 !- Vertex 2 Xcoordinate
+    18.34030,                 !- Vertex 2 Ycoordinate
+    8.55000,                  !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    11.40000,                 !- Vertex 3 Zcoordinate
+    14.02950,                 !- Vertex 4 Xcoordinate
+    21.42030,                 !- Vertex 4 Ycoordinate
+    11.40000;                 !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor3_Wall_2,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor3,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    8.55000,                  !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    8.55000,                  !- Vertex 2 Zcoordinate
+    14.02950,                 !- Vertex 3 Xcoordinate
+    21.42030,                 !- Vertex 3 Ycoordinate
+    11.40000,                 !- Vertex 3 Zcoordinate
+    17.30040,                 !- Vertex 4 Xcoordinate
+    3.19000,                  !- Vertex 4 Ycoordinate
+    11.40000;                 !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor3_Wall_3,        !- Name
+    Wall,                     !- Surface Type
+    http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium,    !- Construction Name
+    ZoneFloor3,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    autocalculate,            !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0.00000,                  !- Vertex 1 Xcoordinate
+    0.00000,                  !- Vertex 1 Ycoordinate
+    8.55000,                  !- Vertex 1 Zcoordinate
+    17.30040,                 !- Vertex 2 Xcoordinate
+    3.19000,                  !- Vertex 2 Ycoordinate
+    8.55000,                  !- Vertex 2 Zcoordinate
+    17.30040,                 !- Vertex 3 Xcoordinate
+    3.19000,                  !- Vertex 3 Ycoordinate
+    11.40000,                 !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    11.40000;                 !- Vertex 4 Zcoordinate
+
+BUILDINGSURFACE:DETAILED,
+    ZoneFloor3_Roof,          !- Name
+    Roof,                     !- Surface Type
+    http://uesl_data/sources/archetypes/roofs/Roof1918_peatfiber_medium,    !- Construction Name
+    ZoneFloor3,               !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
+    17.30040,                 !- Vertex 1 Xcoordinate
+    3.19000,                  !- Vertex 1 Ycoordinate
+    11.40000,                 !- Vertex 1 Zcoordinate
+    14.02950,                 !- Vertex 2 Xcoordinate
+    21.42030,                 !- Vertex 2 Ycoordinate
+    11.40000,                 !- Vertex 2 Zcoordinate
+    -3.29090,                 !- Vertex 3 Xcoordinate
+    18.34030,                 !- Vertex 3 Ycoordinate
+    11.40000,                 !- Vertex 3 Zcoordinate
+    0.00000,                  !- Vertex 4 Xcoordinate
+    0.00000,                  !- Vertex 4 Ycoordinate
+    11.40000;                 !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_0_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor0_Wall_0,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    -2.11440,                 !- Vertex 1 Xcoordinate
+    11.78364,                 !- Vertex 1 Ycoordinate
+    0.67500,                  !- Vertex 1 Zcoordinate
+    -1.17650,                 !- Vertex 2 Xcoordinate
+    6.55666,                  !- Vertex 2 Ycoordinate
+    0.67500,                  !- Vertex 2 Zcoordinate
+    -1.17650,                 !- Vertex 3 Xcoordinate
+    6.55666,                  !- Vertex 3 Ycoordinate
+    2.17500,                  !- Vertex 3 Zcoordinate
+    -2.11440,                 !- Vertex 4 Xcoordinate
+    11.78364,                 !- Vertex 4 Ycoordinate
+    2.17500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_1_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor0_Wall_1,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    7.83746,                  !- Vertex 1 Xcoordinate
+    20.31920,                 !- Vertex 1 Ycoordinate
+    0.67500,                  !- Vertex 1 Zcoordinate
+    2.90114,                  !- Vertex 2 Xcoordinate
+    19.44140,                 !- Vertex 2 Ycoordinate
+    0.67500,                  !- Vertex 2 Zcoordinate
+    2.90114,                  !- Vertex 3 Xcoordinate
+    19.44140,                 !- Vertex 3 Ycoordinate
+    2.17500,                  !- Vertex 3 Zcoordinate
+    7.83746,                  !- Vertex 4 Xcoordinate
+    20.31920,                 !- Vertex 4 Ycoordinate
+    2.17500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_2_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor0_Wall_2,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    16.13105,                 !- Vertex 1 Xcoordinate
+    9.70733,                  !- Vertex 1 Ycoordinate
+    0.67500,                  !- Vertex 1 Zcoordinate
+    15.19885,                 !- Vertex 2 Xcoordinate
+    14.90297,                 !- Vertex 2 Ycoordinate
+    0.67500,                  !- Vertex 2 Zcoordinate
+    15.19885,                 !- Vertex 3 Xcoordinate
+    14.90297,                 !- Vertex 3 Ycoordinate
+    2.17500,                  !- Vertex 3 Zcoordinate
+    16.13105,                 !- Vertex 4 Xcoordinate
+    9.70733,                  !- Vertex 4 Ycoordinate
+    2.17500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor0_Wall_3_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor0_Wall_3,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    6.18489,                  !- Vertex 1 Xcoordinate
+    1.14042,                  !- Vertex 1 Ycoordinate
+    0.67500,                  !- Vertex 1 Zcoordinate
+    11.11551,                 !- Vertex 2 Xcoordinate
+    2.04958,                  !- Vertex 2 Ycoordinate
+    0.67500,                  !- Vertex 2 Zcoordinate
+    11.11551,                 !- Vertex 3 Xcoordinate
+    2.04958,                  !- Vertex 3 Ycoordinate
+    2.17500,                  !- Vertex 3 Zcoordinate
+    6.18489,                  !- Vertex 4 Xcoordinate
+    1.14042,                  !- Vertex 4 Ycoordinate
+    2.17500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_0_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor1_Wall_0,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    -2.11440,                 !- Vertex 1 Xcoordinate
+    11.78364,                 !- Vertex 1 Ycoordinate
+    3.52500,                  !- Vertex 1 Zcoordinate
+    -1.17650,                 !- Vertex 2 Xcoordinate
+    6.55666,                  !- Vertex 2 Ycoordinate
+    3.52500,                  !- Vertex 2 Zcoordinate
+    -1.17650,                 !- Vertex 3 Xcoordinate
+    6.55666,                  !- Vertex 3 Ycoordinate
+    5.02500,                  !- Vertex 3 Zcoordinate
+    -2.11440,                 !- Vertex 4 Xcoordinate
+    11.78364,                 !- Vertex 4 Ycoordinate
+    5.02500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_1_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor1_Wall_1,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    7.83746,                  !- Vertex 1 Xcoordinate
+    20.31920,                 !- Vertex 1 Ycoordinate
+    3.52500,                  !- Vertex 1 Zcoordinate
+    2.90114,                  !- Vertex 2 Xcoordinate
+    19.44140,                 !- Vertex 2 Ycoordinate
+    3.52500,                  !- Vertex 2 Zcoordinate
+    2.90114,                  !- Vertex 3 Xcoordinate
+    19.44140,                 !- Vertex 3 Ycoordinate
+    5.02500,                  !- Vertex 3 Zcoordinate
+    7.83746,                  !- Vertex 4 Xcoordinate
+    20.31920,                 !- Vertex 4 Ycoordinate
+    5.02500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_2_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor1_Wall_2,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    16.13105,                 !- Vertex 1 Xcoordinate
+    9.70733,                  !- Vertex 1 Ycoordinate
+    3.52500,                  !- Vertex 1 Zcoordinate
+    15.19885,                 !- Vertex 2 Xcoordinate
+    14.90297,                 !- Vertex 2 Ycoordinate
+    3.52500,                  !- Vertex 2 Zcoordinate
+    15.19885,                 !- Vertex 3 Xcoordinate
+    14.90297,                 !- Vertex 3 Ycoordinate
+    5.02500,                  !- Vertex 3 Zcoordinate
+    16.13105,                 !- Vertex 4 Xcoordinate
+    9.70733,                  !- Vertex 4 Ycoordinate
+    5.02500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor1_Wall_3_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor1_Wall_3,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    6.18489,                  !- Vertex 1 Xcoordinate
+    1.14042,                  !- Vertex 1 Ycoordinate
+    3.52500,                  !- Vertex 1 Zcoordinate
+    11.11551,                 !- Vertex 2 Xcoordinate
+    2.04958,                  !- Vertex 2 Ycoordinate
+    3.52500,                  !- Vertex 2 Zcoordinate
+    11.11551,                 !- Vertex 3 Xcoordinate
+    2.04958,                  !- Vertex 3 Ycoordinate
+    5.02500,                  !- Vertex 3 Zcoordinate
+    6.18489,                  !- Vertex 4 Xcoordinate
+    1.14042,                  !- Vertex 4 Ycoordinate
+    5.02500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor2_Wall_0_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor2_Wall_0,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    -2.11440,                 !- Vertex 1 Xcoordinate
+    11.78364,                 !- Vertex 1 Ycoordinate
+    6.37500,                  !- Vertex 1 Zcoordinate
+    -1.17650,                 !- Vertex 2 Xcoordinate
+    6.55666,                  !- Vertex 2 Ycoordinate
+    6.37500,                  !- Vertex 2 Zcoordinate
+    -1.17650,                 !- Vertex 3 Xcoordinate
+    6.55666,                  !- Vertex 3 Ycoordinate
+    7.87500,                  !- Vertex 3 Zcoordinate
+    -2.11440,                 !- Vertex 4 Xcoordinate
+    11.78364,                 !- Vertex 4 Ycoordinate
+    7.87500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor2_Wall_1_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor2_Wall_1,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    7.83746,                  !- Vertex 1 Xcoordinate
+    20.31920,                 !- Vertex 1 Ycoordinate
+    6.37500,                  !- Vertex 1 Zcoordinate
+    2.90114,                  !- Vertex 2 Xcoordinate
+    19.44140,                 !- Vertex 2 Ycoordinate
+    6.37500,                  !- Vertex 2 Zcoordinate
+    2.90114,                  !- Vertex 3 Xcoordinate
+    19.44140,                 !- Vertex 3 Ycoordinate
+    7.87500,                  !- Vertex 3 Zcoordinate
+    7.83746,                  !- Vertex 4 Xcoordinate
+    20.31920,                 !- Vertex 4 Ycoordinate
+    7.87500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor2_Wall_2_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor2_Wall_2,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    16.13105,                 !- Vertex 1 Xcoordinate
+    9.70733,                  !- Vertex 1 Ycoordinate
+    6.37500,                  !- Vertex 1 Zcoordinate
+    15.19885,                 !- Vertex 2 Xcoordinate
+    14.90297,                 !- Vertex 2 Ycoordinate
+    6.37500,                  !- Vertex 2 Zcoordinate
+    15.19885,                 !- Vertex 3 Xcoordinate
+    14.90297,                 !- Vertex 3 Ycoordinate
+    7.87500,                  !- Vertex 3 Zcoordinate
+    16.13105,                 !- Vertex 4 Xcoordinate
+    9.70733,                  !- Vertex 4 Ycoordinate
+    7.87500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor2_Wall_3_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor2_Wall_3,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    6.18489,                  !- Vertex 1 Xcoordinate
+    1.14042,                  !- Vertex 1 Ycoordinate
+    6.37500,                  !- Vertex 1 Zcoordinate
+    11.11551,                 !- Vertex 2 Xcoordinate
+    2.04958,                  !- Vertex 2 Ycoordinate
+    6.37500,                  !- Vertex 2 Zcoordinate
+    11.11551,                 !- Vertex 3 Xcoordinate
+    2.04958,                  !- Vertex 3 Ycoordinate
+    7.87500,                  !- Vertex 3 Zcoordinate
+    6.18489,                  !- Vertex 4 Xcoordinate
+    1.14042,                  !- Vertex 4 Ycoordinate
+    7.87500;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor3_Wall_0_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor3_Wall_0,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    -2.11440,                 !- Vertex 1 Xcoordinate
+    11.78364,                 !- Vertex 1 Ycoordinate
+    9.22500,                  !- Vertex 1 Zcoordinate
+    -1.17650,                 !- Vertex 2 Xcoordinate
+    6.55666,                  !- Vertex 2 Ycoordinate
+    9.22500,                  !- Vertex 2 Zcoordinate
+    -1.17650,                 !- Vertex 3 Xcoordinate
+    6.55666,                  !- Vertex 3 Ycoordinate
+    10.72500,                 !- Vertex 3 Zcoordinate
+    -2.11440,                 !- Vertex 4 Xcoordinate
+    11.78364,                 !- Vertex 4 Ycoordinate
+    10.72500;                 !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor3_Wall_1_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor3_Wall_1,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    7.83746,                  !- Vertex 1 Xcoordinate
+    20.31920,                 !- Vertex 1 Ycoordinate
+    9.22500,                  !- Vertex 1 Zcoordinate
+    2.90114,                  !- Vertex 2 Xcoordinate
+    19.44140,                 !- Vertex 2 Ycoordinate
+    9.22500,                  !- Vertex 2 Zcoordinate
+    2.90114,                  !- Vertex 3 Xcoordinate
+    19.44140,                 !- Vertex 3 Ycoordinate
+    10.72500,                 !- Vertex 3 Zcoordinate
+    7.83746,                  !- Vertex 4 Xcoordinate
+    20.31920,                 !- Vertex 4 Ycoordinate
+    10.72500;                 !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor3_Wall_2_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor3_Wall_2,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    16.13105,                 !- Vertex 1 Xcoordinate
+    9.70733,                  !- Vertex 1 Ycoordinate
+    9.22500,                  !- Vertex 1 Zcoordinate
+    15.19885,                 !- Vertex 2 Xcoordinate
+    14.90297,                 !- Vertex 2 Ycoordinate
+    9.22500,                  !- Vertex 2 Zcoordinate
+    15.19885,                 !- Vertex 3 Xcoordinate
+    14.90297,                 !- Vertex 3 Ycoordinate
+    10.72500,                 !- Vertex 3 Zcoordinate
+    16.13105,                 !- Vertex 4 Xcoordinate
+    9.70733,                  !- Vertex 4 Ycoordinate
+    10.72500;                 !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    ZoneFloor3_Wall_3_Win,    !- Name
+    Window,                   !- Surface Type
+    http://uesl_data/sources/archetypes/windows/Window1918_Standard,    !- Construction Name
+    ZoneFloor3_Wall_3,        !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    cesar-wood-aluminium-default,    !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    6.18489,                  !- Vertex 1 Xcoordinate
+    1.14042,                  !- Vertex 1 Ycoordinate
+    9.22500,                  !- Vertex 1 Zcoordinate
+    11.11551,                 !- Vertex 2 Xcoordinate
+    2.04958,                  !- Vertex 2 Ycoordinate
+    9.22500,                  !- Vertex 2 Zcoordinate
+    11.11551,                 !- Vertex 3 Xcoordinate
+    2.04958,                  !- Vertex 3 Ycoordinate
+    10.72500,                 !- Vertex 3 Zcoordinate
+    6.18489,                  !- Vertex 4 Xcoordinate
+    1.14042,                  !- Vertex 4 Ycoordinate
+    10.72500;                 !- Vertex 4 Zcoordinate
+
+WINDOWPROPERTY:FRAMEANDDIVIDER,
+    cesar-wood-aluminium-default,    !- Name
+    0.04,                     !- Frame Width
+    0,                        !- Frame Outside Projection
+    0,                        !- Frame Inside Projection
+    9.5,                      !- Frame Conductance
+    1,                        !- Ratio of FrameEdge Glass Conductance to CenterOfGlass Conductance
+    0.5,                      !- Frame Solar Absorptance
+    0.5,                      !- Frame Visible Absorptance
+    0.9,                      !- Frame Thermal Hemispherical Emissivity
+    DividedLite,              !- Divider Type
+    0,                        !- Divider Width
+    0,                        !- Number of Horizontal Dividers
+    0,                        !- Number of Vertical Dividers
+    0,                        !- Divider Outside Projection
+    0,                        !- Divider Inside Projection
+    0,                        !- Divider Conductance
+    1,                        !- Ratio of DividerEdge Glass Conductance to CenterOfGlass Conductance
+    0,                        !- Divider Solar Absorptance
+    0,                        !- Divider Visible Absorptance
+    0.9,                      !- Divider Thermal Hemispherical Emissivity
+    0.5,                      !- Outside Reveal Solar Absorptance
+    0,                        !- Inside Sill Depth
+    0,                        !- Inside Sill Solar Absorptance
+    0,                        !- Inside Reveal Depth
+    0;                        !- Inside Reveal Solar Absorptance
+
+PEOPLE,
+    ZoneFloor0_People,        !- Name
+    ZoneFloor0,               !- Zone or ZoneList Name
+    mfh_nominal_occupancy,    !- Number of People Schedule Name
+    Area/Person,              !- Number of People Calculation Method
+    ,                         !- Number of People
+    ,                         !- People per Zone Floor Area
+    25.64103,                 !- Zone Floor Area per Person
+    0.3,                      !- Fraction Radiant
+    autocalculate,            !- Sensible Heat Fraction
+    mfh_nominal_activity,     !- Activity Level Schedule Name
+    3.82e-08,                 !- Carbon Dioxide Generation Rate
+    No,                       !- Enable ASHRAE 55 Comfort Warnings
+    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
+    ,                         !- Surface NameAngle Factor List Name
+    ,                         !- Work Efficiency Schedule Name
+    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
+
+PEOPLE,
+    ZoneFloor1_People,        !- Name
+    ZoneFloor1,               !- Zone or ZoneList Name
+    mfh_nominal_occupancy,    !- Number of People Schedule Name
+    Area/Person,              !- Number of People Calculation Method
+    ,                         !- Number of People
+    ,                         !- People per Zone Floor Area
+    25.64103,                 !- Zone Floor Area per Person
+    0.3,                      !- Fraction Radiant
+    autocalculate,            !- Sensible Heat Fraction
+    mfh_nominal_activity,     !- Activity Level Schedule Name
+    3.82e-08,                 !- Carbon Dioxide Generation Rate
+    No,                       !- Enable ASHRAE 55 Comfort Warnings
+    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
+    ,                         !- Surface NameAngle Factor List Name
+    ,                         !- Work Efficiency Schedule Name
+    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
+
+PEOPLE,
+    ZoneFloor2_People,        !- Name
+    ZoneFloor2,               !- Zone or ZoneList Name
+    mfh_nominal_occupancy,    !- Number of People Schedule Name
+    Area/Person,              !- Number of People Calculation Method
+    ,                         !- Number of People
+    ,                         !- People per Zone Floor Area
+    25.64103,                 !- Zone Floor Area per Person
+    0.3,                      !- Fraction Radiant
+    autocalculate,            !- Sensible Heat Fraction
+    mfh_nominal_activity,     !- Activity Level Schedule Name
+    3.82e-08,                 !- Carbon Dioxide Generation Rate
+    No,                       !- Enable ASHRAE 55 Comfort Warnings
+    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
+    ,                         !- Surface NameAngle Factor List Name
+    ,                         !- Work Efficiency Schedule Name
+    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
+
+PEOPLE,
+    ZoneFloor3_People,        !- Name
+    ZoneFloor3,               !- Zone or ZoneList Name
+    mfh_nominal_occupancy,    !- Number of People Schedule Name
+    Area/Person,              !- Number of People Calculation Method
+    ,                         !- Number of People
+    ,                         !- People per Zone Floor Area
+    25.64103,                 !- Zone Floor Area per Person
+    0.3,                      !- Fraction Radiant
+    autocalculate,            !- Sensible Heat Fraction
+    mfh_nominal_activity,     !- Activity Level Schedule Name
+    3.82e-08,                 !- Carbon Dioxide Generation Rate
+    No,                       !- Enable ASHRAE 55 Comfort Warnings
+    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
+    ,                         !- Surface NameAngle Factor List Name
+    ,                         !- Work Efficiency Schedule Name
+    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
+
+LIGHTS,
+    ZoneFloor0_Lights,        !- Name
+    ZoneFloor0,               !- Zone or ZoneList Name
+    mfh_nominal_lighting,     !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Lighting Level
+    10.3104,                  !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.4,                      !- Fraction Radiant
+    0.2,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    General,                  !- EndUse Subcategory
+    No,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+LIGHTS,
+    ZoneFloor1_Lights,        !- Name
+    ZoneFloor1,               !- Zone or ZoneList Name
+    mfh_nominal_lighting,     !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Lighting Level
+    10.3104,                  !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.4,                      !- Fraction Radiant
+    0.2,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    General,                  !- EndUse Subcategory
+    No,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+LIGHTS,
+    ZoneFloor2_Lights,        !- Name
+    ZoneFloor2,               !- Zone or ZoneList Name
+    mfh_nominal_lighting,     !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Lighting Level
+    10.3104,                  !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.4,                      !- Fraction Radiant
+    0.2,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    General,                  !- EndUse Subcategory
+    No,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+LIGHTS,
+    ZoneFloor3_Lights,        !- Name
+    ZoneFloor3,               !- Zone or ZoneList Name
+    mfh_nominal_lighting,     !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Lighting Level
+    10.3104,                  !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.4,                      !- Fraction Radiant
+    0.2,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    General,                  !- EndUse Subcategory
+    No,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+ELECTRICEQUIPMENT,
+    ZoneFloor0_Appliances,    !- Name
+    ZoneFloor0,               !- Zone or ZoneList Name
+    mfh_nominal_appliances,    !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    6.4,                      !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.75,                     !- Fraction Radiant
+    0,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+ELECTRICEQUIPMENT,
+    ZoneFloor1_Appliances,    !- Name
+    ZoneFloor1,               !- Zone or ZoneList Name
+    mfh_nominal_appliances,    !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    6.4,                      !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.75,                     !- Fraction Radiant
+    0,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+ELECTRICEQUIPMENT,
+    ZoneFloor2_Appliances,    !- Name
+    ZoneFloor2,               !- Zone or ZoneList Name
+    mfh_nominal_appliances,    !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    6.4,                      !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.75,                     !- Fraction Radiant
+    0,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+ELECTRICEQUIPMENT,
+    ZoneFloor3_Appliances,    !- Name
+    ZoneFloor3,               !- Zone or ZoneList Name
+    mfh_nominal_appliances,    !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    6.4,                      !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.75,                     !- Fraction Radiant
+    0,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+HOTWATEREQUIPMENT,
+    ZoneFloor0_DHW,           !- Name
+    ZoneFloor0,               !- Zone or ZoneList Name
+    mfh_nominal_dhw,          !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    4.216667,                 !- Power per Zone Floor Area
+    ,                         !- Power per Person
+    0,                        !- Fraction Latent
+    0,                        !- Fraction Radiant
+    1,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+HOTWATEREQUIPMENT,
+    ZoneFloor1_DHW,           !- Name
+    ZoneFloor1,               !- Zone or ZoneList Name
+    mfh_nominal_dhw,          !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    4.216667,                 !- Power per Zone Floor Area
+    ,                         !- Power per Person
+    0,                        !- Fraction Latent
+    0,                        !- Fraction Radiant
+    1,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+HOTWATEREQUIPMENT,
+    ZoneFloor2_DHW,           !- Name
+    ZoneFloor2,               !- Zone or ZoneList Name
+    mfh_nominal_dhw,          !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    4.216667,                 !- Power per Zone Floor Area
+    ,                         !- Power per Person
+    0,                        !- Fraction Latent
+    0,                        !- Fraction Radiant
+    1,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+HOTWATEREQUIPMENT,
+    ZoneFloor3_DHW,           !- Name
+    ZoneFloor3,               !- Zone or ZoneList Name
+    mfh_nominal_dhw,          !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    4.216667,                 !- Power per Zone Floor Area
+    ,                         !- Power per Person
+    0,                        !- Fraction Latent
+    0,                        !- Fraction Radiant
+    1,                        !- Fraction Lost
+    General;                  !- EndUse Subcategory
+
+ZONEINFILTRATION:DESIGNFLOWRATE,
+    ZoneFloor0_Infiltration,    !- Name
+    ZoneFloor0,               !- Zone or ZoneList Name
+    Constant_1,               !- Schedule Name
+    AirChanges/Hour,          !- Design Flow Rate Calculation Method
+    ,                         !- Design Flow Rate
+    ,                         !- Flow per Zone Floor Area
+    ,                         !- Flow per Exterior Surface Area
+    0.551666667,              !- Air Changes per Hour
+    1,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
+    0,                        !- Velocity Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
+
+ZONEINFILTRATION:DESIGNFLOWRATE,
+    ZoneFloor1_Infiltration,    !- Name
+    ZoneFloor1,               !- Zone or ZoneList Name
+    Constant_1,               !- Schedule Name
+    AirChanges/Hour,          !- Design Flow Rate Calculation Method
+    ,                         !- Design Flow Rate
+    ,                         !- Flow per Zone Floor Area
+    ,                         !- Flow per Exterior Surface Area
+    0.551666667,              !- Air Changes per Hour
+    1,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
+    0,                        !- Velocity Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
+
+ZONEINFILTRATION:DESIGNFLOWRATE,
+    ZoneFloor2_Infiltration,    !- Name
+    ZoneFloor2,               !- Zone or ZoneList Name
+    Constant_1,               !- Schedule Name
+    AirChanges/Hour,          !- Design Flow Rate Calculation Method
+    ,                         !- Design Flow Rate
+    ,                         !- Flow per Zone Floor Area
+    ,                         !- Flow per Exterior Surface Area
+    0.551666667,              !- Air Changes per Hour
+    1,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
+    0,                        !- Velocity Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
+
+ZONEINFILTRATION:DESIGNFLOWRATE,
+    ZoneFloor3_Infiltration,    !- Name
+    ZoneFloor3,               !- Zone or ZoneList Name
+    Constant_1,               !- Schedule Name
+    AirChanges/Hour,          !- Design Flow Rate Calculation Method
+    ,                         !- Design Flow Rate
+    ,                         !- Flow per Zone Floor Area
+    ,                         !- Flow per Exterior Surface Area
+    0.551666667,              !- Air Changes per Hour
+    1,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
+    0,                        !- Velocity Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
+
+HVACTEMPLATE:THERMOSTAT,
+    FIXED_Residential_thermostat,    !- Name
+    mfh_nominal_thermostat_heating,    !- Heating Setpoint Schedule Name
+    ,                         !- Constant Heating Setpoint
+    mfh_nominal_thermostat_cooling,    !- Cooling Setpoint Schedule Name
+    ;                         !- Constant Cooling Setpoint
+
+HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,
+    ZoneFloor0,               !- Zone Name
+    FIXED_Residential_thermostat,    !- Template Thermostat Name
+    ,                         !- System Availability Schedule Name
+    50,                       !- Maximum Heating Supply Air Temperature
+    13,                       !- Minimum Cooling Supply Air Temperature
+    0.0156,                   !- Maximum Heating Supply Air Humidity Ratio
+    0.0077,                   !- Minimum Cooling Supply Air Humidity Ratio
+    NoLimit,                  !- Heating Limit
+    ,                         !- Maximum Heating Air Flow Rate
+    ,                         !- Maximum Sensible Heating Capacity
+    NoLimit,                  !- Cooling Limit
+    ,                         !- Maximum Cooling Air Flow Rate
+    ,                         !- Maximum Total Cooling Capacity
+    ,                         !- Heating Availability Schedule Name
+    ,                         !- Cooling Availability Schedule Name
+    ConstantSensibleHeatRatio,    !- Dehumidification Control Type
+    0.7,                      !- Cooling Sensible Heat Ratio
+    60,                       !- Dehumidification Setpoint
+    None,                     !- Humidification Control Type
+    30,                       !- Humidification Setpoint
+    DetailedSpecification,    !- Outdoor Air Method
+    0,                        !- Outdoor Air Flow Rate per Person
+    0,                        !- Outdoor Air Flow Rate per Zone Floor Area
+    0,                        !- Outdoor Air Flow Rate per Zone
+    FIXED_Residential_outdoorair,    !- Design Specification Outdoor Air Object Name
+    None,                     !- Demand Controlled Ventilation Type
+    NoEconomizer,             !- Outdoor Air Economizer Type
+    None,                     !- Heat Recovery Type
+    0.7,                      !- Sensible Heat Recovery Effectiveness
+    0.65;                     !- Latent Heat Recovery Effectiveness
+
+HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,
+    ZoneFloor1,               !- Zone Name
+    FIXED_Residential_thermostat,    !- Template Thermostat Name
+    ,                         !- System Availability Schedule Name
+    50,                       !- Maximum Heating Supply Air Temperature
+    13,                       !- Minimum Cooling Supply Air Temperature
+    0.0156,                   !- Maximum Heating Supply Air Humidity Ratio
+    0.0077,                   !- Minimum Cooling Supply Air Humidity Ratio
+    NoLimit,                  !- Heating Limit
+    ,                         !- Maximum Heating Air Flow Rate
+    ,                         !- Maximum Sensible Heating Capacity
+    NoLimit,                  !- Cooling Limit
+    ,                         !- Maximum Cooling Air Flow Rate
+    ,                         !- Maximum Total Cooling Capacity
+    ,                         !- Heating Availability Schedule Name
+    ,                         !- Cooling Availability Schedule Name
+    ConstantSensibleHeatRatio,    !- Dehumidification Control Type
+    0.7,                      !- Cooling Sensible Heat Ratio
+    60,                       !- Dehumidification Setpoint
+    None,                     !- Humidification Control Type
+    30,                       !- Humidification Setpoint
+    DetailedSpecification,    !- Outdoor Air Method
+    0,                        !- Outdoor Air Flow Rate per Person
+    0,                        !- Outdoor Air Flow Rate per Zone Floor Area
+    0,                        !- Outdoor Air Flow Rate per Zone
+    FIXED_Residential_outdoorair,    !- Design Specification Outdoor Air Object Name
+    None,                     !- Demand Controlled Ventilation Type
+    NoEconomizer,             !- Outdoor Air Economizer Type
+    None,                     !- Heat Recovery Type
+    0.7,                      !- Sensible Heat Recovery Effectiveness
+    0.65;                     !- Latent Heat Recovery Effectiveness
+
+HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,
+    ZoneFloor2,               !- Zone Name
+    FIXED_Residential_thermostat,    !- Template Thermostat Name
+    ,                         !- System Availability Schedule Name
+    50,                       !- Maximum Heating Supply Air Temperature
+    13,                       !- Minimum Cooling Supply Air Temperature
+    0.0156,                   !- Maximum Heating Supply Air Humidity Ratio
+    0.0077,                   !- Minimum Cooling Supply Air Humidity Ratio
+    NoLimit,                  !- Heating Limit
+    ,                         !- Maximum Heating Air Flow Rate
+    ,                         !- Maximum Sensible Heating Capacity
+    NoLimit,                  !- Cooling Limit
+    ,                         !- Maximum Cooling Air Flow Rate
+    ,                         !- Maximum Total Cooling Capacity
+    ,                         !- Heating Availability Schedule Name
+    ,                         !- Cooling Availability Schedule Name
+    ConstantSensibleHeatRatio,    !- Dehumidification Control Type
+    0.7,                      !- Cooling Sensible Heat Ratio
+    60,                       !- Dehumidification Setpoint
+    None,                     !- Humidification Control Type
+    30,                       !- Humidification Setpoint
+    DetailedSpecification,    !- Outdoor Air Method
+    0,                        !- Outdoor Air Flow Rate per Person
+    0,                        !- Outdoor Air Flow Rate per Zone Floor Area
+    0,                        !- Outdoor Air Flow Rate per Zone
+    FIXED_Residential_outdoorair,    !- Design Specification Outdoor Air Object Name
+    None,                     !- Demand Controlled Ventilation Type
+    NoEconomizer,             !- Outdoor Air Economizer Type
+    None,                     !- Heat Recovery Type
+    0.7,                      !- Sensible Heat Recovery Effectiveness
+    0.65;                     !- Latent Heat Recovery Effectiveness
+
+HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,
+    ZoneFloor3,               !- Zone Name
+    FIXED_Residential_thermostat,    !- Template Thermostat Name
+    ,                         !- System Availability Schedule Name
+    50,                       !- Maximum Heating Supply Air Temperature
+    13,                       !- Minimum Cooling Supply Air Temperature
+    0.0156,                   !- Maximum Heating Supply Air Humidity Ratio
+    0.0077,                   !- Minimum Cooling Supply Air Humidity Ratio
+    NoLimit,                  !- Heating Limit
+    ,                         !- Maximum Heating Air Flow Rate
+    ,                         !- Maximum Sensible Heating Capacity
+    NoLimit,                  !- Cooling Limit
+    ,                         !- Maximum Cooling Air Flow Rate
+    ,                         !- Maximum Total Cooling Capacity
+    ,                         !- Heating Availability Schedule Name
+    ,                         !- Cooling Availability Schedule Name
+    ConstantSensibleHeatRatio,    !- Dehumidification Control Type
+    0.7,                      !- Cooling Sensible Heat Ratio
+    60,                       !- Dehumidification Setpoint
+    None,                     !- Humidification Control Type
+    30,                       !- Humidification Setpoint
+    DetailedSpecification,    !- Outdoor Air Method
+    0,                        !- Outdoor Air Flow Rate per Person
+    0,                        !- Outdoor Air Flow Rate per Zone Floor Area
+    0,                        !- Outdoor Air Flow Rate per Zone
+    FIXED_Residential_outdoorair,    !- Design Specification Outdoor Air Object Name
+    None,                     !- Demand Controlled Ventilation Type
+    NoEconomizer,             !- Outdoor Air Economizer Type
+    None,                     !- Heat Recovery Type
+    0.7,                      !- Sensible Heat Recovery Effectiveness
+    0.65;                     !- Latent Heat Recovery Effectiveness
+
+DESIGNSPECIFICATION:OUTDOORAIR,
+    FIXED_Residential_outdoorair,    !- Name
+    Flow/Area,                !- Outdoor Air Method
+    0,                        !- Outdoor Air Flow per Person
+    0.001297222,              !- Outdoor Air Flow per Zone Floor Area
+    0,                        !- Outdoor Air Flow per Zone
+    0,                        !- Outdoor Air Flow Air Changes per Hour
+    mfh_nominal_ventilation;    !- Outdoor Air Schedule Name
+
+OUTPUT:VARIABLEDICTIONARY,
+    IDF;                      !- Key Field
+
+OUTPUT:TABLE:SUMMARYREPORTS,
+    AllSummary;               !- Report 1 Name
+
+OUTPUTCONTROL:TABLE:STYLE,
+    CommaAndHTML,             !- Column Separator
+    JtoKWH;                   !- Unit Conversion
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Zone Ideal Loads Supply Air Total Heating Energy,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Zone Ideal Loads Supply Air Total Cooling Energy,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Hot Water Equipment District Heating Energy,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Zone Ideal Loads Supply Air Sensible Heating Rate,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Hot Water Equipment District Heating Rate,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:Facility,    !- Key Name
+    RunPeriod;                !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictCooling:Facility,    !- Key Name
+    RunPeriod;                !- Reporting Frequency
+
+OUTPUT:METER,
+    Electricity:Facility,     !- Key Name
+    RunPeriod;                !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:HVAC,     !- Key Name
+    RunPeriod;                !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:Building,    !- Key Name
+    RunPeriod;                !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:Facility,    !- Key Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictCooling:Facility,    !- Key Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:METER,
+    Electricity:Facility,     !- Key Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:HVAC,     !- Key Name
+    Hourly;                   !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:Building,    !- Key Name
+    Hourly;                   !- Reporting Frequency
