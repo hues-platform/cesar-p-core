@@ -156,9 +156,7 @@ B - Editable mode / Development
 
   .. code-block::
 
-    git clone https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-core/cesar-p-core.git
-
-- If you do not have access to gitlab.empa.ch, you unpack cesar-p-X.X.X.tar.gz, but if doing so you will not be able to commit changes.
+    git clone https://github.com/hues-platform/cesar-p-core.git
 
 - Open a shell and navigate to the root of the checked-out repository
 
@@ -327,7 +325,7 @@ Run CESAR-P with Docker
 - Checkout a copy of cesar-p:
   .. code-block::
 
-    git clone https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-core/cesar-p-core.git
+    git clone https://github.com/hues-platform/cesar-p-core.git
 
 - cd to the base project folder (containing the Dockerfile)
 - follow instructions at the bottom of the Dockerfile
