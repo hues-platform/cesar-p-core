@@ -60,6 +60,21 @@ publish:
   only:
     - production
 
+publish-pypi-public:
+  stage: Deploy
+  variables:
+    TWINE_USERNAME: ${PYPI_USER}
+    TWINE_PASSWORD: ${PYPI_PASSWORD}
+  script:
+    - poetry build
+    - pip3 install twine 
+    - python3 -m twine upload --repository gitlab dist/*
+  artifacts:
+    paths:
+      - dist/*
+  only:
+    - production-open-source
+
 pages:
   stage: Deploy
   script:
@@ -69,18 +84,16 @@ pages:
   artifacts:
     paths:
       - public
-
-publish:
-  stage: Deploy
-  variables:
-    TWINE_USERNAME: gitlab-ci-token
-    TWINE_PASSWORD: ${CI_JOB_TOKEN}
-  script:
-    - poetry build
-    - pip3 install twine
-    - python3 -m twine upload --repository-url https://gitlab.empa.ch/api/v4/projects/805/packages/pypi dist/*
-  artifacts:
-    paths:
-      - dist/*
-  only:
-    - production
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
