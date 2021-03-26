@@ -19,6 +19,7 @@
 #
 import os
 import sys
+import subprocess
 sys.path.insert(0, os.path.abspath('../../src'))
 import sphinx_rtd_theme
 
@@ -171,7 +172,18 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
         return False
     return skip
 
+def run_apidoc(_):
+    module = 'src/cesarp'
+    cur_dir = os.path.abspath(os.path.dirname(__file__))
+    output_path = os.path.join(cur_dir,'api')
+    cmd_path = 'sphinx-apidoc'
+    if hasattr(sys, 'real_prefix'):  # Check to see if we are in a virtualenv
+        # If we are, assemble the path manually
+        cmd_path = os.path.abspath(os.path.join(sys.prefix, 'bin', 'sphinx-apidoc'))
+    subprocess.check_call([cmd_path, '-e', '-o', output_path, module, '--force'])
+
 def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
+    app.connect('builder-inited', run_apidoc)
 
 
