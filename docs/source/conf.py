@@ -173,7 +173,7 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
     return skip
 
 def run_apidoc(_):
-    module = '../src/cesarp'
+    module = '../../src/cesarp'
     cur_dir = os.path.abspath(os.path.dirname(__file__))
     output_path = os.path.join(cur_dir,'api')
     cmd_path = 'sphinx-apidoc'
