@@ -111,8 +111,7 @@ CESAR-P requires Python 3.8. Download and Install from https://www.python.org/do
 
 If you already have a Python installation, do not tick 'Add Python X.Y to Path' during installation procedure.
 
-Alternative: use Anaconda to setup different python versions, but keep in mind that if you will be using development IDE's conda is not always the most easy to handle.
-
+Note: using Anaconda is not recommended, as it might be more complicated to handle with your IDE
 
 A - Install (& Update) CESAR-P as python package
 ------------------------------------------------
@@ -139,6 +138,7 @@ A - Install (& Update) CESAR-P as python package
 
       "/t%TEMP%/venv-cesar-p/Scripts/activate
 
+- Note: in case you use Anaconda, install shapely respectively geos with conda before installing CESAR-P (conda install -c conda-forge shapely). When running CESAR-P you might get an error that geos_c.dll was not found, which is hopefully prevented with installing shapley with conda. If you nevertheless get that error, try searching for that DLL in your conda environment where you did install shapley and copy-paste the geos.dll and geos_c.dll to the locatation mentioned in the error you get.
 
 - pip install the package
 
