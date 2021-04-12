@@ -9,7 +9,7 @@ description = "Combined Energy Simulation And Retrofit"
 authors = ["Leonie Fierz <leonie.fierz@empa.ch>"]
 homepage = "https://github.com/hues-platform/cesar-p-core"
 repository = "https://github.com/hues-platform/cesar-p-core"
-documentation = "https://readthedocs.org/projects/cesar-p-core/"
+documentation = "https://cesar-p-core.readthedocs.io/en/latest/"
 readme = "pypi-project-description.md"
 classifiers=['Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
