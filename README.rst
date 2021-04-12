@@ -197,6 +197,8 @@ B - Editable mode / Development
 Usage
 =====
 
+Ready-to go examples can be found in the seaprate repository: https://github.com/hues-platform/cesar-p-usage-examples
+
 The steps to set up a simulation run are:
 
 1. Define configuration file 
