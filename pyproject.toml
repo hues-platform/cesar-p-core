@@ -7,20 +7,24 @@ name = "cesar-p"
 version = "1.3.0"
 description = "Combined Energy Simulation And Retrofit"
 authors = ["Leonie Fierz <leonie.fierz@empa.ch>"]
-homepage = "https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-core"
-classifiers=['Development Status :: Released',
+homepage = "https://github.com/hues-platform/cesar-p-core"
+repository = "https://github.com/hues-platform/cesar-p-core"
+documentation = "https://readthedocs.org/projects/cesar-p-core/"
+readme = "pypi-project-description.md"
+classifiers=['Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: GNU Affero General Public License v3 (AGPLv3)',
+    'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
     'Natural Language :: English',
     'Programming Language :: Python :: 3.8',
-    'Operating System :: Microsoft :: Windows'
+    'Operating System :: Microsoft :: Windows', 
+    'Operating System :: POSIX :: Linux'
 ]
 packages = [
     { include = "cesarp", from="src" }
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "~3.8"
 numpy = "^1.16.5"
 pandas = "^0.25.1"
 PyYaml = "^5.1.2"

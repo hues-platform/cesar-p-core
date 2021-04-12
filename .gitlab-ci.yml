@@ -68,7 +68,7 @@ publish-pypi-public:
   script:
     - poetry build
     - pip3 install twine 
-    - python3 -m twine upload --repository gitlab dist/*
+    - python3 -m twine upload dist/*
   artifacts:
     paths:
       - dist/*

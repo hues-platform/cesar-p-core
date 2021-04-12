@@ -2,6 +2,8 @@
 History & Release Notes
 ========================
 
+.. _version_numbers:
+
 Version Numbers
 ---------------
 X.Y.Z
