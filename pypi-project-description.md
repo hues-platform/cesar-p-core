@@ -9,4 +9,6 @@ The package allows for simulating the building **energy demand of a district**, 
 
 The tool was developed at **Urban Energy Systems Lab**, which is part of the Swiss Federal Laboratories for Materials Science and Technology (Empa).
 
-For more details please have a look at the documentation. A good starting point for general information is the README section.
+**Usage examples** can be found under https://github.com/hues-platform/cesar-p-usage-examples
+
+For more details please have a look at the documentation, linked in the side menu. A good starting point for general information is the **README** section. It includes a detailed **installation guide**.
