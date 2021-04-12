@@ -1,1 +1,0 @@
-../src/cesarp/  # only needed for readthedocs api autogeneration; dependencies are managed with poetry in pyproject.toml
