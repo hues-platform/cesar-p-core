@@ -79,8 +79,8 @@ pages:
   stage: Deploy
   script:
     - mkdir public
-    - poetry run sphinx-apidoc -efM -o docs/source/api src/cesarp
-    - poetry run sphinx-build docs/source public
+    - cd docs/source
+    - poetry run sphinx-build . ../../public
   artifacts:
     paths:
       - public
