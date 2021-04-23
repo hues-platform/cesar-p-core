@@ -136,13 +136,13 @@ A - Install (& Update) CESAR-P as python package
 
     .. code-block::
 
-      "/t%TEMP%/venv-cesar-p/Scripts/activate
+      "%TEMP%/venv-cesar-p/Scripts/activate
 
 - Note: in case you use Anaconda, install shapely respectively geos with conda before installing CESAR-P (conda install -c conda-forge shapely). When running CESAR-P you might get an error that geos_c.dll was not found, which is hopefully prevented with installing shapley with conda. If you nevertheless get that error, try searching for that DLL in your conda environment where you did install shapley and copy-paste the geos.dll and geos_c.dll to the locatation mentioned in the error you get.
 
 - pip install the package
 
-  - pip install cesar_p-X.X.X-py3-none-any.whl
+  - pip install cesar-p
 
 - **Update** the package: redo the pip install command you used for installing the package
 
