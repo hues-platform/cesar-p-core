@@ -32,6 +32,7 @@ from pathlib import Path
 import cesarp.common
 from cesarp.common.ScheduleFixedValue import ScheduleFixedValue
 from cesarp.common.ScheduleFile import ScheduleFile
+from cesarp.common.CesarpException import CesarpException
 from cesarp.model.Construction import BuildingElement
 from cesarp.model.WindowConstruction import WindowConstruction, WindowFrameConstruction, WindowGlassConstruction
 from cesarp.model.BuildingModel import BuildingModel
@@ -260,7 +261,7 @@ def test_pickle_id_identical_obj(res_folder):
     json_file = res_folder / Path("chocolates.json")
     cesarp.manager.json_pickling.save_to_disk(batches, json_file)
     parsed_batches = cesarp.manager.json_pickling.read_from_disk(json_file)
-    assert isinstance(parsed_batches["more_needed"], ChocolateChips) # when setting make_refs=False, the second list item gets encoded and decoded as string/__repr__
+    assert isinstance(parsed_batches["more_needed"], ChocolateChips) # when setting make_refs=False, the second list item gets encoded and decoded as string/__repr__ - this seems to be fixed with jsonpickling version 2.0.0! so I did set now make_refs=False!
 
 
 def test_unpickle_bldg_container_cesarp_1_1_0(fixture_folder):
@@ -274,22 +275,18 @@ def test_unpickle_bldg_container_cesarp_1_1_0(fixture_folder):
 def test_unpickle_bldg_model_version_1_2(fixture_folder):
     ureg = cesarp.common.init_unit_registry()
     bldg_cont_file_path = fixture_folder / Path("bldg_container_fid_1_bldg_model_1_2.json")
-    parsed_bldg_container = cesarp.manager.json_pickling.read_bldg_container_from_disk(bldg_cont_file_path)
-    assert isinstance(parsed_bldg_container, BuildingContainer)
-    assert isinstance(parsed_bldg_container.get_bldg_model().bldg_shape, BldgShapeDetailed)
-    assert isinstance(parsed_bldg_container.get_bldg_model().neighbours[2], BldgShapeEnvelope)
-    assert not parsed_bldg_container.get_bldg_model().bldg_operation_mapping.get_operation_assignments()[0][1].night_vent.is_active
-    assert not parsed_bldg_container.get_bldg_model().bldg_operation_mapping.get_operation_assignments()[0][1].win_shading_ctrl.is_active
-    assert isinstance(parsed_bldg_container.get_bldg_model().bldg_operation_mapping, BuildingOperationMapping)
-    with pytest.raises(AttributeError):
-       parsed_bldg_container.get_bldg_model().bldg_construction.internal_floor_constr
+    with pytest.raises(CesarpException):
+        parsed_bldg_container = cesarp.manager.json_pickling.read_bldg_container_from_disk(bldg_cont_file_path)
+
+    # the upgrade functionality for building model version 1.2 is not tested anymore, as in the normal workflow the functionality is not used anymore from cesar-p version 2.0.0 upwards
 
 def test_unpickle_bldg_container_version_2(fixture_folder):
     ureg = cesarp.common.init_unit_registry()
     bldg_cont_file_path = fixture_folder / Path("bldg_container_fid_1_version_2.json")
-    parsed_bldg_container = cesarp.manager.json_pickling.read_bldg_container_from_disk(bldg_cont_file_path)
-    assert isinstance(parsed_bldg_container, BuildingContainer)
-    assert parsed_bldg_container.get_eplus_error_level() is EplusErrorLevel.WARNING
+    with pytest.raises(CesarpException):
+        parsed_bldg_container = cesarp.manager.json_pickling.read_bldg_container_from_disk(bldg_cont_file_path)
+
+    # the upgrade functionality for building container version 2 is not tested anymore, as in the normal workflow the functionality is not used anymore from cesar-p version 2.0.0 upwards
 
 
 @dataclass

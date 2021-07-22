@@ -23,7 +23,7 @@ import pint
 import logging
 import pandas as pd
 from collections import OrderedDict
-from typing import Dict, Any, Tuple, Optional
+from typing import Dict, Any, Tuple, Optional, Union
 from enum import Enum
 from pathlib import Path
 
@@ -81,6 +81,19 @@ class ColHeaderPENCO2(Enum):
 
 
 class ResultProcessor:
+    """
+    Handles annual results aggregation.
+    In case energy carriers for heating and domestic hot water are provided, operational emissions and costs are calculated.
+
+    Usage:
+    1. initialize the class
+    2. call *process_results_for* for each of the buildings
+    3. get all results with *get_all_results*
+
+    :return: [description]
+    :rtype: [type]
+    """
+
     MULTI_IDX_NAMES = ["unit", "var_name"]
 
     def __init__(self, ureg: pint.UnitRegistry, do_calc_op_emissions_and_costs: bool = True, custom_config: Dict[str, Any] = {}):
@@ -96,9 +109,30 @@ class ResultProcessor:
         self._logger = logging.getLogger(__name__)
 
     def process_results_for(
-        self, fid: int, eplus_result_folder, heating_energy_carrier: Optional[EnergySource], dhw_energy_carrier: Optional[EnergySource], sim_year: Optional[int],
+        self,
+        fid: int,
+        eplus_result_folder: Union[Path, str],
+        heating_energy_carrier: Optional[EnergySource],
+        dhw_energy_carrier: Optional[EnergySource],
+        sim_year: Optional[int],
     ) -> Tuple[EplusErrorLevel, Optional[EnergyDemandSimulationResults], Optional[OperationalEmissionsAndCostsResult]]:
+        """
+        Call this method for each building you want to add the results.
+        Besides returning the results for that building, they are added to the class instance variable *simulation_result_per_bldg*.
 
+        :param fid: building fid to process
+        :type fid: int
+        :param eplus_result_folder: EnergyPlus results folder
+        :type eplus_result_folder: Union[Path, str]
+        :param heating_energy_carrier: energy carrier used for heating for given building
+        :type heating_energy_carrier: Optional[EnergySource]
+        :param dhw_energy_carrier: energy carrier used for domestic hot water for given building
+        :type dhw_energy_carrier: Optional[EnergySource]
+        :param sim_year: simulation year, used to lookup cost and emission values
+        :type sim_year: Optional[int]
+        :return: see type
+        :rtype: Tuple[EplusErrorLevel, Optional[EnergyDemandSimulationResults], Optional[OperationalEmissionsAndCostsResult]]
+        """
         emission_and_costs = None
         sim_res: EnergyDemandSimulationResults = None  # type: ignore
         eplus_err_level = check_eplus_error_level(eplus_result_folder / Path(EPLUS_ERROR_FILE_NAME))
@@ -158,7 +192,10 @@ class ResultProcessor:
 
         floor_area_unit = ureg.m ** 2
         sim_res_floor_area = pd.DataFrame(columns=["floor_area"])
-        sim_res_floor_area.columns = pd.MultiIndex.from_arrays([[floor_area_unit], [ColHeaderSimResult.FLOOR_AREA.value]], names=ResultProcessor.MULTI_IDX_NAMES,)
+        sim_res_floor_area.columns = pd.MultiIndex.from_arrays(
+            [[floor_area_unit], [ColHeaderSimResult.FLOOR_AREA.value]],
+            names=ResultProcessor.MULTI_IDX_NAMES,
+        )
 
         for fid, sim_res in sim_res_per_bldg.items():
             if sim_res is not None:
@@ -179,11 +216,17 @@ class ResultProcessor:
 
         col_names_tot = [k.value for k in sim_res_rows_tot_demand[0].keys()]
         demand_tot = pd.DataFrame(data=sim_res_rows_tot_demand, index=row_index)
-        demand_tot.columns = pd.MultiIndex.from_arrays([[str(demand_tot_u)] * len(col_names_tot), col_names_tot], names=ResultProcessor.MULTI_IDX_NAMES,)
+        demand_tot.columns = pd.MultiIndex.from_arrays(
+            [[str(demand_tot_u)] * len(col_names_tot), col_names_tot],
+            names=ResultProcessor.MULTI_IDX_NAMES,
+        )
 
         col_names_spec = [k.value for k in sim_res_rows_specific_demand[0].keys()]
         demand_spec = pd.DataFrame(data=sim_res_rows_specific_demand, index=row_index)
-        demand_spec.columns = pd.MultiIndex.from_arrays([[str(demand_specific_u)] * len(col_names_spec), col_names_spec], names=ResultProcessor.MULTI_IDX_NAMES,)
+        demand_spec.columns = pd.MultiIndex.from_arrays(
+            [[str(demand_specific_u)] * len(col_names_spec), col_names_spec],
+            names=ResultProcessor.MULTI_IDX_NAMES,
+        )
 
         return pd.concat([demand_tot, demand_spec, sim_res_floor_area], axis="columns")
 
@@ -191,7 +234,10 @@ class ResultProcessor:
     def convert_eplus_error_level_to_df(eplus_error_level_per_bldg: Dict[int, EplusErrorLevel]) -> pd.DataFrame:
         all_eplus_err_df = pd.DataFrame.from_dict(eplus_error_level_per_bldg, orient="index", columns=[_EPLUS_ERROR_LEVEL_COL_NAME])
         eplus_err_options = "|".join(el.name for el in sorted(EplusErrorLevel, key=lambda x: x.value))
-        all_eplus_err_df.columns = pd.MultiIndex.from_arrays([[eplus_err_options], [_EPLUS_ERROR_LEVEL_COL_NAME]], names=ResultProcessor.MULTI_IDX_NAMES,)
+        all_eplus_err_df.columns = pd.MultiIndex.from_arrays(
+            [[eplus_err_options], [_EPLUS_ERROR_LEVEL_COL_NAME]],
+            names=ResultProcessor.MULTI_IDX_NAMES,
+        )
         return all_eplus_err_df
 
     @staticmethod

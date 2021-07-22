@@ -19,6 +19,26 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+idf_constructions_db_access
+============================
+
+Accessing the pre-generated partial construction IDF files. It is not really a database, but just a collection of those IDF files.
+The construction definitions do NOT include the infromation necessary to perform retrofit actions.
+
+The definitions included here were transfered the a GraphDB, which is accessible over :py:mod:`cesarp.graphdb_access`.
+
+
+Main API classes
+
+===================================================================================== ===========================================================
+class                                                                                 description
+===================================================================================== ===========================================================
+:py:class:`cesarp.idf_construction_db_access.IDFConstructionArchetypeFactory`         Create a construction archetype.
+                                                                                      Is used if config param CONSTRUCTION_DB is set to IDF_FILES_DB in config of :py:mod:`cesarp.construction`
+===================================================================================== ===========================================================
+
+"""
 
 import os
 from pathlib import Path

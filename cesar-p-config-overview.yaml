@@ -1,0 +1,603 @@
+# This is an overview of all possible configuration parameters. It will not automatically be updated when configuration parameters for a package are added.
+# This file has been created with the script cesar-p-usage-examples/development_scripts/combine_all_config_files.py
+
+CONSTRUCTION:
+    # source for constructional data such as materials;
+    # Options
+    # GRAPH_DB: data source local TTL graph data file or remote GraphDB. See configuration in cesarp.graphdb_access.
+    # IDF_FILES_DB: legacy option using pre-defined IDF snippets, does not support retrofitting, see package cesarp.idf_constructions_db_access
+    CONSTRUCTION_DB: "GRAPH_DB"
+    # parameters for window frame are the same for all the buildings. 
+    # SOURCE: those parameters where constants in cesar matlab version / co2 and pen: KBOB 2014
+    FIXED_WINDOW_FRAME_CONSTRUCTION_PARAMETERS:
+        name: "cesar-wood-aluminium-default"
+        frame_conductance: 9.5 W/m**2/K
+        frame_solar_absorptance: 0.5 solar_absorptance
+        frame_visible_absorptance: 0.5 visible_absorptance
+        outside_reveal_solar_absorptance: 0.5 solar_absorptance # TODO correct to still set that value? check in E+ reference
+        embodied_co2_emission_per_m2: 256 kg*CO2eq/m**2
+        embodied_non_renewable_primary_energy_per_m2: 3740 MJ*Oileq/m**2
+    # installation characteristics parameters which are the same for all of the buildings
+    # those are quite EnergyPlus specific
+    # SOURCE: those parameters where constants in cesar matlab version
+    FIXED_INSTALLATION_CHARACTERISTICS: 
+        FRACTION_RADIANT_FROM_ACTIVITY: 0.3 dimensionless
+        LIGHTING_RETURN_AIR_FRACTION: 0.0 dimensionless
+        LIGHTING_FRACTION_RADIANT: 0.4 dimensionless
+        LIGHTING_FRACTION_VISIBLE: 0.2 dimensionless
+        DHW_FRACTION_LOST: 1 dimensionless
+        ELECTRIC_APPLIANCES_FRACTION_RADIANT: 0.75 dimensionless
+    # material properties for neighbouring buildings are the same for all of the buildings 
+    # (expect for glass, which is set to be the same as the one of the main building)
+    # SOURCE: those parameters where constants in cesar matlab version
+    FIXED_NEIGHBOUR_BLDG_PARAMETERS:
+        SHADING_OBJ_WALL:
+            diffuse_solar_reflectance_unglazed_part: 0.3 diffuse_solar_reflectance
+            diffuse_visible_reflectance_unglazed_part: 0.3 diffuse_visible_reflectance
+            glazing_ratio: 0.3 dimensionless
+        SHADING_OBJ_ROOF:
+            diffuse_solar_reflectance_unglazed_part: 0.15 diffuse_solar_reflectance
+            diffuse_visible_reflectance_unglazed_part: 0.1 diffuse_visible_reflectance
+            glazing_ratio: 0 dimensionless
+    # only used in case CONSTRUCTION_DB is set to IDF_FILES_DB; otherwis internal ceiling/floor is queried from GraphDB
+    FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS:
+        name: "cesar_default_internal_ceiling"
+        layers:
+            layer1:
+                thickness: 0.1 m
+                material: "cast_concrete_dense"
+    # only used in case above construction FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS is used
+    MATERIALS:
+        cast_concrete_dense:
+            name: "cast_concrete_dense"
+            roughness: "Rough"
+            conductivity: 1.4 W/m/K
+            density: 2100 kg/m**3
+            specific_heat: 840 J/kg/K
+            thermal_absorptance: 0.9 thermal_absorptance
+            solar_absorptance: 0.6 solar_absorptance
+            visible_absorptance: 0.6 visible_absorptance
+
+# energy strategy defines different constants used for operational cost and emission calculation and retrofitting with the EnergyPerspective2050RetrofitManager
+# each strategy defines a number of time periods, some of the linked files do then specify the parameters per time period
+ENERGY_STRATEGY: 
+  ENERGY_STRATEGY_SELECTION: WWB # options: WWB - Business as Usual or NEP - New Energy Policy
+  WWB:
+    TIME_PERIODS: [2015, 2020, 2030, 2035, 2040, 2050]
+    PRIMARY_ENERGY_FACTORS_FILE: "ressources/general/PrimaryEnergyFactors.xlsx"
+    ENERGYMIX:
+      GAS_MIX_FILE: "ressources/business_as_usual/energymix/GasMix.xlsx"
+      WOOD_MIX_FILE: "ressources/business_as_usual/energymix/WoodMix.xlsx"
+      DHW_SYSTEM_MIX_FILE: "ressources/business_as_usual/energymix/DHWSystemMix.xlsx"
+      HEATING_SYSTEM_MIX_FILE: "ressources/business_as_usual/energymix/HeatingSystemMix.xlsx"
+      ELECTRICITY_FACTORS:
+        PATH: "ressources/business_as_usual/energymix/ElectricityFactors.xlsx"
+        MIX_WITH_TRADE: True # if false, factors without trade are used
+    FUEL:
+      FUEL_COST_FACTORS_FILE: "ressources/business_as_usual/fuel/FuelCostFactors.xlsx"
+    EFFICIENCIES:
+      DHW_SYSTEM_EFFICIENCY_FILE: "ressources/business_as_usual/efficiencies/DHWSystemEfficiencies.xlsx"
+      HEATING_SYSTEM_EFFICIENCY_FILE: "ressources/business_as_usual/efficiencies/HeatingSystemEfficiencies.xlsx"
+      HEATING_VALUE_FACTOR_FILE: "ressources/general/HvFactors.xlsx"
+    RETROFIT:
+      FULL_RATES:
+        SFH:
+          PATH: "./ressources/business_as_usual/retrofit/FullyRetrofitRates_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/business_as_usual/retrofit/FullyRetrofitRates_MFH.csv"
+          SEPARATOR: ";"
+      PARTIAL_SHARES:
+        SFH:
+          PATH: "./ressources/business_as_usual/retrofit/PartialRetrofitShares_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/business_as_usual/retrofit/PartialRetrofitShares_MFH.csv"
+          SEPARATOR: ";"
+  NEP:
+    TIME_PERIODS: [2015, 2020, 2030, 2035, 2040, 2050]
+    PRIMARY_ENERGY_FACTORS_FILE: "ressources/general/PrimaryEnergyFactors.xlsx"
+    ENERGYMIX:
+      GAS_MIX_FILE: "ressources/new_energy_policy/energymix/GasMix.xlsx"
+      WOOD_MIX_FILE: "ressources/new_energy_policy/energymix/WoodMix.xlsx"
+      DHW_SYSTEM_MIX_FILE: "ressources/new_energy_policy/energymix/DHWSystemMix.xlsx"
+      HEATING_SYSTEM_MIX_FILE: "ressources/new_energy_policy/energymix/HeatingSystemMix.xlsx"
+      ELECTRICITY_FACTORS:
+        PATH: "ressources/new_energy_policy/energymix/ElectricityFactors.xlsx"
+        MIX_WITH_TRADE: True # if false, factors without trade are used
+    FUEL:
+      FUEL_COST_FACTORS_FILE: "ressources/new_energy_policy/fuel/FuelCostFactors.xlsx"
+    EFFICIENCIES:
+      DHW_SYSTEM_EFFICIENCY_FILE: "ressources/new_energy_policy/efficiencies/DHWSystemEfficiencies.xlsx"
+      HEATING_SYSTEM_EFFICIENCY_FILE: "ressources/new_energy_policy/efficiencies/HeatingSystemEfficiencies.xlsx"
+      HEATING_VALUE_FACTOR_FILE: "ressources/general/HvFactors.xlsx"
+    RETROFIT:
+      FULL_RATES:
+        SFH:
+          PATH: "./ressources/new_energy_policy/retrofit/FullyRetrofitRates_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/new_energy_policy/retrofit/FullyRetrofitRates_MFH.csv"
+          SEPARATOR: ";"
+      PARTIAL_SHARES:
+        SFH:
+          PATH: "./ressources/new_energy_policy/retrofit/PartialRetrofitShares_EFH.csv"
+          SEPARATOR: ";"
+        MFH:
+          PATH: "./ressources/new_energy_policy/retrofit/PartialRetrofitShares_MFH.csv"
+          SEPARATOR: ";"
+
+GEOMETRY:
+    NEIGHBOURHOOD:
+        RADIUS:                     100  # meter; within this radius buildings around the main building are used as shading objects
+        MAX_DISTANCE_ADJACENCY:     0.1  # meter; if the distance between two buildings is below this threshold they are considered to be adjacent (no windows, different properties for wall)
+
+    MAIN_BLDG_SHAPE:
+        MINIMAL_STORY_HEIGHT:          2.4  # meter; minimal floor height; if the building height is not dividable by 2.4, the floor height is rounded up
+        WINDOW:
+            HEIGHT:                         1.5  # meter; fixed height for a window, width is set to match specified glazing ratio
+            MIN_WALL_WIDTH_FOR_WINDOW:      0.1  # meter; if a wall is smaller than this threshold no window is modelled
+            MIN_WINDOW_WIDTH:               0.08 # meter; if a window would be smaller than this threshold it is not modelled
+            MAX_GLZ_RATIO_WALL_WIDTH:       0.95 # factor [0..1]; if window width calculated is wider then this fraction of the wall, then reduce the window width to wall width * MAX_GLZ_RATIO_FACTOR_WIN_WIDTH. this avoids windows which are wider than the wall.
+            WINDOW_FRAME:
+                WIDTH: 0.04                  # meter; fixed width for the windows frames
+        GLAZING_RATIO_CHECK:  # check if overall building ratio is equal to set per-wall building ratio
+            ALLOWED_GLZ_RATIO_DEV: 0.02  # percentage deviation allowed between the set glazing ratio applied per wall and the resulting overall building glazing ratio
+            EXCEPTION_ON_MISMATCH: True  # raise exception if glazing ratio mismatch is out of allowed deviation, if false only do only log as a warning
+            DO_CHECK_BLD_WITH_ADJACENCIES: False  # if true, check is also on if some of the walls of the building are adjacent and thus have no windows
+
+GRAPHDB_ACCESS:
+  FIXED_INFILTRATION_PROFILE_VALUE: 1  # the value to use for timesteps of the infiltration rate profile (constant profile)
+  # choose between local or remote data source, only one of the two can be set to active at the same time
+  LOCAL:  # use a TTL file as data source
+    ACTIVE: True 
+    PATH: "ressources/construction_and_material_data.ttl"
+    FORMAT: "ttl"
+  REMOTE:  # connect to a GraphDB server instance (remote server or on your local machine)
+    ACTIVE: False
+    SPARQL_ENDPOINT: "YOUR_GRAPHDB_ENDPOINT"  # GraphDB Endpoint URL, make sure to set the User and PW as environment variables (GRAPHDB_USER, GRAPHDB_PASSWORD) 
+  # Lookup of retrofit construction for each building element. Regulation which was followed to define the retrofit construction
+  # The retrofit construction linked to a construction with "ues:retrofitOf" must have "ues:targetRequirement" respectively "ues:minRequirement" respectively (if parameter "target_requirement" is False) 
+  #set to the string value of the parameter "regulation"
+  RETROFIT:
+    regulation: "SIA-380-1_2016"  
+    target_requirement: False  # in SIA-380 there is a definition for U-Values for minimal and a target goals 
+  # This factory class must return the constructional archetype for each builidng on the site. 
+  # The default one (GraphDBArchetypicalConstructionFactory) uses a lookup by constrution year and the list of archetypes below.
+  # The class specified here must be compatible with cesarp.manager.BldgModelFactory.ArchetypicalConstructionFactoryProtocol 
+  # and arguments for init must match with the ones passed in GraphDBFacade. You can link to your own implementation outside cesar-p-core.
+  # Make sure to specify class, not just module name containing the class.
+  ARCHETYPE_CONSTRUCTION_FACTORY_CLASS: "cesarp.graphdb_access.GraphDBArchetypicalConstructionFactory.GraphDBArchetypicalConstructionFactory"
+  # Constructional archetypes to use in in the GraphDBArchetypicalConstructionFactory
+  # For each Archetype the age class / range is looked up in the GraphDB.
+  # The standard archetypes have several options for each building element so you can have some variability if you switch it on with MANAGER:RANDOM_CONSTRUCTIONS
+  # If you have no variablility, there are two strategies to choose the default one to be used:
+  # DEFAULT_CONSTRUCTION_MEAN_UVALUE: get U-Value of all elements and choose the one where the U-Value is closest to the mean
+  # DEFAULT_CONSTRUCTION_SPECIFIC: set a certain construction as default (in the standard values most of them are actually selected to match a mean U-Value, but there are some special cases)
+  ARCHETYPES:
+    1918_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/1918_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof1918_peatfiber_medium"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall1918_brick_dl_medium"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground1918_concrete_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window1918_Standard"
+    1948_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/1948_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof1948_cellular_concrete_medium"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground1948_hollow_slab_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window1948_Standard"
+    1978_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/1978_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof1978_glassfiber_medium"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall1978_sandstone_heavy"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground1978_hollow_brick_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window1978_StdAirIns_Double"
+    1994_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/1994_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof1994_concrete_med_insulation"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall1994_concrete_areated_medium"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground1994_concrete_slab_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window1994_LowE_Air_Double"
+    2001_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2001_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2001_wood_poor_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2001_concrete_med_ins"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2001_concrete_slab_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2001_LowE_Argon_Double"
+    2006_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2006_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2006_wood_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2006_concrete_high_ins"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2006_concrete_slab_medium_high_ins"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2006_LowE_Krypton_Double"
+    2009_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2009_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2009_wood_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2009_brick_low_ins"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2009_concrete_slab_medium_high_ins"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2009_LowE_Xenon_Double"
+    2014_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2014_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2014_wood_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2014_stone_cavity_woodplank"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2014_concrete_slab_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2014_LowE_Xenon_Double"
+    2015_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2015_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2015_concrete_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2015_flumroc_B335"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2015_concrete_slab_medium_med_ins"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2015_LowE_Xenon_Double"
+
+IDF_CONSTRUCTIONS_DB_ACCESS:
+    FIXED_INFILTRATION_PROFILE_VALUE: 1
+    INPUT_FILES:
+        GLAZING_RATIO_PER_AGE_CLASS:
+            PATH: "ressources/GlazingRatio.csvy"
+            SEPARATOR: ";"
+            LABELS:
+                age_class_nr: "AgeClass"
+                min: "Min"
+                max: "Max"
+
+        INFILTRATION_PER_AGE_CLASS:
+            PATH: "ressources/InfiltrationRate.csvy"
+            SEPARATOR: ";"
+            LABELS:
+                age_class_nr: "AgeClass"
+                ACH_normal_pressure: 'ACH @ normal pressure'
+
+        BUILDING_ELEMENTS:
+            STANDARD_CONSTRUCTIONS_DIR: "ressources/IDFConstructions/"
+            MATERIAL_PER_AGE_CLASS_IDF: "ressources/IDFConstructions/Materials.idf"
+            MATERIAL_INTERNAL_IDF: "ressources/IDFConstructions/MaterialsInternalConstructions.idf"
+            INTERNAL_CEILING_IDF: "ressources/IDFConstructions/InternalCeiling.idf"
+            INTERNAL_FLOOR_IDF: "ressources/IDFConstructions/InternalFloor.idf"
+# PATHES: all following folders are relative to the basepath of the project, which is passed as a parameter when initializing SimulationManager 
+#         respectively the scenario folder in case when using the ProjectManager
+# Only the per-building inputs marked with MANDATORY must be given, the others can be set to inactive if you want to use the CESAR-P standards for them
+
+MANAGER:   
+    # how many worker-threads shall be used, -1 means half of the available processors will be used 
+    # (applicable when using one of the built-in main classes, e.g. SimulationManager, ProjectManager)
+    NR_OF_PARALLEL_WORKERS: -1  # -1 means half of the available processors will be used    
+    # path an properties for simulation result summary file
+    SUMMARY_OUTPUT:
+        PATH_REL: "./site_result_summary.csvy"
+        CSV_SEPARATOR: ";"
+        CSV_FLOAT_FORMAT: "%.4f"
+    # all energy plus error files are copied into this summary
+    EPLUS_ERROR_SUMMARY_REL: "eplus_error_summary.err"
+    # folder where idf files will be stored to / reloaded from
+    IDF_FOLDER_REL: "idfs"
+    # pattern for the idf files, {} will be replaced by the FID of the building
+    IDF_FILENAME_REL: "fid_{}.idf"
+    # which weather file to use for which builing (usually it is the same for all buildings on a site but it does not have to be), necessary if you re-load your IDF files from disk and run the simulations
+    WEATHER_FILES_MAPPED_REL: "weather_files_mapped.csvy"    
+    # if ACTIVE set to True, all profile files used/linked to will be copied into the subfolder stated under 
+    # PROFILES_FOLDER_NAME_REL as a subfolder of IDF_FOLDER_REL when IDF files are created
+    COPY_PROFILES:
+        ACTIVE: True
+        PROFILES_FOLDER_NAME_REL: "profiles" # nome of folder where the profile should be stored, will be created as subfolder of IDF_FOLDER_REL
+    # folder where raw energyplus output files are stored     
+    OUTPUT_FOLDER_REL: "eplus_output"
+    # pattern for per-building subfolder withtin OUTPUT_FOLDER_REL, {} will be replaced by the FID of the building
+    BATCH_OUT_DIR_TEMPLATE_REL: "fid_{}"
+    # folder where the BuildingContainer JSON dumps will be stored
+    BLDG_CONTAINERS_FOLDER_REL: "bldg_containers"
+    # filename pattern for the BuildingContainer JSON dump, , {} will be replaced by the FID of the building
+    BLDG_CONTAINER_FILENAME_REL: "bldg_container_fid_{}.json"
+    # information per building which was used during generation of the building models is stored to this file
+    BLDG_INFO_REPORT_FILENAME_REL: "bldg_infos_model_generation.csvy"
+    # if true, the SUMMARY_OUTPUT and BLDG_INFO_REPORT_FILENAME_REL are saved as plain csv along with a yml metadata file
+    SEPARATE_METADATA: False
+    # MANDATORY File containint the footprint of all your buildings on a site
+    SITE_VERTICES_FILE:
+        PATH: "./SiteVertices.csv" # you can specify a *.shp file here, but be aware that you need to have geopandas installed when reading from shape file
+        SEPARATOR: ","
+        LABELS: # only effective for csv files
+            gis_fid:  "TARGET_FID"
+            height:   "HEIGHT"
+            x:        "POINT_X"
+            y:        "POINT_Y"
+    # MANDATORY list of building fids to be used as main buildings
+    BLDG_FID_FILE:
+        PATH: "TBD_BLDG_FID_FILE.csv"
+        SEPARATOR: ","
+        LABELS:
+            gis_fid: "ORIG_FID"
+    # MANDATORY construction year for each main building - based on the construction year the constructional properties are populated
+    BLDG_AGE_FILE:
+        PATH: "TBD_BLDG_AGE_FILE.csv"
+        SEPARATOR: ","
+        LABELS:
+            gis_fid: "ORIG_FID"
+            year_of_construction: "BuildingAge"
+    # MANDATORY building usage or type, e.g. MFH, EFH, OFFICE etc (see cesarp.SIA2024.SIA2024BuildingType for full list) - based on the type the operational properties are populated
+    BLDG_TYPE_PER_BLDG_FILE:
+      PATH: "TBD_BLDG_TYPE_PER_BLDG_FILE.csv"
+      SEPARATOR: ","
+      LABELS:
+        gis_fid: "ORIG_FID"
+        sia_bldg_type: "SIA2024BuildingType"
+    # If True, operational costs and emissions are calculated by CESAR-P after the simulation.
+    # If True, you have to specify BLDG_INSTALLATION_FILE specifiying the energy carrier used for heating and to heat up the domestic hot water 
+    DO_CALC_OP_EMISSIONS_AND_COSTS: True
+    BLDG_INSTALLATION_FILE: # used for operational emission & cost calculation, no influence on model for EnergyPlus. Not needed if MANAGER - DO_CALC_OP_EMISSIONS_AND_COSTS set to False
+        PATH: "TBD_BLDG_INSTALLATION_FILE.csv"
+        SEPARATOR: ","
+        LABELS:
+            gis_fid: "ORIG_FID"
+            dhw_energy_carrier: "ECarrierDHW"
+            heating_energy_carrier: "ECarrierHeating"
+    # if ACTIVE is True, the file is used to lookup glazing ratio per building
+    # if ACTIVE is False, look up glazing ratio from constructional archetype (which is per default dependent on construction year of building)
+    GLAZING_RATIO_PER_BLDG_FILE:
+      ACTIVE: False
+      PATH: "TBD_GLAZING_RATIO_PER_BLDG_FILE.csv"
+      SEPARATOR: ","
+      LABELS:
+        gis_fid: "ORIG_FID"
+        glazing_ratio: "GlazingRatio"
+    # Source for infiltration rate - Options:
+    # Archetype: use infiltration rate for the consturctional Archetype (which is per default dependent on construction year of building)
+    # SIA2024: use infiltration rate from SIA2024 definitions (which is dependent on the building type)
+    INFILTRATION_RATE_SOURCE: "Archetype" # either "Archetype" or "SIA2024"
+    # If True, when there are different options for the building element construction in the constructional archetype, one of those constructions is chosen randomly
+    RANDOM_CONSTRUCTIONS: False 
+    # Factory class creating BuildingOperation objects for your buildings. Built in are two options:
+    # "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory": same operational parameter and profiles for all buildings on your site. Configuration see parameters for OPERATION.FIXED
+    # "cesarp.SIA2024.SIA2024Facade.SIA2024Facade": use profiles according to SIA2024, parameters based on building type, optional variability. Configuration see parameters for SIA2024
+    # You can create your own factory class outisde of cesar-p-core, if you are doing so it must implement "cesarp.manager.manager_protocols.BuildingOperationFactoryProtocol"
+    # and take the init must take the same parameters as the FixedBuildingOperationFactory
+    BUILDING_OPERATION_FACTORY_CLASS: "cesarp.SIA2024.SIA2024Facade.SIA2024Facade"
+    # Mandatory - Weather file(s)
+    # Only SINGLE_SITE or SITE_PER_CH_COMMUNITY can be active at the same time
+    # SINGLE_SITE: the same weather file is used for all buildings
+    # SITE_PER_CH_COMMUNITY: weather file is chosen based on the cummunity of the building (BLDG_TO_COMMUNITY_FILE below)
+    #                        which is then mapped to a weather station having a weather file associated (see parameters for WEATHER:SWISS_COMMUNITIES)
+    SINGLE_SITE:
+        ACTIVE: True # if False, SITE_PER_CH_COMMUNITY must be active
+        WEATHER_FILE: "./Zurich_1.epw"
+    SITE_PER_CH_COMMUNITY:
+        ACTIVE: False # if False, SINGLE_SITE must be active
+        BLDG_TO_COMMUNITY_FILE:
+            PATH: "TBD_BLDG_TO_COMMUNITY_FILE.csv"
+            SEPARATOR: ","
+            LABELS:
+                bldg_fid: "bldg_fid"
+                community_id: "community_id" # numeric id should match with community ids defined in cesar.weather.swiss_communities Gemeinde_to_WeatherStation.csvy
+
+OPERATION:
+  # Parameters for night ventilation, same parameters for all buildings are used 
+  # (see PassiveCoolingOperationFactory, which is used by FixedBuildingOperationFactory as well as SIA2024Facade)
+  # If ACTIVE is False, no night ventilation is applied at all
+  NIGHT_VENTILATION:
+    ACTIVE: FALSE
+    flow_rate: 2.5 ACH             # night ventilation nominal air flow rate - in air-changes-per-hour (ACH)
+    min_indoor_temperature: 24 °C  # minimum indoor temperature for the space to require cooling (C) - above this value the window can be opened
+    maximum_in_out_deltaT: 2 °C    # maximum indoor-outdoor temperature differential in (C) to ensure that the occupant only opens the window when the ambient can provide cooling, i.e., when the outdoor temperature is lower than the inside temperature by a given number of degrees
+    max_wind_speed: 40 m/s         # maximum wind speed threshold (m/s) - above this value the occupant closes the window - 40m/s is default in EnergyPlus Version 8.5
+    start_hour: "20:00"            # night ventilation starting hour (00:00 format)
+    end_hour: "6:00"               # night ventilation ending hour (00:00 format)
+  # Parameters for operational properties of window shading, same parameters for all buildings are used.
+  # (see PassiveCoolingOperationFactory, which is used by FixedBuildingOperationFactory as well as SIA2024Facade)
+  # For window shade material properties, see :py:class:`cesarp.construction.ConstructionBasics.ConstructionBasics` method get_window_shading_constr
+  # If ACTIVE is True and a :py:class:`cesarp.model.WindowConstruction.WindowShadingMaterial` material 
+  # with is_shading_available True is set in the constructional part of the BuildingModel, WindowShading is applied,
+  # if one of those conditions is False, no window shading is applied
+  WINDOW_SHADING_CONTROL:
+    ACTIVE: True
+    is_exterior: True  # type of shading device [False-interior True-exterior]
+    rad_min_set: 90 W/m2   # minimum radiation set point 
+    shading_control_type: OnIfHighSolarOnWindow  # note that When changeing to not solar based, you have to adapt code to handle the Setpoint when writing the IDF correctly
+  # Parameters when using the FixedBuildingOperationFactory (same parameters and profiles for all buildings)
+  # To enable FIXED operation parameters set config MANAGER -  BUILDING_OPERATION_FACTORY_CLASS to 
+  # "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
+  # parameters starting with SCHED_ should point to a file with a yearly profile (without header, only one column)
+  # parameters with suffix _PER_ZONE_AREA relate to m2 of floor area
+  FIXED: 
+    FLOOR_AREA_PER_PERSON: 25.64103 m**2
+    SCHED_OCCUPANCY_PATH: "./ressources/mfh_nominal_occupancy.csv"
+    SCHED_ACTIVITY_PATH: "./ressources/mfh_nominal_activity.csv"
+    SCHED_APPLIANCES_PATH: "./ressources/mfh_nominal_appliances.csv"
+    APPLIANCES_WATT_PER_ZONE_AREA: 6.4 W/m**2
+    SCHED_LIGHTING_PATH: "./ressources/mfh_nominal_lighting.csv"
+    LIGHTING_WATT_PER_ZONE_AREA: 10.3104 W/m**2
+    SCHED_DHW_PATH: "./ressources/mfh_nominal_dhw.csv"
+    DHW_WATTS_PER_ZONE_AREA: 4.216667 W/m**2
+    SCHED_THERMOSTAT_HEATING: "./ressources/mfh_nominal_thermostat_heating.csv"
+    SCHED_THERMOSTAT_COOLING: "./ressources/mfh_nominal_thermostat_cooling.csv"
+    OUTDOOR_AIR_FLOW_PER_ZONE_FLOOR_AREA: 1.297222e-03 m**3/(s * m**2)
+    SCHED_VENTILATION: "./ressources/mfh_nominal_ventilation.csv"
+    SCHED_PROPS: # same properties are applied for all the above profile csv files
+      NUM_OF_HOURS: 8760  # should always be 8760, as we do full-horizon simulation with hourly resolution in EnergyPlus
+      SEPARATOR: ","
+      NUM_OF_HEADER_ROWS: 0  # no header assumed
+      DATA_COLUMN: 1  # we assume each profile in its own file with only one column
+
+RETROFIT:
+  # in case buildings are retrofitted, infiltration rate is set to this value
+  # indiependent of the original infiltration rate that was set in the BuildingModel 
+  # being retrofitted
+  INFILRATION_RATE_AFTER_WINDOW_RETROFIT: 0.1 ACH
+  EMBODIED:
+    # yml configuration with entries for insulation retrofit costs, see ConstructionRetrofitCost.py for required entries
+    INSULATION_COST_LOOKUP: './ressources/insulation_retrofit_costs_geak_2014.yml'
+    WINDOW_COST_LOOKUP: './ressources/window_retrofit_costs_geak_2014.yml'
+
+# to use operational params from SIA2024 set config MANAGER - BUILDING_OPERATION_FACTORY_CLASS to "cesarp.SIA2024.SIA2024Facade.SIA2024Facade"
+# to use infiltration rate from SIA2024 set config MANAGER - INFILTRATION_RATE_SOURCE to "SIA2024"
+SIA2024: 
+  # if True, use the variable parameter sets, otherwise use nominal parameter sets
+  # when using variable parameter sets, if you do want to simulate different scenarios, use the ProjectManager to do so - this 
+  # way you can keep the assignment between the variable profiles and your individual buildings
+  USE_VARIABLE_PARAMSETS: False
+  # if you have your own profile files or you want to modify them, point to a custom folder; the default points to the included pre-generated standard SIA2024 profiles.
+  PARAMSETS_VARIABLE_SAVE_FOLDER: "./generated_params/variable/"  # variable profiles, thus several profiles per buidling type 
+  PARAMSETS_NOMINAL_SAVE_FOLDER: "./generated_params/nominal/" # standard profiles, one profile per building type
+  CSV_SEPARATOR: ";" # using semicolon instead of comma as separator to be able to use commas in the YAML block which will not be split to different cells when read by Excel or the like
+  CSV_FLOAT_FORMAT: "%.4f" # floating point formate when writing profile files, actually only used when PROFILE_GENERATION: ACTIVE is True
+  # names for generated parameter & profile files. only one file including all parameters and all hourly profiles is created per building type
+  PROFILE_NOMINAL_FILENAME_PATTERN_REL: 'SIA2024_{0}_nominal.csvy' # filename for standard profile; {0} -> bldg type name
+  PROFILE_VARIABLE_FILENAME_PATTERN_REL: 'SIA2024_{0}_variable_{1}.csvy' # filename for variable profiles; {0} -> bldg type name, {1} param set nr
+  # parameters to control generation of the parameters and profile files from the SIA2024 base data
+  PROFILE_GENERATION:
+    # set to True if you want profile generation active; not that if the profiles are already available in the output save folder profiles are not re-generated
+    # if you activate, make sure to set valid pathes for the SIA_SHEET_CONFIG_FILE and BUILDING_TYPES_CONFIG_FILE 
+    ACTIVE: False
+    # note that the base data Excel sheet is not available in the OpenSource version and stored in a separate repository cesar-p-sia2024-data
+    SIA_SHEET_CONFIG_FILE: "CHECKOUT_PATH_OF_cesar-p-sia2024-data/ressources/sia2024_2016_edited_excel_config.yml"
+    BUILDING_TYPES_CONFIG_FILE: "CHECKOUT_PATH_OF_cesar-p-sia2024-data/ressources/building_types.yml"
+    # how many different profiles for residential buildings (SFH/MFH) shall be created for the variable parameter sets
+    MAX_NR_PARAMSETS_PER_RESIDENTIAL_BLDG_TYPE: 100
+    # how many different profiles for non-residential buildings (OFFICE, SCHOOL, SHOP) shall be created for the variable parameter sets
+    MAX_NR_PARAMSETS_PER_NON_RESIDENTIAL_BLDG_TYPE: 10
+    VARIABILITY_SETTINGS: # settings for variability
+      LIGHTING_SETPOINT_VARIABILITY_PRC: 0.1 dimensionless  # percentage of the standard value to use for randomization of the lighting setpoint parameter
+      VERTICAL_VARIABILITY_THERMOSTAT_SETPOINT: 1 delta_degC  # variation band for thermostat setpoint (cooling and heating)
+      INFILTRATION_RATE_VARIABILITY_PRC: 0.2 dimensionless  # percentage of the standard value to use for randomization of the infiltration parameter
+      VERTICAL_VARIABILITY_FRACTION_PROFILES: 0.15  # sigma for randomization of each profile value for yearly appliance and occupancy profile and the monthly variation 
+      DAILY_ROUTINE_VARIABILITY: 1 # hour, variability for wakeup and sleeptime hour
+      DO_HORIZONTAL_VARIABILTY: True # do horizontal variability/shuffling for occupancy and appliances profiles for rooms where breaks are defined in SIA Excel
+    PROFILE_SETTINGS:
+      WAKEUP_HOUR: 6 # occupancy profile - wakeup at 6 o'clock 
+      SLEEPTIME_HOUR: 22 # occupancy profile - bedtime at 22 o'clock
+      OCCUPANCY_RESTDAY_VALUE: 0 dimensionless  # occupancy profile value for occupancy profile on restdays      
+      LIGHTING_OFF_VALUE: 0 dimensionless  # lighting profile - value to use in profile when lights are switched off
+      INFILTRATION_RATE_FRACTION_BASE_VALUE: 1 dimensionless  # infiltration profile - constant value to be used for all hours of year
+      DHW_NIGHT_VALUE: 0 dimensionless  # DHW profile - value for DHW usage during nighttime hours
+      START_DATE: "20190101" # start date for profile generation (e.g. to match weekends with weather data)
+    DHW_BASED_ON_LITER_PER_DAY:  # for detailed description, see CESAR-P docs, https://cesar-p-core.readthedocs.io/en/latest/features/sia2024-dhw-demand.html
+      ACTIVE: True # if not active, then the DHW power demand stated in the excel sheet is used, as in Matlab CESAR
+      NOMINAL_TEMPERATURE: 60°C  # setpoint temperature for domestic hot water
+      COLD_WATER_TEMPERATURE: 10°C  # assumend temperature of cold water inlet (used for domestic hot water)
+
+SITE:
+  # some basic environmental properties used in EnergyPlus - constant for all buildings (even when you use multiple weather files wit SITE_PER_SWISS_COMMUNITY)
+  GROUND_TEMPERATURES: # parameters are quite EnergyPlus specific, check out EnergyPlus reference for details
+    BUILDING_SURFACE: 18 degreeC
+    SHALLOW: 14 degreeC
+    DEEP: 14 degreeC
+    GROUND_TEMP_PER_MONTH: [1.6, 0.7, 2.3, 4.8, 11.2, 16.2, 19.6, 20.6, 18.9, 15, 9.8, 5]
+    GROUND_TEMP_PER_MONTH_UNIT: degreeC
+  SIMULATION_YEAR: 2015 # should match one of defined period/year in config ENERGY_STRATEGY - XXX - TIME_PERIODS
+
+WEATHER:
+  # to activate lookup of weather file based on the building l
+  # note: 
+  SWISS_COMMUNITIES:
+    COMMUNITY_TO_STATION:
+      PATH: "./ressources/Gemeinde_to_WeatherStation.csvy"
+      SEPARATOR: ","
+      LABELS:
+        community_id: "BFS Gde-nummer"
+        station_name: "WeatherStationName" # entries should not have any special characters such as ü/é, adapt weather file names if necessary!
+    WEATHER_FILES:
+      PATH: "./ressources/weather_files"
+      EXTENSION: "epw"
+
+EPLUS_ADAPTER:
+    # energy plus version to use, if not specified in environment variable
+    EPLUS_VERSION: "9.5.0" # "9.2.0" # energy plus version to use
+    # default installation path of energyplus depending on OS. {version} is replaced with EPLUS_VERSION (dots replaced by dashes)
+    EPLUS_WINDOWS_DEFAULT_PATH: "C:/EnergyPlusV{version}"
+    EPLUS_LINUX_DEFAULT_PATH: "/usr/local/EnergyPlus-{version}"
+    EPLUS_MAC_DEFAULT_PATH: "/Applications/EnergyPlus-{version}"  
+    # let energy plus create a csv results file for each simulated building (same data as in eplusout.eso)
+    DO_CREATE_CSV_RESULTS: False  
+    # if true, some output is sent to console during energy plus run. use this option for debugging.
+    EPLUS_RUN_VERBOSE: False      
+    # the custom IDD allow for more vertices and more window shading objects than are defined in the default ones, see idf_writer_geometry.py
+    CUSTOM_IDD_8_5: "ressources/Energy+_8-5_NrOfVerticesExtended.idd"
+    CUSTOM_IDD_8_7: "ressources/Energy+_8-7-0_NrOfVerticesExtended.idd"
+    CUSTOM_IDD_8_8: "ressources/Energy+_8-8-0_NrOfVerticesExtended.idd"
+    CUSTOM_IDD_8_9: "ressources/Energy+_8-9-0_NrOfVerticesExtended.idd"
+    CUSTOM_IDD_9_1: "ressources/Energy+_9-0-1_NrOfVerticesExtended.idd"
+    CUSTOM_IDD_9_2: "ressources/Energy+_9-2-0_NrOfVerticesExtended.idd"
+    CUSTOM_IDD_9_3: "ressources/Energy+_9-3-0_NrOfVerticesExtended.idd"
+    CUSTOM_IDD_9_5: "ressources/Energy+_9-5-0_NrOfVerticesExtended.idd"
+    # simulation settings to be used in the IDF specification, same for all buildings
+    SIMULATION_SETTINGS:
+        MIN_SYSTEM_TIMESTAMP: 2
+        MAX_HVAC_ITERATIONS: 25
+        NR_OF_TIMESTEPS: 4
+        SHADOW_CALCULATION_FREQUENCY: 7
+    # definitions of output variables which shall be included in the E+ outputs, respectively which will be added to your IDF files
+    # you can add several entries for different result frequencies, see cesar.eplus_adapter.idf_strings.ResultsFrequency for possibilites    
+    # check for instructions how to get the E+ variable names from rdd resp mdd file after a first test simulation run from
+    # https://bigladdersoftware.com/epx/docs/8-0/input-output-reference/page-088.html#outputmeter-and-outputmetermeterfileonly
+    # if you overwrite in your own config, you have to specify all parameters you want. the lists are not merged
+    OUTPUT_VARS:       
+      HOURLY:
+        - "Zone Air Temperature"
+        - "Zone Ideal Loads Supply Air Total Heating Energy"
+        - "Zone Ideal Loads Supply Air Total Cooling Energy"
+        - "Hot Water Equipment District Heating Energy"
+        - "Zone Ideal Loads Supply Air Sensible Heating Rate"
+        - "Hot Water Equipment District Heating Rate"
+    # same applies as for OUTPUT_VARS
+    OUTPUT_METER:
+      HOURLY: 
+        - "DistrictHeating:Building"  # DHW 
+        - "DistrictHeating:HVAC"  # Heating
+        - "DistrictCooling:Facility" # Cooling
+        - "Electricity:Facility"  # Electricity
+      ANNUAL:
+        - "DistrictHeating:Building"  # DHW 
+        - "DistrictHeating:HVAC"  # Heating
+        - "DistrictCooling:Facility" # Cooling
+        - "Electricity:Facility"  # Electricity
+    # parameters used to read floor area from EIO file
+    # if E+ does not change anything in the EIO output format, you do not need to change those
+    EIO_READER:
+      ZONE_SUMMARY_START_TAG: "! <Zone Summary>" # zone summary is expected before zone info in the eio file
+      IDX_NR_OF_ZONES: 1  # index for entry on summary line is the number of zones, 1 means the second entry
+      ZONE_INFO_TO_SUMMARY_OFFSET: 0  # how many lines after the ZONE_SUMMARY_START_TAG per zone info lines start
+      FLOOR_AREA_HEADER: "Floor Area {m2}" 
+      AREA_UNIT: "m**2"  # pint-styled unit to use for floor area
+      SEPARATOR: ","  # separator used in EIO file
+
+# use class EnergyPerspective2050RetrofitManager if you want EnergyPerspective2050 retrofit strategy applied
+ENERGY_PERSPECTIVE_2050:
+    # targest for operational emissions after the retrofit
+    ENERGY_TARGETS_LOOKUP_FILE: './ressources/energy_targets_2050.yml'
+    # do model that only some of the building elements are retrofitted
+    DO_PARTIAL_RETROFIT: True

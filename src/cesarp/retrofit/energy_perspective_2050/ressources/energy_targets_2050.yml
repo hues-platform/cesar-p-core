@@ -25,9 +25,9 @@ METADATA:
   - CESAR Matlab CESAR-Tool_Documentation.pdf
 
 RESIDENTIAL:
-  RETROFITTED:
+  RETROFITTED:  # if those operational emissions are reached, a building will get no retrofit
     OPERATIONAL_NON_RENEWABLE_PEN: 250 MJ*Oileq/m**2/year
     OPERATIONAL_CO2_EMISSION: 5 kg CO2eq/m**2/year
-  NEW:
+  NEW:  # unused currently, as get_resi_op_pen_target is only called with parameter "new_bldg" set to False...
     OPERATIONAL_NON_RENEWABLE_PEN: 200 MJ*Oileq/m**2/year
     OPERATIONAL_CO2_EMISSION: 2.5 kg CO2eq/m**2/year

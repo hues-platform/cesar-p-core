@@ -1,7 +1,7 @@
 !- Windows Line endings
 
 VERSION,
-    9.3.0;                    !- Version Identifier
+    9.5.0;                    !- Version Identifier
 
 SIMULATIONCONTROL,
     No,                       !- Do Zone Sizing Calculation
@@ -1275,7 +1275,11 @@ OUTPUT:VARIABLE,
     Hourly;                   !- Reporting Frequency
 
 OUTPUT:METER,
-    DistrictHeating:Facility,    !- Key Name
+    DistrictHeating:Building,    !- Key Name
+    RunPeriod;                !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:HVAC,     !- Key Name
     RunPeriod;                !- Reporting Frequency
 
 OUTPUT:METER,
@@ -1287,15 +1291,11 @@ OUTPUT:METER,
     RunPeriod;                !- Reporting Frequency
 
 OUTPUT:METER,
-    DistrictHeating:HVAC,     !- Key Name
-    RunPeriod;                !- Reporting Frequency
-
-OUTPUT:METER,
     DistrictHeating:Building,    !- Key Name
-    RunPeriod;                !- Reporting Frequency
+    Hourly;                   !- Reporting Frequency
 
 OUTPUT:METER,
-    DistrictHeating:Facility,    !- Key Name
+    DistrictHeating:HVAC,     !- Key Name
     Hourly;                   !- Reporting Frequency
 
 OUTPUT:METER,
@@ -1304,12 +1304,4 @@ OUTPUT:METER,
 
 OUTPUT:METER,
     Electricity:Facility,     !- Key Name
-    Hourly;                   !- Reporting Frequency
-
-OUTPUT:METER,
-    DistrictHeating:HVAC,     !- Key Name
-    Hourly;                   !- Reporting Frequency
-
-OUTPUT:METER,
-    DistrictHeating:Building,    !- Key Name
     Hourly;                   !- Reporting Frequency

@@ -33,7 +33,7 @@ from cesarp.model.EnergySource import EnergySource
 class LightingCharacteristics:
     """
     Defines properties of lighting installation. those properties are independent of actual usage,
-    the latter is defined in operational part of the building model """
+    the latter is defined in operational part of the building model"""
 
     return_air_fraction: pint.Quantity  # dimensionless
     fraction_radiant: pint.Quantity  # dimensionless
@@ -45,7 +45,7 @@ class LightingCharacteristics:
 
 @dataclass
 class InstallationsCharacteristics:
-    """ defining properties such as efficiencies of installed appliances and such, which are not depending on the usage """
+    """defining properties such as efficiencies of installed appliances and such, which are not depending on the usage"""
 
     fraction_radiant_from_activity: pint.Quantity  # dimensionless
     lighting_characteristics: LightingCharacteristics

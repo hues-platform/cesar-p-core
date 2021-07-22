@@ -43,7 +43,10 @@ class VariationMonthly:
     """
 
     def __init__(
-        self, bldg_type: BuildingTypeProtocol, base_data: BaseDataForVariationMonthlyProtocol, vertical_variability: float,
+        self,
+        bldg_type: BuildingTypeProtocol,
+        base_data: BaseDataForVariationMonthlyProtocol,
+        vertical_variability: float,
     ):
         """
         :param bldg_type: building type for which to get monthly variation, e.g. object of SIA2024BuildingType

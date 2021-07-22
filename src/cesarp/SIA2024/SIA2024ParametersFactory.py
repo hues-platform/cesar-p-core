@@ -20,11 +20,11 @@
 # Contact: https://www.empa.ch/web/s313
 #
 from typing import List, Protocol
-from enum import Enum
 
 import cesarp.common.csv_writer
 import cesarp.common
 from cesarp.SIA2024.SIA2024DataAccessor import SIA2024DataAccessor
+from cesarp.SIA2024.SIA2024BuildingType import SIA2024BldgTypeKeys
 from cesarp.SIA2024.demand_generators.OccupancyProfileGenerator import OccupancyProfileGenerator
 from cesarp.SIA2024.demand_generators.AreaPerPersonCalculator import AreaPerPersonCalculator
 from cesarp.SIA2024.demand_generators.ActivityHeatGainCalculator import ActivityHeatGainCalculator
@@ -58,7 +58,7 @@ class DHWDemandProtocol(Protocol):
 
 class SIA2024ParametersFactory:
     """
-    Creates a set of operation demand profiles and values as well as infiltration properties based on SIA2024 derived base data.
+    Creates a set of operation demand profiles and values (without passive cooling aspects) as well as infiltration properties based on SIA2024 derived base data.
     Base data can be defined by passing an instance to a data accessor (sia_base_data), which should implement all methods defined in the BaseDataXXXProtocol of
     the different generators in sub-package demand_generators.
 
@@ -69,9 +69,6 @@ class SIA2024ParametersFactory:
     For more details about how the variability is introduced and the used distributions please refer to the PhD thesis from George Mavromatidis
     and the review paper "A review of uncertainty characterisation approaches for the optimal design of distributed energy systems", https://doi.org/10.1016/j.rser.2018.02.021
     You can configure details of variability bandwith etc in the package configuration, sia2024_default_config.yml.
-
-    If you need greater control over the parameter generation than provided by the SIA2024Facade and the configuration parameters, you can use the SIA2024ParameterFactory to create
-    SIA parameter sets. The factory just creates in-memory objects, so if you need to e.g. store the profiles to disk you can get some inspiration from SIA2024ParameterManager
 
     For detailed settings on the variability (e.g. variability bands) please have a look at the package configuration file, sia2024_default_config.yml.
     """
@@ -102,7 +99,7 @@ class SIA2024ParametersFactory:
         )
         self.data_descr.CONFIG_ENTRIES.update({self.__VARIABILITY_SETTINGS_KEY: self._cfg_variability})
 
-    def get_sia2024_parameters(self, bldg_type_key: Enum, variability_active: bool, name: str = None):
+    def get_sia2024_parameters(self, bldg_type_key: SIA2024BldgTypeKeys, variability_active: bool, name: str = None):
         """
         Creates one SIA2024 parameter set for teh given building type, with variability or nominal
 
@@ -124,22 +121,32 @@ class SIA2024ParametersFactory:
             nighttime_pattern_gen.activate_variability(variability_band=self._cfg_variability["DAILY_ROUTINE_VARIABILITY"])
         monthly_variation = VariationMonthly(bldg_type, self.sia_base_data, vertical_variability=vertical_var_band)
         area_pp_gen = AreaPerPersonCalculator(bldg_type, self.sia_base_data, area_pp_variability=variability_active)
+        profile_start_date = self._cfg["PROFILE_GENERATION"]["PROFILE_SETTINGS"]["START_DATE"]
         occ_prof_gen = OccupancyProfileGenerator(
             bldg_type=bldg_type,
             base_data=self.sia_base_data,
             nighttime_pattern_year_profile_bldg_hourly=nighttime_pattern_profile,
             get_year_profile_variation_monthly_for_room_method=monthly_variation.get_monthly_variation_per_room,
+            profile_start_date=profile_start_date,
         )
         if variability_active:
             occ_prof_gen.activate_profile_variability(
-                vertical_variability=self._cfg_variability["VERTICAL_VARIABILITY_FRACTION_PROFILES"], do_horizontal_variability=self._cfg_variability["DO_HORIZONTAL_VARIABILTY"],
+                vertical_variability=self._cfg_variability["VERTICAL_VARIABILITY_FRACTION_PROFILES"],
+                do_horizontal_variability=self._cfg_variability["DO_HORIZONTAL_VARIABILTY"],
             )
 
         sia2024params = SIA2024Parameters.emptyObj()
         sia2024params.data_descr = self.data_descr
         sia2024params.name = name
         self.__add_building_operation(
-            sia2024params, area_pp_gen, bldg_type, monthly_variation, nighttime_pattern_profile, occ_prof_gen, variability_active,
+            sia2024params,
+            area_pp_gen,
+            bldg_type,
+            monthly_variation,
+            nighttime_pattern_profile,
+            occ_prof_gen,
+            variability_active,
+            profile_start_date
         )
         self.__add_hvac(sia2024params, bldg_type, nighttime_pattern_profile, occ_prof_gen, area_pp_gen, variability_active)
         self.__add_infiltration(sia2024params, bldg_type, variability_active)
@@ -157,14 +164,23 @@ class SIA2024ParametersFactory:
         return self.sia_base_data.get_bldg_type(bldg_type_key).is_residential
 
     def __add_building_operation(
-        self, sia2024params, area_pp_gen, bldg_type, monthly_variation, nighttime_pattern_profile, occ_prof_gen, variability_active: bool,
+        self,
+        sia2024params,
+        area_pp_gen,
+        bldg_type,
+        monthly_variation,
+        nighttime_pattern_profile,
+        occ_prof_gen,
+        variability_active: bool,
+        profile_start_date
     ):
         activity_gen = ActivityHeatGainCalculator(bldg_type, self.sia_base_data, self.ureg)  # activity has no variability option
 
-        appliance_gen = AppliancesDemandGenerator(bldg_type, self.sia_base_data, monthly_variation.get_monthly_variation_per_room)
+        appliance_gen = AppliancesDemandGenerator(bldg_type, self.sia_base_data, monthly_variation.get_monthly_variation_per_room, profile_start_date)
         if variability_active:
             appliance_gen.activate_profile_variability(
-                self._cfg_variability["VERTICAL_VARIABILITY_FRACTION_PROFILES"], self._cfg_variability["DO_HORIZONTAL_VARIABILTY"],
+                self._cfg_variability["VERTICAL_VARIABILITY_FRACTION_PROFILES"],
+                self._cfg_variability["DO_HORIZONTAL_VARIABILTY"],
             )
             appliance_gen.activate_appliance_level_variability()
 
@@ -190,7 +206,13 @@ class SIA2024ParametersFactory:
             )
 
         else:
-            dhw_gen = DHWDemandGenerator(bldg_type, self.sia_base_data, variability_active, occ_prof_gen.get_occupancy_profile_for_room_method, nighttime_pattern_profile,)
+            dhw_gen = DHWDemandGenerator(
+                bldg_type,
+                self.sia_base_data,
+                variability_active,
+                occ_prof_gen.get_occupancy_profile_for_room_method,
+                nighttime_pattern_profile,
+            )
 
         area_pp_bldg = area_pp_gen.get_area_pp_for_bldg()
         occ_profile = occ_prof_gen.get_occupancy_profile_for_bldg(area_pp_bldg, area_pp_gen.get_area_pp_for_room)
@@ -198,7 +220,9 @@ class SIA2024ParametersFactory:
         appliance_prof = appliance_gen.get_appliance_profile_for_bldg()
         appliance_level = appliance_gen.get_appliance_level_for_bldg()
         lighting_dens_prof = lighting_gen.get_lighting_density_profile_for_bldg(
-            occ_prof_gen.get_occupancy_profile_for_room_method, nighttime_pattern_profile, monthly_variation.get_monthly_variation_per_room,
+            occ_prof_gen.get_occupancy_profile_for_room_method,
+            nighttime_pattern_profile,
+            monthly_variation.get_monthly_variation_per_room,
         )
         lighting_dens = lighting_gen.get_lighting_density_for_bldg()
         dhw_demand = dhw_gen.get_dhw_power_per_area_for_bldg()

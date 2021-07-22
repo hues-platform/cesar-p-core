@@ -138,7 +138,9 @@ class SIA2024ParamsManager:
                 self.params_cache[bldg_type].append(read_sia_param_set_from_file(path, self.ureg, self._cfg["CSV_SEPARATOR"]))
             nr_profiles_loaded = len(self.params_cache[bldg_type])
             if nr_profiles_loaded == 0:
-                self._logger.warning(f"SIAParameters for {bldg_type.name} with variability could not be loaded, no profiles found in folder {self._cfg['PARAMSETS_VARIABLE_SAVE_FOLDER']}")
+                self._logger.warning(
+                    f"SIAParameters for {bldg_type.name} with variability could not be loaded, no profiles found in folder {self._cfg['PARAMSETS_VARIABLE_SAVE_FOLDER']}"
+                )
             else:
                 self._logger.info(f"SIAParameters for {bldg_type.name} loaded, number of variable profiles {nr_profiles_loaded}")
 

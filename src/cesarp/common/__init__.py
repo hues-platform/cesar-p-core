@@ -19,6 +19,17 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+common
+============================
+
+Everything shared by several packages and overall concepts.
+
+Actually all classes or modules are expected to be used from outside,
+so please go through the classes and modules directly.
+
+"""
+
 import os
 import pint
 import logging

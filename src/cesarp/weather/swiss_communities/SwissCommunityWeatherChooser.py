@@ -19,6 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+
 from pathlib import Path
 import logging
 import pandas as pd
@@ -64,5 +65,9 @@ class SwissCommunityWeatherChooser:
         :return: Dataframe with content of file, column "community_id" with community BFS nr and "station_id" with numeric station-id
         """
         return cesarp.common.read_csvy(
-            cfg_com_to_station["PATH"], ["community_id", "station_name"], cfg_com_to_station["LABELS"], cfg_com_to_station["SEPARATOR"], index_column_name="community_id",
+            cfg_com_to_station["PATH"],
+            ["community_id", "station_name"],
+            cfg_com_to_station["LABELS"],
+            cfg_com_to_station["SEPARATOR"],
+            index_column_name="community_id",
         )

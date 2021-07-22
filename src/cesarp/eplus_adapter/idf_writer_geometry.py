@@ -25,6 +25,10 @@ such a construction reference get a object passed with an interface which must m
 assumes that the "ConstructionWriter" knows which construction to used based on the building type or for a shading
 object. Different constructions for the same BuildingElement (e.g. different constructions for the walls) are not
 supported.
+
+Up to 250 footprint vertices for a building are supported (limited by the IDD respectively eppy, which relies that the field for all vertices are defined in the IDD).
+Other objects have been extended in the IDD as well. If you want to know all, compare the IDD included in ressources with an original one or have a look
+at the notes at the top of the modified IDD.
 """
 from typing import Any, Protocol, Tuple, Mapping, Dict, List
 
@@ -109,11 +113,24 @@ def add_building(idf, bldg_shape: BldgShapeDetailed, constr_handler: ConstrWrite
             )
 
         for wall_nr, wall in enumerate(walls_on_story):
-            wall_idf_obj_name = add_wall(idf, wall, wall_nr, zone_idf_obj_name, constr_wall_idf_obj_name, is_adjacent=bldg_shape.adjacent_walls_bool[story_nr][wall_nr],)
+            wall_idf_obj_name = add_wall(
+                idf,
+                wall,
+                wall_nr,
+                zone_idf_obj_name,
+                constr_wall_idf_obj_name,
+                is_adjacent=bldg_shape.adjacent_walls_bool[story_nr][wall_nr],
+            )
 
             win_glass_shape = bldg_shape.windows[story_nr][wall_nr]
             if win_glass_shape is not None:
-                win_idf_obj = add_window(idf, win_glass_shape, wall_idf_obj_name, constr_win_glass_idf_obj_name, win_frame_idf_obj_name,)
+                win_idf_obj = add_window(
+                    idf,
+                    win_glass_shape,
+                    wall_idf_obj_name,
+                    constr_win_glass_idf_obj_name,
+                    win_frame_idf_obj_name,
+                )
                 windows_in_zone.append(win_idf_obj)
 
         # add roof in zone of last story
@@ -280,13 +297,19 @@ def set_coordinates_clockwise(idf_object, wall):
     id = 1  # create new id for the vertices to be sure they are ascending
     for vertex_id, coord in wall.iterrows():
         setattr(
-            idf_object, idf_strings.Coords.xcoordinate_pattern.format(id), idf_strings.Coords.num_format.format(coord.x),
+            idf_object,
+            idf_strings.Coords.xcoordinate_pattern.format(id),
+            idf_strings.Coords.num_format.format(coord.x),
         )
         setattr(
-            idf_object, idf_strings.Coords.ycoordinate_pattern.format(id), idf_strings.Coords.num_format.format(coord.y),
+            idf_object,
+            idf_strings.Coords.ycoordinate_pattern.format(id),
+            idf_strings.Coords.num_format.format(coord.y),
         )
         setattr(
-            idf_object, idf_strings.Coords.zcoordinate_pattern.format(id), idf_strings.Coords.num_format.format(coord.z),
+            idf_object,
+            idf_strings.Coords.zcoordinate_pattern.format(id),
+            idf_strings.Coords.num_format.format(coord.z),
         )
         id += 1
 

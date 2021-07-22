@@ -47,15 +47,15 @@ class ProjectManager:
 
     def __init__(
         self,
-        base_config: Union[str, Dict[str, Any]],
-        project_path,
+        base_config: Union[Path, str, Dict[str, Any]],
+        project_path: Union[Path, str],
         all_scenarios_summary_filename="all_scenarios_result_summary.csvy",
         fids_to_use=None,
         unit_reg: pint.UnitRegistry = None,
     ):
         """
         :param base_config: path to yml configuration file or dictionary with main configuration entries valid for all scenarios, e.g. EnergyPlus Parameters
-        :param project_path: full folder path where teh project files should be saved
+        :param project_path: full folder path where the project files should be saved
         :param fids_to_use: optional, if passed only the given fids are simulated. be careful when you save and
                             reload projects with only some of the fids used,that might end up in a mess
         :param unit_reg: if you already instantiated a UnitRegistry in the script or class initializing the
@@ -203,7 +203,10 @@ class ProjectManager:
         all_scenario_res = pd.concat(result_summaries.values(), keys=result_summaries.keys(), names=["scenario_name"], axis=1, sort=False)
         all_scenario_res.sort_values(by=["scenario_name", "unit"], axis=1, inplace=True)
 
-        metadata = cesarp.common.DatasetMetadata.DatasetMetadata(source="energy plus simulation results", description=metadata_descr_project_summary,)
+        metadata = cesarp.common.DatasetMetadata.DatasetMetadata(
+            source="energy plus simulation results",
+            description=metadata_descr_project_summary,
+        )
         header_data = {cesarp.common.csv_writer._KEY_SOURCE: metadata}
         cesarp.common.csv_writer.write_csv_with_header(header_data, all_scenario_res, self.all_scenarios_summary_filepath)
         self.logger.info(f"project results summary file written to {self.all_scenarios_summary_filepath}")

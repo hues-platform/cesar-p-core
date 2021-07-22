@@ -28,6 +28,12 @@ from cesarp.geometry import vertices_basics
 
 
 class GeometryBuilderFactory:
+    """
+    Factory class to create GeometryBuilder instances.
+    This reason for this class is to hold the _site_bldgs dataframe to avoid reading the same site vertices file
+    several times if simulating several buildings on the same site (which is the CESAR-P default workflow).
+    """
+
     def __init__(self, flat_site_vertices_list: pd.DataFrame, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
         self._site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices_list)
         self._custom_config = custom_config

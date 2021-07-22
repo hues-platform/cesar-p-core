@@ -22,6 +22,6 @@
 
 """Top-level package for cesarp."""
 
-__author__ = """Leonie Fierz"""
-__email__ = "leonie.fierz@empa.ch"
-__version__ = "1.3.0"
+__author__ = """Urban Energy Systems Lab"""
+__email__ = "https://www.empa.ch/web/s313/team"
+__version__ = "2.0.0"

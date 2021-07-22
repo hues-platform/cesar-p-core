@@ -65,7 +65,11 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+/docs/html/
+/docs/source/public/_latex/
+/docs/source/public/api
+/docs/html_internal/
+/docs/source/empa-internal/_latex
 
 # PyBuilder
 target/
@@ -108,7 +112,6 @@ generated_result
 /src/cesar/manager/eplus_run/
 /src/BitsAndPieces.py
 /flake8report.txt
-/docs/01_SWAnalysis/*.jpg
 /src/cesar/manager/result/
 /tests/test_eplus_adapter/result/
 /multi_runs/idf_0/
@@ -133,6 +136,5 @@ generated_result
 /example/example_site/
 /.idea/codeStyles/codeStyleConfig.xml
 /.idea/misc.xml
-/docs/html/
-/docs/source/api
 .vscode/launch.json
+.vscode/settings.json

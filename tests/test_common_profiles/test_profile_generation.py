@@ -67,9 +67,6 @@ def test_combine_day_and_nighttime_profiles_wrong_nighttimes():
 
 
 def test_combine_day_and_nighttime_profiles():
-    # TODO the matlab wakeup / sleep stuff does first 7 values as night if waekup_h is set to 8, here I'm doing 8h
-    #  - if you start at 00:00 with the day and wake up at 8:00, then 8 hours passed...
-    #   should I stick to the Matlab version or is that change ok?
     logging_level_bak = logging.getLogger().level
     logging.getLogger().setLevel(logging.DEBUG)
 

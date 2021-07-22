@@ -44,7 +44,6 @@ def read_sitevertices_from_csv(file_path, data_labels: Dict[str, str], separator
     :return: pandas DataFrame with one row for each building, columns being 'gis_fid', 'height', 'footprint_shape' and 'bld_id' as index.
             'footprint_shape' is a pandas DataFrame[columns=[x,y]] holding all building vertices
     """
-    # TODO enable to read csv or csvy
     assert (
         list(data_labels.keys()) == _REQUIRED_SITEVERTICES_PD_COLUMNS
     ), f"keys of given data_labels {list(data_labels.keys())} do not match required ones {_REQUIRED_SITEVERTICES_PD_COLUMNS}"

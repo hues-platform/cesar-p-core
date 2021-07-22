@@ -44,6 +44,9 @@ except ImportError:
 from cesarp.eplus_adapter import _default_config_file
 from cesarp.common import config_loader
 
+EPLUS_LOG_FILE_NAME = "eplusout.err"
+EPLUS_MAIN_RES_FILE_NAME = "eplusout.eso"
+
 
 def get_eplus_version(custom_config: Dict[str, Any] = {}, ep_config: Optional[Dict[str, Any]] = None):
     """
@@ -99,6 +102,9 @@ def get_idd_path(custom_config: Dict[str, Any] = {}, ep_config: Optional[Dict[st
         idd_path = ep_config["CUSTOM_IDD_9_2"]
     elif "9.3" in ep_version:
         idd_path = ep_config["CUSTOM_IDD_9_3"]
+        # there is no reason that 9.1 is missing, I just didn't have the installtion
+    elif "9.5" in ep_version:
+        idd_path = ep_config["CUSTOM_IDD_9_5"]
     else:
         raise EnergyPlusRunError(
             f"CESAR-P does not support extended IDD for EnergyPlus version {ep_version}. See cesarp.eplus_adapter.eplus_sim_runner.py::get_idd_path for supported versions."
@@ -157,7 +163,11 @@ def run_single(idffile, epwfile, output_path, ep_config: Optional[Dict[str, Any]
 
 
 def run_batch(
-    idf_files: Dict[int, Any], epw_files: Dict[int, Any], output_folders: Dict[int, Any], nr_of_parallel_workers, custom_config: Dict[str, Any] = {},
+    idf_files: Dict[int, Any],
+    epw_files: Dict[int, Any],
+    output_folders: Dict[int, Any],
+    nr_of_parallel_workers,
+    custom_config: Dict[str, Any] = {},
 ):
     ep_config = get_config(custom_config)
     logger = logging.getLogger(__name__)

@@ -18,3 +18,17 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+
+Package handles weather files per community and is used together with :py:class:`cesarp.site.SitePerSwissCommunityFactory`
+
+The classes/modules built to be used from outside (API of package):
+
+============================================================================ ====================================================
+class/module                                                                 description
+============================================================================ ====================================================
+:py:class:`cesarp.weather.swiss_communities.SwissCommunityWeatherChooser`    mapping a weather file to each community
+
+============================================================================ ====================================================
+
+"""

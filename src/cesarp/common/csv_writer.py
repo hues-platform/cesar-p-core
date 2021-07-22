@@ -19,7 +19,9 @@
 # Contact: https://www.empa.ch/web/s313
 #
 import logging
-from typing import List, Dict, Any
+import os
+from pathlib import Path
+from typing import List, Dict, Any, Union
 
 import pandas as pd
 import yaml
@@ -66,11 +68,38 @@ _KEY_SOURCE = "METADATA"
 _KEY_DATA = "DATA"
 
 
-def write_csv_with_header(header_data: Dict[Any, Any], csv_data: pd.DataFrame, filepath, csv_separator=";", float_format="%.4f"):
-    with open(filepath, "w") as file_handle:
-        file_handle.write(_YAML_SEPARATOR)
-        file_handle.write(_CSVY_FILEFORMAT_COMMENT)
-        yaml.dump(header_data, file_handle)
-        file_handle.write(_YAML_SEPARATOR)
-        csv_data.to_csv(file_handle, index=True, sep=csv_separator, float_format=float_format, line_terminator="\n")
-        logging.getLogger(__name__).debug(f"saved to {file_handle.name} successfully")
+def write_csv_with_header(header_data: Dict[Any, Any], csv_data: pd.DataFrame, filepath: Union[str, Path], csv_separator=";", float_format="%.4f", separate_metadata=False):
+    """
+    Write data to a csvy file, header_data as YAML terminated with "---" and followed by the csv data
+
+    :param header_data: header data to write as YAML
+    :type header_data: Dict[Any, Any]
+    :param csv_data: tabular csv data
+    :type csv_data: pd.DataFrame
+    :param filepath: full path to write to
+    :type filepath: [type]
+    :param csv_separator: separator in csv part, defaults to ";"
+    :type csv_separator: str, optional
+    :param float_format: float format used in csv part, defaults to "%.4f"
+    :type float_format: str, optional
+    :param separate_metadata: if true, the data is written as plain csv and a separate metadata file is stored as filename-METADATA.yml
+    :type separate_metadata: bool, optional, defaults to False
+    """
+    if separate_metadata:
+        with open(filepath, "w") as file_handle:
+            csv_data.to_csv(file_handle, index=True, sep=csv_separator, float_format=float_format, line_terminator="\n")
+            logging.getLogger(__name__).debug(f"saved to {file_handle.name} successfully - plain csv")
+
+        filepath_and_name, file_ext = os.path.splitext(filepath)
+        filepath_meta = f"{filepath_and_name}-METADATA.yml"
+        with open(filepath_meta, "w") as file_metadata_handle:
+            yaml.dump(header_data, file_metadata_handle)
+            logging.getLogger(__name__).debug(f"saved metadata to {file_handle.name} successfully")
+    else:
+        with open(filepath, "w") as file_handle:
+            file_handle.write(_YAML_SEPARATOR)
+            file_handle.write(_CSVY_FILEFORMAT_COMMENT)
+            yaml.dump(header_data, file_handle)
+            file_handle.write(_YAML_SEPARATOR)
+            csv_data.to_csv(file_handle, index=True, sep=csv_separator, float_format=float_format, line_terminator="\n")
+            logging.getLogger(__name__).debug(f"saved to {file_handle.name} successfully")

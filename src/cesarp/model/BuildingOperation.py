@@ -52,7 +52,11 @@ class HVACOperation:
     """
 
     def __init__(
-        self, heating_setpoint_schedule: Any, cooling_setpoint_schedule: Any, ventilation_fraction_schedule: Any, outdoor_air_flow_per_zone_floor_area: pint.Quantity,
+        self,
+        heating_setpoint_schedule: Any,
+        cooling_setpoint_schedule: Any,
+        ventilation_fraction_schedule: Any,
+        outdoor_air_flow_per_zone_floor_area: pint.Quantity,
     ):
         self.heating_setpoint_schedule = heating_setpoint_schedule
         self.cooling_setpoint_schedule = cooling_setpoint_schedule

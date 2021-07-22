@@ -30,6 +30,11 @@ from cesarp.energy_strategy.input_parser_helper import check_timeperiod
 
 
 class RetrofitRates:
+    """
+    Query the retrofit rates according to set energy strategy.
+    Only supports BldgType.SFH and BldgType.MFH and assumes that they have identical age classes.
+    """
+
     _COL_LABEL_YOC = "Year of Construction"
     _COL_LABEL_PARTIAL_AC_MAPPING = "AgeRangePartialRetrofit"
     _COL_LABEL_BLDG_ELEMS = "Building Element"

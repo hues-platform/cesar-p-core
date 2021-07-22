@@ -22,7 +22,8 @@
 import pandas as pd
 import pint
 import logging
-from typing import List, Dict, Any, Optional
+from pathlib import Path
+from typing import List, Dict, Any, Optional, Union
 from enum import Enum
 from cesarp.model.BuildingElement import BuildingElement
 
@@ -44,8 +45,9 @@ class RetrofitLog:
     """
     Log retrofit entries. Log can either by used per building or for a site, as building fid is included in each
     entry.
-    The idea is to add on demand query method, e.g. how many buildings got the Windows retrofitted or
-    how much embodied emissions result from the retrofit for a certain building.
+    The idea is to save the retrofit information as fine grained as possible. To get any information out of the log,
+    the best is to convert it to a dataframe with convert_to_df method and then e.g. sum the costs column
+    or query how many buildings got a window retrofitted or whatever information interests you.
     """
 
     def __init__(self):
@@ -96,7 +98,13 @@ class RetrofitLog:
     def append_log(self, ret_log_to_append):
         self.my_log_entries + ret_log_to_append.my_log_entries
 
-    def save(self, filepath):
+    def save(self, filepath: Union[str, Path]) -> None:
+        """
+        Save the retrofit log as a csv.
+
+        :param filepath: filename with full path to write retrofit log to
+        :type filepath: Union[str, path]
+        """
         if self.my_log_entries:
             log_as_df = self.convert_to_df()
             log_as_df.to_csv(filepath)
@@ -104,6 +112,21 @@ class RetrofitLog:
             logging.getLogger(__name__).info("did not write retrofit log because it is empty")
 
     def convert_to_df(self) -> pd.DataFrame:
+        """
+        :return: the retrofit log as a dataframe. Each retrofit measure as a row, columns are the entries of LOG_KEYS enum
+        :rtype: pd.DataFrame
+        """
         log_as_df = pd.DataFrame(self.my_log_entries)
         log_as_df.columns = [log_key.value for log_key in LOG_KEYS]
         return log_as_df
+
+    def get_sum_of_costs_and_emissions(self) -> Dict[str, pint.Quantity]:
+        """
+        Returns a pandas DataSeries (which can be queried like a dict) with entries "costs", "co2_emission", "non_renewable_pen",
+        each having as a value the sum of those LOG_KEYS over all retrofit log entries as a pint.Quantity.
+
+        :return: pandas Series with sum of costs and emission, as described above
+        :rtype: Dict[str, pint.Quantity]
+        """
+        ret_log_as_df = self.convert_to_df()
+        return ret_log_as_df[[LOG_KEYS.COSTS.value, LOG_KEYS.CO2_EMISSION.value, LOG_KEYS.NON_RENEWABLE_PEN.value]].apply(sum)

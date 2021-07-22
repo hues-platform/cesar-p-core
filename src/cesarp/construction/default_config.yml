@@ -19,8 +19,7 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 
- # for files and pathes, use either a path relative to the location of cesar/construction/ or absolute path
-METADATA:
+METADATA: # metadata for default CONSTRUCTION config parameters
   SOURCE:
     - embodied co2 and pen for window frame were looked up in KBOB 2014, assuming wood-aluminium frame
     - Installation characteristic, shading parameters, frame properties were transfered from hard-coded values
@@ -29,23 +28,35 @@ METADATA:
       no frame dividers nowadays and adding fixed dividers for all buildings adds thus more inaccuracy and uncertainity
       than it helps to get more accurate results.)
 CONSTRUCTION:
-    CONSTRUCTION_DB: "GRAPH_DB" # "IDF_FILES_DB", "GRAPH_DB"; for graph db options see package graph_db_access
+    # source for constructional data such as materials;
+    # Options
+    # GRAPH_DB: data source local TTL graph data file or remote GraphDB. See configuration in cesarp.graphdb_access.
+    # IDF_FILES_DB: legacy option using pre-defined IDF snippets, does not support retrofitting, see package cesarp.idf_constructions_db_access
+    CONSTRUCTION_DB: "GRAPH_DB"
+    # parameters for window frame are the same for all the buildings. 
+    # SOURCE: those parameters where constants in cesar matlab version / co2 and pen: KBOB 2014
     FIXED_WINDOW_FRAME_CONSTRUCTION_PARAMETERS:
         name: "cesar-wood-aluminium-default"
         frame_conductance: 9.5 W/m**2/K
         frame_solar_absorptance: 0.5 solar_absorptance
         frame_visible_absorptance: 0.5 visible_absorptance
         outside_reveal_solar_absorptance: 0.5 solar_absorptance # TODO correct to still set that value? check in E+ reference
-        embodied_co2_emission_per_m2: 256 kg*CO2eq/m**2 # SOURCE: KBOB 2014
-        embodied_non_renewable_primary_energy_per_m2: 3740 MJ*Oileq/m**2 # SOURCE: KBOB 2014
-    FIXED_INSTALLATION_CHARACTERISTICS: # SOURCE: those parameters where constants in cesar matlab version
+        embodied_co2_emission_per_m2: 256 kg*CO2eq/m**2
+        embodied_non_renewable_primary_energy_per_m2: 3740 MJ*Oileq/m**2
+    # installation characteristics parameters which are the same for all of the buildings
+    # those are quite EnergyPlus specific
+    # SOURCE: those parameters where constants in cesar matlab version
+    FIXED_INSTALLATION_CHARACTERISTICS: 
         FRACTION_RADIANT_FROM_ACTIVITY: 0.3 dimensionless
         LIGHTING_RETURN_AIR_FRACTION: 0.0 dimensionless
         LIGHTING_FRACTION_RADIANT: 0.4 dimensionless
         LIGHTING_FRACTION_VISIBLE: 0.2 dimensionless
         DHW_FRACTION_LOST: 1 dimensionless
         ELECTRIC_APPLIANCES_FRACTION_RADIANT: 0.75 dimensionless
-    FIXED_NEIGHBOUR_BLDG_PARAMETERS: # SOURCE: those parameters where constants in cesar matlab version
+    # material properties for neighbouring buildings are the same for all of the buildings 
+    # (expect for glass, which is set to be the same as the one of the main building)
+    # SOURCE: those parameters where constants in cesar matlab version
+    FIXED_NEIGHBOUR_BLDG_PARAMETERS:
         SHADING_OBJ_WALL:
             diffuse_solar_reflectance_unglazed_part: 0.3 diffuse_solar_reflectance
             diffuse_visible_reflectance_unglazed_part: 0.3 diffuse_visible_reflectance
@@ -54,18 +65,14 @@ CONSTRUCTION:
             diffuse_solar_reflectance_unglazed_part: 0.15 diffuse_solar_reflectance
             diffuse_visible_reflectance_unglazed_part: 0.1 diffuse_visible_reflectance
             glazing_ratio: 0 dimensionless
-    FIXED_INTERNAL_FLOOR_CONSTRUCTION_PARAMETERS:
-        name: "cesar_default_internal_floor"
-        layers:
-            layer1:
-                thickness: 0.1 m
-                material: "cast_concrete_dense"
+    # only used in case CONSTRUCTION_DB is set to IDF_FILES_DB; otherwis internal ceiling/floor is queried from GraphDB
     FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS:
         name: "cesar_default_internal_ceiling"
         layers:
             layer1:
                 thickness: 0.1 m
                 material: "cast_concrete_dense"
+    # only used in case above construction FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS is used
     MATERIALS:
         cast_concrete_dense:
             name: "cast_concrete_dense"

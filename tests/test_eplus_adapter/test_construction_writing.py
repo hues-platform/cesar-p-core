@@ -162,8 +162,8 @@ def get_sample_win_constr(ureg: pint.UnitRegistry):
 @pytest.fixture
 def idf():
     eplus_cfg = cesarp.common.config_loader.load_config_for_package(eplus_adpater_config_file, "cesarp.eplus_adapter")
-    IDF.setiddname(eplus_cfg["CUSTOM_IDD_9_3"])
-    idfstring = cesarp.eplus_adapter.idf_strings.version.format("9.3.0")
+    IDF.setiddname(eplus_cfg["CUSTOM_IDD_9_5"])
+    idfstring = cesarp.eplus_adapter.idf_strings.version.format("9.5.0")
     fhandle = StringIO(idfstring)
     return IDF(fhandle)
 

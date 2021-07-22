@@ -20,18 +20,19 @@
 ##
 GEOMETRY:
     NEIGHBOURHOOD:
-        RADIUS:                     100  # meter
-        MAX_DISTANCE_ADJACENCY:     0.1  # meter
+        RADIUS:                     100  # meter; within this radius buildings around the main building are used as shading objects
+        MAX_DISTANCE_ADJACENCY:     0.1  # meter; if the distance between two buildings is below this threshold they are considered to be adjacent (no windows, different properties for wall)
 
     MAIN_BLDG_SHAPE:
-        MINIMAL_STORY_HEIGHT:          2.4  # meter
+        MINIMAL_STORY_HEIGHT:          2.4  # meter; minimal floor height; if the building height is not dividable by 2.4, the floor height is rounded up
         WINDOW:
-            HEIGHT:                     1.5  # meter
-            MIN_WALL_WIDTH_FOR_WINDOW:  0.1  # meter
-            MIN_WINDOW_WIDTH:           0.08 # meter
+            HEIGHT:                         1.5  # meter; fixed height for a window, width is set to match specified glazing ratio
+            MIN_WALL_WIDTH_FOR_WINDOW:      0.1  # meter; if a wall is smaller than this threshold no window is modelled
+            MIN_WINDOW_WIDTH:               0.08 # meter; if a window would be smaller than this threshold it is not modelled
+            MAX_GLZ_RATIO_WALL_WIDTH:       0.95 # factor [0..1]; if window width calculated is wider then this fraction of the wall, then reduce the window width to wall width * MAX_GLZ_RATIO_FACTOR_WIN_WIDTH. this avoids windows which are wider than the wall.
             WINDOW_FRAME:
-                WIDTH: 0.04
+                WIDTH: 0.04                  # meter; fixed width for the windows frames
         GLAZING_RATIO_CHECK:  # check if overall building ratio is equal to set per-wall building ratio
             ALLOWED_GLZ_RATIO_DEV: 0.02  # percentage deviation allowed between the set glazing ratio applied per wall and the resulting overall building glazing ratio
-            EXCEPTION_ON_MISMATCH: True  # raise exception if glazing ratio mismatch is out of allowed deviation, if false only log a warning
-            DO_CHECK_BLD_WITH_ADJACENCIES: False  # if true, check is on also if some of the walls of the building are adjacent and thus have no windows
+            EXCEPTION_ON_MISMATCH: True  # raise exception if glazing ratio mismatch is out of allowed deviation, if false only do only log as a warning
+            DO_CHECK_BLD_WITH_ADJACENCIES: False  # if true, check is also on if some of the walls of the building are adjacent and thus have no windows

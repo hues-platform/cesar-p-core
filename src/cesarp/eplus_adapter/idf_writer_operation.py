@@ -43,7 +43,11 @@ def add_building_operation(idf, zone_idf_name, bldg_operation: BuildingOperation
     add_people(idf, zone_idf_name, bldg_operation.occupancy, install_characteristics.fraction_radiant_from_activity, ureg)
     add_lights(idf, zone_idf_name, bldg_operation.lighting, install_characteristics.lighting_characteristics, ureg)
     add_electric_equipment(
-        idf, zone_idf_name, bldg_operation.electric_appliances, install_characteristics.electric_appliances_fraction_radiant, ureg,
+        idf,
+        zone_idf_name,
+        bldg_operation.electric_appliances,
+        install_characteristics.electric_appliances_fraction_radiant,
+        ureg,
     )
     add_hot_water_equipment(idf, zone_idf_name, bldg_operation.dhw, install_characteristics.dhw_fraction_lost, ureg)
     add_HVAC_template(idf, zone_idf_name, bldg_operation.hvac, bldg_operation.name, ureg)

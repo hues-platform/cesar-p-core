@@ -19,7 +19,8 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 SITE:
-  GROUND_TEMPERATURES:
+  # some basic environmental properties used in EnergyPlus - constant for all buildings (even when you use multiple weather files wit SITE_PER_SWISS_COMMUNITY)
+  GROUND_TEMPERATURES: # parameters are quite EnergyPlus specific, check out EnergyPlus reference for details
     BUILDING_SURFACE: 18 degreeC
     SHALLOW: 14 degreeC
     DEEP: 14 degreeC

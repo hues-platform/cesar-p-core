@@ -18,6 +18,10 @@
 ##
 ## Contact: https://www.empa.ch/web/s313
 ##
-ENERGY_PERSPECTIVE_2050: # use class EnergyPerspective2050RetrofitManager if you want EnergyPerspective2050 retrofit strategy applied
+
+# use class EnergyPerspective2050RetrofitManager if you want EnergyPerspective2050 retrofit strategy applied
+ENERGY_PERSPECTIVE_2050:
+    # targest for operational emissions after the retrofit
     ENERGY_TARGETS_LOOKUP_FILE: './ressources/energy_targets_2050.yml'
+    # do model that only some of the building elements are retrofitted
     DO_PARTIAL_RETROFIT: True

@@ -19,7 +19,20 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-import os
-from pathlib import Path
+"""
+emissions_cost
+============================
 
-_default_config_file = os.path.dirname(__file__) / Path("emissions_cost_config.yml")
+Operational emissions and costs calculation.
+
+
+Main API
+
+======================================================================================= ===========================================================
+class / module                                                                          description
+======================================================================================= ===========================================================
+:py:class:`cesarp.emissions_cost.OperationalEmissionsAndCosts`                          calculate operational emissions and costs for a building
+
+======================================================================================= ===========================================================
+
+"""

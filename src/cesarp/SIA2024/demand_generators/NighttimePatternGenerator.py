@@ -64,11 +64,17 @@ class NighttimePatternGenerator:
         :return: nothing, values per day are cached
         """
         self.wakeup_hour_daily = profile_variability.randomize_vertical(
-            values=self.__get_wakeup_year_prof_daily_nom(), band=variability_band, min_value=MIN_HOUR_OF_DAY, max_value=MAX_HOUR_OF_DAY,
+            values=self.__get_wakeup_year_prof_daily_nom(),
+            band=variability_band,
+            min_value=MIN_HOUR_OF_DAY,
+            max_value=MAX_HOUR_OF_DAY,
         )
         self.wakeup_hour_daily = [round(x, 0) for x in self.wakeup_hour_daily]
         self.sleeptime_hour_daily = profile_variability.randomize_vertical(
-            values=self.__get_sleeptime_year_prof_daily_nom(), band=variability_band, min_value=MIN_HOUR_OF_DAY, max_value=MAX_HOUR_OF_DAY,
+            values=self.__get_sleeptime_year_prof_daily_nom(),
+            band=variability_band,
+            min_value=MIN_HOUR_OF_DAY,
+            max_value=MAX_HOUR_OF_DAY,
         )
         self.sleeptime_hour_daily = [round(x, 0) for x in self.sleeptime_hour_daily]
         assert all(

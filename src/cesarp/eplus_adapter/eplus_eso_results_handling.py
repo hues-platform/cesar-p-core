@@ -30,7 +30,7 @@ from pathlib import Path
 import cesarp.common
 from cesarp.results.EnergyDemandSimulationResults import EnergyDemandSimulationResults
 from cesarp.eplus_adapter import _default_config_file
-from cesarp.eplus_adapter.EPlusEioResultReader import EPlusEioResultAnalyzer
+from cesarp.eplus_adapter.EPlusEioResultAnalyzer import EPlusEioResultAnalyzer
 from cesarp.eplus_adapter.idf_strings import ResultsFrequency
 
 _ESO_FILE_NAME = "eplusout.eso"
@@ -162,6 +162,23 @@ def collect_single_param_for_site(result_folders: Mapping[int, str], result_key,
     """
     res = collect_multi_params_for_site(result_folders, [result_key], results_frequency)
     return res.drop(result_key, axis=1)
+
+
+def collect_multi_entry_annual_result(single_result_folder: str, var_name: str):
+
+    eso = esoreader.read_from_path(single_result_folder / Path(_ESO_FILE_NAME))
+
+    variable_instances = eso.dd.find_variable(var_name)
+
+    results_dict = {}
+
+    for var_def in variable_instances:
+        # index pos 1 = entry name e.g. surface name
+        (data, unit) = __get_data_series_with_unit(eso, var_def)
+        assert len(data) == 1, f"data (f{var_def}) is not a single value, it has more than one value!"
+        results_dict[var_def[1]] = data[0]
+
+    return results_dict
 
 
 def _get_all_annual_vars_from_config(custom_config: Dict[str, Any] = {}):

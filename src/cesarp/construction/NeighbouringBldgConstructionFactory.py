@@ -30,6 +30,13 @@ from cesarp.construction import _default_config_file
 
 
 class NeighbouringBldgConstructionFactory:
+    """
+    Access to material properties (reflectenc ect) to be used for neighbouring buildings.
+    For the glass material, the same material is usually used for the neighbouring buildings as the glass of the main building,
+    thus the glass construction to be used is passed in. All other parameters are constant and configurable in the config of
+    this package.
+    """
+
     def __init__(self, unit_reg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
         """
         :param custom_config: dictonary with configuration entries overwriting package default config
@@ -40,9 +47,10 @@ class NeighbouringBldgConstructionFactory:
 
     def get_neighbours_construction_props(self, window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF]) -> Mapping[str, ShadingObjectConstruction]:
         """
-        Do not use the BuildingElement directly as this dict is jsonpickled, and multiple dicts with same BuildingElement instances as keys give a mess...
-        cesarp.model.BuildingConstruction also has a dict with BuildingElement keys...
+        return a dict with the shading properties for the wall and roof of neighbouring buildings
         """
         props_wall = ShadingObjectConstruction.init_from_dict(self._fixed_params["SHADING_OBJ_WALL"], window_glass_construction, self.unit_reg)
         props_roof = ShadingObjectConstruction.init_from_dict(self._fixed_params["SHADING_OBJ_ROOF"], window_glass_construction, self.unit_reg)
+        # Do not use the BuildingElement directly as a key, as this dict is jsonpickled, and multiple dicts with same BuildingElement instances as keys give a mess...
+        # cesarp.model.BuildingConstruction also has a dict with BuildingElement keys...
         return {bec.WALL.name: props_wall, bec.ROOF.name: props_roof}

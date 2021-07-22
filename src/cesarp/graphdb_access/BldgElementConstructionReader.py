@@ -150,20 +150,19 @@ class BldgElementConstructionReader:
         """
         try:
             emb_co2, emb_pen = self.get_construction_emission_values(win_glass_uri)
-        except ValueError as val_err:
-            msg = f"could not read embodied emissions for {win_glass_uri}"
+        except GraphDataException as graph_err:
             if emb_emissions_needed:
-                raise GraphDataException(msg) from val_err
-            else:
-                self._logger.debug(msg + ". Setting them to None.")
-                emb_co2 = None
-                emb_pen = None
+                raise graph_err
+            self._logger.debug(repr(graph_err) + ". Setting co2 and pen to None.")
+            emb_co2 = None
+            emb_pen = None
 
-        var_win_construction = WindowGlassConstruction(
-            name=win_glass_uri, layers=self.get_window_layers(win_glass_uri), emb_co2_emission_per_m2=emb_co2, emb_non_ren_primary_energy_per_m2=emb_pen,
+        return WindowGlassConstruction(
+            name=win_glass_uri,
+            layers=self.get_window_layers(win_glass_uri),
+            emb_co2_emission_per_m2=emb_co2,
+            emb_non_ren_primary_energy_per_m2=emb_pen,
         )
-
-        return var_win_construction
 
     def get_layers(self, name):
         df = self.graph_reader.get_layers_from_graph(name)
@@ -201,7 +200,16 @@ class BldgElementConstructionReader:
                 co2_emission = self.ureg(df.at[0, "CO2Emission"])
                 non_renewable_primary_energy = self.ureg(df.at[0, "nonRenewablePrimaryEnergy"])
             return OpaqueMaterial(
-                name, density, roughness, solar_absorptance, specific_heat, thermal_absorptance, conductivity, visible_absorptance, co2_emission, non_renewable_primary_energy,
+                name,
+                density,
+                roughness,
+                solar_absorptance,
+                specific_heat,
+                thermal_absorptance,
+                conductivity,
+                visible_absorptance,
+                co2_emission,
+                non_renewable_primary_energy,
             )
         else:
             raise ValueError(f"{name} has missing properties in Graph")
@@ -397,6 +405,9 @@ class BldgElementConstructionReader:
 
     def get_construction_emission_values(self, construction_uri) -> Tuple[pint.Quantity, pint.Quantity]:
         df = self.graph_reader.get_construction_emission_from_graph(construction_uri)
+        if len(df.index) != 1:
+            msg = f"Could not read embodied emissions for {construction_uri}. One entry expected, but there were {len(df.index)}."
+            raise GraphDataException(msg)
         co2_emission_per_kg = self.ureg(df.at[0, "co2Emission"])
         non_renewable_primary_energy_per_kg = self.ureg(df.at[0, "nonRenewablePrimaryEnergy"])
         return co2_emission_per_kg, non_renewable_primary_energy_per_kg

@@ -26,7 +26,6 @@ from pathlib import Path
 
 def scan_directory(dir_path, name_with_number_pattern, placeholder_regexp=r"(\d+)", key_is_int=True):
     """
-
     :param dir_path: directory which schould be scanned
     :param name_with_number_pattern: a name pattern containing one placeholder {} where a integer (e.g. the fid) is expected
     :return: dict with all directory entries matching, key beeing the number from the filename (e.g. the fid)

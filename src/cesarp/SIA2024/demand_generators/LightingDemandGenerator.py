@@ -108,11 +108,15 @@ class LightingDemandGenerator:
 
         def wrap_get_lighting_density_prof_for_room(room_type):
             return self.__get_lighting_density_profile_for_room(
-                room_type, get_year_profile_occupancy_hourly_per_room_method, nighttime_pattern_year_profile_bldg_hourly, get_year_profile_monthly_variation_hourly_per_room_method,
+                room_type,
+                get_year_profile_occupancy_hourly_per_room_method,
+                nighttime_pattern_year_profile_bldg_hourly,
+                get_year_profile_monthly_variation_hourly_per_room_method,
             )
 
         return self.bldg_type.synthesize_profiles_yearly_by_room_area_for_bldg(
-            wrap_get_lighting_density_prof_for_room, additional_factor_per_room_method=self.__get_lighting_density_for_room_method,
+            wrap_get_lighting_density_prof_for_room,
+            additional_factor_per_room_method=self.__get_lighting_density_for_room_method,
         )
 
     def get_lighting_density_for_bldg(self):

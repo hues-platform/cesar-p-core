@@ -24,9 +24,10 @@ Basic operations on 2d/3d vertices and shapes
 """
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Tuple
+from typing import Dict
 from contracts import ic
 from shapely.geometry import Polygon
+import math
 
 import cesarp.common
 from cesarp.geometry.custom_contracts import coords_3d_raw, coords_2d_raw
@@ -74,7 +75,7 @@ def calc_proj_area_of_polygon(polygon_vertices: pd.DataFrame) -> float:
     :rtype: floats
     """
     assert coords_3d_raw(polygon_vertices) or coords_2d_raw(polygon_vertices), "please pass a dataframe defining 2d or 3d vertices"
-    vertices_as_list: List[Tuple[float, float, float]] = np.array(polygon_vertices.to_records(index=False).tolist())
+    vertices_as_list: np.ndarray = np.array(polygon_vertices.to_records(index=False).tolist())
     return Polygon(vertices_as_list).area
 
 
@@ -88,8 +89,12 @@ def calc_area_of_rectangle(rectangle_vertices):
     assert coords_3d_raw(rectangle_vertices) or coords_2d_raw(rectangle_vertices), "please pass a dataframe defining 2d or 3d vertices"
     side_a = calc_distance_between_vertices(rectangle_vertices.loc[0], rectangle_vertices.loc[1])
     side_b = calc_distance_between_vertices(rectangle_vertices.loc[1], rectangle_vertices.loc[2])
-    assert abs(round(side_a, 2)) == abs(round(calc_distance_between_vertices(rectangle_vertices.loc[2], rectangle_vertices.loc[3]), 2)), "passed vertices do not define a rectangle"
-    assert abs(round(side_b, 2)) == abs(round(calc_distance_between_vertices(rectangle_vertices.loc[3], rectangle_vertices.loc[0]), 2)), "passed vertices do not define a rectangle"
+    assert math.isclose(
+        abs(round(side_a, 5)), abs(round(calc_distance_between_vertices(rectangle_vertices.loc[2], rectangle_vertices.loc[3]), 5)), abs_tol=0.0001
+    ), "passed vertices do not define a rectangle"
+    assert math.isclose(
+        abs(round(side_b, 5)), abs(round(calc_distance_between_vertices(rectangle_vertices.loc[3], rectangle_vertices.loc[0]), 5)), abs_tol=0.0001
+    ), "passed vertices do not define a rectangle"
     return side_a * side_b
 
 

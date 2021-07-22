@@ -54,7 +54,11 @@ class VentilationDemandGenerator:
     """
 
     def __init__(
-        self, bldg_type: BuildingTypeProtocol, base_data: BaseDataForVentilationProtocol, vent_rate_variability: bool, get_area_pp_for_room_method: Callable[[str], float],
+        self,
+        bldg_type: BuildingTypeProtocol,
+        base_data: BaseDataForVentilationProtocol,
+        vent_rate_variability: bool,
+        get_area_pp_for_room_method: Callable[[str], float],
     ):
         """
         :param bldg_type: Building type to generate the profile for, e.g. object of SIA2024BuildingType
@@ -80,7 +84,9 @@ class VentilationDemandGenerator:
         return self.bldg_type.synthesize_value_by_room_area(self.__get_vent_rate_for_room_method)
 
     def get_yearly_ventilation_profile_for_bldg(
-        self, get_year_profile_occupancy_hourly_per_room_method: Callable[[str], List[float]], nighttime_pattern_year_profile_bldg_hourly: List[bool],
+        self,
+        get_year_profile_occupancy_hourly_per_room_method: Callable[[str], List[float]],
+        nighttime_pattern_year_profile_bldg_hourly: List[bool],
     ):
         """
         :param get_year_profile_occupancy_hourly_per_room_method: reference to method returning a year profile with hourly values [0...1]
@@ -94,7 +100,10 @@ class VentilationDemandGenerator:
         return self.bldg_type.synthesize_profiles_yearly_by_room_area_for_bldg(wrap_get_vent_prof_for_room, additional_factor_per_room_method=self.__get_vent_rate_for_room_method)
 
     def __get_yearly_ventilation_profile_for_room(
-        self, room_type, get_year_profile_occupancy_hourly_per_room_method: Callable[[str], List[float]], nighttime_pattern_year_profile_bldg_hourly: List[bool],
+        self,
+        room_type,
+        get_year_profile_occupancy_hourly_per_room_method: Callable[[str], List[float]],
+        nighttime_pattern_year_profile_bldg_hourly: List[bool],
     ):
 
         # ventilation profile follows occupancy

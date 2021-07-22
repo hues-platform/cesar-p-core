@@ -34,6 +34,10 @@ from cesarp.model.WindowConstruction import WindowShadingMaterial
 
 class BuildingModel:
     """
+    In case you change the structure, add parameters in any of the sub-classes,
+    make sure old versions stored to disk can be reloaded by adapting the upgrade_if_necessary() method
+    and you increse the self._class_version
+
     Version 1.0: first version pushed to master
     Version 1.1: added year_of_construction, cooling parameters
     Version 1.2: merged Version 1.1 from feature/cooling branch, but without cooling parameters, but adding bldg_type

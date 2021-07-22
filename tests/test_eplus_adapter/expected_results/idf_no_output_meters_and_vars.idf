@@ -1,7 +1,7 @@
 !- Windows Line endings 
 
 VERSION,
-    9.3.0;                    !- Version Identifier
+    9.5.0;                    !- Version Identifier
 
 OUTPUT:VARIABLEDICTIONARY,
     IDF;                      !- Key Field

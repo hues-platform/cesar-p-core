@@ -2348,7 +2348,11 @@ OUTPUT:VARIABLE,
     Hourly;                   !- Reporting Frequency
 
 OUTPUT:METER,
-    DistrictHeating:Facility,    !- Name
+    DistrictHeating:Building,    !- Name
+    RunPeriod;                !- Reporting Frequency
+
+OUTPUT:METER,
+    DistrictHeating:HVAC,     !- Name
     RunPeriod;                !- Reporting Frequency
 
 OUTPUT:METER,
@@ -2360,15 +2364,11 @@ OUTPUT:METER,
     RunPeriod;                !- Reporting Frequency
 
 OUTPUT:METER,
-    DistrictHeating:HVAC,     !- Name
-    RunPeriod;                !- Reporting Frequency
-
-OUTPUT:METER,
     DistrictHeating:Building,    !- Name
-    RunPeriod;                !- Reporting Frequency
+    Hourly;                   !- Reporting Frequency
 
 OUTPUT:METER,
-    DistrictHeating:Facility,    !- Name
+    DistrictHeating:HVAC,     !- Name
     Hourly;                   !- Reporting Frequency
 
 OUTPUT:METER,
@@ -2377,12 +2377,4 @@ OUTPUT:METER,
 
 OUTPUT:METER,
     Electricity:Facility,     !- Name
-    Hourly;                   !- Reporting Frequency
-
-OUTPUT:METER,
-    DistrictHeating:HVAC,     !- Name
-    Hourly;                   !- Reporting Frequency
-
-OUTPUT:METER,
-    DistrictHeating:Building,    !- Name
     Hourly;                   !- Reporting Frequency

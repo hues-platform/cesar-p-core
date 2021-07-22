@@ -18,6 +18,17 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+
+"""
+Methods running in process pool need to be top-level module methods, thus for each
+processing step there is such a method.
+Methods with suffix "_no_exception" catch exceptions caused by an error in a single building.
+This is useful when many buildings are run at once and an error in one building should not lead to termination
+of the whole site run.
+Those methods are not really intended to be used from outside manager package... if you do, read descriptions and
+study the type of the arguments and return values carefully.
+"""
+
 import os
 import logging
 import pandas as pd
@@ -36,19 +47,14 @@ from cesarp.emissons_cost.OperationalEmissionsAndCosts import OperationalEmissio
 from cesarp.results.EnergyDemandSimulationResults import EnergyDemandSimulationResults
 from cesarp.results.ResultProcessor import ResultProcessor
 
-################################################################################
-# Methods running in process pool need to be top-level module methods, thus for each
-# processing step there is such a method.
-# Methods with suffix "_no_exception" catch exceptions caused by an error in a single building.
-# This is useful when many buildings are run at once and an error in one building should not lead to termination
-# of the whole site run.
-# Those methods are not really intended to be used from outside manager package... if you do, read descriptions and
-# study the type of the arguments and return values carefully.
-################################################################################
-
 
 def all_preparation_steps_batch_no_exception(
-    bldg_fids_to_do, custom_config, sia_params_gen_lock, idf_save_folder, idf_file_pattern, profiles_files_handler,
+    bldg_fids_to_do,
+    custom_config,
+    sia_params_gen_lock,
+    idf_save_folder,
+    idf_file_pattern,
+    profiles_files_handler,
 ):
     (bldg_models, per_bldg_infos, bldg_model_creation_failed) = create_bldg_models_batch_no_exception(bldg_fids_to_do, custom_config, sia_params_gen_lock)
 
@@ -145,9 +151,7 @@ def run_simulation_no_exception(idf_path, weather_file, output_folder, config_ep
 
 def _collect_result_summary_batch(
     input_tuples_per_fid, do_calc_op_emissions_and_costs, custom_config
-) -> Tuple[
-    Dict[int, EplusErrorLevel], Dict[int, Optional[EnergyDemandSimulationResults]], Dict[int, Optional[OperationalEmissionsAndCostsResult]],
-]:
+) -> Tuple[Dict[int, EplusErrorLevel], Dict[int, Optional[EnergyDemandSimulationResults]], Dict[int, Optional[OperationalEmissionsAndCostsResult]]]:
     """
     :param input_tuples_per_fid: {fid: (eplus_output_folder, heating_energy_carrier, dhw_energy_carrier, simulation_year)}}
     :param custom_config: custom configuration entries
@@ -155,7 +159,10 @@ def _collect_result_summary_batch(
     """
     unit_reg = pint.get_application_registry()
     res_processor = ResultProcessor(unit_reg, do_calc_op_emissions_and_costs, custom_config)
-    for (fid, (eplus_output_folder, heating_energy_carrier, dhw_energy_carrier, sim_year),) in input_tuples_per_fid.items():
+    for (
+        fid,
+        (eplus_output_folder, heating_energy_carrier, dhw_energy_carrier, sim_year),
+    ) in input_tuples_per_fid.items():
         res_processor.process_results_for(fid, eplus_output_folder, heating_energy_carrier, dhw_energy_carrier, sim_year)
     return (
         res_processor.eplus_err_level_per_bldg,

@@ -19,7 +19,6 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 
- # for files and pathes, use either a path relative to the location of cesar/construction/ or absolute path
 IDF_CONSTRUCTIONS_DB_ACCESS:
     FIXED_INFILTRATION_PROFILE_VALUE: 1
     INPUT_FILES:

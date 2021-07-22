@@ -31,8 +31,10 @@ from cesarp.operation.protocols import PassiveCoolingOperationFactoryProtocol
 
 class FixedBuildingOperationFactory:
     """
-    Assembles internal condition properties based on configuration settings pointing to schedule files. Only one
-    schedule file for all buildings is supported.
+    Assembles internal condition properties based on configuration settings pointing to schedule files.
+    For all buildings the same schedules and parameters are applied.
+
+    Implements the :py:class:`cesarp.manager.manager_protocols.BuildingOperationFactoryProtocol` and thus can be set as "BUILDING_OPERATION_FACTORY_CLASS" in the config of package :py:class:`cesarp.manager`
     """
 
     def __init__(self, passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol, unit_registry, custom_config={}):

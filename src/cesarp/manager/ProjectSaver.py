@@ -38,12 +38,14 @@ from cesarp.model.Site import Site
 from cesarp.common import version_info
 from cesarp.eplus_adapter.eplus_sim_runner import get_eplus_executable, get_idd_path, get_eplus_version
 import cesarp.common
+from cesarp.common.CesarpException import CesarpException
 from cesarp.common.config_loader import save_config_to_file
 from cesarp.graphdb_access import _default_config_file as graph_db_access_default_config
 
 
 def add_folder_to_zip(zip_file: ZipFile, folder: Union[str, Path], sub_dir_in_zip: str = "") -> Dict[str, str]:
-    """add folder and subelements to zip
+    """
+    add folder and subelements to zip
 
     :param zip_file: [description]
     :type zip_file: ZipFile
@@ -79,6 +81,15 @@ def add_file_to_zip(zip_file: ZipFile, filepath, subdir="", filename_in_zip=None
 
 
 class ProjectSaver:
+    """
+    Save a simulation as a zip file. Either to transfer to another PC or to save for storage.
+    You have different options what should be included, see options of *create_zip_file()*.
+    In general, the aim is that in the ZIP you have everything included necessary to re-run the
+    simulation. To do so, create a instance of this class and then call *create_zip_file()*.
+
+    If you use the SimulationManager, see its *save_to_zip()* method, which calls this ProjectSaver and initializes everything as needed.
+    """
+
     GIT_STATUS_FILENAME = "git_status_extended.txt"
     PROJ_RESSOURCES_FOLDER = "project_ressources"
     CESARP_OUTPUTS_FOLDER = "cesarp_output"
@@ -88,19 +99,33 @@ class ProjectSaver:
 
     def __init__(
         self,
-        zip_file_path,
-        base_project_path,
+        zip_file_path: Union[Path, str],
         main_config: Dict[str, Any],
         main_script_path: str,
         file_storage_handler: FileStorageHandler,
         temp_dir: Optional[Path] = None,
         bldg_containers: Dict[int, BuildingContainer] = None,
     ):
+        """
+        :param zip_file_path: full path including file name and extension to save your zip to
+        :type zip_file_path: Union[Path, str]
+        :param main_config: main/custom config used in that project
+        :type main_config: Dict[str, Any]
+        :param main_script_path: path to main script used to run CESAR-P for current project. Script will be included in the ZIP.
+        :type main_script_path: str
+        :param file_storage_handler: file storage handler instance of the project. needed to know where which files are located.
+        :type file_storage_handler: FileStorageHandler
+        :param temp_dir: temporary directory where to store contents to be added to ZIP, such as the README, if None system TEMP folder will be used, defaults to None
+        :type temp_dir: Optional[Path], optional
+        :param bldg_containers: if serialized *BuildingContainer*, pass the *BuildingContainer* objects here, defaults to None
+        :type bldg_containers: Dict[int, BuildingContainer], optional
+        :raises Exception: CesarpException if system TEMP dir is not available and no temp_dir is passed
+        """
         if not temp_dir:
             try:
                 temp_dir = os.environ["TEMP"] / Path("cesar-p-saveproj")
             except KeyError:
-                raise Exception("Please specify destination_dir_tmp as parameter for ProjectSaver() as TEMP was not found in environment.")
+                raise CesarpException("Please specify destination_dir_tmp as parameter for ProjectSaver() as TEMP was not found in environment.")
 
         shutil.rmtree(temp_dir, ignore_errors=True)
         os.makedirs(temp_dir)
@@ -115,6 +140,20 @@ class ProjectSaver:
         self._logger = logging.getLogger(__name__)
 
     def create_zip_file(self, include_bldg_models, include_idfs, include_eplus_output, include_src_pck) -> str:
+        """
+        saving all project input files and information needed for cesar-p installation so that the project can be transfered to another computer and results can be re-produced.
+        if run from a cesar-p development installation, thus poetry is available, local source files are packed into a pip-installable wheel package.
+
+        :param include_bldg_models: internal ceasar-p representation of each building saved as json, can be re-loaded into python objects for later analysis of modeled building parameters or to re-create IDF files, defaults to True
+        :type include_bldg_models: bool, optional
+        :param include_idfs: generated IDF files are saved, defaults to False
+        :type include_idfs: bool, optional
+        :param include_eplus_output: include energy plus raw output files - attention, that might be a lot of data!, defaults to False
+        :type include_eplus_output: bool, optional
+        :param include_src_pck: include source code as wheel package (only possible if CESAR-P is installed with poetry)
+        :type include_src_pck: bool, optional
+        :return: path of saved zip file
+        """
         env_files = self.create_environment_files()
         env_files_dir = self.RUNTIME_ENV_FOLDER
         with ZipFile(self._zip_file_path, "w") as thezip:
@@ -372,9 +411,9 @@ class ProjectSaver:
         file_descriptor.writelines(
             "Create a new virtual environment (you can adapt the location of the venv as you wish - your home directory or any other location on the fileserver is not a sensible choice and might run out of space when installing all dependencies.).\n\n"
         )
-        file_descriptor.writelines(f"\tpython -m venv %TEMP%/venv-cesarp-{Path(self._zip_file_path).stem}\n")
+        file_descriptor.writelines(f"\tpython -m venv %USERPROFILE%/venv-cesarp-{Path(self._zip_file_path).stem}\n")
         file_descriptor.writelines("Activate your venv with:\n\n")
-        file_descriptor.writelines(f"\t%TEMP%/venv-cesarp-{Path(self._zip_file_path).stem}/Scripts/activate\n")
+        file_descriptor.writelines(f"\t%USERPROFILE%/venv-cesarp-{Path(self._zip_file_path).stem}/Scripts/activate\n")
 
         file_descriptor.writelines("\n**CESAR-P (including dependencies)**\n\n")
         if self._src_wheel_zip_rel_path:
@@ -389,11 +428,12 @@ class ProjectSaver:
             file_descriptor.writelines(
                 f"The project used CESAR-P version {version('cesar-p')}. To install that version from the corresponding tagged git repository version, do:\n\n"
             )
-            file_descriptor.writelines(f"\tpip install git+https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-core.git@CESAR-P-V{version('cesar-p')}#egg=cesar_p\n\n")
+            file_descriptor.writelines(f"\tpip install cesar-p=={version('cesar-p')}\n\n")
             file_descriptor.writelines("This will install CESAR-P and it's dependencies.")
             file_descriptor.writelines(
-                'If the version is untagged and thus the above does not work, you can try to find the corresponding version/branch on gitlab.empa.ch/ues-lab/cesar-p, do a git clone, checkout the branch and then install from that clone with "pip install cesar-p-core".\n'
+                "If the version is not released on PyPi you can see if there is a tag for it on https://github.com/hues-platform/cesar-p-core and install from that Tag with \n"
             )
+            file_descriptor.writelines(f"\tpip install git+https://github.com/hues-platform/cesar-p-core.git@{version('cesar-p')}#egg=cesar_p\n\n")
         if "geopandas" in sys.modules:
             file_descriptor.writelines(
                 f"\n\nThe library geopandas (version {version('geopandas')}) was installed in the python environment where the project was exported from.\nThus, the project might import site vertices form shape files.\n"

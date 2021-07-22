@@ -64,7 +64,7 @@ def search_neighbouring_buildings_for(main: Dict[str, Any], all_sitebld: pd.Data
     distance_to_neighbours = np.linalg.norm(all_sitebld[["main_vertex_x", "main_vertex_y"]].sub([main["main_vertex_x"], main["main_vertex_y"]]), axis=1)
     within_radius = all_sitebld.loc[distance_to_neighbours < radius]
     neighbours = within_radius.loc[within_radius["gis_fid"] != main["gis_fid"]]
-    return neighbours.to_dict(orient="reords")
+    return neighbours.to_dict(orient="records")
 
 
 def find_adjacent_footprint_vertices_for(main: Mapping[str, Any], neighbours: List[Mapping[str, Any]], max_distance_adjacency) -> Iterable[pd.DataFrame]:

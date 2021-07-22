@@ -45,7 +45,7 @@ def result_main_folder():
     except Exception:
         pass
     yield result_main_folder
-    shutil.rmtree(result_main_folder)
+    #shutil.rmtree(result_main_folder)
 
 
 
@@ -191,8 +191,9 @@ def test_no_adjacencies(config_no_adjacencies_case, result_main_folder):
                                expected_idf_file_path.format(bldg_fid),
                                ignore_line_nrs = [1],
                                ignore_filesep_mismatch = True) is True, f'IDF files not equal for {bldg_fid}'
-        # Line 0 and 177 contain energyplus veriosn and date/time of execution, thus ignore those; on line 709 there is a small numeric difference when run on windows vs linux...
-        assert are_files_equal(sim_mgr.output_folders[bldg_fid] / Path("eplustbl.csv") , expected_result_file_path.format(bldg_fid), ignore_line_nrs=[1,178,709]) is True, f'result files not equal for {bldg_fid}'
+        # Line 0 and 177 contain energyplus veriosn and date/time of execution, thus ignore those;
+        # on line 709 and 1463 there is a small numeric difference when run on windows vs linux...
+        assert are_files_equal(sim_mgr.output_folders[bldg_fid] / Path("eplustbl.csv") , expected_result_file_path.format(bldg_fid), ignore_line_nrs=[1,178,709, 1463]) is True, f'result files not equal for {bldg_fid}'
 
 
 def test_window_shading(result_main_folder):

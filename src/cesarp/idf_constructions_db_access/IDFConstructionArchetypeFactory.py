@@ -101,7 +101,8 @@ class IDFConstructionArchetypeFactory:
                 self._infiltration_rates.loc[age_class, "ACH_normal_pressure"],
                 self._cfg["FIXED_INFILTRATION_PROFILE_VALUE"] * self.ureg.dimensionless,
                 self._construction_basics.get_inst_characteristics(
-                    e_carrier_dhw=self._bldg_fid_to_dhw_ecarrier_lookup[bldg_fid], e_carrier_heating=self._bldg_fid_to_heating_ecarrier_lookup[bldg_fid],
+                    e_carrier_dhw=self._bldg_fid_to_dhw_ecarrier_lookup[bldg_fid],
+                    e_carrier_heating=self._bldg_fid_to_heating_ecarrier_lookup[bldg_fid],
                 ),
             )
             self._archetypes_cache[age_class] = archetype

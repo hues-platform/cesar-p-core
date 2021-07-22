@@ -18,6 +18,37 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+eplus_adapter
+============================
+
+Responsible for everything regarding EnergyPlus, from IDF creation to result extraction.
+The implementation is based on the eppy library, see https://pypi.org/project/eppy/
+
+For custom IDF creation, create an instance of IDF (with eppy) and call the methods writing the parts of the IDF you want, either
+use the functions in CesarIDFWriter or call directly methods form idf_writer_xxx.
+
+Main API
+
+======================================================================================= ===========================================================
+class / module                                                                          description
+======================================================================================= ===========================================================
+:py:class:`cesarp.eplus_adapter.CesarIDFWriter`                                         creates an IDF file based on :py:class:`cesarp.model.BuildingModel`
+                                                                                        connection according to the configuration (by default local file)
+
+:py:mod:`cesarp.eplus_adapter.eplus_sim_runner`                                         run energyplus simulation for exisitng IDF file
+
+:py:mod:`cesarp.eplus_adapter.eplus_eso_results_handling`                               extracts main results from EnergyPlus eso results file
+
+:py:class:`cesarp.eplus_adapter.EPlusEioResultAnalyzer`                                 extracts results from EnergyPlus eio results file, e.g. floor area
+
+:py:mod:`cesarp.eplus_adapter.eplus_error_file_handling`                                extract error level from EnergyPlus err log file
+
+======================================================================================= ===========================================================
+
+
+"""
+
 import os
 from pathlib import Path
 

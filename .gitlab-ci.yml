@@ -1,19 +1,28 @@
 variables:
-  ENERGYPLUS_DOWNLOAD_FILENAME: EnergyPlus-9.3.0-baff08990c-Linux-x86_64.sh
+  ENERGYPLUS_DOWNLOAD_FILENAME: EnergyPlus-9.5.0-de239b2e5f-Linux-Ubuntu20.04-x86_64.sh
   ENERGYPLUS_EXE: /usr/local/bin/EnergyPlus
-  ENERGYPLUS_VER: "9.3.0"
+  ENERGYPLUS_VER: "9.5.0"
   POETRY_VIRTUALENVS_IN_PROJECT: "True"
+  TZ: Europe/Zurich  # needs to be set for silent install of tzdata package, used by texlive packages
+  DEBIAN_FRONTEND: noninteractive  # needs to be set for silent install of tzdata package, used by texlive packages
 
-image: "python:3.8"
+# use ubuntu image instead of pyhton:3.x as E+ installation does not work on the python image
+image: "ubuntu:20.04"
 
 before_script:
+  - apt-get update -yq
+  - apt-get install -yq python3-pip python3-dev  # get latest python 3 version, at time of configuring this is python 3.8.5
+  - apt-get install -yq x11-apps  # we need those X11 libs in order that E+ will run
+  - pip3 install --upgrade pip
   - chmod +x $ENERGYPLUS_DOWNLOAD_FILENAME
   - echo "y\r" | ./$ENERGYPLUS_DOWNLOAD_FILENAME  
   - /usr/local/bin/EnergyPlus --version
   - python3 --version
   - which python3
-  - pip3 install poetry
-  - poetry install -E geopandas
+  - pip3 install poetry   # poetry is the project management tool used
+  - poetry install    # install cesar-p-core library (this project)
+  - pip install geopandas
+
 
 stages:
   - Test
@@ -28,6 +37,7 @@ static_tests:
   artifacts:
     paths:
     - style-guide-check-flake8-report.txt
+    - typing-check-mypy-report.xml
     expire_in: 1 week
     when: always
   timeout: 5 minutes
@@ -36,7 +46,7 @@ unit_test:
   stage: Test
   script:  
   - poetry run pytest --cov --html=unit_test_report.html --self-contained-html --capture=sys
-  - poetry run coverage html
+  - poetry run coverage html  # for coverage settings and threshold see .coveragerc; note that tests for cesarp.sia2024 are not included in cesar-p-core because the data is cannot be shared as open source
   artifacts:
     paths:
     - unit_test_report.html
@@ -45,11 +55,73 @@ unit_test:
     when: always
   timeout: 20 minutes
 
+pages-internal:
+  stage: Deploy
+  script:
+    - mkdir internal_docs
+    - cd docs/source/empa-internal
+    - poetry run sphinx-build . ../../../internal_docs
+  artifacts:
+    paths:
+      - internal_docs
+  only:
+    - production
+    - master
+
+pdfdoc-internal:
+  stage: Deploy
+  script:
+    - apt-get -y install make
+    - apt-get install -y --no-install-recommends texlive-latex-recommended texlive-fonts-recommended
+    - apt-get install -y --no-install-recommends texlive-latex-extra texlive-fonts-extra texlive-lang-all
+    - apt-get install -y latexmk
+    - mkdir pdfdoc
+    - cd docs/source/empa-internal
+    - poetry run sphinx-build -b latex . _latex
+    - cd _latex
+    - make
+    - ls -al
+    - cp cesar-p-empa-internal.pdf ../../../../cesar-p-empa-internal.pdf
+  artifacts:
+    paths:
+      - cesar-p-empa-internal.pdf
+  only:
+    - production
+    - master
+
+pages-public:
+  stage: Deploy
+  script:
+    - mkdir public
+    - cd docs/source/public
+    - poetry run sphinx-build . ../../../public
+  artifacts:
+    paths:
+      - public  # if gitlab pages would be enabled in the gitlab.empa.ch installation that directory should be published automatically 
+
+pdfdoc-public:
+  stage: Deploy
+  script:
+    - apt-get -y install make
+    - apt-get install -y --no-install-recommends texlive-latex-recommended texlive-fonts-recommended
+    - apt-get install -y --no-install-recommends texlive-latex-extra texlive-fonts-extra texlive-lang-all
+    - apt-get install -y latexmk
+    - mkdir pdfdoc
+    - cd docs/source/public
+    - poetry run sphinx-build -b latex . _latex
+    - cd _latex
+    - make
+    - ls -al
+    - cp cesar-p.pdf ../../../../cesar-p.pdf
+  artifacts:
+    paths:
+      - cesar-p.pdf
+
 publish:
   stage: Deploy
   variables:
     TWINE_USERNAME: gitlab-ci-token
-    TWINE_PASSWORD: ${CI_JOB_TOKEN}
+    TWINE_PASSWORD: ${CI_JOB_TOKEN}   # CI_JOB_TOKEN is a pre-defined variable, see https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
   script:
     - poetry build
     - pip3 install twine
@@ -74,26 +146,3 @@ publish-pypi-public:
       - dist/*
   only:
     - production-open-source
-
-pages:
-  stage: Deploy
-  script:
-    - mkdir public
-    - cd docs/source
-    - poetry run sphinx-build . ../../public
-  artifacts:
-    paths:
-      - public
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 

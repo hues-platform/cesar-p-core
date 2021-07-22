@@ -34,6 +34,11 @@ from cesarp.graphdb_access.BldgElementConstructionReader import BldgElementConst
 
 
 class GraphDBFacade:
+    """
+    This facade creates for you the main API classes. It does initialize a remote or local DB instance (for more details see package description).
+    You can use a custom factory to create the constructional archetypes by setting the configuration parameter ARCHETYPE_CONSTRUCTION_FACTORY_CLASS.
+    """
+
     def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
         self._ureg = ureg
         self._custom_config = custom_config
@@ -52,14 +57,18 @@ class GraphDBFacade:
         bldg_fid_to_year_of_constr_lookup: Dict[int, int],
         bldg_fid_to_dhw_ecarrier_lookup: Dict[int, EnergySource],
         bldg_fid_to_heating_ecarrier_lookup: Dict[int, EnergySource],
-    ):
-
+    ) -> cesarp.construction.construction_protocols.ArchetypicalConstructionFactoryProtocol:
         constr_fact_class_name: str = self._cfg["ARCHETYPE_CONSTRUCTION_FACTORY_CLASS"]
         constr_fact_class: type = cesarp.common.get_class_from_str(constr_fact_class_name)
         return constr_fact_class(
-            bldg_fid_to_year_of_constr_lookup, bldg_fid_to_dhw_ecarrier_lookup, bldg_fid_to_heating_ecarrier_lookup, self._graph_reader, self._ureg, self._custom_config,
+            bldg_fid_to_year_of_constr_lookup,
+            bldg_fid_to_dhw_ecarrier_lookup,
+            bldg_fid_to_heating_ecarrier_lookup,
+            self._graph_reader,
+            self._ureg,
+            self._custom_config,
         )
 
-    def get_graph_construction_retrofitter(self):
+    def get_graph_construction_retrofitter(self) -> ConstructionRetrofitter:
         bldg_elem_reader = BldgElementConstructionReader(self._graph_reader, self._ureg, self._custom_config)
         return ConstructionRetrofitter(bldg_elem_reader, self._ureg, self._custom_config)

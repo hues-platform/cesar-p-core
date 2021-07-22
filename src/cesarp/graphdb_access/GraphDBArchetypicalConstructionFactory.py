@@ -34,6 +34,13 @@ from cesarp.graphdb_access import _default_config_file
 
 
 class GraphDBArchetypicalConstructionFactory:
+    """
+    Manages the constructional archetype.
+    In the initialization you have to pass the information per building needed to get the appropriate archetype.
+    After initialization, you call get_archetype_for(bldg_fid) for each of your buildings.
+    Note that archetypes are cached, if several buildings use the same archetype they are not re-constructed.
+    """
+
     def __init__(
         self,
         bldg_fid_to_year_of_constr_lookup: Dict[int, int],
@@ -51,7 +58,7 @@ class GraphDBArchetypicalConstructionFactory:
         self._constr_reader = BldgElementConstructionReader(graph_data_reader, ureg, custom_config)
         self._construction_basics = ConstructionBasics(self._ureg, custom_config)
         self._ageclass_archetype = self._init_age_class_lookup()
-        self._archetypes_cache: Dict[cesarp.common.AgeClass, ArchetypicalConstructionGraphDBBased] = dict()
+        self._archetypes_cache: Dict[str, ArchetypicalConstructionGraphDBBased] = dict()  # key is archetype URI
 
     def _init_age_class_lookup(self) -> Dict[AgeClass, str]:
         ageclass_archetype = {}
@@ -68,14 +75,13 @@ class GraphDBArchetypicalConstructionFactory:
     def get_archetype_for(self, bldg_fid: int) -> ArchetypicalBuildingConstruction:
         year_of_construction = self._bldg_fid_to_year_of_constr_lookup[bldg_fid]
         try:
-            age_class = AgeClass.get_age_class_for(year_of_construction, self._ageclass_archetype.keys())
+            archetype_uri = self._get_archetype_uri_for(year_of_construction)
         except Exception:
             logging.error(f"no archetype found for building with fid {bldg_fid} and year of construction {year_of_construction}")
 
-        if age_class in self._archetypes_cache.keys():
-            archetype = self._archetypes_cache[age_class]
+        if archetype_uri in self._archetypes_cache.keys():
+            archetype = self._archetypes_cache[archetype_uri]
         else:
-            archetype_uri = self._ageclass_archetype[age_class]
             constr_from_graph_db = self._constr_reader.get_bldg_elem_construction_archetype(archetype_uri)
 
             archetype = ArchetypicalConstructionGraphDBBased(
@@ -95,8 +101,20 @@ class GraphDBArchetypicalConstructionFactory:
                 infiltration_rate=self._constr_reader.get_infiltration_rate(constr_from_graph_db.name),
                 infiltration_fraction_profile_value=self._cfg["FIXED_INFILTRATION_PROFILE_VALUE"] * self._ureg.dimensionless,
                 installations_characteristics=self._construction_basics.get_inst_characteristics(
-                    self._bldg_fid_to_dhw_ecarrier_lookup[bldg_fid], self._bldg_fid_to_heating_ecarrier_lookup[bldg_fid],
+                    self._bldg_fid_to_dhw_ecarrier_lookup[bldg_fid],
+                    self._bldg_fid_to_heating_ecarrier_lookup[bldg_fid],
                 ),
             )
-            self._archetypes_cache[age_class] = archetype
+            self._archetypes_cache[archetype_uri] = archetype
         return archetype
+
+    def _get_archetype_uri_for(self, year_of_construction):
+        """
+        :param year_of_construction: [description]
+        :type year_of_construction: [type]
+        :return: [description]
+        :rtype: [type]
+        :raises: Exception if no archetype for given year_of_construction was found
+        """
+        age_class = AgeClass.get_age_class_for(year_of_construction, self._ageclass_archetype.keys())
+        return self._ageclass_archetype[age_class]

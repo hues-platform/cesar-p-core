@@ -19,19 +19,33 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 GRAPHDB_ACCESS:
-  FIXED_INFILTRATION_PROFILE_VALUE: 1
-  LOCAL:
-    ACTIVE: True
+  FIXED_INFILTRATION_PROFILE_VALUE: 1  # the value to use for timesteps of the infiltration rate profile (constant profile)
+  # choose between local or remote data source, only one of the two can be set to active at the same time
+  LOCAL:  # use a TTL file as data source
+    ACTIVE: True 
     PATH: "ressources/construction_and_material_data.ttl"
     FORMAT: "ttl"
-  REMOTE:
+  REMOTE:  # connect to a GraphDB server instance (remote server or on your local machine)
     ACTIVE: False
-    SPARQL_ENDPOINT: "YOUR_GRAPHDB_ENDPOINT"
+    SPARQL_ENDPOINT: "YOUR_GRAPHDB_ENDPOINT"  # GraphDB Endpoint URL, make sure to set the User and PW as environment variables (GRAPHDB_USER, GRAPHDB_PASSWORD) 
+  # Lookup of retrofit construction for each building element. Regulation which was followed to define the retrofit construction
+  # The retrofit construction linked to a construction with "ues:retrofitOf" must have "ues:targetRequirement" respectively "ues:minRequirement" respectively (if parameter "target_requirement" is False) 
+  #set to the string value of the parameter "regulation"
   RETROFIT:
-    regulation: "SIA-380-1_2016"
-    target_requirement: False
-  # class specified here must be compatible with cesarp.manager.BldgModelFactory.ArchetypicalConstructionFactoryProtocol and arguments for init must match with the ones passed in GraphDBFacade. Make sure to specify class, not just module name containing the class.
+    regulation: "SIA-380-1_2016"  
+    target_requirement: False  # in SIA-380 there is a definition for U-Values for minimal and a target goals 
+  # This factory class must return the constructional archetype for each builidng on the site. 
+  # The default one (GraphDBArchetypicalConstructionFactory) uses a lookup by constrution year and the list of archetypes below.
+  # The class specified here must be compatible with cesarp.manager.BldgModelFactory.ArchetypicalConstructionFactoryProtocol 
+  # and arguments for init must match with the ones passed in GraphDBFacade. You can link to your own implementation outside cesar-p-core.
+  # Make sure to specify class, not just module name containing the class.
   ARCHETYPE_CONSTRUCTION_FACTORY_CLASS: "cesarp.graphdb_access.GraphDBArchetypicalConstructionFactory.GraphDBArchetypicalConstructionFactory"
+  # Constructional archetypes to use in in the GraphDBArchetypicalConstructionFactory
+  # For each Archetype the age class / range is looked up in the GraphDB.
+  # The standard archetypes have several options for each building element so you can have some variability if you switch it on with MANAGER:RANDOM_CONSTRUCTIONS
+  # If you have no variablility, there are two strategies to choose the default one to be used:
+  # DEFAULT_CONSTRUCTION_MEAN_UVALUE: get U-Value of all elements and choose the one where the U-Value is closest to the mean
+  # DEFAULT_CONSTRUCTION_SPECIFIC: set a certain construction as default (in the standard values most of them are actually selected to match a mean U-Value, but there are some special cases)
   ARCHETYPES:
     1918_SFH_ARCHETYPE:
       URI: "http://uesl_data/sources/archetypes/1918_SFH_Archetype"

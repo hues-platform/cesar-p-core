@@ -46,7 +46,7 @@ win_gas_types = ["Air", "Argon", "Krypton", "Xenon"]
 
 
 class Roughness(Enum):
-    """ the integer values have no speical meaning"""
+    """the integer values have no speical meaning"""
 
     VeryRough = 1
     Rough = 2

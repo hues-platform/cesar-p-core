@@ -1,7 +1,7 @@
 !- Windows Line endings 
 
 VERSION,
-    9.3;                      !- Version Identifier
+    9.5;                      !- Version Identifier
 
 WINDOWMATERIAL:SHADE,
     Shade0901,                !- Name

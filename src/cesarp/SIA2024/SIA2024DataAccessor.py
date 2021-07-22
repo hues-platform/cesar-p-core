@@ -62,9 +62,7 @@ class SIA2024DataAccessor:
         data_file = self._cfg_sia_sheet["FILE_PATH"]
         if not os.path.isfile(data_file):
             raise CesarpException(f"Cannot load SIA2024 data because file {data_file} does not exist.")
-        self._raw_input_data = pd.read_excel(
-            data_file, sheet_name=self._cfg_sia_sheet["SHEET_NAME"], header=None, index_col=self._cfg_sia_sheet["ROOM_NAME_COL"], skipinitialspace=True,
-        )
+        self._raw_input_data = pd.read_excel(data_file, sheet_name=self._cfg_sia_sheet["SHEET_NAME"], header=None, index_col=self._cfg_sia_sheet["ROOM_NAME_COL"])
         str_to_enum_room_name = {room.name: room for room in SIA2024_2016_RoomType}
         self._raw_input_data.rename(index=str_to_enum_room_name, inplace=True)
 
@@ -77,9 +75,8 @@ class SIA2024DataAccessor:
         self.appliances_day_profile_hourly_nominal: pd.DataFrame = self.__extract_from_raw_data(self._cfg_sia_sheet["DAILY_APPLIANCES_NOMINAL"])
         self.appliances_breaks: pd.DataFrame = self.__extract_array_from_raw_data(self._cfg_sia_sheet["APPLIANCES_BREAKS"], data_type=int)
         self.appliances_level_triple: pd.DataFrame = self.__extract_triple_from_raw_data(self._cfg_sia_sheet["APPLIANCES_LEVEL"], has_unit=True)
-        self.appliances_level_standby_prc: pd.DataFrame = self.__extract_from_raw_data(
-            self._cfg_sia_sheet["APPLIANCE_LEVEL_STANDBY_PRC"], has_unit=False
-        ) / 100 * self.ureg.dimensionless
+        data_appliance_level_prc = self.__extract_from_raw_data(self._cfg_sia_sheet["APPLIANCE_LEVEL_STANDBY_PRC"], has_unit=False)
+        self.appliances_level_standby_prc: pd.DataFrame = data_appliance_level_prc.apply(lambda x: x / 100 * self.ureg.dimensionless)
         self.nr_of_rest_days_per_week: pd.DataFrame = self.__extract_from_raw_data(self._cfg_sia_sheet["REST_DAYS"], has_unit=True)
         self.setpoint_heating: pd.DataFrame = self.__extract_from_raw_data(self._cfg_sia_sheet["HEATING_SETPOINT"], has_unit=True)
         self.setpoint_cooling: pd.DataFrame = self.__extract_from_raw_data(self._cfg_sia_sheet["COOLING_SETPOINT"], has_unit=True)
@@ -88,7 +85,9 @@ class SIA2024DataAccessor:
         self.heating_setback: pd.DataFrame = self.__extract_from_raw_data(self._cfg_sia_sheet["HEATING_SETBACK"], has_unit=True)
         self.cooling_setback: pd.DataFrame = self.__extract_from_raw_data(self._cfg_sia_sheet["COOLING_SETBACK"], has_unit=True)
         self.ventilation_rate_per_m2_nominal = self.__extract_from_raw_data(
-            self._cfg_sia_sheet["VENTILATION_RATE_PER_M2_NOMINAL"], has_unit=True, convert_to_unit=self.ureg.m ** 3 / self.ureg.seconds / self.ureg.m ** 2,
+            self._cfg_sia_sheet["VENTILATION_RATE_PER_M2_NOMINAL"],
+            has_unit=True,
+            convert_to_unit=self.ureg.m ** 3 / self.ureg.seconds / self.ureg.m ** 2,
         )
         self.ventilation_rate_per_p_nominal = self.__extract_from_raw_data(
             self._cfg_sia_sheet["VENTILATION_RATE_PER_P_NOMINAL"],

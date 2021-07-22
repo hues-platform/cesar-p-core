@@ -27,7 +27,7 @@ from cesarp.SIA2024.demand_generators.BuildingTypeProtocol import BuildingTypePr
 
 
 class BaseDataForActivityProtocol(Protocol):
-    """ returns activity in MET (metabolic equivalent of task)"""
+    """returns activity in MET (metabolic equivalent of task)"""
 
     def get_activity_level_per_person(self, room_type: Any) -> pint.Quantity:
         ...
@@ -44,7 +44,10 @@ class ActivityHeatGainCalculator:
     """
 
     def __init__(
-        self, bldg_type: BuildingTypeProtocol, base_data_accessor: BaseDataForActivityProtocol, unit_reg: pint.UnitRegistry,
+        self,
+        bldg_type: BuildingTypeProtocol,
+        base_data_accessor: BaseDataForActivityProtocol,
+        unit_reg: pint.UnitRegistry,
     ):
         """
         :param bldg_type: building type for which to calculate heat gain from activity, e.g. SIA2024BuildingType

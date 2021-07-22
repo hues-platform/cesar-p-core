@@ -66,10 +66,17 @@ def no_idf_constr_files(constr):
 class CesarIDFWriter:
     """
     Handels the IDF Writing process
+
+    For each building, you create a new instance of CesarIDFWriter and call write_bldg_model() to create a full IDF file.
+
     """
 
     def __init__(
-        self, idf_file_path, unit_registry, profiles_files_handler: Optional[ProfileFilesHandler] = None, custom_config={},
+        self,
+        idf_file_path,
+        unit_registry,
+        profiles_files_handler: Optional[ProfileFilesHandler] = None,
+        custom_config={},
     ):
         """
         You can only use one construction type at a time. All three constr_xxx callables take a construction object as the first argument.
@@ -100,7 +107,11 @@ class CesarIDFWriter:
         else:
             self.profiles_files_handler_method = lambda x: x  # do nothing, just return filepath back
 
-    def write_bldg_model(self, bldg_model: BuildingModel):
+    def write_bldg_model(self, bldg_model: BuildingModel) -> None:
+        """
+        :param bldg_model: Building model to write to IDF
+        :type bldg_model: BuildingModel
+        """
         idf = IDF(str(self.idf_file_path))
         self.add_basic_simulation_settings(idf, bldg_model.site.site_ground_temperatures)
         constr_handler = ConstructionIDFWritingHandler(bldg_model.bldg_construction, bldg_model.neighbours_construction_props, self.unit_registry)
@@ -159,7 +170,9 @@ class CesarIDFWriter:
     def _add_site_ground_temperatures(self, idf, site_ground_temps: SiteGroundTemperatures):
         site_ground_bldg_surface = idf.newidfobject(idf_strings.IDFObjects.site_ground_temperature_building_surface)
         idf_writing_helpers.add_monthly(
-            site_ground_bldg_surface, [site_ground_temps.building_surface.to(self.unit_registry.degreeC).m] * 12, idf_strings.GroundTempFieldNamePatterns.building_surface,
+            site_ground_bldg_surface,
+            [site_ground_temps.building_surface.to(self.unit_registry.degreeC).m] * 12,
+            idf_strings.GroundTempFieldNamePatterns.building_surface,
         )
         site_ground_fcfactormethod = idf.newidfobject(idf_strings.IDFObjects.site_ground_temperature_fc_factor_method)
         idf_writing_helpers.add_monthly(
@@ -169,11 +182,15 @@ class CesarIDFWriter:
         )
         site_ground_shallow = idf.newidfobject(idf_strings.IDFObjects.site_ground_temperature_shallow)
         idf_writing_helpers.add_monthly(
-            site_ground_shallow, [site_ground_temps.shallow.to(self.unit_registry.degreeC).m] * 12, idf_strings.GroundTempFieldNamePatterns.shallow,
+            site_ground_shallow,
+            [site_ground_temps.shallow.to(self.unit_registry.degreeC).m] * 12,
+            idf_strings.GroundTempFieldNamePatterns.shallow,
         )
         site_ground_deep = idf.newidfobject(idf_strings.IDFObjects.site_ground_temperature_deep)
         idf_writing_helpers.add_monthly(
-            site_ground_deep, [site_ground_temps.deep.to(self.unit_registry.degreeC).m] * 12, idf_strings.GroundTempFieldNamePatterns.deep,
+            site_ground_deep,
+            [site_ground_temps.deep.to(self.unit_registry.degreeC).m] * 12,
+            idf_strings.GroundTempFieldNamePatterns.deep,
         )
 
     @staticmethod
@@ -206,11 +223,13 @@ class CesarIDFWriter:
         table_style.Unit_Conversion = idf_strings.UnitConversion.j_to_kwh
 
         for frequency, meters in self._cfg["OUTPUT_METER"].items():
-            freq_idf_str = idf_strings.ResultsFrequency[frequency].value
-            [CesarIDFWriter._add_output_meter(idf, meter_var, freq_idf_str) for meter_var in meters]
+            if meters:  # there might be no entries for a certain frequency
+                freq_idf_str = idf_strings.ResultsFrequency[frequency].value
+                [CesarIDFWriter._add_output_meter(idf, meter_var, freq_idf_str) for meter_var in meters]
         for frequency, output_vars in self._cfg["OUTPUT_VARS"].items():
-            freq_idf_str = idf_strings.ResultsFrequency[frequency].value
-            [CesarIDFWriter._add_output_variable(idf, output_var, freq_idf_str) for output_var in output_vars]
+            if output_vars:  # there might be no entries for a certain frequency
+                freq_idf_str = idf_strings.ResultsFrequency[frequency].value
+                [CesarIDFWriter._add_output_variable(idf, output_var, freq_idf_str) for output_var in output_vars]
 
         return idf
 
@@ -233,7 +252,12 @@ class CesarIDFWriter:
         # returned list is empty in case the cesarp.model.Construction and cesarp.model.WindowGlassConstruction are used for all constructions of the building
         return constr_handler.get_partial_idf_files()
 
-    def add_neighbours(self, idf, neighbour_bldg_shapes_simple: Mapping[int, BldgShapeEnvelope], constr_handler: ConstructionIDFWritingHandler,) -> IDF:
+    def add_neighbours(
+        self,
+        idf,
+        neighbour_bldg_shapes_simple: Mapping[int, BldgShapeEnvelope],
+        constr_handler: ConstructionIDFWritingHandler,
+    ) -> IDF:
         """
         Add neighbouring buildings as shading objects
 
@@ -263,8 +287,8 @@ class CesarIDFWriter:
         """
         assert self.zone_data is not None, "make sure that prior to calling add_buidlding_properties attribute zone_data is initialized, e.g. by calling add_buidling_geometry"
         assert (
-            list(self.zone_data.keys()) == building_operation_mapping.all_assigned_floor_nrs
-        ), f"zones/floors {list(self.zone_data.keys())} in geometry do not match with the floors in the building operation mapping ({building_operation_mapping.all_assigned_floor_nrs})"
+            list(self.zone_data.keys()) == building_operation_mapping.all_assigned_floor_nrs  # type: ignore  # checked self.zone_data for none in assert on line 288
+        ), f"zones/floors {list(self.zone_data.keys())} in geometry do not match with the floors in the building operation mapping ({building_operation_mapping.all_assigned_floor_nrs})"   # type: ignore  # checked self.zone_data for none in assert on line 288
 
         for (floor_nrs, bldg_op) in building_operation_mapping.get_operation_assignments():
             bldg_op_local_profiles = copy.deepcopy(bldg_op)
@@ -280,7 +304,7 @@ class CesarIDFWriter:
             if bldg_op_local_profiles.night_vent.is_active:
                 bldg_op_local_profiles.night_vent.maximum_indoor_temp_profile = self.__handle_profile_file(bldg_op_local_profiles.night_vent.maximum_indoor_temp_profile)
 
-            for floor_nr, (zone_name, windows_in_zone) in self.zone_data.items():
+            for floor_nr, (zone_name, windows_in_zone) in self.zone_data.items():  # type: ignore  # checked self.zone_data for none in assert on line 288
                 if floor_nr in floor_nrs:
                     idf_writer_operation.add_building_operation(idf, zone_name, bldg_op_local_profiles, installation_characteristics, self.unit_registry)
                     idf_writer_operation.add_zone_infiltration(idf, zone_name, infiltrationRate, infiltrationProfile, self.unit_registry)

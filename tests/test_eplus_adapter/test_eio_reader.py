@@ -23,7 +23,7 @@ import pytest
 import os
 from pathlib import Path
 import cesarp.common
-from cesarp.eplus_adapter.EPlusEioResultReader import EPlusEioResultAnalyzer
+from cesarp.eplus_adapter.EPlusEioResultAnalyzer import EPlusEioResultAnalyzer
 
 @pytest.fixture
 def eio_reader():

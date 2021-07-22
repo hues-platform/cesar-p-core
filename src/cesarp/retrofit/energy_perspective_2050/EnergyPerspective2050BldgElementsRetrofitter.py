@@ -80,9 +80,8 @@ class EnergyPerspective2050BldgElementsRetrofitter:
     The percentages of full and partial retrofit depending on building age and retrofit year/period are configurable
     through input files and are located in the cesarp.energy_strategy, as they relate to the energy strategy.
 
-    # TODO to be implemented
-    Re-use the same class instance for all retrofit periods if you want any retrofit shares that
-    could not be "fulfilled" in one retrofit run to be transferred to the next period.
+    Taking any retrofit shares that could not be "fulfilled" in one retrofit period to the next is not yet implemented,
+    but was in the Matlab version. See gitlab Issue #109.
 
     If the site does not have buildings for a certain building type and age class used in the retrofit rate definition,
     that retrofit rate get's ignored. For example, if the site defines no single family home (SFH) buildings with
@@ -106,7 +105,10 @@ class EnergyPerspective2050BldgElementsRetrofitter:
         self._logger = logging.getLogger(__name__)
 
     def retrofit_site(
-        self, year_of_retrofit: int, bldg_containers_current: Dict[int, BuildingContainer], bldg_containers_prev_period: Dict[int, BuildingContainer],
+        self,
+        year_of_retrofit: int,
+        bldg_containers_current: Dict[int, BuildingContainer],
+        bldg_containers_prev_period: Dict[int, BuildingContainer],
     ) -> RetrofitLog:
         """
         Retrofit building construction.
@@ -205,7 +207,14 @@ class EnergyPerspective2050BldgElementsRetrofitter:
                 for ac, rate_per_bldg_elems in partial_retrofit_rates.items():
                     for (bldg_elems, ret_rate) in rate_per_bldg_elems:
                         target_num_bldgs = int(round(ret_rate * nr_of_bldgs_on_site[bt][ac], ndigits=0))
-                        ret_cats.append(RetrofitCategoryDetails(bldg_type=bt, constr_ac=ac, bldg_elems_to_retrofit=bldg_elems, target_nr_of_bldgs_to_retrofit=target_num_bldgs,))
+                        ret_cats.append(
+                            RetrofitCategoryDetails(
+                                bldg_type=bt,
+                                constr_ac=ac,
+                                bldg_elems_to_retrofit=bldg_elems,
+                                target_nr_of_bldgs_to_retrofit=target_num_bldgs,
+                            )
+                        )
                 retrofit_categories_by_bt[bt] = ret_cats
 
             else:
@@ -220,7 +229,12 @@ class EnergyPerspective2050BldgElementsRetrofitter:
                 for ac, ret_rate in retrofit_rates.items():
                     target_num_bldgs = int(round(ret_rate * nr_of_bldgs_on_site[bt][ac], ndigits=0))
                     ret_per_ac.append(
-                        RetrofitCategoryDetails(bldg_type=bt, constr_ac=ac, bldg_elems_to_retrofit=full_retrofit_elems, target_nr_of_bldgs_to_retrofit=target_num_bldgs,)
+                        RetrofitCategoryDetails(
+                            bldg_type=bt,
+                            constr_ac=ac,
+                            bldg_elems_to_retrofit=full_retrofit_elems,
+                            target_nr_of_bldgs_to_retrofit=target_num_bldgs,
+                        )
                     )
                 retrofit_categories_by_bt[bt] = ret_per_ac
         self._retrofit_categories_last_run = retrofit_categories_by_bt
@@ -245,7 +259,11 @@ class EnergyPerspective2050BldgElementsRetrofitter:
         self._per_elem_construction_retrofitter.retrofit_bldg_construction(model.fid, model.bldg_construction, model.bldg_shape)
 
     def _check_emissions_below_target(
-        self, energy_demand: EnergyDemandSimulationResults, dhw_carrier: EnergySource, heating_carrier: EnergySource, year_for_emission_calc,
+        self,
+        energy_demand: EnergyDemandSimulationResults,
+        dhw_carrier: EnergySource,
+        heating_carrier: EnergySource,
+        year_for_emission_calc,
     ):
         """
         Returns True if operational costs and emissions are below the required SIA target
@@ -269,5 +287,5 @@ class EnergyPerspective2050BldgElementsRetrofitter:
         return False
 
     def _check_retrofitted_in_last_period(self, last_period_year: int, last_sim_retrofit: RetrofitLog):
-        # TODO should it really only look at the last year?
+        # TODO should it really only look at the last year? (see issue 109 on gitlab)
         return last_sim_retrofit.was_construction_retrofitted_in(last_period_year)

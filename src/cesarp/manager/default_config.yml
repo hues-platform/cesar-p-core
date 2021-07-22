@@ -18,25 +18,45 @@
 ##
 ## Contact: https://www.empa.ch/web/s313
 ##
+
+# PATHES: all following folders are relative to the basepath of the project, which is passed as a parameter when initializing SimulationManager 
+#         respectively the scenario folder in case when using the ProjectManager
+# Only the per-building inputs marked with MANDATORY must be given, the others can be set to inactive if you want to use the CESAR-P standards for them
 MANAGER:    
-    NR_OF_PARALLEL_WORKERS: -1  # -1 means half of the available processors will be used
-    # all following folders are relative to BASEPATH, which is passed when initializing SimulationManager
-    OUTPUT_FOLDER_REL: "eplus_output"
+    # how many worker-threads shall be used, -1 means half of the available processors will be used 
+    # (applicable when using one of the built-in main classes, e.g. SimulationManager, ProjectManager)
+    NR_OF_PARALLEL_WORKERS: -1  # -1 means half of the available processors will be used    
+    # path an properties for simulation result summary file
     SUMMARY_OUTPUT:
         PATH_REL: "./site_result_summary.csvy"
         CSV_SEPARATOR: ";"
         CSV_FLOAT_FORMAT: "%.4f"
+    # all energy plus error files are copied into this summary
     EPLUS_ERROR_SUMMARY_REL: "eplus_error_summary.err"
+    # folder where idf files will be stored to / reloaded from
     IDF_FOLDER_REL: "idfs"
-    WEATHER_FILES_MAPPED_REL: "weather_files_mapped.csvy"
+    # pattern for the idf files, {} will be replaced by the FID of the building
+    IDF_FILENAME_REL: "fid_{}.idf"
+    # which weather file to use for which builing (usually it is the same for all buildings on a site but it does not have to be), necessary if you re-load your IDF files from disk and run the simulations
+    WEATHER_FILES_MAPPED_REL: "weather_files_mapped.csvy"    
+    # if ACTIVE set to True, all profile files used/linked to will be copied into the subfolder stated under 
+    # PROFILES_FOLDER_NAME_REL as a subfolder of IDF_FOLDER_REL when IDF files are created
     COPY_PROFILES:
         ACTIVE: True
         PROFILES_FOLDER_NAME_REL: "profiles" # nome of folder where the profile should be stored, will be created as subfolder of IDF_FOLDER_REL
-    IDF_FILENAME_REL: "fid_{}.idf"
+    # folder where raw energyplus output files are stored     
+    OUTPUT_FOLDER_REL: "eplus_output"
+    # pattern for per-building subfolder withtin OUTPUT_FOLDER_REL, {} will be replaced by the FID of the building
     BATCH_OUT_DIR_TEMPLATE_REL: "fid_{}"
+    # folder where the BuildingContainer JSON dumps will be stored
     BLDG_CONTAINERS_FOLDER_REL: "bldg_containers"
+    # filename pattern for the BuildingContainer JSON dump, , {} will be replaced by the FID of the building
     BLDG_CONTAINER_FILENAME_REL: "bldg_container_fid_{}.json"
+    # information per building which was used during generation of the building models is stored to this file
     BLDG_INFO_REPORT_FILENAME_REL: "bldg_infos_model_generation.csvy"
+    # if true, the SUMMARY_OUTPUT and BLDG_INFO_REPORT_FILENAME_REL are saved as plain csv along with a yml metadata file
+    SEPARATE_METADATA: False
+    # MANDATORY File containint the footprint of all your buildings on a site
     SITE_VERTICES_FILE:
         PATH: "./SiteVertices.csv" # you can specify a *.shp file here, but be aware that you need to have geopandas installed when reading from shape file
         SEPARATOR: ","
@@ -45,23 +65,28 @@ MANAGER:
             height:   "HEIGHT"
             x:        "POINT_X"
             y:        "POINT_Y"
+    # MANDATORY list of building fids to be used as main buildings
     BLDG_FID_FILE:
         PATH: "TBD_BLDG_FID_FILE.csv"
         SEPARATOR: ","
         LABELS:
             gis_fid: "ORIG_FID"
+    # MANDATORY construction year for each main building - based on the construction year the constructional properties are populated
     BLDG_AGE_FILE:
         PATH: "TBD_BLDG_AGE_FILE.csv"
         SEPARATOR: ","
         LABELS:
             gis_fid: "ORIG_FID"
             year_of_construction: "BuildingAge"
+    # MANDATORY building usage or type, e.g. MFH, EFH, OFFICE etc (see cesarp.SIA2024.SIA2024BuildingType for full list) - based on the type the operational properties are populated
     BLDG_TYPE_PER_BLDG_FILE:
       PATH: "TBD_BLDG_TYPE_PER_BLDG_FILE.csv"
       SEPARATOR: ","
       LABELS:
         gis_fid: "ORIG_FID"
         sia_bldg_type: "SIA2024BuildingType"
+    # If True, operational costs and emissions are calculated by CESAR-P after the simulation.
+    # If True, you have to specify BLDG_INSTALLATION_FILE specifiying the energy carrier used for heating and to heat up the domestic hot water 
     DO_CALC_OP_EMISSIONS_AND_COSTS: True
     BLDG_INSTALLATION_FILE: # used for operational emission & cost calculation, no influence on model for EnergyPlus. Not needed if MANAGER - DO_CALC_OP_EMISSIONS_AND_COSTS set to False
         PATH: "TBD_BLDG_INSTALLATION_FILE.csv"
@@ -70,16 +95,32 @@ MANAGER:
             gis_fid: "ORIG_FID"
             dhw_energy_carrier: "ECarrierDHW"
             heating_energy_carrier: "ECarrierHeating"
+    # if ACTIVE is True, the file is used to lookup glazing ratio per building
+    # if ACTIVE is False, look up glazing ratio from constructional archetype (which is per default dependent on construction year of building)
     GLAZING_RATIO_PER_BLDG_FILE:
-      ACTIVE: False # if not active glazing ratio from Constructional Archetype (based on age class of building) is used
+      ACTIVE: False
       PATH: "TBD_GLAZING_RATIO_PER_BLDG_FILE.csv"
       SEPARATOR: ","
       LABELS:
         gis_fid: "ORIG_FID"
         glazing_ratio: "GlazingRatio"
+    # Source for infiltration rate - Options:
+    # Archetype: use infiltration rate for the consturctional Archetype (which is per default dependent on construction year of building)
+    # SIA2024: use infiltration rate from SIA2024 definitions (which is dependent on the building type)
     INFILTRATION_RATE_SOURCE: "Archetype" # either "Archetype" or "SIA2024"
-    RANDOM_CONSTRUCTIONS: False # selecting bldg construction elements randomly within certain age class, add variability to glz ratio
-    BUILDING_OPERATION_FACTORY_CLASS: "cesarp.SIA2024.SIA2024Facade.SIA2024Facade" # either "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory" or "cesarp.SIA2024.SIA2024Facade.SIA2024Facade"
+    # If True, when there are different options for the building element construction in the constructional archetype, one of those constructions is chosen randomly
+    RANDOM_CONSTRUCTIONS: False 
+    # Factory class creating BuildingOperation objects for your buildings. Built in are two options:
+    # "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory": same operational parameter and profiles for all buildings on your site. Configuration see parameters for OPERATION.FIXED
+    # "cesarp.SIA2024.SIA2024Facade.SIA2024Facade": use profiles according to SIA2024, parameters based on building type, optional variability. Configuration see parameters for SIA2024
+    # You can create your own factory class outisde of cesar-p-core, if you are doing so it must implement "cesarp.manager.manager_protocols.BuildingOperationFactoryProtocol"
+    # and take the init must take the same parameters as the FixedBuildingOperationFactory
+    BUILDING_OPERATION_FACTORY_CLASS: "cesarp.SIA2024.SIA2024Facade.SIA2024Facade"
+    # Mandatory - Weather file(s)
+    # Only SINGLE_SITE or SITE_PER_CH_COMMUNITY can be active at the same time
+    # SINGLE_SITE: the same weather file is used for all buildings
+    # SITE_PER_CH_COMMUNITY: weather file is chosen based on the cummunity of the building (BLDG_TO_COMMUNITY_FILE below)
+    #                        which is then mapped to a weather station having a weather file associated (see parameters for WEATHER:SWISS_COMMUNITIES)
     SINGLE_SITE:
         ACTIVE: True # if False, SITE_PER_CH_COMMUNITY must be active
         WEATHER_FILE: "./Zurich_1.epw"

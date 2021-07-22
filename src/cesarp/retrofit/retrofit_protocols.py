@@ -27,15 +27,15 @@ from cesarp.model.Construction import Construction
 
 class ConstructionRetrofitterProtocol(Protocol):
     def get_retrofitted_construction(self, construction: Construction) -> Construction:
-        """ return retrofitted version of passed construction element as a NEW object """
+        """return retrofitted version of passed construction element as a NEW object"""
         ...
 
     def get_retrofitted_window(self, base_win_constr: WindowConstruction) -> WindowConstruction:
-        """ return retrofitted version of passed window construction as a NEW object """
+        """return retrofitted version of passed window construction as a NEW object"""
         ...
 
     def get_retrofit_target_info(self) -> str:
-        """ should retrun a descriptive string of the retrofit target intended to meet, e.g. SIA380-2016 Minimal """
+        """should retrun a descriptive string of the retrofit target intended to meet, e.g. SIA380-2016 Minimal"""
         ...
 
 

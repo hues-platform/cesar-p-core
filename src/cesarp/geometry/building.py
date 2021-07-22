@@ -33,6 +33,7 @@ from typing import List, Callable, Dict, Any
 from cesarp.model.BldgShape import BldgShapeEnvelope, BldgShapeDetailed
 from cesarp.common import config_loader
 from cesarp.geometry import _default_config_file
+from cesarp.common.CesarpException import CesarpException
 
 from cesarp.geometry.custom_contracts import (
     coords_2d,
@@ -116,9 +117,14 @@ def define_bldg_walls_per_floor(floors: List[pd.DataFrame]) -> List[List[pd.Data
 
 
 @ic(
-    wall=coords_3d_square, glazing_ratio=percentage, window_height=positive_number, min_wall_width=positive_number, min_window_width=positive_number,
+    wall=coords_3d_square,
+    glazing_ratio=percentage,
+    window_height=positive_number,
+    min_wall_width=positive_number,
+    min_window_width=positive_number,
+    max_glz_ratio_wall_width=percentage,
 )
-def define_window_in_wall(wall: pd.DataFrame, glazing_ratio, win_height, min_wall_width, min_window_width) -> pd.DataFrame:
+def define_window_in_wall(wall: pd.DataFrame, glazing_ratio, win_height, min_wall_width, min_window_width, max_glz_ratio_wall_width) -> pd.DataFrame:
     """
     Defines a window in the center of the wall
     If wall is smaller than MINIMAL_WALL_WIDTH_FOR_WINDOW or
@@ -133,7 +139,9 @@ def define_window_in_wall(wall: pd.DataFrame, glazing_ratio, win_height, min_wal
     wall_width = calc_distance_between_vertices(wall.loc[0], wall.loc[1])
     if wall_width < min_wall_width:
         logger.info(
-            "no window modeled as wall is only %.2fm which is smaller than minimum of %fm", wall_width, min_wall_width,
+            "no window modeled as wall is only %.2fm which is smaller than minimum of %fm",
+            wall_width,
+            min_wall_width,
         )
         return None
 
@@ -143,6 +151,12 @@ def define_window_in_wall(wall: pd.DataFrame, glazing_ratio, win_height, min_wal
     # glazing_ratio = window_surface/wall_surface = (window_width*window_height)/(wall_width*wall_height)
     # ratio_width = window_width/wall_width = glazing_ratio * height_wall/height_window
     gl_ratio_width = glazing_ratio * wall_height / win_height
+    if gl_ratio_width >= max_glz_ratio_wall_width:
+        logger.info(
+            f"glazing ratio {glazing_ratio} cannot be reached. Wall width: {wall_width}, height: {wall_height} and window heigth: {win_height} would need a wall width to window width ratio of {gl_ratio_width}. Reducing to 0.95."
+        )
+        gl_ratio_width = max_glz_ratio_wall_width
+    # Note: check that window height is smaller than wall height is implemented in create_bldg_shape_detailed()
     ctr_to_win_edge_d_x = gl_ratio_width * 0.5 * (wall.loc[1, "x"] - wall.loc[0, "x"])
     ctr_to_win_edge_d_y = gl_ratio_width * 0.5 * (wall.loc[1, "y"] - wall.loc[0, "y"])
 
@@ -159,7 +173,9 @@ def define_window_in_wall(wall: pd.DataFrame, glazing_ratio, win_height, min_wal
     window_width = calc_distance_between_vertices(window.loc[0], window.loc[1])
     if window_width < min_window_width:
         logger.info(
-            "no window modeled as it is only %f m which is smaller than minimum of %f", window_width, min_window_width,
+            "no window modeled as it is only %f m which is smaller than minimum of %f",
+            window_width,
+            min_window_width,
         )
         return None
 
@@ -167,11 +183,16 @@ def define_window_in_wall(wall: pd.DataFrame, glazing_ratio, win_height, min_wal
 
 
 @ic(
-    wall=list2d_coords_3d_square, glazing_ratio=percentage, window_height=positive_number, min_wall_width=positive_number, min_window_width=positive_number,
+    wall=list2d_coords_3d_square,
+    glazing_ratio=percentage,
+    window_height=positive_number,
+    min_wall_width=positive_number,
+    min_window_width=positive_number,
+    max_glz_ratio_wall_width=percentage,
 )
-def define_windows_for_walls(walls_per_floor: List[List[pd.DataFrame]], glazing_ratio: float, win_height, min_wall_width, min_window_width):
+def define_windows_for_walls(walls_per_floor: List[List[pd.DataFrame]], glazing_ratio: float, win_height, min_wall_width, min_window_width, max_glz_ratio_wall_width):
     def get_window(wall):
-        return define_window_in_wall(wall, glazing_ratio, win_height, min_wall_width, min_window_width)
+        return define_window_in_wall(wall, glazing_ratio, win_height, min_wall_width, min_window_width, max_glz_ratio_wall_width)
 
     return list(map(lambda floor: list(map(lambda wall: get_window(wall), floor)), walls_per_floor))
 
@@ -209,19 +230,19 @@ def create_bldg_shape_detailed(
     custom_config: Dict[str, Any] = {},  # make sure to pass as a named parameter, otherwise the previous param consumes it...
 ) -> BldgShapeDetailed:
     """
-        Define building shape as cesarp.manager.manager_protocols.BldgShapeDetailed
-        Glazing ratio is applied per wall. This means, if a building has walls adjacent to the next building or walls that are too small for windows,
-        those walls will be modeled without a window, resulting in a overall building glazing ratio lower than the specified one.
+    Define building shape as cesarp.manager.manager_protocols.BldgShapeDetailed
+    Glazing ratio is applied per wall. This means, if a building has walls adjacent to the next building or walls that are too small for windows,
+    those walls will be modeled without a window, resulting in a overall building glazing ratio lower than the specified one.
 
-        :param bldg: one row defining the building for which to create the shape data
-        :type bldg: DataFrame[columns=['footprint_shape', 'height']] - footprint vertices in counter-clockwise order
-        :param glazing_ratio: glazing ratio per wall
-        :param get_adjacent_footprint_vertices: function with at least
-            1 positional parameter bldg DataFrame[columns=['footprint_shape']]  and
-            returning a Series[columns=main_vertices]] with zero to many adjacent vertices as DataFrame[columns=[x,y]]
-        :param args_to_get_adjacent_footprint_vertices: additional parameters for function get_adjacent_footprint_vertices
-        :param custom_config: dict with custom configuration entries overwriting values from package default config
-        :return: dict with keys:
+    :param bldg: one row defining the building for which to create the shape data
+    :type bldg: DataFrame[columns=['footprint_shape', 'height']] - footprint vertices in counter-clockwise order
+    :param glazing_ratio: glazing ratio per wall
+    :param get_adjacent_footprint_vertices: function with at least
+        1 positional parameter bldg DataFrame[columns=['footprint_shape']]  and
+        returning a Series[columns=main_vertices]] with zero to many adjacent vertices as DataFrame[columns=[x,y]]
+    :param args_to_get_adjacent_footprint_vertices: additional parameters for function get_adjacent_footprint_vertices
+    :param custom_config: dict with custom configuration entries overwriting values from package default config
+    :return: dict with keys:
 
 
     """
@@ -236,7 +257,14 @@ def create_bldg_shape_detailed(
 
     cfg_window = cfg["MAIN_BLDG_SHAPE"]["WINDOW"]
 
-    all_windows = define_windows_for_walls(walls, glazing_ratio, cfg_window["HEIGHT"], cfg_window["MIN_WALL_WIDTH_FOR_WINDOW"], cfg_window["MIN_WINDOW_WIDTH"],)
+    if cfg["MAIN_BLDG_SHAPE"]["MINIMAL_STORY_HEIGHT"] < cfg_window["HEIGHT"]:
+        raise CesarpException(
+            f"inconsistent configuration: minimal story height MINIMAL_STORY_HEIGHT {cfg['MAIN_BLDG_SHAPE']['MINIMAL_STORY_HEIGHT']} is smaller than window height WINDOW: HEIGHT {cfg_window['HEIGHT']}"
+        )
+
+    all_windows = define_windows_for_walls(
+        walls, glazing_ratio, cfg_window["HEIGHT"], cfg_window["MIN_WALL_WIDTH_FOR_WINDOW"], cfg_window["MIN_WINDOW_WIDTH"], cfg_window["MAX_GLZ_RATIO_WALL_WIDTH"]
+    )
     windows = remove_windows_in_adjacent_walls(all_windows, adjacent_walls)
 
     return BldgShapeDetailed(

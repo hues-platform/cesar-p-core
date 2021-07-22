@@ -25,6 +25,8 @@ Module providing functions to parse energyplus error file.
 import mmap
 from enum import Enum
 import re
+from typing import Union
+from pathlib import Path
 
 
 EPLUS_ERROR_FILE_NAME = "eplusout.err"
@@ -49,7 +51,7 @@ eplusout_err_identifiers = {
 eplusout_ignored_warnings = ["** Warning ** IP: Note -- Some missing fields have been filled with defaults. See the audit output file for details."]
 
 
-def check_eplus_error_level(eplus_err_file: str) -> EplusErrorLevel:
+def check_eplus_error_level(eplus_err_file: Union[str, Path]) -> EplusErrorLevel:
     """
     Returns the most severe error level found in the given energyplus error log file
 

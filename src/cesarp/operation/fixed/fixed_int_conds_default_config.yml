@@ -19,7 +19,12 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 OPERATION:
-  FIXED: # to enable FIXED operation parameters set config MANAGER -  BUILDING_OPERATION_FACTORY_CLASS to "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
+  # Parameters when using the FixedBuildingOperationFactory (same parameters and profiles for all buildings)
+  # To enable FIXED operation parameters set config MANAGER -  BUILDING_OPERATION_FACTORY_CLASS to 
+  # "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
+  # parameters starting with SCHED_ should point to a file with a yearly profile (without header, only one column)
+  # parameters with suffix _PER_ZONE_AREA relate to m2 of floor area
+  FIXED: 
     FLOOR_AREA_PER_PERSON: 25.64103 m**2
     SCHED_OCCUPANCY_PATH: "./ressources/mfh_nominal_occupancy.csv"
     SCHED_ACTIVITY_PATH: "./ressources/mfh_nominal_activity.csv"
@@ -33,9 +38,9 @@ OPERATION:
     SCHED_THERMOSTAT_COOLING: "./ressources/mfh_nominal_thermostat_cooling.csv"
     OUTDOOR_AIR_FLOW_PER_ZONE_FLOOR_AREA: 1.297222e-03 m**3/(s * m**2)
     SCHED_VENTILATION: "./ressources/mfh_nominal_ventilation.csv"
-    SCHED_PROPS:
-      NUM_OF_HOURS: 8760
+    SCHED_PROPS: # same properties are applied for all the above profile csv files
+      NUM_OF_HOURS: 8760  # should always be 8760, as we do full-horizon simulation with hourly resolution in EnergyPlus
       SEPARATOR: ","
-      NUM_OF_HEADER_ROWS: 0
-      DATA_COLUMN: 1
+      NUM_OF_HEADER_ROWS: 0  # no header assumed
+      DATA_COLUMN: 1  # we assume each profile in its own file with only one column
 

@@ -20,7 +20,7 @@
 # Contact: https://www.empa.ch/web/s313
 #
 import pint
-from typing import Dict, Mapping, Optional, List
+from typing import Dict, Mapping, Optional, List, Any
 
 import cesarp.common
 from cesarp.SIA2024 import _default_config_file
@@ -38,23 +38,59 @@ from cesarp.operation.protocols import PassiveCoolingOperationFactoryProtocol
 class SIA2024Facade:
     """
     This class provides the main interface to interact with the SIA2024 package.
-    The storage location of profiles is handled via configuration. Nominal and variable profiles are stored in separate locations by default under /ressources/generated of this package.
+
+    Implements the :py:class:`cesarp.manager.manager_protocols.BuildingOperationFactoryProtocol` and thus can be set as "BUILDING_OPERATION_FACTORY_CLASS" in the config of package :py:class:`cesarp.manager`
+
+    The storage location of profiles is handled via configuration. Nominal and variable profiles are stored in separate locations by default in the folder *generated_params* (nominal and variable profiles) of this package.
+    As we cannot include the SIA2024 data with the open source release, a set of pre-generated profiles is stored in the folder mentioned.
+
+    To activate profile generation, you must get access to the SIA2024 base data. Contact the Urban Energy Systems Lab for this, as there are some additional input values used. For UES Lab members,
+    check out the separate cesar-p-sia2024-data repository. To activte profile generation copy the PROFILE_GENERATION part of the package config to your main configuration file and adapt to your needs,
+    especially point to the data file, change the location where to save the profiles (as otherwise your profiles will be overwritten when updating your cesar-p installation) and set the *ACTIVE* switch to *TRUE*.
+    With that set up, the profiles will be generated when the destination folder for the profiles is empty or you explicitly call the *generate_all_parameter_sets* with **
+    In the configuration you also have many options to control the variability (e.g. variability bands).
+
     One file is stored per parameter set, which means that single-value parameters are stored in the YAML header and yearly profile values in the following csv part. This file can be directly used
     as an input for EnergyPlus. The profiles returned by the module are represented as `cesarp.common.ScheduleFile`.
-    If you have a development installation it's ok to keep this location, but it is expected to be set to a folder within your project by passing your custom configuration.
-    When using this default location with a pip installed version, when updating cesar the profiles might be lost.
-    For available building types see ressources/building_types.yml. You have to pass the Top-Level YAML Keys as Strings, e.g. if you have Single family homes and offices, ['SFH', 'OFFICE']
-    The returned profiles are of type "cesarp.common.ScheduleFile", as the SIA2024 module takes care of writing newly created parameter sets to disk.
-    For detailed settings on the variability (e.g. variability bands) please have a look at the package configuration file, sia2024_default_config.yml.
+
+    Usage:
+
+    1. create an instance of this class  (passing the mapping between the building ids and their type, if you use the lib to only generate parameters, you can pass an empty list)
+    2. call method *load_or_create_parameters*  (passing the building types you want to laod the profiles for, use unique values of the mapping you passed to the init e.g. my_bldg_types.values().unique())
+       VARIABILITY: to control whether variable or nominal profiles are used, see configuration parameter *USE_VARIABLE_PARAMSETS*
+    3. call *get_building_operation* and/or *get_infiltration_profile*, *get_infiltration_rate* for each building you need the parameters and profiles
+
+    For available building types see :py:class:`cesarp.SIA2024.SIA2024BuildingType.SIA2024BldgTypeKeys`. You have to pass the Enum entries as Strings, e.g. if you have Single family homes and offices, ['SFH', 'OFFICE']
+
+    As this class implements the interface defined in :py:class:`cesarp.manager.manager_protocols.BuildingOperationFactoryProtocol`,
+    and the SIA2024 package does not provide the operational parameters for passive cooling, we need a factory instance implementing :py:class:`cesarp.operation.protocolsPassiveCoolingOperationFactoryProtocol`
+    to query for those parameters to be able to fulfill this interface/protocol. As this interface further requires that the query methods get_xxx take only the building fid as a parameter, we pass the mapping
+    between the building fid and its type to the construction. (the reason for this implementation is that in case another implemntation needs another or additional attribute, e.g. building age,
+    the interface will be unchanged, but only the parameters you would pass to the constructor of that method change, which means only in one location where the class is initialized a special handling must
+    be implemented but not at each place where an instance of the interface/protocol is used)
+
+    If you need greater control over the parameter generation than provided by this facade and the configuration parameters, you can use the :py:class:`cesarp.SIA2024.SIA2024ParameterFactory` to create
+    SIA parameter sets. The factory just creates in-memory objects, so if you need to e.g. store the profiles to disk you can get some inspiration from :py:class:`cesarp.SIA2024.SIA2024ParameterManager`.
     """
 
-    def __init__(self, bldg_fid_bldg_type_lookup: Mapping[int, str], passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol, ureg, custom_config={}):
+    def __init__(
+        self,
+        bldg_fid_bldg_type_lookup: Mapping[int, str],
+        passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol,
+        ureg: pint.UnitRegistry,
+        custom_config: Dict[str, Any] = {},
+    ):
         """
-        Initialization
+        Initialization of the facade.
 
         :param bldg_fid_bldg_type_lookup: dictionary defining the building type (as a string) of each building.
+        :type bldg_fid_bldg_type_lookup: Mapping[int, str]
+        :param passive_cooling_op_fact: the properties for passive cooling are not implemented withing SIA2024. As this interface class provides the full operational parameter set, we use this factory instance to genertate the passive cooling specific parameters.
+        :type passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol
         :param ureg: instance of pint unit registry
+        :type ureg: pint.UnitRegistry
         :param custom_config: dict with custom configuration entries
+        :type custom_config: Dict[str, Any]
         """
         self.bldg_fid_params_lookup: Dict[int, SIA2024Parameters] = dict()
         self._cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)

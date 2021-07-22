@@ -68,7 +68,7 @@ class ArchetypicalConstructionFactoryProtocol(Protocol):
 
 
 class NeighbouringConstructionFactoryProtocol(Protocol):
-    " where key of mapping should be name of cesarp.common.BuildingElement Enum member "
+    "where key of mapping should be name of cesarp.common.BuildingElement Enum member"
 
     def get_neighbours_construction_props(self, window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF]) -> Mapping[str, ShadingObjectConstruction]:
         ...

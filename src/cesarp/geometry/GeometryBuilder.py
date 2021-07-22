@@ -38,6 +38,8 @@ class GeometryBuilder:
     For configuration options, please see default_config.yml.
     Manages the geometry data for one building, including neighbouring buildings.
     All returned coordinates have the first vertex of the main building set as the origin.
+    The layout of the dataframe for the site_bldgs parameter matches the one
+    returned by cesarp.geometry.vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint.
     """
 
     def __init__(self, main_bldg_fid, site_bldgs: pd.DataFrame, glazing_ratio: float, custom_config: Dict[str, Any] = {}):

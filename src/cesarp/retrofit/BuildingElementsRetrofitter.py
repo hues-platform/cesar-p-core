@@ -59,7 +59,7 @@ class BuildingElementsRetrofitter:
     cesarp.retrofit.RetrofitLog class. It includes the embodied costs and emissions. Depending on your needs,
     you can reset the log by calling reset_retrofit_log() before calling retrofit_bldg_construction(....) and
     retrieving the log right afterwards, which gives you the log only for that one building. Otherwise, log entries
-    for the different buildings are appended (but log entries contain building fid).
+    for the different buildings are appended (log entries contain building fid).
     """
 
     _retrofittable_bldg_elems = [

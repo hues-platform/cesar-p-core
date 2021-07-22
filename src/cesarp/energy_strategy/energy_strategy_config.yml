@@ -18,8 +18,11 @@
 ##
 ## Contact: https://www.empa.ch/web/s313
 ##
-ENERGY_STRATEGY:
-  ENERGY_STRATEGY_SELECTION: WWB # WWB - Business as Usual or NEP - New Energy Policy
+
+# energy strategy defines different constants used for operational cost and emission calculation and retrofitting with the EnergyPerspective2050RetrofitManager
+# each strategy defines a number of time periods, some of the linked files do then specify the parameters per time period
+ENERGY_STRATEGY: 
+  ENERGY_STRATEGY_SELECTION: WWB # options: WWB - Business as Usual or NEP - New Energy Policy
   WWB:
     TIME_PERIODS: [2015, 2020, 2030, 2035, 2040, 2050]
     PRIMARY_ENERGY_FACTORS_FILE: "ressources/general/PrimaryEnergyFactors.xlsx"

@@ -42,7 +42,10 @@ class ConstructionIDFWritingHandler:
     """
 
     def __init__(
-        self, main_building_construction: BuildingConstruction, shading_surfaces_construction: Mapping[str, ShadingObjectConstruction], unit_reg: pint.UnitRegistry,
+        self,
+        main_building_construction: BuildingConstruction,
+        shading_surfaces_construction: Mapping[str, ShadingObjectConstruction],
+        unit_reg: pint.UnitRegistry,
     ):
         self.unit_reg = unit_reg
         self._main_building_construction = main_building_construction

@@ -39,13 +39,37 @@ def read_insulation_costs(yml_input_file: str, ureg: pint.UnitRegistry) -> List[
     yml_cost_config = cesarp.common.load_config_full(yml_input_file, ignore_metadata=True)
     cost_lookup = []
     out_compact_costs = _order_by_key(_convert_key_value_to_quantity(yml_cost_config["WALL_OUTSIDE_COMPACT"], ureg))
-    cost_lookup.append(InsulationCosts(cost_per_thickness=out_compact_costs, applicable_to=[BuildingElement.WALL], layer_function=LayerFunction.INSULATION_OUTSIDE,))
+    cost_lookup.append(
+        InsulationCosts(
+            cost_per_thickness=out_compact_costs,
+            applicable_to=[BuildingElement.WALL],
+            layer_function=LayerFunction.INSULATION_OUTSIDE,
+        )
+    )
     backv_costs = _order_by_key(_convert_key_value_to_quantity(yml_cost_config["WALL_OUTSIDE_BACK_VENTILATED"], ureg))
-    cost_lookup.append(InsulationCosts(cost_per_thickness=backv_costs, applicable_to=[BuildingElement.WALL], layer_function=LayerFunction.INSULATION_OUTSIDE_BACK_VENTILATED,))
+    cost_lookup.append(
+        InsulationCosts(
+            cost_per_thickness=backv_costs,
+            applicable_to=[BuildingElement.WALL],
+            layer_function=LayerFunction.INSULATION_OUTSIDE_BACK_VENTILATED,
+        )
+    )
     roof_inside_costs = _order_by_key(_convert_key_value_to_quantity(yml_cost_config["ROOF_INSIDE"], ureg))
-    cost_lookup.append(InsulationCosts(cost_per_thickness=roof_inside_costs, applicable_to=[BuildingElement.ROOF], layer_function=LayerFunction.INSULATION_INSIDE,))
+    cost_lookup.append(
+        InsulationCosts(
+            cost_per_thickness=roof_inside_costs,
+            applicable_to=[BuildingElement.ROOF],
+            layer_function=LayerFunction.INSULATION_INSIDE,
+        )
+    )
     roof_outside_costs = _order_by_key(_convert_key_value_to_quantity(yml_cost_config["ROOF_OUTSIDE"], ureg))
-    cost_lookup.append(InsulationCosts(cost_per_thickness=roof_outside_costs, applicable_to=[BuildingElement.ROOF], layer_function=LayerFunction.INSULATION_OUTSIDE,))
+    cost_lookup.append(
+        InsulationCosts(
+            cost_per_thickness=roof_outside_costs,
+            applicable_to=[BuildingElement.ROOF],
+            layer_function=LayerFunction.INSULATION_OUTSIDE,
+        )
+    )
     inb_costs = _order_by_key(_convert_key_value_to_quantity(yml_cost_config["WALL_ROOF_GROUNDFLOOR_INBETWEEN"], ureg))
     cost_lookup.append(
         InsulationCosts(
@@ -55,7 +79,13 @@ def read_insulation_costs(yml_input_file: str, ureg: pint.UnitRegistry) -> List[
         )
     )
     gf_costs = _order_by_key(_convert_key_value_to_quantity(yml_cost_config["GROUNDFLOOR_INSULATION_TO_UNHEATED_SPACE"], ureg))
-    cost_lookup.append(InsulationCosts(cost_per_thickness=gf_costs, applicable_to=[BuildingElement.GROUNDFLOOR], layer_function=LayerFunction.INSULATION_INSIDE,))
+    cost_lookup.append(
+        InsulationCosts(
+            cost_per_thickness=gf_costs,
+            applicable_to=[BuildingElement.GROUNDFLOOR],
+            layer_function=LayerFunction.INSULATION_INSIDE,
+        )
+    )
     return cost_lookup
 
 

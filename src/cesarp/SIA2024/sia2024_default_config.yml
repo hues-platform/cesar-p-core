@@ -19,36 +19,50 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 
-# coding=utf-8
-SIA2024: # to use operational params/infiltration rate from SIA2024 set config MANAGER - BUILDING_OPERATION_SOURCE resp INFILTRATION_RATE_SOURCE to "SIA2024"
-  USE_VARIABLE_PARAMSETS: False # if True, use the variable parameter sets, otherwise use nominal parameter sets
-  PARAMSETS_VARIABLE_SAVE_FOLDER: "./generated_params/variable/" # set to folder outside of cesar-p sources
-  PARAMSETS_NOMINAL_SAVE_FOLDER: "./generated_params/nominal/" # set to folder outside of cesar-p sources
+# to use operational params from SIA2024 set config MANAGER - BUILDING_OPERATION_FACTORY_CLASS to "cesarp.SIA2024.SIA2024Facade.SIA2024Facade"
+# to use infiltration rate from SIA2024 set config MANAGER - INFILTRATION_RATE_SOURCE to "SIA2024"
+SIA2024: 
+  # if True, use the variable parameter sets, otherwise use nominal parameter sets
+  # when using variable parameter sets, if you do want to simulate different scenarios, use the ProjectManager to do so - this 
+  # way you can keep the assignment between the variable profiles and your individual buildings
+  USE_VARIABLE_PARAMSETS: False
+  # if you have your own profile files or you want to modify them, point to a custom folder; the default points to the included pre-generated standard SIA2024 profiles.
+  PARAMSETS_VARIABLE_SAVE_FOLDER: "./generated_params/variable/"  # variable profiles, thus several profiles per buidling type 
+  PARAMSETS_NOMINAL_SAVE_FOLDER: "./generated_params/nominal/" # standard profiles, one profile per building type
   CSV_SEPARATOR: ";" # using semicolon instead of comma as separator to be able to use commas in the YAML block which will not be split to different cells when read by Excel or the like
-  CSV_FLOAT_FORMAT: "%.4f"
-  PROFILE_NOMINAL_FILENAME_PATTERN_REL: 'SIA2024_{0}_nominal.csvy' # {0} -> bldg type name, {1} profile name, see PROFILE_NAMES
-  PROFILE_VARIABLE_FILENAME_PATTERN_REL: 'SIA2024_{0}_variable_{1}.csvy' # {0} -> bldg type name, {1} param set nr
+  CSV_FLOAT_FORMAT: "%.4f" # floating point formate when writing profile files, actually only used when PROFILE_GENERATION: ACTIVE is True
+  # names for generated parameter & profile files. only one file including all parameters and all hourly profiles is created per building type
+  PROFILE_NOMINAL_FILENAME_PATTERN_REL: 'SIA2024_{0}_nominal.csvy' # filename for standard profile; {0} -> bldg type name
+  PROFILE_VARIABLE_FILENAME_PATTERN_REL: 'SIA2024_{0}_variable_{1}.csvy' # filename for variable profiles; {0} -> bldg type name, {1} param set nr
+  # parameters to control generation of the parameters and profile files from the SIA2024 base data
+  
   PROFILE_GENERATION:
+    # set to True if you want profile generation active; not that if the profiles are already available in the output save folder profiles are not re-generated
+    # if you activate, make sure to set valid pathes for the SIA_SHEET_CONFIG_FILE and BUILDING_TYPES_CONFIG_FILE 
     ACTIVE: False
+    # note that the base data Excel sheet is not available in the OpenSource version and stored in a separate repository cesar-p-sia2024-data
     SIA_SHEET_CONFIG_FILE: "CHECKOUT_PATH_OF_cesar-p-sia2024-data/ressources/sia2024_2016_edited_excel_config.yml"
     BUILDING_TYPES_CONFIG_FILE: "CHECKOUT_PATH_OF_cesar-p-sia2024-data/ressources/building_types.yml"
+    # how many different profiles for residential buildings (SFH/MFH) shall be created for the variable parameter sets
     MAX_NR_PARAMSETS_PER_RESIDENTIAL_BLDG_TYPE: 100
+    # how many different profiles for non-residential buildings (OFFICE, SCHOOL, SHOP) shall be created for the variable parameter sets
     MAX_NR_PARAMSETS_PER_NON_RESIDENTIAL_BLDG_TYPE: 10
-    VARIABILITY_SETTINGS:
-      LIGHTING_SETPOINT_VARIABILITY_PRC: 0.1 dimensionless 
-      VERTICAL_VARIABILITY_THERMOSTAT_SETPOINT: 1 delta_degC 
-      INFILTRATION_RATE_VARIABILITY_PRC: 0.2 dimensionless 
-      VERTICAL_VARIABILITY_FRACTION_PROFILES: 0.15  
+    VARIABILITY_SETTINGS: # settings for variability
+      LIGHTING_SETPOINT_VARIABILITY_PRC: 0.1 dimensionless  # percentage of the standard value to use for randomization of the lighting setpoint parameter
+      VERTICAL_VARIABILITY_THERMOSTAT_SETPOINT: 1 delta_degC  # variation band for thermostat setpoint (cooling and heating)
+      INFILTRATION_RATE_VARIABILITY_PRC: 0.2 dimensionless  # percentage of the standard value to use for randomization of the infiltration parameter
+      VERTICAL_VARIABILITY_FRACTION_PROFILES: 0.15  # sigma for randomization of each profile value for yearly appliance and occupancy profile and the monthly variation 
       DAILY_ROUTINE_VARIABILITY: 1 # hour, variability for wakeup and sleeptime hour
       DO_HORIZONTAL_VARIABILTY: True # do horizontal variability/shuffling for occupancy and appliances profiles for rooms where breaks are defined in SIA Excel
     PROFILE_SETTINGS:
-      WAKEUP_HOUR: 6 # wakeup at 6 o'clock 
-      SLEEPTIME_HOUR: 22 # bedtime at 22 o'clock
-      DHW_NIGHT_VALUE: 0 dimensionless
-      LIGHTING_OFF_VALUE: 0 dimensionless
-      INFILTRATION_RATE_FRACTION_BASE_VALUE: 1 dimensionless
-      OCCUPANCY_RESTDAY_VALUE: 0 dimensionless
-    DHW_BASED_ON_LITER_PER_DAY:
+      WAKEUP_HOUR: 6 # occupancy profile - wakeup at 6 o'clock 
+      SLEEPTIME_HOUR: 22 # occupancy profile - bedtime at 22 o'clock
+      OCCUPANCY_RESTDAY_VALUE: 0 dimensionless  # occupancy profile value for occupancy profile on restdays      
+      LIGHTING_OFF_VALUE: 0 dimensionless  # lighting profile - value to use in profile when lights are switched off
+      INFILTRATION_RATE_FRACTION_BASE_VALUE: 1 dimensionless  # infiltration profile - constant value to be used for all hours of year
+      DHW_NIGHT_VALUE: 0 dimensionless  # DHW profile - value for DHW usage during nighttime hours
+      START_DATE: "20190101" # start date for profile generation (e.g. to match weekends with weather data)
+    DHW_BASED_ON_LITER_PER_DAY:  # for detailed description, see CESAR-P docs, https://cesar-p-core.readthedocs.io/en/latest/features/sia2024-dhw-demand.html
       ACTIVE: True # if not active, then the DHW power demand stated in the excel sheet is used, as in Matlab CESAR
-      NOMINAL_TEMPERATURE: 60°C
-      COLD_WATER_TEMPERATURE: 10°C
+      NOMINAL_TEMPERATURE: 60°C  # setpoint temperature for domestic hot water
+      COLD_WATER_TEMPERATURE: 10°C  # assumend temperature of cold water inlet (used for domestic hot water)

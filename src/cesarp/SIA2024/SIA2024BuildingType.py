@@ -26,7 +26,7 @@ from cesarp.common.profiles import HOURS_PER_YEAR
 
 
 class SIA2024BldgTypeKeys(Enum):
-    """ these names have to match with the building types defined in the building type YML configuration referenced from config as  """
+    """these names have to match with the building types defined in the building type YML configuration referenced from config"""
 
     MFH = 1
     SFH = 2
@@ -59,7 +59,9 @@ class SIA2024BuildingType:
         return synthesized_value
 
     def synthesize_profiles_yearly_by_room_area_for_bldg(
-        self, profile_per_room_method: Callable[[Enum], List[float]], additional_factor_per_room_method: Callable[[Enum], float] = None,
+        self,
+        profile_per_room_method: Callable[[Enum], List[float]],
+        additional_factor_per_room_method: Callable[[Enum], float] = None,
     ):
         if additional_factor_per_room_method is not None:
             add_factor_synth = self.synthesize_value_by_room_area(additional_factor_per_room_method)

@@ -4,9 +4,9 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "cesar-p"
-version = "1.3.0"
+version = "2.0.0"
 description = "Combined Energy Simulation And Retrofit"
-authors = ["Leonie Fierz <leonie.fierz@empa.ch>"]
+authors = ["Urban Energy Systems Lab - Empa"]
 homepage = "https://github.com/hues-platform/cesar-p-core"
 repository = "https://github.com/hues-platform/cesar-p-core"
 documentation = "https://cesar-p-core.readthedocs.io/en/latest/"
@@ -24,33 +24,36 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "~3.8"
-numpy = "^1.16.5"
-pandas = "^0.25.1"
-PyYaml = "^5.1.2"
-eppy = "^0.5.52"
-python-contracts = "^0.1.4"
-pint = "^0.10.1"
-xlrd = "^1.2.0"
-esoreader = "^1.2.3"
-jsonpickle = "1.3"
-geopandas = { version = "^0.7.0", optional = true }
-rdflib = "^4.2.2"
-SPARQLWrapper = "^1.8.5"
-scipy = "^1.5.2"
-Shapely = "^1.7.1"
+python = ">3.8, <3.10"  # <3.10 forced by scipy
+numpy = "^1.20"
+pandas = "^1.3"
+PyYaml = "^5.4"
+eppy = "^0.5"
+python-contracts = "^0.1"
+pint = "^0.17"
+esoreader = "^1.2"
+jsonpickle = "^2.0.0"  # attention, with version 2.0.0 you cannot read serialzed BuildingContainer objects created with versions < 2.0.0 (it messes up with the py/id, check out tests/test_model/test-model_pickling.py to see the error)
+geopandas = { version = "^0.9.0", optional = true }
+rdflib = "^5.0"
+SPARQLWrapper = "^1.8"
+scipy = "^1.7"
+Shapely = "^1.7"
+geomeppy = { version = "^0.11", optional = true }
+openpyxl = "^3.0"
+types-PyYAML = "^5.4.3"
+types-six = "^0.1.7"
+
 [tool.poetry.dev-dependencies]
-pytest = "^coverage>=4.5.4"
-pytest-cov = "^2.8"
-flake8 = "^3.7.8"
-black = "^19.10b0"
-sphinx = "^2.2"
-sphinx_rtd_theme = "^0.4.3"
-MyPy = "^0.750.0"
-memory-profiler = "^0.55.0"
-geomeppy = { version = "^0.11.6", optional = true }
-pytest-html = "^2.1.1"
-licenseheaders = "^0.8.7"
+pytest = "^coverage>=5.5"
+pytest-cov = "^2.12"
+flake8 = "^3.9.2"
+black = "^21.7b0"
+sphinx = "^4.1.1"
+sphinx_rtd_theme = "^0.5.2"
+MyPy = "^0.910"
+memory-profiler = "^0.58.0"
+pytest-html = "^3.1.1"
+licenseheaders = "^0.8.8"
 
 [tool.poetry.extras]
 geopandas = ["geopandas"]

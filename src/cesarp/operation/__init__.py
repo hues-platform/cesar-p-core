@@ -21,15 +21,31 @@
 #
 
 """
+operation
+============
+
 Package providing functionality for defining internal conditions such as occupancy, appliances, lighting.
 As well for passive cooling with night ventilation and window shading.
 
 For the main part of the operational properties including profiles, there is either the variant to assign a fixed set identical
 for all buildings (cesarp.operation.fixed) or using the parameters defined according to SIA2024 (see cesarp.SIA2014).
 
-For passive cooling there is a separate factory, cesarp.operation.PassiveCoolingOperationFacotry, used in both above cases.
+For passive cooling there is a separate factory, cesarp.operation.PassiveCoolingOperationFacotry, used in both above caseses and is passed
+to them as an argument in :py:class:`cesarp.manager.BldgModelFactory`
 
+============================================================================ ===========================================================
+class                                                                        description
+============================================================================ ===========================================================
+:py:class:`cesarp.operation.FixedBuildingOperationFactory`                   Main class used in case of using the same operational parameters for all buildings.
+                                                                             This class can be set as "BUILDING_OPERATION_FACTORY_CLASS" in the config of :py:class:`cesarp.manager`
+                                                                             Use this as a starting point if you want to create your own factory for building operation properties.
+
+:py:class:`cesarp.operation.PassiveCoolingOperationFacotry`                  Generation of passive cooling night ventilation and window shading operational properties.
+                                                                             Both are initialized from configuration parameters and are the same for all buildings.
+
+============================================================================ ===========================================================
 """
+
 from pathlib import Path
 import os
 

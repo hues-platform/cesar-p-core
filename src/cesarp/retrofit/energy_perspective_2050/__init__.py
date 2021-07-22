@@ -21,6 +21,8 @@
 #
 """
 Implementation retrofit following energy perspective 2050 (when default configurations are used).
+Uses cesarp.energy_strategy for getting retrofit rates. There are two strategies, business as usual and new energy policy,
+which can be chosen over the configuration of cesarp.energy_strategy package parameter ENERGY_STRATEGY_SELECTION.
 """
 
 import os

@@ -25,7 +25,11 @@ import pint
 
 class SiteGroundTemperatures:
     def __init__(
-        self, building_surface: pint.Quantity, shallow: pint.Quantity, deep: pint.Quantity, ground_temp_per_month: List[pint.Quantity],
+        self,
+        building_surface: pint.Quantity,
+        shallow: pint.Quantity,
+        deep: pint.Quantity,
+        ground_temp_per_month: List[pint.Quantity],
     ):
         assert len(ground_temp_per_month) == 12
         self.building_surface = building_surface

@@ -91,7 +91,8 @@ def get_git_extended_status(fd_git_infos):
         command_to_file(["git", "diff", "origin"], fd_git_infos)
     else:
         print(
-            "CESAR-P seems to be installed as a package, as not git reference can be found or no GIT CLI is properly installed on the system...", file=fd_git_infos,
+            "CESAR-P seems to be installed as a package, as not git reference can be found or no GIT CLI is properly installed on the system...",
+            file=fd_git_infos,
         )
 
 

@@ -43,8 +43,7 @@ class BuildingOperationMapping:
         self.add_operation_assignment(list(range(0, nr_of_floors)), building_op)
 
     def get_operation_for_floor(self, floor_nr: int):
-        """for fast access to all building operation assignment please use get_operation_assignment
-        """
+        """for fast access to all building operation assignment please use get_operation_assignment"""
         for floor_nrs, bldg_op in self._op_assignments:
             if floor_nr in floor_nrs:
                 return bldg_op

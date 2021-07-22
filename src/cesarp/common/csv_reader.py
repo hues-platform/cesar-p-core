@@ -21,19 +21,30 @@
 #
 import pandas as pd
 import yaml
-from typing import Dict, List
+from pathlib import Path
+from typing import Dict, List, Union, Tuple, Any
 
 YAML_DELIMITER = "---"
 
 
 def read_csv(
-    full_file_name: str, required_columns: List[str], data_labels_mapping: Dict[str, str], separator: str = ";", index_column_name: str = None, drop_unmapped_cols: bool = True,
+    full_file_name: str,
+    required_columns: List[str],
+    data_labels_mapping: Dict[str, str],
+    separator: str = ";",
+    index_column_name: str = None,
+    drop_unmapped_cols: bool = True,
 ) -> pd.DataFrame:
     return read_csvy(full_file_name, required_columns, data_labels_mapping, separator, index_column_name, drop_unmapped_cols)
 
 
 def read_csvy(
-    full_file_name: str, required_columns: List[str], data_labels_mapping: Dict[str, str], separator: str = ";", index_column_name: str = None, drop_unmapped_cols: bool = True,
+    full_file_name: Union[str, Path],
+    required_columns: List[str],
+    data_labels_mapping: Dict[str, str],
+    separator: str = ";",
+    index_column_name: str = None,
+    drop_unmapped_cols: bool = True,
 ) -> pd.DataFrame:
     """
     Reads data from CSV or CSVY to a pandas Dataframe. If a YAML header, delimited with --- is found at the beginning of the file this block is ignored.
@@ -60,7 +71,22 @@ def read_csvy(
     return data_relabeled
 
 
-def read_csvy_raw(full_file_name, separator, encoding="utf-8"):
+def read_csvy_raw(full_file_name: Union[str, Path], separator: str = ";", encoding="utf-8", header="infer", index_col=None) -> Tuple[Dict[Any, Any], pd.DataFrame]:
+    """
+    Reading a csvy file (csv tabular data with YAML header, delimitted by ---) and return the metadata and csv data portion separately.
+    If no YAML header is found then just read as a plain csv.
+
+    :param full_file_name: full file path to be read
+    :type full_file_name: Union[str, Path]
+    :param separator: separator used in csv part
+    :type separator: str
+    :param encoding: forwarding parameter to pandas.read_csv, encoding used in file, defaults to "utf-8"
+    :type encoding: str, optional
+    :param header: forwarding parameter to pandas.read_csv, defaults to "infer"
+    :param index_col: forwarding parameter to pands.read_csv, defaults to None
+    :return: (YAML data as dict, csv data as pd.DataFrame)
+    :rtype: Tuple[Dict[Any, Any], pd.DataFrame]
+    """
     delimiter_hits = 0
     data_with_orig_labels = None
     yaml_lines = []
@@ -77,9 +103,9 @@ def read_csvy_raw(full_file_name, separator, encoding="utf-8"):
         else:
             metadata = {}
         try:
-            data_with_orig_labels = pd.read_csv(file_handel, sep=separator, encoding=encoding)
+            data_with_orig_labels = pd.read_csv(file_handel, sep=separator, encoding=encoding, header=header, index_col=index_col)
         except pd.errors.EmptyDataError:
             pass  # no delimiters found, thus file_handel was at end of file... try to read plain csv below
     if data_with_orig_labels is None:
-        data_with_orig_labels = pd.read_csv(full_file_name, sep=separator, encoding=encoding)
+        data_with_orig_labels = pd.read_csv(full_file_name, sep=separator, encoding=encoding, header=header, index_col=index_col)
     return metadata, data_with_orig_labels

@@ -80,14 +80,26 @@ def read_sia_param_set_from_file(filepath, unit_registry, csv_separator=";"):
         if "name" not in parameters.keys():
             parameters["name"] = os.path.splitext(os.path.basename(filepath))[0]
         sia_params = _init_params_from_dict(
-            parameters, profile_header, _full_qualified_siaparams_classname, schedule_file_template, parameters["name"], unit_registry, skip_attributes=["data_descr"],
+            parameters,
+            profile_header,
+            _full_qualified_siaparams_classname,
+            schedule_file_template,
+            parameters["name"],
+            unit_registry,
+            skip_attributes=["data_descr"],
         )
         sia_params.data_descr = _init_params_from_dict(yaml_properties[_KEY_SOURCE], None, _full_qualified_datadescr_classname, None, None, unit_registry)
     return sia_params
 
 
 def _init_params_from_dict(
-    parameters, profiles, class_name, schedule_file_template: cesarp.common.ScheduleFile, schedule_name_prefix: str, unit_registry, skip_attributes=[],
+    parameters,
+    profiles,
+    class_name,
+    schedule_file_template: cesarp.common.ScheduleFile,
+    schedule_name_prefix: str,
+    unit_registry,
+    skip_attributes=[],
 ):
     """
     Sub-classes are supported. The main class ("class_name") and all sub-classes have to provide an "emptyObj()" class method which returns an empty object.
@@ -115,7 +127,12 @@ def _init_params_from_dict(
             if isinstance(parameters[attr_name], Iterable):
                 if _KEY_CLASS in parameters[attr_name]:
                     sub_obj = _init_params_from_dict(
-                        parameters[attr_name][_KEY_PARAMS], profiles, parameters[attr_name][_KEY_CLASS], schedule_file_template, schedule_name_prefix, unit_registry,
+                        parameters[attr_name][_KEY_PARAMS],
+                        profiles,
+                        parameters[attr_name][_KEY_CLASS],
+                        schedule_file_template,
+                        schedule_name_prefix,
+                        unit_registry,
                     )
                     setattr(obj_to_init, attr_name, sub_obj)
                 elif _KEY_SCHED_COL in parameters[attr_name]:

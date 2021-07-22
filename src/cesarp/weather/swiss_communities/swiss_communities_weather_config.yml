@@ -18,14 +18,17 @@
 ##
 ## Contact: https://www.empa.ch/web/s313
 ##
+
 WEATHER:
-    SWISS_COMMUNITIES:
-      COMMUNITY_TO_STATION:
-        PATH: "./ressources/Gemeinde_to_WeatherStation.csvy"
-        SEPARATOR: ","
-        LABELS:
-          community_id: "BFS Gde-nummer"
-          station_name: "WeatherStationName" # entries should not have any special characters such as ü/é, adapt weather file names if necessary!
-      WEATHER_FILES:
-        PATH: "./ressources/weather_files"
-        EXTENSION: "epw"
+  # to activate lookup of weather file based on the building l
+  # note: 
+  SWISS_COMMUNITIES:
+    COMMUNITY_TO_STATION:
+      PATH: "./ressources/Gemeinde_to_WeatherStation.csvy"
+      SEPARATOR: ","
+      LABELS:
+        community_id: "BFS Gde-nummer"
+        station_name: "WeatherStationName" # entries should not have any special characters such as ü/é, adapt weather file names if necessary!
+    WEATHER_FILES:
+      PATH: "./ressources/weather_files"
+      EXTENSION: "epw"

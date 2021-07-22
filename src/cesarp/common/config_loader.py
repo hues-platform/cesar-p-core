@@ -21,7 +21,7 @@
 """
 Keep an eye on handling relative pathes. When loading the configuration all detected relative pathes are converted to absolute ones. The detection relies on some keywords of the config keys and values, such as known file extensions. Details see cesarp.common.config_loader.
 """
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Union
 import logging
 import yaml
 import os
@@ -152,7 +152,7 @@ def __convert_entries_to_abs_pathes(config_dict: Dict[str, Any], basepath: str) 
                         config_dict[key] = abs_path(value, basepath)
 
 
-def abs_path(path, basepath) -> str:
+def abs_path(path: Union[str, Path], basepath: Union[str, Path]) -> str:
     """
     Converts given path to an absolute path. If path exists and is relative to current execution directory,
     the latter is used to create the absolute path. If path does not exist and is relative, "basepath" is prepended
@@ -171,7 +171,7 @@ def abs_path(path, basepath) -> str:
         return str(basepath / Path(path))
 
 
-def save_config_to_file(config: Dict[str, Any], filepath):
+def save_config_to_file(config: Dict[str, Any], filepath: Union[str, Path]):
     """
     Write config entries to file in YAML format.
 
@@ -198,7 +198,9 @@ def validate_custom_cesarp_config(custom_config_to_validate: Dict[str, Any], the
 
 
 def validate_custom_config(
-    all_cfg_files: List[str], custom_config_to_validate: Dict[str, Any], the_logger: logging.Logger = logging.getLogger(__name__),
+    all_cfg_files: List[str],
+    custom_config_to_validate: Dict[str, Any],
+    the_logger: logging.Logger = logging.getLogger(__name__),
 ):
     """
     Checks if all the entries in the custom_config_to_validate are valid keys be searching them in all the default configuration entries.
@@ -279,7 +281,9 @@ def _find_key(key_to_search: str, nested_dict: Dict[str, Any], key_matched_value
 
 
 def _compare_dicts(
-    superset: Dict[str, Any], subset: Dict[str, Any], missing_value: str = "!!! THIS PARAM NAME IS NOT VALID OR WRONG POSITION !!!",
+    superset: Dict[str, Any],
+    subset: Dict[str, Any],
+    missing_value: str = "!!! THIS PARAM NAME IS NOT VALID OR WRONG POSITION !!!",
 ):
     """
     Compare two dicts and return dictionary with enties from subset which are not present in the superset dict.

@@ -156,6 +156,7 @@ METADATA:
       NR_OF_PARALLEL_WORKERS: -1
       OUTPUT_FOLDER_REL: eplus_output
       RANDOM_CONSTRUCTIONS: false
+      SEPARATE_METADATA: false
       SINGLE_SITE:
         ACTIVE: true
         WEATHER_FILE: C:\Users\file\Documents\CESAR-P\cesar-p-core\tests\test_integration\testfixture\sample_case\Zurich_1.epw
@@ -183,16 +184,16 @@ METADATA:
   DATE_CREATED: 2021-01-25 17:48:26.286860
   DESCRIPTION: idf generation, simualtion run and results aggregation with cesar-p.
     See configuration settings dumped above for top level and custom settings
-  SOURCE: energy plus simulation results EnergyPlus Version 9.3.0 and calculated emissions
+  SOURCE: energy plus simulation results EnergyPlus Version 9.5.0 and calculated emissions
     and fuel costs with cesar-p using emisson and cost data input files listed in
     the configuration entries for ENERGY_STRATEGY
   SOURCE_LINK: null
   VERSION_INFO:
-    Cesar-P Version: 1.3.0
+    Cesar-P Version: 2.0.0
     GIT-BRANCH: development
     GIT-INFO: CESAR-P-V1.1.0-112-g0dc5d6a
     GIT-REMOTE: https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-core.git
 ---
 unit;FATAL|SEVERE|WARNING|IP_NOTE|NO_ERRORS|UNKNOWN;h * kiloW / year;h * kiloW / year;h * kiloW / year;h * kiloW / year;h * kiloW / meter ** 2 / year;h * kiloW / meter ** 2 / year;h * kiloW / meter ** 2 / year;h * kiloW / meter ** 2 / year;meter ** 2;Oileq * megajoule / meter ** 2 / year;Oileq * megajoule / meter ** 2 / year;Oileq * megajoule / meter ** 2 / year;Oileq * megajoule / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;CO2eq * kilogram / meter ** 2 / year;;CHF / year;CHF / year;CHF / year;
 var_name;EnergyPlus error level;Heating Annual;DHW Annual;Electricity Annual;Cooling Annual;Heating Annual specific;DHW Annual specific;Electricity Annual specific;Cooling Annual specific;Total bldg floor area;Total PEN;PEN Heating;PEN DHW;PEN Elec;Total CO2;CO2 Heating;CO2 DHW;CO2 Elec;Year used for lookup of cost factors;Heating - Fuel Costs;DHW - Fuel Costs;Electricity - Costs;Year used for lookup of cost factors
-2;NO_ERRORS;161334.6962;10351.5661;71952.9883;1808.4632;129.0678;8.2813;57.5624;1.4468;1250.0000;1315.5169;711.0673;59.4489;545.0007;60.5526;47.9826;4.0116;8.5584;2015;18395.0736;1537.9221;18348.0120;2015
+2;NO_ERRORS;161333.4835;10351.5661;71952.9883;1808.5904;129.0668;8.2813;57.5624;1.4469;1250.0000;1315.5115;711.0619;59.4489;545.0007;60.5522;47.9822;4.0116;8.5584;2015;18394.9353;1537.9221;18348.0120;2015

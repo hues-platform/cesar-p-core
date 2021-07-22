@@ -53,12 +53,14 @@ class ConstructionBasics:
         )
 
     def get_inst_characteristics(self, e_carrier_dhw: Optional[EnergySource] = None, e_carrier_heating: Optional[EnergySource] = None):
-        """ get fixed installation characteristics and default CH EnergySource mix for DHW and HEATING """
+        """get fixed installation characteristics and default CH EnergySource mix for DHW and HEATING"""
         props = self._cfg["FIXED_INSTALLATION_CHARACTERISTICS"]
         return InstallationsCharacteristics(
             fraction_radiant_from_activity=self.ureg(str(props["FRACTION_RADIANT_FROM_ACTIVITY"])),
             lighting_characteristics=LightingCharacteristics(
-                self.ureg(str(props["LIGHTING_RETURN_AIR_FRACTION"])), self.ureg(str(props["LIGHTING_FRACTION_RADIANT"])), self.ureg(str(props["LIGHTING_FRACTION_VISIBLE"])),
+                self.ureg(str(props["LIGHTING_RETURN_AIR_FRACTION"])),
+                self.ureg(str(props["LIGHTING_FRACTION_RADIANT"])),
+                self.ureg(str(props["LIGHTING_FRACTION_VISIBLE"])),
             ),
             dhw_fraction_lost=self.ureg(str(props["DHW_FRACTION_LOST"])),
             electric_appliances_fraction_radiant=self.ureg(str(props["ELECTRIC_APPLIANCES_FRACTION_RADIANT"])),

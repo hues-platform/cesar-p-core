@@ -32,18 +32,18 @@ SHADE_CTRL_IDF_NAME_PREFIX = "shade_control"
 
 def add_shading_on_windows(idf: IDF, zone_name: str, windows_in_zone: List[EpBunch], shading_ctrl_model: WindowShadingControl, shading_mat: WindowShadingMaterial):
     """
-   For description of model used for window shading please refer to docs/features/passive-cooling.rst.
+    For description of model used for window shading please refer to docs/features/passive-cooling.rst.
 
-    Adds shading device and control for all windows on all floors, if windows shading material is defined and control is active
+     Adds shading device and control for all windows on all floors, if windows shading material is defined and control is active
 
-    Created IDF structure depends on EnergyPlus version.
+     Created IDF structure depends on EnergyPlus version.
 
-    :param idf: eppy IDF object for which to add shading. Expects windows to be defined!
-    :param zone_name: the idf zone name for which to add window shading
-    :param windows_in_zone: list of all window idf objects for that zone
-    :param shading_ctrl_model: control/operational parameters for the window shade
-    :param shading_mat: material parameters for the window shade
-    :return: nothing, idf is extended in place
+     :param idf: eppy IDF object for which to add shading. Expects windows to be defined!
+     :param zone_name: the idf zone name for which to add window shading
+     :param windows_in_zone: list of all window idf objects for that zone
+     :param shading_ctrl_model: control/operational parameters for the window shade
+     :param shading_mat: material parameters for the window shade
+     :return: nothing, idf is extended in place
     """
     if shading_ctrl_model.is_active and shading_mat.is_shading_available:
         if idf.idd_version[0] < 9:

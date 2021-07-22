@@ -49,7 +49,9 @@ class SystemEfficiencies:
             self._es_cfg["EFFICIENCIES"]["DHW_SYSTEM_EFFICIENCY_FILE"], self.time_periods, self.COL_NR_ENERGY_CARRIER
         )
         self.heating_system_efficiencies = get_energysource_vs_timeperiod_params_table(
-            self._es_cfg["EFFICIENCIES"]["HEATING_SYSTEM_EFFICIENCY_FILE"], self.time_periods, self.COL_NR_ENERGY_CARRIER,
+            self._es_cfg["EFFICIENCIES"]["HEATING_SYSTEM_EFFICIENCY_FILE"],
+            self.time_periods,
+            self.COL_NR_ENERGY_CARRIER,
         )
         self.heating_value_factor = get_energysource_vs_timeperiod_params_table(
             self._es_cfg["EFFICIENCIES"]["HEATING_VALUE_FACTOR_FILE"], self.time_periods, self.COL_NR_ENERGY_CARRIER

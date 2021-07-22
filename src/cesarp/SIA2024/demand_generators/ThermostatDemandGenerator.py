@@ -78,7 +78,9 @@ class ThermostatDemandGenerator:
             self.__get_thermostat_setpoints_method = self.__lookup_setpoint_heating_cooling_nominal
 
     def get_thermostat_profiles_for_bldg(
-        self, get_year_profile_occupancy_hourly_per_room_method: Callable[[str], List[float]], nighttime_pattern_yearly_profile: List[bool],
+        self,
+        get_year_profile_occupancy_hourly_per_room_method: Callable[[str], List[float]],
+        nighttime_pattern_yearly_profile: List[bool],
     ) -> Tuple[List[float], List[float]]:
         """
         If setback for night and unoccupied hours
@@ -125,7 +127,12 @@ class ThermostatDemandGenerator:
         return (synth_heating_prof, synth_cooling_prof)
 
     def __get_thermostat_profile(
-        self, thermostat_setpoint: Quantity, occupancy_profile: List[float], setback_unoccupied: Quantity, nighttime_pattern_yearly_profile: List[bool], setback_night: Quantity,
+        self,
+        thermostat_setpoint: Quantity,
+        occupancy_profile: List[float],
+        setback_unoccupied: Quantity,
+        nighttime_pattern_yearly_profile: List[bool],
+        setback_night: Quantity,
     ):
         """
         Create a thermostat profile, for heating or cooling. In case of cooling, specify negative setback temperatures.

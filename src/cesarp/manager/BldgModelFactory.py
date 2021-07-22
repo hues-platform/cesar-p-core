@@ -33,6 +33,7 @@ try:
 except Exception:
     pass
 from cesarp.geometry.GeometryBuilderFactory import GeometryBuilderFactory
+from cesarp.geometry import area_calculator
 from cesarp.manager.GlazingRatioBldgSpecific import GlazingRatioBldgSpecific
 from cesarp.manager import _default_config_file
 from cesarp.manager.manager_protocols import (
@@ -63,24 +64,50 @@ _COL_DHW_E_CARRIER = "dhw_energy_carrier"
 
 
 class BldgModelFactory:
+    """
+    The factory controls how the cesarp.model.BuildingModel is created.
+    It reads the per-building information from the input file(s) set in the config, reads the site vertices
+    and chooses the right factory classes according to the configuration settings to create the different parts
+    of the model.
+
+    Note that reading the site vertices file can take quite long. This file is only read once per instance of BldgModelFactory.
+    In case you have different site vertices files for your project, create a new BldgModelFactory for each of those site vertices
+    files.
+
+    In case you want to take control over a part of the model creation for which the factory class cannot be set in the
+    configuration, you can change the factory instance after initialization of this class.
+    If you only want to change the IDF creation part, check out the instruction in :py:class:`cesarp.eplus_adapter`
+
+    After the class has been initialized, you can call create_bldg_model(bldg_fid) for each building of your site for
+    which you want to create a building model. The necessary input data for all the buildings is loaded in the initialization.
+    """
 
     _BLDG_I_COL_OVERALL_GLZ_RATIO = "resulting_overall_bldg_glazing_ratio"
     _BLDG_I_COL_TARGET_GLZ_RATIO = "target_per_wall_glazing_ratio"
     _BLDG_I_COL_HEIGHT = "bldg_height_meter"
     _BLDG_I_COL_FLOOR_HEIGHT = "floor_height_meter"
     _BLDG_I_COL_NR_OF_FLOORS = "nr_of_floors"
+    _BLDG_I_COl_GROUNDFLOOR_AREA = "groundfloor_area"
 
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}, sia_params_generation_lock=None):
-        # collect all input information used for the simulation, must be defined before calling subsequent init-methods, so they can fill in their information...
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any], sia_params_generation_lock=None):
+        """
+        :param ureg: pint unit registry application instance
+        :type ureg: pint.UnitRegistry
+        :param custom_config: main configuration parameters, overwriting the CESAR-P defaults, must at least contain the configuration pointing to input files
+        :type custom_config: Dict[str, Any], optional
+        :param sia_params_generation_lock: when using multiprocessing and creating SIA profile files on request, we need to synchronize the processes, defaults to None (usually not required anymore if using the pre-generated profiles)
+        :type sia_params_generation_lock: Lock, optional
+        """
+        # per_bldg_infos_used is used to collect all input information used during model creation, must be defined before calling subsequent init-methods, so they can fill in their information...
         self.per_bldg_infos_used = pd.DataFrame()
         self._logger = logging.getLogger(__name__)
         self._unit_reg = ureg
         self._custom_config = custom_config
         self._mgr_config = cesarp.common.config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
-        # get year of construction for each building
         self._year_of_constr_per_bldg = self.__read_year_of_construction_per_bldg()
         _bldg_type_per_bldg_series = self.__read_bldg_type()
         self._bldg_type_per_bldg: Dict[int, BldgType] = {fid: BldgType[bldg_type_str] for fid, bldg_type_str in _bldg_type_per_bldg_series.to_dict().items()}
+
         self.per_bldg_infos_used = self.per_bldg_infos_used.append(self._year_of_constr_per_bldg)
         self.per_bldg_infos_used = pd.concat([self.per_bldg_infos_used, _bldg_type_per_bldg_series], axis="columns")
         self.per_bldg_infos_used[self._BLDG_I_COL_HEIGHT] = None
@@ -95,6 +122,37 @@ class BldgModelFactory:
         self._bldg_operation_factory: BuildingOperationFactoryProtocol = self.__create_bldg_operation_factory(_bldg_type_per_bldg_series, sia_params_generation_lock)
         self._site_factory: SiteFactoryProtocol = self.__create_site_factory()
 
+    def create_bldg_model(self, bldg_fid: int) -> BuildingModel:
+        """
+        :param bldg_fid: fid of building for which to create the model
+        :return: BuildingModel
+        """
+        bldg_constr = self.__get_bldg_construction(bldg_fid)
+        geometry_builder = self._geometry_builder_factory.get_geometry_builder(bldg_fid, bldg_constr.glazing_ratio)
+        shape = geometry_builder.get_bldg_shape_detailed()
+        neighbours = geometry_builder.get_bldg_shape_of_neighbours()
+        self.__add_target_glz_ratio_to_used_info_df(bldg_fid, bldg_constr.glazing_ratio)
+        self.__add_resulting_glz_ratio_to_used_info_df(bldg_fid, geometry_builder.overall_glazing_ratio)
+        neighbours_constr_props = self._neighbouring_bldg_constr_factory.get_neighbours_construction_props(bldg_constr.window_constr.glass)
+        site = self._site_factory.get_site(bldg_fid)
+        bldg_operation = self._bldg_operation_factory.get_building_operation(bldg_fid, shape.get_nr_of_floors())
+        self.per_bldg_infos_used.loc[bldg_fid, self._BLDG_I_COL_HEIGHT] = shape.get_bldg_height()
+        self.per_bldg_infos_used.loc[bldg_fid, self._BLDG_I_COL_NR_OF_FLOORS] = shape.get_nr_of_floors()
+        self.per_bldg_infos_used.loc[bldg_fid, self._BLDG_I_COL_FLOOR_HEIGHT] = shape.get_floor_height()
+        self.per_bldg_infos_used.loc[bldg_fid, self._BLDG_I_COl_GROUNDFLOOR_AREA] = area_calculator.calc_groundfloor_area(shape)
+
+        return BuildingModel(
+            bldg_fid,
+            self._year_of_constr_per_bldg.loc[bldg_fid, "year_of_construction"],
+            site,
+            shape,
+            neighbours,
+            neighbours_constr_props,
+            bldg_constr,
+            bldg_operation,
+            self._bldg_type_per_bldg[bldg_fid],
+        )
+
     def __create_geometry_builder_factory(self):
         site_vertices_filepath = self._mgr_config["SITE_VERTICES_FILE"]["PATH"]
         self._logger.info(f"loading site vertices from {site_vertices_filepath}. Takes a while depending on the size of the site. For 10'000 building ~3 Minutes on a Laptop...")
@@ -104,7 +162,9 @@ class BldgModelFactory:
             flat_site_vertices_list = read_sitevertices_from_shp(site_vertices_filepath)
         else:
             flat_site_vertices_list = cesarp.geometry.csv_input_parser.read_sitevertices_from_csv(
-                site_vertices_filepath, self._mgr_config["SITE_VERTICES_FILE"]["LABELS"], self._mgr_config["SITE_VERTICES_FILE"]["SEPARATOR"],
+                site_vertices_filepath,
+                self._mgr_config["SITE_VERTICES_FILE"]["LABELS"],
+                self._mgr_config["SITE_VERTICES_FILE"]["SEPARATOR"],
             )
         return GeometryBuilderFactory(flat_site_vertices_list, ureg=self._unit_reg, custom_config=self._custom_config)
 
@@ -115,7 +175,6 @@ class BldgModelFactory:
         parameters might be generated from several threads at the same time in the same location
         :return: object providing the BuildingOperationFactoryProtocol, concrete implementation depends on configuration
         """
-        bldg_operation_factory: BuildingOperationFactoryProtocol
         passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol = PassiveCoolingOperationFactory(self._unit_reg, self._custom_config)
 
         op_fact_class_name: str = self._mgr_config["BUILDING_OPERATION_FACTORY_CLASS"]
@@ -151,7 +210,11 @@ class BldgModelFactory:
             heating_e_carrier_as_dict = {fid: None for fid in year_of_constr_as_dict.keys()}
 
         return ConstructionFacade.get_constructional_archetype_factory(
-            year_of_constr_as_dict, dhw_e_carrier_as_dict, heating_e_carrier_as_dict, self._unit_reg, self._custom_config,
+            year_of_constr_as_dict,
+            dhw_e_carrier_as_dict,
+            heating_e_carrier_as_dict,
+            self._unit_reg,
+            self._custom_config,
         )
 
     def __read_year_of_construction_per_bldg(self) -> pd.DataFrame:
@@ -206,44 +269,15 @@ class BldgModelFactory:
         elif ch_sites_active:
             mapping_file_cfg = self._mgr_config["SITE_PER_CH_COMMUNITY"]["BLDG_TO_COMMUNITY_FILE"]
             bldg_fid_to_community_id = cesarp.common.read_csvy(
-                mapping_file_cfg["PATH"], ["bldg_fid", "community_id"], mapping_file_cfg["LABELS"], mapping_file_cfg["SEPARATOR"], index_column_name="bldg_fid",
+                mapping_file_cfg["PATH"],
+                ["bldg_fid", "community_id"],
+                mapping_file_cfg["LABELS"],
+                mapping_file_cfg["SEPARATOR"],
+                index_column_name="bldg_fid",
             )
             return SitePerSwissCommunityFactory(bldg_fid_to_community_id["community_id"].to_dict(), self._unit_reg, self._custom_config)
         else:
             raise Exception("no site strategy activated in config. set SITE_PER_CH_COMMUNITY or SINGLE_SITE active")
-
-    def create_bldg_model(self, bldg_fid: int):
-        """
-        :param bldg_fid:
-        :param bldg_info: dictonary with information for the building
-        :param site_bldgs: pandas DataFrame with one row for each building, columns being 'gis_fid', 'height', 'footprint_shape' and 'bld_id' as index.
-                            'footprint_shape' is a pandas DataFrame[columns=[x,y]] holding all building vertices
-        :return:
-        """
-        bldg_constr = self.__get_bldg_construction(bldg_fid)
-        geometry_builder = self._geometry_builder_factory.get_geometry_builder(bldg_fid, bldg_constr.glazing_ratio)
-        shape = geometry_builder.get_bldg_shape_detailed()
-        neighbours = geometry_builder.get_bldg_shape_of_neighbours()
-        self.__add_target_glz_ratio_to_used_info_df(bldg_fid, bldg_constr.glazing_ratio)
-        self.__add_resulting_glz_ratio_to_used_info_df(bldg_fid, geometry_builder.overall_glazing_ratio)
-        neighbours_constr_props = self._neighbouring_bldg_constr_factory.get_neighbours_construction_props(bldg_constr.window_constr.glass)
-        site = self._site_factory.get_site(bldg_fid)
-        bldg_operation = self._bldg_operation_factory.get_building_operation(bldg_fid, shape.get_nr_of_floors())
-        self.per_bldg_infos_used.loc[bldg_fid, self._BLDG_I_COL_HEIGHT] = shape.get_bldg_height()
-        self.per_bldg_infos_used.loc[bldg_fid, self._BLDG_I_COL_NR_OF_FLOORS] = shape.get_nr_of_floors()
-        self.per_bldg_infos_used.loc[bldg_fid, self._BLDG_I_COL_FLOOR_HEIGHT] = shape.get_floor_height()
-
-        return BuildingModel(
-            bldg_fid,
-            self._year_of_constr_per_bldg.loc[bldg_fid, "year_of_construction"],
-            site,
-            shape,
-            neighbours,
-            neighbours_constr_props,
-            bldg_constr,
-            bldg_operation,
-            self._bldg_type_per_bldg[bldg_fid],
-        )
 
     def __add_target_glz_ratio_to_used_info_df(self, bldg_fid: int, target_glazing_ratio: Union[pint.Quantity, float]):
         if isinstance(target_glazing_ratio, pint.Quantity):

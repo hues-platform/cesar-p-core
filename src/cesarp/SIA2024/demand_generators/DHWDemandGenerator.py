@@ -93,7 +93,8 @@ class DHWDemandGenerator:
         """
 
         return self.bldg_type.synthesize_profiles_yearly_by_room_area_for_bldg(
-            self.__get_dhw_profile_for_room, additional_factor_per_room_method=self.__get_dhw_power_per_area_for_room_method,
+            self.__get_dhw_profile_for_room,
+            additional_factor_per_room_method=self.__get_dhw_power_per_area_for_room_method,
         )
 
     def get_dhw_power_per_area_for_bldg(self) -> float:

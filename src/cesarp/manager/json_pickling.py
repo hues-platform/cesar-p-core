@@ -20,10 +20,14 @@
 # Contact: https://www.empa.ch/web/s313
 #
 from typing import Any
+import json
+from importlib.metadata import version
 import jsonpickle
 import jsonpickle.ext.pandas
 import jsonpickle.ext.numpy
+
 from cesarp.manager.BuildingContainer import BuildingContainer
+from cesarp.common.CesarpException import CesarpException
 
 
 def prepare_pickler():
@@ -38,11 +42,13 @@ def save_to_disk(obj_to_save, filepath: str):
     BuildingContainer objects
     """
     prepare_pickler()
-    # TODO can we encode and decode without make_refs=True? That would make the json building files really
-    #  independent of the pickling method because with the make_refs there are magic py/id for id-identical objects...
-    #  Setting make_refs=False fails becasue then a object that was previously encoded with a py/id then is a string
-    #  instead of proper object
-    json_string = jsonpickle.encode(obj_to_save, keys=True, unpicklable=True, make_refs=True)
+    # encode and decode with make_refs=False allows for json serialized files really
+    # independent of the pickling method. With make_refs=True there are magic py/id for id-identical objects...
+    # Befor jsonpickling version 2.0.0 setting make_refs=False failed becasue then a object that was previously
+    # encoded with a py/id then is a string instead of proper object
+    # With jsonpickling 2.0.0 it works. The backward-compatibility test files do work as well, so I hope projects
+    # which have building models safed with jsonpickling prior to 2.0.0 with make_refs set to True will still be loaded
+    json_string = jsonpickle.encode(obj_to_save, keys=True, unpicklable=True, make_refs=False)
     with open(filepath, "w") as fh:
         fh.write(json_string)
 
@@ -51,11 +57,29 @@ def read_from_disk(filepath: str) -> Any:
     prepare_pickler()
     with open(filepath, "r") as fh:
         json_string = fh.read()
-    return jsonpickle.decode(json_string, keys=True)
+    return jsonpickle.decode(json_string, keys=True, safe=True)
+
+
+def is_jsonpickle_incompatible(filepath: str) -> bool:
+    with open(filepath, "w") as fh:
+        json_string = fh.read()
+    raw_json = json.loads(json_string)
+    return ("container_version" not in raw_json["container"] or raw_json["container"]["container_version"] < 4) and (int(version('jsonpickle').split(".")[0]) >= 2)
 
 
 def read_bldg_container_from_disk(filepath: str) -> BuildingContainer:
-    bldg_cont = read_from_disk(filepath)
+    try:
+        bldg_cont = read_from_disk(filepath)
+    except Exception as ex:
+        if is_jsonpickle_incompatible:
+            raise CesarpException(f"You try to load a serialized BuildingContainer from {filepath}. \
+The container was serialized using a jsonpickle library version below 2.0.0, which is not compatible with the cesar-p {version('cesar-p')} \
+respectively jsonpickle version {version('jsonpickle')} isntalled. \
+Either you install cesar-p version < 2.0.0, or if you need some functionalities from cesar-p version 2 or above you can try to manually \
+downgrade jsonpickle with pip install jsonpickle==1.5.2 and ignore warnings that cesar-p requires jsonpickle versin xxx")
+        else:
+            raise ex
+
     assert isinstance(bldg_cont, BuildingContainer)
     bldg_cont.upgrade_if_necessary()
     return bldg_cont

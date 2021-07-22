@@ -22,13 +22,17 @@
 import logging
 import copy
 
-from typing import Iterable, Dict, Any, Optional, Set, Sequence, List
+from typing import Iterable, Dict, Any, Optional, Set, Sequence, List, Union
 import multiprocessing
 import atexit
 import math
 from multiprocessing.managers import SyncManager, BaseManager
 import pandas as pd
 import os
+from pathlib import Path
+import pint
+import glob
+import shutil
 
 import cesarp.eplus_adapter
 import cesarp.common
@@ -76,7 +80,7 @@ MyManager.register("AuxFilesHandler", RelativeAuxiliaryFilesHandler)
 
 class SimulationManager:
     """
-    Main interface for basic Cesar usage.
+    Main interface for basic cesar-p-core library usage.
 
     - Extract and aggregate building geometry, construction, internal gains and control schedules from the different input sources.
     - Create IDF file
@@ -92,24 +96,44 @@ class SimulationManager:
     Within the SimulationManager a worker pool is started and each of the workflow steps
     (createing building models, writing the IDF, running simulation, collecting results) are distributed to those workers.
     The number of worker processes is configurable in the configuration, property NR_OF_PARALLEL_WORKERS.
+    Make sure that you have the if-guard *__name__ == "__main__"* in your main script when using the SimulationManager,
+    as the workers started will re-execute the parts of your main script not protectd by that guard.
+
     Exceptions and errors processing one of the buildings are reported and execution is pursued with the next building.
     FID's of buildings where something went wrong are saved to member failed_fids, so you can check after running if you
     do not want to scan the console output manually.
 
     """
 
-    def __init__(self, base_output_path, main_config, unit_reg, load_from_disk=False, fids_to_use=None):
+    def __init__(
+        self,
+        base_output_path: Union[str, Path],
+        main_config: Union[str, Path, Dict[str, Any]],
+        unit_reg: pint.UnitRegistry,
+        load_from_disk: bool = False,
+        fids_to_use: List[int] = None,
+        delete_old_logs=True,
+    ):
         """
-            :param base_output_path: full folder path where idf, eplus output and other cesar-p output and intermediate files are stored.
-            :param main_config: either dict with configuration entries or path to custom config yml file.
-                                for details about how the configuration works see class description
-            :param unit_reg: pint Unit Registry
-            :param load_from_disk: True if you want to load existing simulation files into memory. cannot be combined with fids_to_use, defaults to False
-            :param fids_to_use: pass list of FID's for which called methods on the manager object should be performed, if not provided all fids defined in the input file are used
+        :param base_output_path: full folder path where idf, eplus output and other cesar-p output and intermediate files are stored.
+        :type base_output_path: Union[str, Path]
+        :param main_config: either dict with configuration entries or path to custom config yml file.
+                            for details about how the configuration works see class description
+        :type main_config: Union[str, Path, Dict[str, Any]]
+        :param unit_reg: pint Unit Registry application wide instance ()
+        :type unit_reg: pint.UnitRegistry
+        :param load_from_disk: True if you want to load existing simulation files into memory. cannot be combined with fids_to_use, defaults to False
+        :type load_from_disk: bool
+        :param fids_to_use: pass list of FID's for which called methods on the manager object should be performed, if not provided all fids defined in the input file are used
+        :type fids_to_use: List[int]
+        :param delete_old_logs: if true old \\*-cesarp-logs folder are deleted when a new worker pool is created
+        :type delete_old_logs: bool
         """
         self.logger = logging.getLogger(__name__)
         assert not (load_from_disk and (fids_to_use is not None)), "if load_from_disk is True you cannot pass fids_to_use"
         self._unit_reg = unit_reg
+        self.delete_old_logs = delete_old_logs
+
         if not isinstance(main_config, dict):
             self._custom_config = config_loader.load_config_full(main_config)
         else:
@@ -124,24 +148,22 @@ class SimulationManager:
 
         self._worker_pool = None
 
+        if not fids_to_use:
+            fids_to_use = self.get_fids_from_config()
+        self._fids_to_use = fids_to_use
+
+        self.bldg_containers = self._init_empty_bldg_containers(fids_to_use)
+        self.output_folders: Dict[int, str] = {}
+        self.idf_pathes: Dict[int, str] = {}
+        self.weather_files: Dict[int, str] = {}
+
         if load_from_disk:
             self.bldg_containers = self._storage.load_existing_bldg_containers()
             self.idf_pathes = self._storage.load_existing_idfs()
             if self.idf_pathes:
                 self.weather_files = self._storage.load_existing_weather_mapping()
-            else:
-                self.weather_files: Dict[int, str] = {}
             self.output_folders = self._storage.load_existing_result_folders()
-            self._fids_to_use = set(list(self.bldg_containers.keys()) + list(self.idf_pathes.keys()) + list(self.output_folders.keys()))
-
-        else:
-            if not fids_to_use:
-                fids_to_use = self.get_fids_from_config()
-            self._fids_to_use = fids_to_use
-            self.bldg_containers = self._init_empty_bldg_containers(fids_to_use)
-            self.weather_files: Dict[int, str] = {}
-            self.output_folders: Dict[int, str] = {}
-            self.idf_pathes: Dict[int, str] = {}
+            self._fids_to_use = list(set(list(self.bldg_containers.keys()) + list(self.idf_pathes.keys()) + list(self.output_folders.keys())))
 
     def __validate_custom_config(self, custom_config: Dict[str, Any]):
         wrong_entries, _, _ = config_loader.validate_custom_cesarp_config(custom_config, self.logger)
@@ -156,7 +178,7 @@ class SimulationManager:
         return self.idf_pathes and all(fid in self.weather_files.keys() for fid in self.idf_pathes.keys())
 
     def is_demand_results_available(self):
-        """ return True if at least for one building energy demand results are available """
+        """return True if at least for one building energy demand results are available"""
         try:
             for bldg_c in self.bldg_containers.values():
                 if not bldg_c.has_error():
@@ -169,7 +191,7 @@ class SimulationManager:
             fids_to_use = self.get_fids_from_config()
         return {fid: BuildingContainer() for fid in fids_to_use}
 
-    def get_fids_from_config(self):
+    def get_fids_from_config(self) -> List[int]:
         """
         You can use this method as a base if you want to run e.g. 100 buildings of your site, but the fid's are not consecutive. You would just pass e.g. the first 100 entries
         returned by this method to run_all_steps().
@@ -178,7 +200,11 @@ class SimulationManager:
         :return: list of all fid's of the site
         """
         all_bldg_fids = cesarp.common.csv_reader.read_csvy(
-            self._mgr_config["BLDG_FID_FILE"]["PATH"], ["gis_fid"], self._mgr_config["BLDG_FID_FILE"]["LABELS"], self._mgr_config["BLDG_FID_FILE"]["SEPARATOR"], "gis_fid",
+            self._mgr_config["BLDG_FID_FILE"]["PATH"],
+            ["gis_fid"],
+            self._mgr_config["BLDG_FID_FILE"]["LABELS"],
+            self._mgr_config["BLDG_FID_FILE"]["SEPARATOR"],
+            "gis_fid",
         )
         bldg_gis_ids_to_simulate = all_bldg_fids["gis_fid"].to_list()
         return bldg_gis_ids_to_simulate
@@ -219,7 +245,10 @@ class SimulationManager:
         fid_batches = define_fid_batches(list(self.bldg_containers.keys()), worker_pool._processes)
         sia_params_gen_lock = self._get_lock()
         job_res_list = [
-            self._get_worker_pool().apply_async(processing_steps.create_bldg_models_batch_no_exception, (fid_batch, self._custom_config, sia_params_gen_lock),)
+            self._get_worker_pool().apply_async(
+                processing_steps.create_bldg_models_batch_no_exception,
+                (fid_batch, self._custom_config, sia_params_gen_lock),
+            )
             for fid_batch in fid_batches
         ]
         result_per_worker = [res.get() for res in job_res_list]
@@ -301,7 +330,8 @@ class SimulationManager:
         config_eplus = cesarp.eplus_adapter.eplus_sim_runner.get_config(self._custom_config)
         job_res_dict = {
             fid: self._get_worker_pool().apply_async(
-                processing_steps.run_simulation_no_exception, (self.idf_pathes[fid], self.weather_files[fid], expected_output_folders[fid], config_eplus),
+                processing_steps.run_simulation_no_exception,
+                (self.idf_pathes[fid], self.weather_files[fid], expected_output_folders[fid], config_eplus),
             )
             for fid in bldg_gis_ids_to_simulate
         }
@@ -423,7 +453,11 @@ class SimulationManager:
         job_res_list = [
             self._get_worker_pool().apply_async(
                 cesarp.eplus_adapter.eplus_eso_results_handling.collect_multi_params_for_site,
-                ({fid: output_folder for fid, output_folder in self.output_folders.items() if fid in fid_batch}, result_keys, results_frequency,),
+                (
+                    {fid: output_folder for fid, output_folder in self.output_folders.items() if fid in fid_batch},
+                    result_keys,
+                    results_frequency,
+                ),
                 error_callback=processing_steps.log_error,
             )
             for fid_batch in fid_batches
@@ -453,12 +487,16 @@ class SimulationManager:
         :return: path of saved zip file
         """
         projSaver = ProjectSaver(
-            self._storage.get_ZIP_filepath(save_folder_path), self.base_output_path, self._custom_config, main_script_path, self._storage, bldg_containers=self.bldg_containers
+            zip_file_path=self._storage.get_ZIP_filepath(save_folder_path),
+            main_config=self._custom_config,
+            main_script_path=main_script_path,
+            file_storage_handler=self._storage,
+            bldg_containers=self.bldg_containers,
         )
         return projSaver.create_zip_file(include_bldg_models, include_idfs, include_eplus_output, include_src_pck)
 
     def _get_fids_having_bldg_model(self) -> List[int]:
-        """ returns list of building fids for which a building model exists"""
+        """returns list of building fids for which a building model exists"""
         bldg_model_exists = [fid for fid, bldg_container in self.bldg_containers.items() if bldg_container.has_bldg_model()]
         return bldg_model_exists
 
@@ -479,6 +517,8 @@ class SimulationManager:
 
     def _get_worker_pool(self):
         if self._worker_pool is None:
+            if self.delete_old_logs:
+                delete_old_logs()
             mplogger = multiprocessing.log_to_stderr()
             mplogger.setLevel(logging.WARNING)  # set to INFO if you want to see details about process management
             processors = self._mgr_config["NR_OF_PARALLEL_WORKERS"]
@@ -515,7 +555,12 @@ class SimulationManager:
         :param new_manager_basepath: basepath folder for the new SimulationManager
         :return: new instance of SimulationManager class
         """
-        new_manager = cls(new_manager_basepath, base_scenario_manager._custom_config, base_scenario_manager._unit_reg, base_scenario_manager._fids_to_use,)
+        new_manager = cls(
+            new_manager_basepath,
+            base_scenario_manager._custom_config,
+            base_scenario_manager._unit_reg,
+            base_scenario_manager._fids_to_use,
+        )
         new_manager.bldg_containers = {fid: BuildingContainer() for fid in base_scenario_manager.bldg_containers.keys()}
         for fid, container in new_manager.bldg_containers.items():
             container.set_bldg_model(copy.deepcopy(base_scenario_manager.bldg_containers[fid].get_bldg_model()))
@@ -546,3 +591,8 @@ def init_log_to_file():
     cl.setLevel(logging.INFO)
     cl.propagate = False
     cl.addHandler(file_handler)
+
+
+def delete_old_logs():
+    for dir_entry in glob.glob("*-cesarp-logs", recursive=False):
+        shutil.rmtree(dir_entry, ignore_errors=True)

@@ -41,6 +41,8 @@ class BldgContainerDefaultEntries:
 class BuildingContainer:
     """
     Bucket to save all information for a simulated building.
+    See set_custom_obj / get_custom_obj to add your project-specific information.
+    In case you change the structure, make sure old versions stored to disk can be reloaded by adapting the upgrade_if_necessary() method.
     """
 
     _RESULT_ENTRY_KEYS = [
@@ -51,7 +53,8 @@ class BuildingContainer:
 
     # 2 - container version numbering startet at 2, as there was a container definition without the EPLUS_ERROR_LEVEL entry up to CESAR-P Verison 1.2.0
     # 3 - changed building model to version 1.3 - no released version with container version 2 existst
-    _CONTAINER_VERSION = 3
+    # 4 - updated to jsonpickle 2.0.0 which cannot read serialized json objects created with jsonpickle < 2.0.0
+    _CONTAINER_VERSION = 4
 
     def __init__(self):
         self.container = {}

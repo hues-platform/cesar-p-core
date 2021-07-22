@@ -70,6 +70,7 @@ class OccupancyProfileGenerator:
         base_data: BaseDataForOccupancyProtocol,
         nighttime_pattern_year_profile_bldg_hourly: Sequence[bool],
         get_year_profile_variation_monthly_for_room_method: Callable[[str], Iterable[float]],
+        profile_start_date: str,
     ):
         """
         :param bldg_type: building type for which to generate the profile, e.g. object of SIA2024BuildingType
@@ -85,6 +86,7 @@ class OccupancyProfileGenerator:
         self.get_occupancy_profile_for_room_method = self.__generate_occupancy_profile_nominal_for_room
         self.__occupancy_profiles_variable_cache: Optional[ValuePerKeyCache] = None
         self.__occupancy_profiles_nominal_cache: Dict[Enum, Iterable[float]] = dict()
+        self._profile_start_date = profile_start_date
 
     def activate_profile_variability(self, vertical_variability: float, do_horizontal_variability: bool):
         """
@@ -168,11 +170,14 @@ class OccupancyProfileGenerator:
         # target for "weekend correction" are non residential buildings - on a weekend a fixed value is used
         nr_of_rest_days = self.base_data.get_nr_of_rest_days_per_week(room_type).m
         if nr_of_rest_days > 0:
-            occupancy_base_profile = profile_generation.correct_weekends(occupancy_base_profile, nr_of_rest_days, self.base_data.get_occupancy_profile_restday_value(room_type).m)
+            occupancy_base_profile = profile_generation.correct_weekends(
+                occupancy_base_profile, nr_of_rest_days, self.base_data.get_occupancy_profile_restday_value(room_type).m, start_date=self._profile_start_date
+            )
         return occupancy_base_profile
 
     def __generate_base_occupancy_profile(self, room_type):
         occupancy_profile = profile_generation.expand_year_profile_monthly_to_hourly(
-            self.get_year_profile_variation_monthly_for_room_method(room_type), self.base_data.get_occ_day_profile_hourly_nominal(room_type),
+            self.get_year_profile_variation_monthly_for_room_method(room_type),
+            self.base_data.get_occ_day_profile_hourly_nominal(room_type),
         )
         return occupancy_profile

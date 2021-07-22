@@ -48,7 +48,6 @@ class FileStorageHandler:
     Directory structure is:
 
     base_directory:
-
     - eplus_output
     - idfs
     - bldg_containers
@@ -56,9 +55,7 @@ class FileStorageHandler:
     You can change the names and to a certain degree also the structure by changing the configuration.
 
     idfs [name from cfg: IDF_FOLDER_REL]
-
-    - profiles - folder holding operational profiles used by any of the idf's, only if COPY_PROFILES is set to
-      true in config
+    - profiles - folder holding operational profiles used by any of the idf's, only if COPY_PROFILES is set to true in config
     - fid_XXX.idf - idf file for each building
     - weather_files_mapped.csvy - assignment of weather file to use for each of the buildings [cfg: WEATHER_FILES_MAPPED_REL]
 
@@ -185,7 +182,10 @@ class FileStorageHandler:
         """
         if os.path.exists(self.weather_files_mapped_save_path):
             return cesarp.common.csv_reader.read_csvy(
-                self.weather_files_mapped_save_path, ["bldg_fid", "weather_file"], {"bldg_fid": "bldg_fid", "weather_file": "weather_file"}, index_column_name="bldg_fid",
+                self.weather_files_mapped_save_path,
+                ["bldg_fid", "weather_file"],
+                {"bldg_fid": "bldg_fid", "weather_file": "weather_file"},
+                index_column_name="bldg_fid",
             )["weather_file"].to_dict()
         return {}
 
@@ -216,7 +216,12 @@ class FileStorageHandler:
         sum_file_path = self.get_result_summary_filepath()
         header_data = {cesarp.common.csv_writer._KEY_SOURCE: metadata.get_as_dict()}
         cesarp.common.csv_writer.write_csv_with_header(
-            header_data, summary_res, sum_file_path, sum_outp_conf["CSV_SEPARATOR"], float_format=sum_outp_conf["CSV_FLOAT_FORMAT"],
+            header_data,
+            summary_res,
+            sum_file_path,
+            sum_outp_conf["CSV_SEPARATOR"],
+            float_format=sum_outp_conf["CSV_FLOAT_FORMAT"],
+            separate_metadata=self._mgr_config["SEPARATE_METADATA"]
         )
         self.logger.info(f"simulation summary file written to {sum_file_path}")
         return sum_file_path
@@ -226,13 +231,20 @@ class FileStorageHandler:
 
     def save_bldg_infos_used(self, all_per_bldg_info_used):
         cesarp.common.csv_writer.write_csv_with_header(
-            {"DESCRIPTION": "The data listed here was used during creation of the building models for this site."}, all_per_bldg_info_used, self.get_bldg_infos_used_filepath(),
+            {"DESCRIPTION": "The data listed here was used during creation of the building models for this site."},
+            all_per_bldg_info_used,
+            self.get_bldg_infos_used_filepath(),
+            separate_metadata=self._mgr_config["SEPARATE_METADATA"]
         )
 
     def save_weather_file_mapping(self, weather_file_mapping: Dict[int, str]):
         cesarp.common.csv_writer.write_csv_with_header(
             {"DESCRIPTION": "Intermediate Cesar storage, not intended for reporting"},
-            pd.DataFrame(weather_file_mapping.values(), index=pd.Index(weather_file_mapping.keys(), name="bldg_fid"), columns=["weather_file"],),
+            pd.DataFrame(
+                weather_file_mapping.values(),
+                index=pd.Index(weather_file_mapping.keys(), name="bldg_fid"),
+                columns=["weather_file"],
+            ),
             self.weather_files_mapped_save_path,
         )
 
@@ -312,7 +324,6 @@ class FileStorageHandler:
 
     def combine_eplus_error_files(self, failed_fids: List[int], successful_fids: List[int], eplus_error_file_name: str):
         """
-        Args:
         :param failed_fids: list of fids for which simulation failed and error files should be collected
         :param successful_fids: list of fids for which simulation was successful and error files should be collected
         :param eplus_error_file_name: full path to file to which to write all the log files

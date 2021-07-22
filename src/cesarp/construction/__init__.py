@@ -19,6 +19,30 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+construction
+============================
+
+There are quite a lot of interfaces/protocols wihtin the mechanisms of this package to couple it to either the
+*cesarp.idf_constructions_db_access* or *cesarp.graphdb_access* as a source for the constructional archetypes.
+
+This package includes the parts which are statically defined in the configuration for all buildings, such as
+window frame properties. Those parameters are configurable in the config, expect for the properties of
+window shading materials, which are hard-coded in :py:class:`cesarp.construction.ConstructionBasics`
+
+
+Main API
+
+======================================================================================= ===========================================================
+class / module                                                                          description
+======================================================================================= ===========================================================
+:py:class:`cesarp.construction.ConstructionFacade`                                      returns the construction archetype factory
+
+:py:class:`cesarp.construction.NeighbouringBldgConstructionFactory`                     factory to create parameters for a neighbouring building
+
+======================================================================================= ===========================================================
+
+"""
 
 import os
 from pathlib import Path

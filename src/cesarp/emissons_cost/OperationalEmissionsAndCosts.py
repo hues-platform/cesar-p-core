@@ -23,8 +23,6 @@ from typing import Dict, Any
 import pint
 from dataclasses import dataclass
 
-import cesarp.common
-from cesarp.emissons_cost import _default_config_file
 from cesarp.energy_strategy.EnergyStrategy import EnergyStrategy
 from cesarp.model.EnergySource import EnergySource
 from cesarp.emissons_cost.EmissionAndCostCalculationError import EmissonAndCostCalculationError
@@ -57,9 +55,18 @@ class OperationalEmissionsAndCostsResult:
 
 
 class OperationalEmissionsAndCosts:
+    """
+    Initialize and call *get_operational_emissions_and_costs()* for each building.
+
+    Cost, emission, efficiency and other factors are queried from :py:class:`cesarp.energy_strategy.EnergyStrategy`.
+    They do depend on the energy strategy chosen in the config for :py:mod:`cesarp.energy_strategy` (business as usual / new energy policy) and the simulation year
+    passed to *get_operational_emissions_and_costs()*.
+
+    Operational cost and emissions can only be calculated if energy carrier for domestic hot water and heating is given. See configuration of :py:mod:`cesarp.manager`
+    """
+
     def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
         self._ureg = ureg
-        self._cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         self._energy_strategy = EnergyStrategy(ureg, custom_config)
 
     def get_operational_emissions_and_costs(
@@ -75,15 +82,19 @@ class OperationalEmissionsAndCosts:
         sim_year: int,
     ) -> OperationalEmissionsAndCostsResult:
         """
-        :param specific_dhw_demand: unit convertible to Ws/m2/year
-        :param total_dhw_demand: unit convertible to Ws/year
-        :param dhw_carrier:
-        :param specific_heating_demand:
-        :param total_heating_demand:
-        :param heating_carrier:
-        :param specific_electricity_demand:
-        :param total_electricity_demand:
-        :param sim_year:
+        Calculate the operational cost and emissions for one building.
+        The demand values you have to pass here do match the ones defined in :py:class:`cesarp.results.EnergyDemandSimulationResults`.
+        The reason for passing the values one-by-one is to have low coherance between the packages, which improves reusability.
+
+        :param specific_dhw_demand: dhw demand of this building per m2, unit convertible to Ws/m2/year
+        :param total_dhw_demand: total dhw demand of this building, unit convertible to Ws/year
+        :param dhw_carrier: energy source for domestic hot water
+        :param specific_heating_demand: heating demand of this building per m2
+        :param total_heating_demand: total heating demand of this building
+        :param heating_carrier: energy source for heating
+        :param specific_electricity_demand: electricity demand of this building per m2
+        :param total_electricity_demand: total electricity demand for this building
+        :param sim_year: year of simulation, for which to calculate cost and emissions
         :return: data object containing the results for this building
         """
 
@@ -94,11 +105,20 @@ class OperationalEmissionsAndCosts:
         total_co2_emission = heating_res.co2_emission + dhw_res.co2_emission + el_res.co2_emission
 
         return OperationalEmissionsAndCostsResult(
-            total_pen=total_pen, total_co2_emission=total_co2_emission, heating_system=heating_res, dhw_system=dhw_res, electricity=el_res, simulation_year=sim_year,
+            total_pen=total_pen,
+            total_co2_emission=total_co2_emission,
+            heating_system=heating_res,
+            dhw_system=dhw_res,
+            electricity=el_res,
+            simulation_year=sim_year,
         )
 
     def _calc_heating_emissions_and_costs(
-        self, specific_heating_energy_demand: pint.Quantity, total_heating_energy_demand: pint.Quantity, heating_energy_carrier: EnergySource, sim_year: int,
+        self,
+        specific_heating_energy_demand: pint.Quantity,
+        total_heating_energy_demand: pint.Quantity,
+        heating_energy_carrier: EnergySource,
+        sim_year: int,
     ):
         if heating_energy_carrier == EnergySource.NO:  # no cost and emissions if energy source is NO - same as procedure in Matlab version
             return PerSystemResults(
@@ -128,7 +148,11 @@ class OperationalEmissionsAndCosts:
         return PerSystemResults(pen, co2_emission, fuel_demand, fuel_cost, heating_energy_carrier)
 
     def _calc_dhw_emissions_and_costs(
-        self, specific_dhw_energy_demand: pint.Quantity, total_dhw_energy_demand: pint.Quantity, dhw_energy_carrier: EnergySource, sim_year: int,
+        self,
+        specific_dhw_energy_demand: pint.Quantity,
+        total_dhw_energy_demand: pint.Quantity,
+        dhw_energy_carrier: EnergySource,
+        sim_year: int,
     ):
         if dhw_energy_carrier == EnergySource.NO:
             return PerSystemResults(
@@ -167,5 +191,9 @@ class OperationalEmissionsAndCosts:
         fuel_cost = total_el_demand * fuel_cost_factor
 
         return PerSystemResults(
-            pen=pen.to(PEN_UNIT), co2_emission=co2_emission.to(CO2_EMISSION_UNIT), fuel_demand=total_el_demand, fuel_cost=fuel_cost, energy_carrier=EnergySource.ELECTRICITY,
+            pen=pen.to(PEN_UNIT),
+            co2_emission=co2_emission.to(CO2_EMISSION_UNIT),
+            fuel_demand=total_el_demand,
+            fuel_cost=fuel_cost,
+            energy_carrier=EnergySource.ELECTRICITY,
         )

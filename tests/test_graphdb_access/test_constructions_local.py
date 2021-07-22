@@ -37,14 +37,14 @@ from cesarp.model.Construction import Construction
 
 @pytest.fixture
 def local_db_access():
-    ureg = cesarp.common.init_unit_registry()    
+    ureg = cesarp.common.init_unit_registry()
     local_reader = LocalFileReader()
     reader = BldgElementConstructionReader(local_reader, ureg)
     return reader
 
 @pytest.fixture
 def remote_db_access():
-    """ 
+    """
     you can replace local_db_access with remote_db_access if you whish to test remote db access
     make sure to set GRAPHDB_USER and GRAPHDB_PASSWORD in your environment variables
     """
@@ -145,7 +145,7 @@ def test_material_properties_not_found(local_db_access):
 
 
 def test_glazing_and_infiltration(local_db_access):
-    # TODO units?
+    # TODO assert units
     assert local_db_access.get_glazing_ratio("http://uesl_data/sources/archetypes/2015_SFH_Archetype")._max == 0.38
     assert local_db_access.get_infiltration_rate("http://uesl_data/sources/archetypes/1948_SFH_Archetype") == \
            local_db_access.ureg.Quantity("0.71125 ACH")

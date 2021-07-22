@@ -31,7 +31,11 @@ class SingleSiteFactory:
         cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         if not os.path.isfile(weather_file_path):
             raise Exception(f"{weather_file_path} does not exist. please provide an existing file when initializing SingleSiteFactory")
-        self.the_site = Site(weather_file_path, SiteGroundTemperatureFactory(unit_reg, custom_config).get_ground_temperatures(), cfg["SIMULATION_YEAR"],)
+        self.the_site = Site(
+            weather_file_path,
+            SiteGroundTemperatureFactory(unit_reg, custom_config).get_ground_temperatures(),
+            cfg["SIMULATION_YEAR"],
+        )
 
     def get_site(self, bldg_fid):
         return self.the_site

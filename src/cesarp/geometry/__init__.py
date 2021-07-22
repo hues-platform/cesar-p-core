@@ -20,12 +20,35 @@
 # Contact: https://www.empa.ch/web/s313
 #
 
-"""Package providing functionality for importing building shape data and
-identifying neighbour and adjacent buildings for a certain center building."""
+"""
+geometry
+============
 
-__author__ = """Leonie Fierz"""
-__email__ = "leonie.fierz@empa.ch"
-__version__ = "0.1.0"
+Package providing functionality for importing building shape data and
+identifying neighbour and adjacent buildings for a certain center building.
+
+The classes/modules built to be used from outside (API of package):
+
+=============================================================== ===========================================================
+class/module                                                    description
+=============================================================== ===========================================================
+:py:mod:`cesarp.geometry.area_calculator`                       calculate different areas of a model.BldgShapeDetailed
+
+:py:class:`cesarp.geometry.GeometryBuilderFactory`              create GeometryBuilder instance for different building on same site
+
+:py:class:`cesarp.geometry.GeometryBuilder`                     this is the main class of this package, which
+                                                                creates a full building geometry from footprint and height, for the main
+                                                                building to be simulated and the more simple geometries for its neighbours
+
+:py:mod:`cesarp.geometry.csv_input_parser`                      For reading the site vertices form file, the dataframe returned
+:py:mod:`cesarp.geometry.shp_input_parser`                      can be fed into .. py:class:: name cesarp.geometry.GeometryBuilderFactory
+
+:py:mod:`cesarp.geometry.verticse_basics`                       use the convert_flat_site_vertices_to_per_bldg_footprint method
+                                                                to convert the site vertices read from an input to the structure
+                                                                reuqired by GeometryBuilder
+=============================================================== ===========================================================
+
+"""
 
 import os
 from pathlib import Path

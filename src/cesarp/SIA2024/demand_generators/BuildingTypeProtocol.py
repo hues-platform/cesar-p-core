@@ -28,7 +28,9 @@ class BuildingTypeProtocol:
         ...
 
     def synthesize_profiles_yearly_by_room_area_for_bldg(
-        self, profile_per_room_method: Callable[[str], List[float]], additional_factor_per_room_method: Callable[[str], float] = None,
+        self,
+        profile_per_room_method: Callable[[str], List[float]],
+        additional_factor_per_room_method: Callable[[str], float] = None,
     ) -> List[float]:
         ...
 

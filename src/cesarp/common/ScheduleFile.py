@@ -24,7 +24,15 @@ import pint
 
 class ScheduleFile:
     def __init__(
-        self, schedule_file, type_limit, header_rows, separator, num_hours, data_column, unit_of_values: pint.Unit, name=None,
+        self,
+        schedule_file,
+        type_limit,
+        header_rows,
+        separator,
+        num_hours,
+        data_column,
+        unit_of_values: pint.Unit,
+        name=None,
     ):
         """
         Make sure to provide a name when using the same file for multiple schedules, as per default the filename is used as schedule name
@@ -52,4 +60,12 @@ class ScheduleFile:
 
     @classmethod
     def from_template(cls, template):
-        return cls(template.schedule_file, template.type_limit, template.header_rows, template.separator, template.num_hours, template.data_column, template.unit_of_values,)
+        return cls(
+            template.schedule_file,
+            template.type_limit,
+            template.header_rows,
+            template.separator,
+            template.num_hours,
+            template.data_column,
+            template.unit_of_values,
+        )

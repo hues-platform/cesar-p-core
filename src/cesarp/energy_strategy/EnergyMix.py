@@ -126,7 +126,13 @@ class EnergyMix:
         return mix_data_per_time_period
 
     def _init_factor_lookup_table(
-        self, wood_mix_per_period, gas_mix_per_period, dhw_system_mix_per_period, heating_system_mix_per_period, factor_per_energy_source, factor_for_electricity,
+        self,
+        wood_mix_per_period,
+        gas_mix_per_period,
+        dhw_system_mix_per_period,
+        heating_system_mix_per_period,
+        factor_per_energy_source,
+        factor_for_electricity,
     ) -> pd.DataFrame:
         def do_mix_with_primaryenergyfactor(time_period_series: pd.Series):
             return sum(pen_fact * type_prc for pen_fact, type_prc in zip(factor_per_energy_source.loc[time_period_series.keys()], time_period_series))

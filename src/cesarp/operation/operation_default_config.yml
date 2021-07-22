@@ -19,6 +19,9 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 OPERATION:
+  # Parameters for night ventilation, same parameters for all buildings are used 
+  # (see PassiveCoolingOperationFactory, which is used by FixedBuildingOperationFactory as well as SIA2024Facade)
+  # If ACTIVE is False, no night ventilation is applied at all
   NIGHT_VENTILATION:
     ACTIVE: FALSE
     flow_rate: 2.5 ACH             # night ventilation nominal air flow rate - in air-changes-per-hour (ACH)
@@ -27,6 +30,12 @@ OPERATION:
     max_wind_speed: 40 m/s         # maximum wind speed threshold (m/s) - above this value the occupant closes the window - 40m/s is default in EnergyPlus Version 8.5
     start_hour: "20:00"            # night ventilation starting hour (00:00 format)
     end_hour: "6:00"               # night ventilation ending hour (00:00 format)
+  # Parameters for operational properties of window shading, same parameters for all buildings are used.
+  # (see PassiveCoolingOperationFactory, which is used by FixedBuildingOperationFactory as well as SIA2024Facade)
+  # For window shade material properties, see :py:class:`cesarp.construction.ConstructionBasics.ConstructionBasics` method get_window_shading_constr
+  # If ACTIVE is True and a :py:class:`cesarp.model.WindowConstruction.WindowShadingMaterial` material 
+  # with is_shading_available True is set in the constructional part of the BuildingModel, WindowShading is applied,
+  # if one of those conditions is False, no window shading is applied
   WINDOW_SHADING_CONTROL:
     ACTIVE: True
     is_exterior: True  # type of shading device [False-interior True-exterior]

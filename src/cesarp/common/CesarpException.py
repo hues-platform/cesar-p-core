@@ -19,4 +19,11 @@
 # Contact: https://www.empa.ch/web/s313
 #
 class CesarpException(Exception):
+    """
+    For a proper Exception handling concept, actually within the code from cesarp package only this CesarpException should be raised
+    instead of the Exception directly.
+    This allows the caller to except a CesarpException and do another error handling then when a plain Exception is thrown.
+    It also makes it clear to the user of the library when an exception is kind of expected and when it just crashed somewhere.
+    """
+
     pass

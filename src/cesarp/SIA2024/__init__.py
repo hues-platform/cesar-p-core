@@ -20,9 +20,31 @@
 # Contact: https://www.empa.ch/web/s313
 #
 """
-Details about demand values and profile generation please see cesarp.SIA2024.SIA2024ParametersFactory, data source see cesarp.SIA2024.SIA2024DataAccessor
-Main Interface to the package is SIA2024Facade.
+SIA2024
+============
+
+Package providing functionality for creating operational parameters and profiles based on SIA2024.
+As the raw SIA2024 data used as an input cannot be released OpenSource, there are pre-generated profiles included.
+The code for generating new profiles is included as well, as it might be useful to know how the profiles are built up
+or reuse part of it in case you want to use another data source to generate your profiles.
+
+The SIA2024 data is stored at UES Lab/Empa as a separate GIT project.
+
+
+The classes/modules built to be used from outside (API of package):
+
+======================================================================= ===========================================================
+class/module                                                            description
+======================================================================= ===========================================================
+:py:mod:`cesarp.SIA2024.SIA2024Facade`                                  main interface for accessing operatinal parameters based on SIA2024
+                                                                        This class can be set as "BUILDING_OPERATION_FACTORY_CLASS" in the config of :py:class:`cesarp.manager`
+
+:py:class:`cesarp.SIA2024.SIA2024BuildingType.SIA2024BldgTypeKeys`      the building types available (for lookup, you pass them as strings)
+
+======================================================================= ===========================================================
+
 """
+
 import os
 from pathlib import Path
 

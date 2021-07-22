@@ -18,3 +18,19 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+results
+============
+
+Package for results processing.
+
+This package does not include extracting the results from EnergyPlus, but uses for this the functions from :py:mod:`cesarp.eplus_adapter`
+The package does not include calculating the operational emissions and costs, but uses for this :py:mod:`cesarp.emissions_cost`
+
+=========================================================== ===========================================================
+class                                                       description
+=========================================================== ===========================================================
+:py:class:`cesarp.results.ResultProcessor`                  Handling of annual results, including operational emissions and costs
+
+=========================================================== ===========================================================
+"""

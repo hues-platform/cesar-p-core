@@ -32,7 +32,6 @@ import cesarp.geometry.csv_input_parser
 from cesarp.geometry.GeometryBuilder import GeometryBuilder
 from cesarp.geometry import vertices_basics
 import cesarp.common
-# TODO remove this import, create constructions statically and paste files to test fixture
 from cesarp.idf_constructions_db_access.IDFConstructionArchetypeFactory import IDFConstructionArchetypeFactory
 from cesarp.construction.ConstructionBuilder import ConstructionBuilder
 from cesarp.model.BuildingElement import BuildingElement
@@ -70,8 +69,8 @@ def ureg():
 
 def idf():
     eplus_cfg = cesarp.common.config_loader.load_config_for_package(eplus_adpater_config_file, "cesarp.eplus_adapter")
-    IDF.setiddname(eplus_cfg["CUSTOM_IDD_9_3"])
-    idfstring = cesarp.eplus_adapter.idf_strings.version.format("9.3")
+    IDF.setiddname(eplus_cfg["CUSTOM_IDD_9_5"])
+    idfstring = cesarp.eplus_adapter.idf_strings.version.format("9.5")
     fhandle = StringIO(idfstring)
     idf = IDF(fhandle)
     return idf

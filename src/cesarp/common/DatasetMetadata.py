@@ -26,7 +26,12 @@ from cesarp.common.version_info import get_version_info
 
 class DatasetMetadata:
     def __init__(
-        self, source: str, source_link: str = None, date_created=datetime.now(), description=None, config_entries: Dict = {},
+        self,
+        source: str,
+        source_link: str = None,
+        date_created=datetime.now(),
+        description=None,
+        config_entries: Dict = {},
     ):
         self.SOURCE = source
         self.SOURCE_LINK = source_link

@@ -31,7 +31,7 @@ from cesarp.model.WindowConstruction import WindowConstruction
 
 class RetrofitEmbodiedEmissions:
     """
-    Defines specific emissions for retrofit of opaque constructions such as walls, roof etc and windows.
+    Access to emissions for retrofit of opaque constructions such as walls, roof etc and windows.
     Windows have separate emission factors for the glass and for the frame.
     """
 
@@ -44,7 +44,7 @@ class RetrofitEmbodiedEmissions:
         return sum([layer.material.co2_emission_per_m3 * layer.thickness for layer in constr.layers if layer.retrofitted])
 
     def get_constr_ret_emb_non_renewable_pen(self, constr: Construction) -> pint.Quantity:
-        """ Non renewable primary energy / embodied energy in MJ Oil-eq"""
+        """Non renewable primary energy / embodied energy in MJ Oil-eq"""
         return sum([layer.material.non_renewable_primary_energy_per_m3 * layer.thickness for layer in constr.layers if layer.retrofitted])
 
     def get_win_ret_glass_emb_co2(self, win_constr: WindowConstruction) -> pint.Quantity:

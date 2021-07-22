@@ -24,7 +24,7 @@ from typing import List, Sequence
 from cesarp.common.profiles import DAYS_PER_MONTH, HOURS_PER_DAY, HOURS_PER_YEAR
 
 
-def correct_weekends(year_profile_hourly, nr_of_weekend_days, weekend_value, start_date="20190101"):
+def correct_weekends(year_profile_hourly, nr_of_weekend_days, weekend_value, start_date):
     """
     Sets profile values on weekend to passed value.
     :param year_profile_hourly: profile for one year with hourly values
@@ -92,7 +92,7 @@ def expand_year_profile_monthly_to_hourly(year_profile_monthly, day_profile_hour
     :param day_profile_hourly: profile for one day with hourly values (24 values), used for each day of the year
     :return: profile for one year with hourly values
 
-     """
+    """
     assert len(year_profile_monthly) == 12, f"year_profile_monthly should have 12 values, but has {len(year_profile_monthly)}"
     assert len(day_profile_hourly) == HOURS_PER_DAY, f"day_profile_hourly should have {HOURS_PER_DAY} values, but has {len(day_profile_hourly)}"
     year_profile_hourly_nested = [

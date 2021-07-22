@@ -38,11 +38,19 @@ class EnergyPerspective2050RetrofitManager:
     Seqencer for energy perspective 2050 retrofit.
     Initializes a base case and according to the time periods defined in cesarp.energy_strategy a number of subsequent
     scenarios, each building up on the previous one.
-    For details on retrofit strategy see EnergyPerspective2050BldgElementsRetrofitter
+    For details on retrofit strategy see :py:class`cesarp.retrofit.energy_perspective_2050.EnergyPerspective2050BldgElementsRetrofitter`
+
+    1. Initialize class
+    2. Call run() on your instance
     """
 
     def __init__(
-        self, ureg: pint.Quantity, base_config_path: str, project_base_path: str, weather_per_period: Dict[int, str], fids_to_use=None,
+        self,
+        ureg: pint.Quantity,
+        base_config_path: str,
+        project_base_path: str,
+        weather_per_period: Dict[int, str],
+        fids_to_use=None,
     ):
         """
         :param ureg: pint unit registry instance
@@ -67,6 +75,13 @@ class EnergyPerspective2050RetrofitManager:
         self._current_sim_period_year: int = None  # type: ignore
 
     def run(self) -> pd.DataFrame:
+        """
+        Do run the project with retrofitting.
+        It does create the retrofit scenarios for each of retrofit periods you passed in the weather files dictionary in the initilization.
+
+        :return: annual results for all retrofit scenarios.
+        :rtype: pd.DataFrame
+        """
         retrofit_period_years = self._retrofitter.get_retrofit_periods()
 
         # create base scenario
@@ -91,7 +106,9 @@ class EnergyPerspective2050RetrofitManager:
             self._current_sim_period_year = sim_year
             self._proj_mgr.derive_scenario(prev_sz_name, sz_name, self._change_sim_year_for_model)
             self._retrofitter.retrofit_site(
-                sim_year, self._proj_mgr.get_sim_mgr_for(sz_name).bldg_containers, self._proj_mgr.get_sim_mgr_for(prev_sz_name).bldg_containers,
+                sim_year,
+                self._proj_mgr.get_sim_mgr_for(sz_name).bldg_containers,
+                self._proj_mgr.get_sim_mgr_for(prev_sz_name).bldg_containers,
             )
             self._proj_mgr.run_not_simulated_scenarios()
             prev_sz_name = sz_name

@@ -37,7 +37,7 @@ def exists_in_idf(idf, obj_type, obj_name):
 
 
 def add_type_limits(idf, type_lim_to_add):
-    """ Check if given type_limit already exists in the IDF, if not add it.
+    """Check if given type_limit already exists in the IDF, if not add it.
     :param idf IDF object
     :param type_lim_to_add cesarp.common.ScheduleTypeLimits
     :return: name of type limit idf object;

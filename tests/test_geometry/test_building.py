@@ -19,12 +19,14 @@
 # Contact: https://www.empa.ch/web/s313
 #
 import pandas as pd
-import pandas.util.testing
+import pandas.testing
 import pytest
 import copy
 from contracts import InputContractException
 
 import cesarp.geometry.building
+
+MAX_GLZ_RATIO_WALL_WIDTH = 0.95
 
 _test_data_floors = [
     pd.DataFrame({"x": [0, 0, 25, 25], "y": [0, 10, 10, 0], "z": [0, 0, 0, 0]}).astype(float),
@@ -97,10 +99,10 @@ def test_define_bldg_floors():
     assert len(expected_floor_z) == len(floors_result)
     i = 0
     for floor in floors_result:
-        pandas.util.testing.assert_frame_equal(floor[["x", "y"]], input_bldg["footprint_shape"])
+        pandas.testing.assert_frame_equal(floor[["x", "y"]], input_bldg["footprint_shape"])
         expected_z_dim = pd.Series([expected_floor_z[i]] * len(input_bldg["footprint_shape"].index))
         expected_z_dim.name = "z"
-        pandas.util.testing.assert_series_equal(floor.z, expected_z_dim)
+        pandas.testing.assert_series_equal(floor.z, expected_z_dim)
         i += 1
 
 
@@ -109,35 +111,35 @@ def test_define_bldg_walls_per_floor():
     expected_wall_surfaces = _test_data_walls
 
     # .....frame_equal does not work for whole dataframe with nested dataframes as it seems, thus compare each entry...
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[0][0], expected_wall_surfaces[0][0])
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[0][1], expected_wall_surfaces[0][1])
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[0][2], expected_wall_surfaces[0][2])
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[0][3], expected_wall_surfaces[0][3])
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[1][0], expected_wall_surfaces[1][0])
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[1][1], expected_wall_surfaces[1][1])
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[1][2], expected_wall_surfaces[1][2])
-    pandas.util.testing.assert_frame_equal(result_wall_surfaces[1][3], expected_wall_surfaces[1][3])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[0][0], expected_wall_surfaces[0][0])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[0][1], expected_wall_surfaces[0][1])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[0][2], expected_wall_surfaces[0][2])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[0][3], expected_wall_surfaces[0][3])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[1][0], expected_wall_surfaces[1][0])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[1][1], expected_wall_surfaces[1][1])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[1][2], expected_wall_surfaces[1][2])
+    pandas.testing.assert_frame_equal(result_wall_surfaces[1][3], expected_wall_surfaces[1][3])
 
 
 def test_define_window_in_wall_preconditions():
     # test with wall having vertex 1 and 2 not on same z-position
     wall = pd.DataFrame([[0, 10, 0], [0, 10, 2.5], [0, 20, 2.5], [0, 20, 0]], columns=["x", "y", "z"]).astype(float)
     with pytest.raises(InputContractException):
-        cesarp.geometry.building.define_window_in_wall(wall, 0.13)
+        cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
 
 
 def test_define_window_in_wall_parallel_to_y():
     wall = pd.DataFrame([[0, 10, 0], [0, 0, 0], [0, 0, 2.5], [0, 10, 2.5]], columns=["x", "y", "z"]).astype(float)
     expected_window = pd.DataFrame([[0, 6.0833, 0.5], [0, 3.9167, 0.5], [0, 3.9167, 2.0], [0, 6.0833, 2]], columns=["x", "y", "z"],).astype(float)
-    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04)
-    pandas.util.testing.assert_frame_equal(result_window, expected_window, check_less_precise=True)
+    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
+    pandas.testing.assert_frame_equal(result_window, expected_window, check_exact=False)
 
 
 def test_define_window_in_wall_parallel_to_y_counterclock():
     wall = pd.DataFrame([[0, 0, 0], [0, 10, 0], [0, 10, 2.5], [0, 0, 2.5]], columns=["x", "y", "z"]).astype(float)
     expected_window = pd.DataFrame([[0, 3.9167, 0.5], [0, 6.0833, 0.5], [0, 6.0833, 2], [0, 3.9167, 2.0]], columns=["x", "y", "z"]).astype(float)
-    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04)
-    pandas.util.testing.assert_frame_equal(result_window, expected_window, check_less_precise=True)
+    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
+    pandas.testing.assert_frame_equal(result_window, expected_window, check_exact=False)
 
 
 def test_define_window_in_wall_parallel_to_x():
@@ -148,15 +150,15 @@ def test_define_window_in_wall_parallel_to_x():
         [[15.2083, 10, 0.5], [9.7917, 10, 0.5], [9.7917, 10, 2], [15.2083, 10, 2.0]],
         columns=["x", "y", "z"],
     ).astype(float)
-    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04)
-    pandas.util.testing.assert_frame_equal(result_window, expected_window, check_less_precise=True)
+    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
+    pandas.testing.assert_frame_equal(result_window, expected_window, check_exact=False)
 
 
 def test_define_window_wall_too_small():
     wall = pd.DataFrame(
         [[25, 10, 0], [24.91, 10, 0], [24.91, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]
     ).astype(float)
-    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04)
+    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
     assert result_window is None
 
 
@@ -164,7 +166,7 @@ def test_define_window_window_too_small():
     wall = pd.DataFrame(
         [[25, 10, 0], [21.01, 10, 0], [21.01, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]
     ).astype(float)
-    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.001, 0.25, 0.1, 0.04)
+    result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.001, 0.25, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
     assert result_window is None
 
 
@@ -216,20 +218,20 @@ def test_define_bldg_windows():
             ],
         ]
 
-    result_windows = cesarp.geometry.building.define_windows_for_walls(input_walls_per_floor, 0.13, 1.5, 0.1, 0.04)
+    result_windows = cesarp.geometry.building.define_windows_for_walls(input_walls_per_floor, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
 
     # .....frame_equal does not work for whole dataframe with nested dataframes as it seems, thus compare each entry...
-    pandas.util.testing.assert_frame_equal(
-        result_windows[0][0], expected_windows[0][0], check_less_precise=True
+    pandas.testing.assert_frame_equal(
+        result_windows[0][0], expected_windows[0][0], check_exact=False
     )
-    pandas.util.testing.assert_frame_equal(
-        result_windows[0][1], expected_windows[0][1], check_less_precise=True
+    pandas.testing.assert_frame_equal(
+        result_windows[0][1], expected_windows[0][1], check_exact=False
     )
-    pandas.util.testing.assert_frame_equal(
-        result_windows[1][0], expected_windows[1][0], check_less_precise=True
+    pandas.testing.assert_frame_equal(
+        result_windows[1][0], expected_windows[1][0], check_exact=False
     )
-    pandas.util.testing.assert_frame_equal(
-        result_windows[1][1], expected_windows[1][1], check_less_precise=True
+    pandas.testing.assert_frame_equal(
+        result_windows[1][1], expected_windows[1][1], check_exact=False
     )
 
 
@@ -247,12 +249,12 @@ def test_define_bldg_shape_neighbour():
 
     assert len(result_bldg_shape.walls) == 1
     assert len(result_bldg_shape.walls[0]) == 4
-    pandas.util.testing.assert_frame_equal(
+    pandas.testing.assert_frame_equal(
         result_bldg_shape.walls[0][0], expected_wall_0_0, check_names=False
     )
 
-    pandas.util.testing.assert_frame_equal(result_bldg_shape.groundfloor, expected_groundfloor, check_names=False)
-    pandas.util.testing.assert_frame_equal(result_bldg_shape.roof, expected_roof, check_names=False)
+    pandas.testing.assert_frame_equal(result_bldg_shape.groundfloor, expected_groundfloor, check_names=False)
+    pandas.testing.assert_frame_equal(result_bldg_shape.roof, expected_roof, check_names=False)
 
 
 def test_filter_adjacent_walls():
@@ -276,7 +278,7 @@ def test_filter_adjacent_walls_with_three_adjacent_vertices():
 
 
 def test_remove_windows_in_adjacent_walls():
-    windows = cesarp.geometry.building.define_windows_for_walls(_test_data_walls,  0.13, 1.5, 0.1, 0.04)
+    windows = cesarp.geometry.building.define_windows_for_walls(_test_data_walls,  0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
     windows_without_adjacencies = cesarp.geometry.building.remove_windows_in_adjacent_walls(windows, _test_data_walls_adjacency)
     assert windows_without_adjacencies[0][0] is not None
     assert windows_without_adjacencies[0][1] is None

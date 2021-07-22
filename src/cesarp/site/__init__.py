@@ -18,6 +18,35 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+
+"""
+site
+============
+
+Package handles parameters depending on the site of the building.
+
+The main reason is handling of weatehr files. We have two options built in, either all buildings are located on the same site and use the same weather file
+or each building is located at a different site.
+
+Note that in case of different site per building, we still expect all buildings to be included in the same site vertices input file.
+This can grow big and inefficient in case neighbouring buildings shall be modeled. For such cases, you better set up a pipeline processing
+each building individually (each building with its own building information file and site vertices file, the latter including its neighbouring buildings).
+
+The classes/modules built to be used as the API of the package:
+
+======================================================================= ===========================================================
+class/module                                                            description
+======================================================================= ===========================================================
+:py:class:`cesarp.site.SingleSiteFactory`                               interface to use when all your buildings are located at the same
+                                                                        site, using the same weather file input
+
+:py:class:`cesarp.site.SitePerSwissCommunityFactory`                    interface for distributed site in switzerland, each building is assigned
+                                                                        to a community and for each community a weather file is assigned
+
+======================================================================= ===========================================================
+
+"""
+
 import os
 from pathlib import Path
 

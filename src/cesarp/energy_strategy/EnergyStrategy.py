@@ -29,6 +29,12 @@ from cesarp.energy_strategy.EnergyMix import EnergyMix
 
 
 class EnergyStrategy:
+    """
+    parent interface class to hold together all interfaces for querying operational emission and cost values.
+    you can also directly initialize the individual classes
+    *RetrofitRates* is not included, as it is not used together with the operational emission and cost values.
+    """
+
     def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
         es_cfg = get_selected_energy_strategy_cfg(custom_config)
         self.fuel_cost_factors = FuelCosts(ureg, es_cfg)

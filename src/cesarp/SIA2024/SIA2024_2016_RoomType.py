@@ -23,7 +23,7 @@ from enum import Enum
 
 
 class SIA2024_2016_RoomType(Enum):
-    """ Mapping between RoomType key and SIA 2024-2016 Room name """
+    """Mapping between RoomType key and SIA 2024-2016 Room name"""
 
     MFH = "Wohnen MFH"
     SFH = "Wohnen EFH"

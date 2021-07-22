@@ -49,11 +49,7 @@ class ConstructionAsIDF:
         """
         regexp: str = "\s*(\w+\s?\w+),\s*!-\s?Name\s*"  # noqa W605
 
-        matches = [
-            re.match(regexp, line).groups(0)[0]  # type: ignore
-            for line in open(self.idf_file_path)
-            if re.match(regexp, line) is not None
-        ]
+        matches = [re.match(regexp, line).groups(0)[0] for line in open(self.idf_file_path) if re.match(regexp, line) is not None]  # type: ignore
         if len(matches) != 1:
             raise Exception(f"no or more than one line with matching for element idf_obj_name found in {self.idf_file_path}")
         idf_obj_name = matches[0]

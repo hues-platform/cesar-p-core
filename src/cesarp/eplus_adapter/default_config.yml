@@ -19,7 +19,17 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 EPLUS_ADAPTER:
-    EPLUS_VERSION: "9.3.0" # "9.2.0"
+    # energy plus version to use, if not specified in environment variable
+    EPLUS_VERSION: "9.5.0" # "9.2.0" # energy plus version to use
+    # default installation path of energyplus depending on OS. {version} is replaced with EPLUS_VERSION (dots replaced by dashes)
+    EPLUS_WINDOWS_DEFAULT_PATH: "C:/EnergyPlusV{version}"
+    EPLUS_LINUX_DEFAULT_PATH: "/usr/local/EnergyPlus-{version}"
+    EPLUS_MAC_DEFAULT_PATH: "/Applications/EnergyPlus-{version}"  
+    # let energy plus create a csv results file for each simulated building (same data as in eplusout.eso)
+    DO_CREATE_CSV_RESULTS: False  
+    # if true, some output is sent to console during energy plus run. use this option for debugging.
+    EPLUS_RUN_VERBOSE: False      
+    # the custom IDD allow for more vertices and more window shading objects than are defined in the default ones, see idf_writer_geometry.py
     CUSTOM_IDD_8_5: "ressources/Energy+_8-5_NrOfVerticesExtended.idd"
     CUSTOM_IDD_8_7: "ressources/Energy+_8-7-0_NrOfVerticesExtended.idd"
     CUSTOM_IDD_8_8: "ressources/Energy+_8-8-0_NrOfVerticesExtended.idd"
@@ -27,18 +37,21 @@ EPLUS_ADAPTER:
     CUSTOM_IDD_9_1: "ressources/Energy+_9-0-1_NrOfVerticesExtended.idd"
     CUSTOM_IDD_9_2: "ressources/Energy+_9-2-0_NrOfVerticesExtended.idd"
     CUSTOM_IDD_9_3: "ressources/Energy+_9-3-0_NrOfVerticesExtended.idd"
-    EPLUS_WINDOWS_DEFAULT_PATH: "C:/EnergyPlusV{version}"
-    EPLUS_LINUX_DEFAULT_PATH: "/usr/local/EnergyPlus-{version}"
-    EPLUS_MAC_DEFAULT_PATH: "/Applications/EnergyPlus-{version}"
-    DO_CREATE_CSV_RESULTS: False # create per building csv results file (same data as in eplusout.eso)
-    EPLUS_RUN_VERBOSE: False # if true, some output is sent to console during energy plus run. use this option for debugging.
+    CUSTOM_IDD_9_5: "ressources/Energy+_9-5-0_NrOfVerticesExtended.idd"
+    # simulation settings to be used in the IDF specification, same for all buildings
     SIMULATION_SETTINGS:
         MIN_SYSTEM_TIMESTAMP: 2
         MAX_HVAC_ITERATIONS: 25
         NR_OF_TIMESTEPS: 4
         SHADOW_CALCULATION_FREQUENCY: 7
-    OUTPUT_VARS: # for all possible frequencies, see cesar.eplus_adapter.idf_strings.ResultsFrequency
-      # if you overwrite in the custom config, you have to specify all parameters you want. the lists are not merged
+    # definitions of output variables which shall be included in the E+ outputs, respectively which will be added to your IDF files
+    # you can add several entries for different result frequencies, see cesar.eplus_adapter.idf_strings.ResultsFrequency for possibilites    
+    # check for instructions how to get the E+ variable names from rdd resp mdd file after a first test simulation run from
+    # https://bigladdersoftware.com/epx/docs/8-0/input-output-reference/page-088.html#outputmeter-and-outputmetermeterfileonly
+    # if you overwrite in your own config, you have to specify all parameters you want. the lists are not merged
+    OUTPUT_VARS:
+      ANNUAL:
+      MONTHLY:
       HOURLY:
         - "Zone Air Temperature"
         - "Zone Ideal Loads Supply Air Total Heating Energy"
@@ -46,25 +59,30 @@ EPLUS_ADAPTER:
         - "Hot Water Equipment District Heating Energy"
         - "Zone Ideal Loads Supply Air Sensible Heating Rate"
         - "Hot Water Equipment District Heating Rate"
-    OUTPUT_METER: # for all possible frequencies, see cesar.eplus_adapter.idf_strings.ResultsFrequency
-      # if you overwrite in the custom config, you have to specify all parameters you want. the lists are not merged
+      TIMESTEP:
+      DETAILED:
+    # same applies as for OUTPUT_VARS
+    OUTPUT_METER:
       ANNUAL:
-        - "DistrictHeating:Facility"
-        - "DistrictCooling:Facility"
-        - "Electricity:Facility"
-        - "DistrictHeating:HVAC"
-        - "DistrictHeating:Building"
-      HOURLY:
-        - "DistrictHeating:Facility"
-        - "DistrictCooling:Facility"
-        - "Electricity:Facility"
-        - "DistrictHeating:HVAC"
-        - "DistrictHeating:Building"
+        - "DistrictHeating:Building"  # DHW 
+        - "DistrictHeating:HVAC"  # Heating
+        - "DistrictCooling:Facility" # Cooling
+        - "Electricity:Facility"  # Electricity
+      MONTHLY:
+      HOURLY: 
+        - "DistrictHeating:Building"  # DHW 
+        - "DistrictHeating:HVAC"  # Heating
+        - "DistrictCooling:Facility" # Cooling
+        - "Electricity:Facility"  # Electricity
+      TIMESTEP:
+      DETAILED:
+    # parameters used to read floor area from EIO file
+    # if E+ does not change anything in the EIO output format, you do not need to change those
     EIO_READER:
       ZONE_SUMMARY_START_TAG: "! <Zone Summary>" # zone summary is expected before zone info in the eio file
-      IDX_NR_OF_ZONES: 1 # second entry on summary line is the number of zones
-      ZONE_INFO_TO_SUMMARY_OFFSET: 0
-      FLOOR_AREA_HEADER: "Floor Area {m2}"
-      AREA_UNIT: "m**2"
-      SEPARATOR: ","
+      IDX_NR_OF_ZONES: 1  # index for entry on summary line is the number of zones, 1 means the second entry
+      ZONE_INFO_TO_SUMMARY_OFFSET: 0  # how many lines after the ZONE_SUMMARY_START_TAG per zone info lines start
+      FLOOR_AREA_HEADER: "Floor Area {m2}" 
+      AREA_UNIT: "m**2"  # pint-styled unit to use for floor area
+      SEPARATOR: ","  # separator used in EIO file
 

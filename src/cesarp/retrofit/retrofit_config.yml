@@ -19,4 +19,7 @@
 ## Contact: https://www.empa.ch/web/s313
 ##
 RETROFIT:
+  # in case buildings are retrofitted, infiltration rate is set to this value
+  # indiependent of the original infiltration rate that was set in the BuildingModel 
+  # being retrofitted
   INFILRATION_RATE_AFTER_WINDOW_RETROFIT: 0.1 ACH

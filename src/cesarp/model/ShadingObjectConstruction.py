@@ -35,7 +35,10 @@ class ShadingObjectConstruction:
 
     @classmethod
     def init_from_dict(
-        cls, props_as_dict: Dict[str, Any], window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF], unit_reg: pint.UnitRegistry,
+        cls,
+        props_as_dict: Dict[str, Any],
+        window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF],
+        unit_reg: pint.UnitRegistry,
     ):
         return ShadingObjectConstruction(
             diffuse_solar_reflectance_unglazed_part=unit_reg(props_as_dict["diffuse_solar_reflectance_unglazed_part"]),

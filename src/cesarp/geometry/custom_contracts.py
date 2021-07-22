@@ -21,6 +21,10 @@
 #
 """
 Customized input parameter checking contracts
+Those contracts are used to check input parameters within this package.
+Note that this approach with input contracts has only been used within
+the geometry package, as we pass often pd.DataFrame for which the python
+typing hints do not well describe what is actually expected.
 """
 from collections.abc import Iterable
 import contracts
@@ -28,27 +32,27 @@ import pandas as pd
 
 
 def coords_2d(arg_to_check):
-    """ Is arg a dataframe with columns x,y ? """
+    """Is arg a dataframe with columns x,y ?"""
     return isinstance(arg_to_check, pd.DataFrame) and "x" in arg_to_check and "y" in arg_to_check
 
 
 def coords_2d_raw(arg_to_check):
-    """ Is arg a dataframe with 2 columns? """
+    """Is arg a dataframe with 2 columns?"""
     return isinstance(arg_to_check, pd.DataFrame) and len(arg_to_check.columns) == 2
 
 
 def coords_3d(arg_to_check):
-    """ Is arg a dataframe with columns x,y,z ? """
+    """Is arg a dataframe with columns x,y,z ?"""
     return isinstance(arg_to_check, pd.DataFrame) and "x" in arg_to_check and "y" in arg_to_check and "z" in arg_to_check
 
 
 def coords_3d_raw(arg_to_check):
-    """ Is arg a dataframe with 3 columns defining x and y and z coordinates ? """
+    """Is arg a dataframe with 3 columns defining x and y and z coordinates ?"""
     return isinstance(arg_to_check, pd.DataFrame) and len(arg_to_check.columns) == 3
 
 
 def coords_3d_square(arg_to_check):
-    """ Is arg a square in a plane parallel to the z-axis defined by 4 vertices? """
+    """Is arg a rectangular shape in a plane parallel to the z-axis defined by 4 vertices?"""
     if coords_3d(arg_to_check) and len(arg_to_check) == 4:
         return arg_to_check.loc[0, "z"] == arg_to_check.loc[1, "z"] and arg_to_check.loc[2, "z"] == arg_to_check.loc[3, "z"] and arg_to_check.loc[1, "z"] < arg_to_check.loc[2, "z"]
     else:
@@ -56,7 +60,7 @@ def coords_3d_square(arg_to_check):
 
 
 def list_coords_3d(arg_to_check):
-    """ Is arg a list with pandas.DataFrame with columns x,y,z or empty list? """
+    """Is arg a list with pandas.DataFrame with columns x,y,z or empty list?"""
     if isinstance(arg_to_check, list):
         if not arg_to_check:  # is empty
             return True
@@ -68,7 +72,7 @@ def list_coords_3d(arg_to_check):
 
 
 def iterable_coords_2d(arg_to_check):
-    """ Is arg a list, series or other iterable object with elements pandas.DataFrame[columns=x,y] (or empty)? """
+    """Is arg a list, series or other iterable object with elements pandas.DataFrame[columns=x,y] (or empty)?"""
     if isinstance(arg_to_check, pd.DataFrame) and arg_to_check.empty:  # empty DataFrame is ok
         return True
     if isinstance(arg_to_check, Iterable):
@@ -82,7 +86,7 @@ def iterable_coords_2d(arg_to_check):
 
 
 def list2d_coords_3d_square(arg_to_check):
-    """ Is arg a list of lists containing as values squares pandas.DataFrame[columns=[x,y,z]]? """
+    """Is arg a list of lists containing as values squares pandas.DataFrame[columns=[x,y,z]]?"""
     if isinstance(arg_to_check, list):
         if len(arg_to_check) == 0:
             return True
@@ -92,5 +96,5 @@ def list2d_coords_3d_square(arg_to_check):
 
 
 def percentage(arg_to_check):
-    """ Is arg floating point in the range of 0...1? """
+    """Is arg floating point in the range of 0...1?"""
     return (arg_to_check == 1 or arg_to_check == 0) or (contracts.floating_point(arg_to_check) and arg_to_check <= 1)

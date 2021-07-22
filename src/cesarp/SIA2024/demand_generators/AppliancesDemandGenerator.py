@@ -72,6 +72,7 @@ class AppliancesDemandGenerator:
         bldg_type: BuildingTypeProtocol,
         base_data_accessor: BaseDataForAppliancesProtocol,
         get_year_profile_variation_monthly_for_room_method: Callable[[str], Iterable[float]],
+        profile_start_date: str,
     ):
         """
         :param bldg_type: building type for which to create the profile, e.g. object of SIA2024BuildingType
@@ -86,6 +87,7 @@ class AppliancesDemandGenerator:
         self.__app_prof_var_per_room_cache: Optional[ValuePerKeyCache] = None
         self.__get_appliance_profile_for_room_method = self.__gen_app_prof_for_room_nominal
         self.__get_appliance_level_for_room_method = self.base_data.get_appliance_level_std
+        self._profile_start_date = profile_start_date
 
     def activate_profile_variability(self, vertical_variability: float, do_horizontal_variability: bool):
         """
@@ -129,7 +131,8 @@ class AppliancesDemandGenerator:
         """
 
         return self.bldg_type.synthesize_profiles_yearly_by_room_area_for_bldg(
-            self.__get_appliance_profile_for_room_method, additional_factor_per_room_method=self.__get_appliance_level_for_room_method,
+            self.__get_appliance_profile_for_room_method,
+            additional_factor_per_room_method=self.__get_appliance_level_for_room_method,
         )
 
     def __gen_app_prof_for_room_nominal(self, room_type):
@@ -138,11 +141,15 @@ class AppliancesDemandGenerator:
         nominal or random dependent on linked method during object construction
         """
         appliance_profile = profile_generation.expand_year_profile_monthly_to_hourly(
-            self.get_year_profile_variation_monthly_for_room_method(room_type), self.base_data.get_appliance_day_profile_hourly(room_type),
+            self.get_year_profile_variation_monthly_for_room_method(room_type),
+            self.base_data.get_appliance_day_profile_hourly(room_type),
         )
 
         appliance_profile = profile_generation.correct_weekends(
-            appliance_profile, self.base_data.get_nr_of_rest_days_per_week(room_type).m, weekend_value=self.base_data.get_appliance_profile_fixed_weekend_value(room_type),
+            appliance_profile,
+            self.base_data.get_nr_of_rest_days_per_week(room_type).m,
+            weekend_value=self.base_data.get_appliance_profile_fixed_weekend_value(room_type),
+            start_date=self._profile_start_date,
         )
         min_value = self.base_data.get_appliance_profile_min_value_allowed(room_type)
         appliance_profile = [max(min(self.profile_max_value, prof_val), min_value) for prof_val in appliance_profile]
@@ -152,7 +159,8 @@ class AppliancesDemandGenerator:
     def __gen_app_prof_for_room_variable(self, room_type, vertical_variability: float, do_horizontal_variability: bool):
 
         appliance_profile = profile_generation.expand_year_profile_monthly_to_hourly(
-            self.get_year_profile_variation_monthly_for_room_method(room_type), self.base_data.get_appliance_day_profile_hourly(room_type),
+            self.get_year_profile_variation_monthly_for_room_method(room_type),
+            self.base_data.get_appliance_day_profile_hourly(room_type),
         )
 
         if vertical_variability > 0:
@@ -161,7 +169,10 @@ class AppliancesDemandGenerator:
 
         # target for "weekend correction" are non residential buildings, thus fixed value without randomization is ok.
         appliance_profile = profile_generation.correct_weekends(
-            appliance_profile, self.base_data.get_nr_of_rest_days_per_week(room_type).m, weekend_value=self.base_data.get_appliance_profile_fixed_weekend_value(room_type),
+            appliance_profile,
+            self.base_data.get_nr_of_rest_days_per_week(room_type).m,
+            weekend_value=self.base_data.get_appliance_profile_fixed_weekend_value(room_type),
+            start_date=self._profile_start_date,
         )
 
         if do_horizontal_variability:

@@ -19,6 +19,35 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+"""
+graphdb_access
+============================
+
+Interface to the information stored in the graph database. The data can be either locally in a TTL file (included under ressources) or queried
+from a database running on a GraphDB Server (or locally on your machine).
+
+If you use a remote GraphDB, you are responsible to save or track the data used in your project, as in a common database it could be overwritten or corrected
+which means after some time you wont be able to reproduce the exact same results when querying data from the same remote DB.
+
+The package is not a strict data access, as there is some business logic included.
+
+This data access is a replacement for the :py:mod:`cesarp.idf_construction_db_access` relying on partial IDF files.
+
+
+Main API classes
+
+===================================================================================== ===========================================================
+class                                                                                 description
+===================================================================================== ===========================================================
+:py:class:`cesarp.graphdb_access.GraphDBFacade`                                       This is your entry point to the package, instantiating a local (file) or remote
+                                                                                      connection according to the configuration (by default local file)
+
+:py:class:`cesarp.graphdb_access.GraphDBArchetypicalConstrctionFactory`               Create constructional archetypes based on the infromation from the GraphDB
+
+:py:class:`cesarp.graphdb_access.ConstructionRetrofitter`                             Interface to get retrofit constructions
+===================================================================================== ===========================================================
+"""
+
 import os
 from pathlib import Path
 

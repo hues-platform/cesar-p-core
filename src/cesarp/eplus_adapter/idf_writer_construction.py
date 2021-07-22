@@ -98,7 +98,11 @@ def add_layer(idf: IDF, layer: LayerProtocol, ureg: pint.UnitRegistry, is_window
                 add_opaque_material(idf=idf, idf_obj_name=idf_obj_mat_name, mat_def=mat, thickness=layer.thickness, ureg=ureg)
             else:
                 add_material_no_mass(
-                    idf=idf, idf_obj_name=idf_obj_mat_name, mat_def=mat, thermal_resistance=layer.thermal_resistance, ureg=ureg,
+                    idf=idf,
+                    idf_obj_name=idf_obj_mat_name,
+                    mat_def=mat,
+                    thermal_resistance=layer.thermal_resistance,
+                    ureg=ureg,
                 )
         elif isinstance(mat, Gas):
             add_airgap(idf=idf, idf_obj_name=idf_obj_mat_name, thermal_resistance=layer.thermal_resistance, ureg=ureg)
