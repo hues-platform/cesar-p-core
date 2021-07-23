@@ -25,7 +25,7 @@ There is also the possibility to apply **retrofit measures** to the building con
 a detailed Log with the **retrofit measures** along with pricing and embodied emission infromation.
 
 
-Full documentation: **https://cesar-p-core.readthedocs.io/en/latest/**
+Full documentation: https://cesar-p-core.readthedocs.io/en/latest/
 
 
 Project Info
@@ -107,7 +107,7 @@ Installation & Usage
 ========================
 
 - Installation guide: https://cesar-p-core.readthedocs.io/en/latest/installation.html
-- Usage instructions: https://cesar-p-core.readthedocs.io/en/latest/usage.html
+- Usage instructions: https://cesar-p-core.readthedocs.io/en/latest/usage/index.html
 - Usage examples: https://github.com/hues-platform/cesar-p-usage-examples
 
 Credits
