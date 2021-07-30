@@ -16,6 +16,12 @@ MAJOR.MINOR.PATCH.a0
 
 For all released Version there is a Tag/Release in GitLab.
 
+2.0.1
+-----
+
+- fix missing dependency to requests (dependency of rdflib)
+- update CESAR-P version in cesarp/SIA2024/ressources/generated_profiles (profiles values do not change, just that version pointer was outdated)
+
 2.0.0
 -----
 

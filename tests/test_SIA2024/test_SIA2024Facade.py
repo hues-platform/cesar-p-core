@@ -27,7 +27,9 @@ from cesarp.SIA2024.SIA2024Facade import SIA2024Facade
 from cesarp.SIA2024.SIA2024BuildingType import SIA2024BldgTypeKeys
 from cesarp.operation.PassiveCoolingOperationFactory import PassiveCoolingOperationFactory
 
-NR_OF_LINES_EXPECTED = [83, 86]  # depending on wether we run from git checkout or on CI, we have the lines for GIT status or not...
+NR_OF_LINES_EXPECTED_NOMINAL_PROFILE = [84, 87]  # depending on wether we run from git checkout or on CI, we have the lines for GIT status or not...
+# variable profiles have currently one line less metadata because they were not re-generated with 2.0.0
+NR_OF_LINES_EXPECTED_VARIABLE_PROFILE = [83, 86]  # depending on wether we run from git checkout or on CI, we have the lines for GIT status or not...
 
 def test_init():
     config = {}
@@ -43,7 +45,7 @@ def test_mfh_param_set_nominal():
     activity_prof = mfh_params.occupancy.activity_schedule
     print(f'{activity_prof.schedule_file} column {activity_prof.data_column} header rows {activity_prof.header_rows}')
     assert activity_prof.data_column == 3
-    assert activity_prof.header_rows in NR_OF_LINES_EXPECTED  # header with or without git information
+    assert activity_prof.header_rows in NR_OF_LINES_EXPECTED_NOMINAL_PROFILE  # header with or without git information
     assert activity_prof.schedule_file == mfh_params.dhw.fraction_schedule.schedule_file
 
 def test_mfh_param_set_variable():
@@ -55,7 +57,7 @@ def test_mfh_param_set_variable():
     activity_prof = mfh_params.occupancy.activity_schedule
     print(f'{activity_prof.schedule_file} column {activity_prof.data_column} header rows {activity_prof.header_rows}')
     assert activity_prof.data_column == 3
-    assert activity_prof.header_rows in NR_OF_LINES_EXPECTED
+    assert activity_prof.header_rows in NR_OF_LINES_EXPECTED_VARIABLE_PROFILE
     assert activity_prof.schedule_file == mfh_params.dhw.fraction_schedule.schedule_file
 
 def test_office_param_set_nominal():
@@ -68,7 +70,7 @@ def test_office_param_set_nominal():
     activity_prof = office_params.occupancy.activity_schedule
     print(f'{activity_prof.schedule_file} column {activity_prof.data_column} header rows {activity_prof.header_rows}')
     assert activity_prof.data_column == 3
-    assert activity_prof.header_rows in NR_OF_LINES_EXPECTED
+    assert activity_prof.header_rows in NR_OF_LINES_EXPECTED_NOMINAL_PROFILE
     assert activity_prof.schedule_file == office_params.dhw.fraction_schedule.schedule_file
 
 def test_create_not_enabled():

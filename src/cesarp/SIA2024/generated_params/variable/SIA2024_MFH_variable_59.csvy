@@ -78,7 +78,7 @@ METADATA:
   SOURCE_LINK: c:\Users\file\Documents\CESAR-P\cesar-p-sia2024-data\ressources\SIA_data_for_MATLAB.xlsx
     sheet Eingabedaten_edit
   VERSION_INFO:
-    Cesar-P Version: 1.2.0a0
+    Cesar-P Version: 2.0.0
     GIT-BRANCH: master
     GIT-INFO: ''
     GIT-REMOTE: https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-usage-examples.git

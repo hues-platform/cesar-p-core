@@ -138,7 +138,7 @@ SCHEDULE:FILE,
     FRACTION,                 !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     2,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -148,7 +148,7 @@ SCHEDULE:FILE,
     ANY,                      !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     3,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -158,7 +158,7 @@ SCHEDULE:FILE,
     FRACTION,                 !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     5,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -168,7 +168,7 @@ SCHEDULE:FILE,
     FRACTION,                 !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     4,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -178,7 +178,7 @@ SCHEDULE:FILE,
     FRACTION,                 !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     6,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -188,7 +188,7 @@ SCHEDULE:FILE,
     TEMPERATURE,              !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     7,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -198,7 +198,7 @@ SCHEDULE:FILE,
     TEMPERATURE,              !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     8,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -208,7 +208,7 @@ SCHEDULE:FILE,
     FRACTION,                 !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     9,                        !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep
@@ -218,7 +218,7 @@ SCHEDULE:FILE,
     FRACTION,                 !- Schedule Type Limits Name
     profiles\SIA2024_MFH_nominal.csvy,    !- File Name
     10,                       !- Column Number
-    86,                       !- Rows to Skip at Top
+    87,                       !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
     Semicolon,                !- Column Separator
     No;                       !- Interpolate to Timestep

@@ -63,6 +63,7 @@ METADATA:
       LIGHTING_OFF_VALUE: 0 dimensionless
       OCCUPANCY_RESTDAY_VALUE: 0 dimensionless
       SLEEPTIME_HOUR: 22
+      START_DATE: '20190101'
       WAKEUP_HOUR: 6
     VARIABILITY_SETTINGS:
       DAILY_ROUTINE_VARIABILITY: 1
@@ -71,17 +72,17 @@ METADATA:
       LIGHTING_SETPOINT_VARIABILITY_PRC: 0.1 dimensionless
       VERTICAL_VARIABILITY_FRACTION_PROFILES: 0.15
       VERTICAL_VARIABILITY_THERMOSTAT_SETPOINT: 1 delta_degC
-  DATE_CREATED: 2021-03-02 10:16:08.078958
+  DATE_CREATED: 2021-07-30 13:20:57.392859
   DESCRIPTION: All parameters and profiles in this data set are derived from the described
     source by cesarp.SIA2024.SIA2024ParametersFactory.SIA2024ParametersFactory
   SOURCE: Norm SIA2024-2016, Excel is enriched for usage with CESAR-P.
   SOURCE_LINK: C:\Users\file\Documents\CESAR-P\cesar-p-sia2024-data\ressources\SIA_data_for_MATLAB.xlsx
     sheet Eingabedaten_edit
   VERSION_INFO:
-    Cesar-P Version: 1.2.0a0
-    GIT-BRANCH: ''
+    Cesar-P Version: 2.0.0
+    GIT-BRANCH: master
     GIT-INFO: ''
-    GIT-REMOTE: ''
+    GIT-REMOTE: https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-sia2024-data.git
 ---
 hour_of_year;occupancy_fraction_schedule;activity_schedule;electric_appliances_fraction_schedule;lighting_fraction_schedule;dhw_fraction_schedule;heating_setpoint_schedule;cooling_setpoint_schedule;ventilation_fraction_schedule;infiltration_fraction_schedule
 1;0.0000;133.6320;0.1000;0.0000;0.0000;17.3000;29.2000;0.0000;1

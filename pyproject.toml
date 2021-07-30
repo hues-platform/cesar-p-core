@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "cesar-p"
-version = "2.0.0"
+version = "2.0.1"
 description = "Combined Energy Simulation And Retrofit"
 authors = ["Urban Energy Systems Lab - Empa"]
 homepage = "https://github.com/hues-platform/cesar-p-core"
@@ -42,6 +42,7 @@ geomeppy = { version = "^0.11", optional = true }
 openpyxl = "^3.0"
 types-PyYAML = "^5.4.3"
 types-six = "^0.1.7"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^coverage>=5.5"
