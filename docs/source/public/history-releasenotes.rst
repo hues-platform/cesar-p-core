@@ -16,6 +16,29 @@ MAJOR.MINOR.PATCH.a0
 
 For all released Version there is a Tag/Release in GitLab.
 
+2.2.0
+-----
+
+- duplicated materials were removed from the GraphDB dataset. Names were changed to simplify. All attributes stayed the same. 
+- GraphDB content gets now exported to the zip file if running with remote endpoint (#129)
+
+Bugfixes
+
+- rdflib version 5 did not run anymore. Updated to 6. 
+- zip creatin failed (#131)
+
+
+2.1.0
+-----
+
+- added feature to map a weather file per building (#122)
+- removed idf_constructions_db_access package (#106)
+- moved shading materials to GraphDB dataset (#77)
+
+Bugfixes
+
+- fixed error of ArchetypicalBuildingConstruction in GraphDBArchetypicalConstructionFactory (#126)
+
 2.0.1
 -----
 

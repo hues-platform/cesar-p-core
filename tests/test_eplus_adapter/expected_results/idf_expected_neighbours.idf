@@ -1,4 +1,4 @@
-!- Windows Line endings
+!- Windows Line endings 
 
 VERSION,
     9.5.0;                    !- Version Identifier
@@ -15,8 +15,32 @@ SHADOWCALCULATION,
     No,                       !- Disable SelfShading Within Shading Zone Groups
     No;                       !- Disable SelfShading From Shading Zone Groups to Other Zones
 
+WINDOWMATERIAL:GLAZING,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L1,    !- Name
+    SpectralAverage,          !- Optical Data Type
+    ,                         !- Window Glass Spectral Data Set Name
+    0.006,                    !- Thickness
+    0.775,                    !- Solar Transmittance at Normal Incidence
+    0.071,                    !- Front Side Solar Reflectance at Normal Incidence
+    0.071,                    !- Back Side Solar Reflectance at Normal Incidence
+    0.881,                    !- Visible Transmittance at Normal Incidence
+    0.08,                     !- Front Side Visible Reflectance at Normal Incidence
+    0.08,                     !- Back Side Visible Reflectance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
+    0.84,                     !- Front Side Infrared Hemispherical Emissivity
+    0.84,                     !- Back Side Infrared Hemispherical Emissivity
+    0.9,                      !- Conductivity
+    1,                        !- Dirt Correction Factor for Solar and Visible Transmittance
+    No,                       !- Solar Diffusing
+    72000000000,              !- Youngs modulus
+    0.22;                     !- Poissons ratio
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L1;    !- Outside Layer
+
 SHADING:BUILDING:DETAILED,
-    Ext1_Wall0,                   !- Name
+    Ext1_Wall0,               !- Name
     ,                         !- Transmittance Schedule Name
     4,                        !- Number of Vertices
     -35.00000,                !- Vertex 1 Xcoordinate
@@ -33,7 +57,7 @@ SHADING:BUILDING:DETAILED,
     12.50000;                 !- Vertex 4 Zcoordinate
 
 SHADING:BUILDING:DETAILED,
-    Ext1_Wall1,                   !- Name
+    Ext1_Wall1,               !- Name
     ,                         !- Transmittance Schedule Name
     4,                        !- Number of Vertices
     -10.00000,                !- Vertex 1 Xcoordinate
@@ -49,8 +73,8 @@ SHADING:BUILDING:DETAILED,
     10.00000,                 !- Vertex 4 Ycoordinate
     12.50000;                 !- Vertex 4 Zcoordinate
 
- SHADING:BUILDING:DETAILED,
-    Ext1_Wall2,                   !- Name
+SHADING:BUILDING:DETAILED,
+    Ext1_Wall2,               !- Name
     ,                         !- Transmittance Schedule Name
     4,                        !- Number of Vertices
     -10.00000,                !- Vertex 1 Xcoordinate
@@ -67,7 +91,7 @@ SHADING:BUILDING:DETAILED,
     12.50000;                 !- Vertex 4 Zcoordinate
 
 SHADING:BUILDING:DETAILED,
-    Ext1_Wall3,                   !- Name
+    Ext1_Wall3,               !- Name
     ,                         !- Transmittance Schedule Name
     4,                        !- Number of Vertices
     -35.00000,                !- Vertex 1 Xcoordinate
@@ -84,7 +108,7 @@ SHADING:BUILDING:DETAILED,
     12.50000;                 !- Vertex 4 Zcoordinate
 
 SHADING:BUILDING:DETAILED,
-    Ext1_Roof,                   !- Name
+    Ext1_Roof,                !- Name
     ,                         !- Transmittance Schedule Name
     4,                        !- Number of Vertices
     -10.00000,                !- Vertex 1 Xcoordinate
@@ -101,36 +125,36 @@ SHADING:BUILDING:DETAILED,
     12.50000;                 !- Vertex 4 Zcoordinate
 
 SHADINGPROPERTY:REFLECTANCE,
-    Ext1_Wall0,                   !- Shading Surface Name
+    Ext1_Wall0,               !- Shading Surface Name
     0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Fraction of Shading Surface That Is Glazed
-    Window0201;               !- Glazing Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard;    !- Glazing Construction Name
 
 SHADINGPROPERTY:REFLECTANCE,
-    Ext1_Wall1,                   !- Shading Surface Name
+    Ext1_Wall1,               !- Shading Surface Name
     0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Fraction of Shading Surface That Is Glazed
-    Window0201;               !- Glazing Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard;    !- Glazing Construction Name
 
 SHADINGPROPERTY:REFLECTANCE,
-    Ext1_Wall2,                   !- Shading Surface Name
+    Ext1_Wall2,               !- Shading Surface Name
     0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Fraction of Shading Surface That Is Glazed
-    Window0201;               !- Glazing Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard;    !- Glazing Construction Name
 
 SHADINGPROPERTY:REFLECTANCE,
     Ext1_Wall3,               !- Shading Surface Name
     0.3,                      !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
     0.3,                      !- Fraction of Shading Surface That Is Glazed
-    Window0201;               !- Glazing Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard;    !- Glazing Construction Name
 
 SHADINGPROPERTY:REFLECTANCE,
     Ext1_Roof,                !- Shading Surface Name
     0.15,                     !- Diffuse Solar Reflectance of Unglazed Part of Shading Surface
     0.1,                      !- Diffuse Visible Reflectance of Unglazed Part of Shading Surface
     0,                        !- Fraction of Shading Surface That Is Glazed
-    Window0201;               !- Glazing Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard;    !- Glazing Construction Name

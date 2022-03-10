@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -20,9 +20,8 @@
 # Contact: https://www.empa.ch/web/s313
 #
 import pint
-from typing import Union, Dict, Any
+from typing import Dict, Any
 from cesarp.model.WindowConstruction import WindowGlassConstruction
-from cesarp.idf_constructions_db_access.ConstructionAsIDF import ConstructionAsIDF
 from dataclasses import dataclass
 
 
@@ -31,13 +30,13 @@ class ShadingObjectConstruction:
     diffuse_solar_reflectance_unglazed_part: pint.Quantity
     diffuse_visible_reflectance_unglazed_part: pint.Quantity
     glazing_ratio: pint.Quantity
-    window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF]
+    window_glass_construction: WindowGlassConstruction
 
     @classmethod
     def init_from_dict(
         cls,
         props_as_dict: Dict[str, Any],
-        window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF],
+        window_glass_construction: WindowGlassConstruction,
         unit_reg: pint.UnitRegistry,
     ):
         return ShadingObjectConstruction(

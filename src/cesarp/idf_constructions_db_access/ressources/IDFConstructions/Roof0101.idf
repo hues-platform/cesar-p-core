@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0101,			!-Name	
-   Wood Planking_1918_0.0200	,			!- Outside Layer
-   Peat-Fiber-Boards_1918_0.0400	,			!- Layer 2
-   Gipsum Render_1918_0.0150	;			!- Layer 3

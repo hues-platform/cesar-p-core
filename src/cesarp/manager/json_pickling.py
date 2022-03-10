@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -64,7 +64,7 @@ def is_jsonpickle_incompatible(filepath: str) -> bool:
     with open(filepath, "w") as fh:
         json_string = fh.read()
     raw_json = json.loads(json_string)
-    return ("container_version" not in raw_json["container"] or raw_json["container"]["container_version"] < 4) and (int(version('jsonpickle').split(".")[0]) >= 2)
+    return ("container_version" not in raw_json["container"] or raw_json["container"]["container_version"] < 4) and (int(version("jsonpickle").split(".")[0]) >= 2)
 
 
 def read_bldg_container_from_disk(filepath: str) -> BuildingContainer:
@@ -72,11 +72,13 @@ def read_bldg_container_from_disk(filepath: str) -> BuildingContainer:
         bldg_cont = read_from_disk(filepath)
     except Exception as ex:
         if is_jsonpickle_incompatible:
-            raise CesarpException(f"You try to load a serialized BuildingContainer from {filepath}. \
+            raise CesarpException(
+                f"You try to load a serialized BuildingContainer from {filepath}. \
 The container was serialized using a jsonpickle library version below 2.0.0, which is not compatible with the cesar-p {version('cesar-p')} \
 respectively jsonpickle version {version('jsonpickle')} isntalled. \
 Either you install cesar-p version < 2.0.0, or if you need some functionalities from cesar-p version 2 or above you can try to manually \
-downgrade jsonpickle with pip install jsonpickle==1.5.2 and ignore warnings that cesar-p requires jsonpickle versin xxx")
+downgrade jsonpickle with pip install jsonpickle==1.5.2 and ignore warnings that cesar-p requires jsonpickle versin xxx"
+            )
         else:
             raise ex
 

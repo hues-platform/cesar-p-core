@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -22,9 +22,6 @@
 """
 construction
 ============================
-
-There are quite a lot of interfaces/protocols wihtin the mechanisms of this package to couple it to either the
-*cesarp.idf_constructions_db_access* or *cesarp.graphdb_access* as a source for the constructional archetypes.
 
 This package includes the parts which are statically defined in the configuration for all buildings, such as
 window frame properties. Those parameters are configurable in the config, expect for the properties of

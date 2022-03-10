@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -32,7 +32,6 @@ import cesarp.geometry.csv_input_parser
 from cesarp.geometry.GeometryBuilder import GeometryBuilder
 from cesarp.geometry import vertices_basics
 import cesarp.common
-from cesarp.idf_constructions_db_access.IDFConstructionArchetypeFactory import IDFConstructionArchetypeFactory
 from cesarp.construction.ConstructionBuilder import ConstructionBuilder
 from cesarp.model.BuildingElement import BuildingElement
 from cesarp.model.ShadingObjectConstruction import ShadingObjectConstruction
@@ -47,6 +46,8 @@ from cesarp.eplus_adapter.RelativeAuxiliaryFilesHandler import RelativeAuxiliary
 from cesarp.site.SiteGroundTemperatureFactory import SiteGroundTemperatureFactory
 from cesarp.eplus_adapter.ConstructionIDFWritingHandler import ConstructionIDFWritingHandler
 from cesarp.model.EnergySource import EnergySource
+from cesarp.graphdb_access.GraphDBArchetypicalConstructionFactory import GraphDBArchetypicalConstructionFactory
+from cesarp.graphdb_access.LocalFileReader import LocalFileReader
 
 import shutil
 
@@ -85,9 +86,11 @@ def get_sched_fixed_fraction(ureg):
 
 
 def __get_constr_for(bldg_fid, year_of_construction, ureg):
-    construction_factory = IDFConstructionArchetypeFactory({bldg_fid: year_of_construction},
+    reader = LocalFileReader()
+    construction_factory = GraphDBArchetypicalConstructionFactory({bldg_fid: year_of_construction},
                                                            {bldg_fid: EnergySource.DHW_OTHER},
                                                            {bldg_fid: EnergySource.HEATING_OTHER},
+                                                           reader,
                                                            ureg)
     constr_archetype = construction_factory.get_archetype_for(bldg_fid)
     return ConstructionBuilder(bldg_fid, constr_archetype).build()

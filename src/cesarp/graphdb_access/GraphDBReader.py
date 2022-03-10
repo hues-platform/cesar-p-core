@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -109,6 +109,11 @@ class GraphDBReader:
 
     def get_archetype_year_range_from_graph_for_uri(self, archetype_uri):
         self.sparql.setQuery(sparql_queries.get_archetype_year_range_by_uri.replace("$$$", archetype_uri))
+        results = self.sparql.query().convert()
+        return self.create_df(results)
+
+    def get_window_shading_constr_from_graph_for_uri(self, archetype_uri):
+        self.sparql.setQuery(sparql_queries.get_window_shading_constr_by_uri.replace("$$$", archetype_uri))
         results = self.sparql.query().convert()
         return self.create_df(results)
 

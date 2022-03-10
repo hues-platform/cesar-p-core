@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0302,			!-Name	
-   Roofing Felt_1978_0.0020	,			!- Outside Layer
-   Peat-Fiber-Boards_1978_0.0750	,			!- Layer 2
-   Gipsum-Render_1978_0.0150	;			!- Layer 3

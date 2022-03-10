@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0702,			!-Name	
-   Bitumen Layer_2009_0.0080	,			!- Outside Layer
-   EPS_2014_0.1900	,			!- Layer 2
-   Vapour Barrier_2009_0.0040	,			!- Layer 3
-   Concrete_2009_0.1800	,			!- Layer 4
-   Inside Render_2009_0.0100	;			!- Layer 5

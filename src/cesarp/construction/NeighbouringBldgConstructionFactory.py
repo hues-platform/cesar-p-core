@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -19,11 +19,10 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Any, Mapping, Dict, Union
+from typing import Any, Mapping, Dict
 import pint
 import cesarp.common
 from cesarp.model.WindowConstruction import WindowGlassConstruction
-from cesarp.idf_constructions_db_access.ConstructionAsIDF import ConstructionAsIDF
 from cesarp.model.Construction import BuildingElement as bec
 from cesarp.model.ShadingObjectConstruction import ShadingObjectConstruction
 from cesarp.construction import _default_config_file
@@ -45,7 +44,7 @@ class NeighbouringBldgConstructionFactory:
         self._fixed_params = cfg["FIXED_NEIGHBOUR_BLDG_PARAMETERS"]
         self.unit_reg = unit_reg
 
-    def get_neighbours_construction_props(self, window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF]) -> Mapping[str, ShadingObjectConstruction]:
+    def get_neighbours_construction_props(self, window_glass_construction: WindowGlassConstruction) -> Mapping[str, ShadingObjectConstruction]:
         """
         return a dict with the shading properties for the wall and roof of neighbouring buildings
         """

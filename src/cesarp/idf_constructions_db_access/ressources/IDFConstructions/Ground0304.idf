@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0304,			!-Name	
-   Gipsum-Render_1978_0.0150	,			!- Outside Layer
-   Reinforced Concrete_1978_0.1500	,			!- Layer 2
-   Mineral Wool Board_1978_0.0200	,			!- Layer 3
-   Magnesit Screed_1978_0.0400	,			!- Layer 4
-   Linoleum_1978_0.0025	;			!- Layer 5

@@ -1,5 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0209,			!-Name	
-   80ClayBricks 20Oak_1948_0.1200	,			!- Outside Layer
-   Inside Render_1948_0.0100	;			!- Layer 2

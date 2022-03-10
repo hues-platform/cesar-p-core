@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0208,			!-Name	
-   Outside Render_1948_0.0200	,			!- Outside Layer
-   80ClayBricks 20Oak_1948_0.1100	,			!- Layer 2
-   80ClayRender 20Oak_1948_0.0600	,			!- Layer 3
-   Wooden Board_1948_0.0200	;			!- Layer 4

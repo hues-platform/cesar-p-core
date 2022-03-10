@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -21,10 +21,9 @@
 #
 import pint
 from dataclasses import dataclass
-from typing import List, Union, Optional
+from typing import List, Optional
 from cesarp.model.BuildingElement import BuildingElement
 from cesarp.model.WindowLayer import WindowLayer
-from cesarp.idf_constructions_db_access.ConstructionAsIDF import ConstructionAsIDF
 
 
 @dataclass
@@ -93,7 +92,7 @@ class WindowShadingMaterial:
 @dataclass
 class WindowConstruction:
     frame: WindowFrameConstruction
-    glass: Union[WindowGlassConstruction, ConstructionAsIDF]
+    glass: WindowGlassConstruction
     shade: WindowShadingMaterial
     bldg_element: BuildingElement = BuildingElement.WINDOW
 

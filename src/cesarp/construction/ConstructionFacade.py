@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -27,7 +27,6 @@ import cesarp.common
 from cesarp.common.CesarpException import CesarpException
 from cesarp.model.EnergySource import EnergySource
 from cesarp.construction import _default_config_file
-from cesarp.idf_constructions_db_access.IDFConstructionArchetypeFactory import IDFConstructionArchetypeFactory
 from cesarp.construction.construction_protocols import ArchetypicalConstructionFactoryProtocol
 from cesarp.graphdb_access.GraphDBFacade import GraphDBFacade
 
@@ -42,7 +41,7 @@ class ConstructionFacade:
         custom_config: Dict[str, Any],
     ) -> ArchetypicalConstructionFactoryProtocol:
         """
-        Returns either a IDF based construction factory or a GraphDB based construction factory according to package configuration (parameter CONSTRUCTION_DB).
+        Returns a GraphDB based construction factory according to package configuration (parameter CONSTRUCTION_DB).
 
         :param bldg_fid_to_year_of_constr_lookup: list of all buildings along with their construction year
         :type bldg_fid_to_year_of_constr_lookup: Dict[int, int]
@@ -60,14 +59,6 @@ class ConstructionFacade:
         """
         cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         db_selection = ConstrDBOptions[cfg["CONSTRUCTION_DB"]]
-        if db_selection == ConstrDBOptions.IDF_FILES_DB:
-            return IDFConstructionArchetypeFactory(
-                bldg_fid_to_year_of_constr_lookup,
-                bldg_fid_to_dhw_ecarrier_lookup,
-                bldg_fid_to_heating_ecarrier_lookup,
-                ureg,
-                custom_config,
-            )
         if db_selection in [ConstrDBOptions.GRAPH_DB]:
             graph_db_facade = GraphDBFacade(ureg, custom_config)
             return graph_db_facade.get_graph_construction_archetype_factory(bldg_fid_to_year_of_constr_lookup, bldg_fid_to_dhw_ecarrier_lookup, bldg_fid_to_heating_ecarrier_lookup)
@@ -76,7 +67,3 @@ class ConstructionFacade:
 
 class ConstrDBOptions(Enum):
     GRAPH_DB = 1
-    IDF_FILES_DB = 2
-
-    def is_retrofit_supported(self):
-        return self.name != "IDF_FILES_DB"

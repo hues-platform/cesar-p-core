@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Protocol, Union, List, Dict, Any, Tuple
+from typing import Protocol, Sequence, Union, Dict, Any, Tuple
 import pint
 import pandas as pd
 import logging
@@ -28,7 +28,7 @@ import cesarp.common
 from cesarp.common.AgeClass import AgeClass
 from cesarp.graphdb_access.BuildingElementConstructionsArchetype import BuildingElementConstrcutionsArchetype
 from cesarp.model.Construction import Construction, BuildingElement
-from cesarp.model.WindowConstruction import WindowGlassConstruction
+from cesarp.model.WindowConstruction import WindowGlassConstruction, WindowShadingMaterial
 from cesarp.model.Layer import Layer, LayerFunction
 from cesarp.model.WindowLayer import WindowLayer
 from cesarp.model.OpaqueMaterial import OpaqueMaterial
@@ -85,6 +85,9 @@ class GraphReaderProtocol(Protocol):
         ...
 
     def get_archetype_year_range_from_graph_for_uri(self, archetype_uri) -> pd.DataFrame:
+        ...
+
+    def get_window_shading_constr_from_graph_for_uri(self, archetype_uri):
         ...
 
 
@@ -330,7 +333,7 @@ class BldgElementConstructionReader:
             return regulation + " Target"
 
     def get_default_construction(
-        self, constructions: List[Union[Construction, WindowGlassConstruction]], archetype_shortname: str = None
+        self, constructions: Sequence[Union[Construction, WindowGlassConstruction]], archetype_shortname: str = None
     ) -> Union[Construction, WindowGlassConstruction]:
         assert constructions, f"no constructions passed for getting default construction in archetpye {archetype_shortname}"
         if len(constructions) == 1:  # nothing to do if only one construction option
@@ -343,7 +346,7 @@ class BldgElementConstructionReader:
 
         return self._get_default_construction_by_uvalue(constructions)
 
-    def _get_default_construction_from_config(self, constructions: List[Union[Construction, WindowGlassConstruction]], archetype_shortname: str):
+    def _get_default_construction_from_config(self, constructions: Sequence[Union[Construction, WindowGlassConstruction]], archetype_shortname: str):
         try:
             bldg_element = constructions[0].bldg_element
             if self._cfg["ARCHETYPES"][archetype_shortname.upper()]["DEFAULT_CONSTRUCTION_SPECIFIC"]["ACTIVE"]:
@@ -356,7 +359,7 @@ class BldgElementConstructionReader:
 
         raise GraphDataException(f"Default construction set in configuration for {archetype_shortname} is not matching one of {[c.name for c in constructions]}")
 
-    def _get_default_construction_by_uvalue(self, constructions: List[Union[Construction, WindowGlassConstruction]]) -> Union[Construction, WindowGlassConstruction]:
+    def _get_default_construction_by_uvalue(self, constructions: Sequence[Union[Construction, WindowGlassConstruction]]) -> Union[Construction, WindowGlassConstruction]:
         u_values = []
         for construction in constructions:
             u_values.append(self.get_u_value(construction))
@@ -428,6 +431,46 @@ class BldgElementConstructionReader:
             return AgeClass(min_value, max_value)
         else:
             raise LookupError(f"There is no Archetype with uri {archetype_uri} in the database.")
+
+    def get_window_shading_constr(self, archetype_uri) -> WindowShadingMaterial:
+        df = self.graph_reader.get_window_shading_constr_from_graph_for_uri(archetype_uri)
+        if not df.empty:
+            is_shading_available = bool(df.at[0, "isShadingAvailable"])
+            name = str(df.at[0, "name"])
+            solar_transmittance = self.ureg(df.at[0, "solarTransmittance"])
+            solar_reflectance = self.ureg(df.at[0, "solarReflectance"])
+            visible_transmittance = self.ureg(df.at[0, "visibleTransmittance"])
+            visible_reflectance = self.ureg(df.at[0, "visibleReflectance"])
+            infrared_hemispherical_emissivity = self.ureg(df.at[0, "infraredHemisphericalEmissivity"])
+            infrared_transmittance = self.ureg(df.at[0, "infraredTransmittance"])
+            conductivity = self.ureg(df.at[0, "conductivity"])
+            thickness = self.ureg(df.at[0, "thickness"])
+            shade_to_glass_distance = self.ureg(df.at[0, "shadeToGlassDistance"])
+            top_opening_multiplier = float(df.at[0, "topOpeningMultiplier"])
+            bottom_opening_multiplier = float(df.at[0, "bottomOpeningMultiplier"])
+            leftside_opening_multiplier = float(df.at[0, "leftsideOpeningMultiplier"])
+            rightside_opening_multiplier = float(df.at[0, "rightsideOpeningMultiplier"])
+            airflow_permeability = float(df.at[0, "airflowPermeability"])
+            return WindowShadingMaterial(
+                is_shading_available,
+                name,
+                solar_transmittance,
+                solar_reflectance,
+                visible_transmittance,
+                visible_reflectance,
+                infrared_hemispherical_emissivity,
+                infrared_transmittance,
+                conductivity,
+                thickness,
+                shade_to_glass_distance,
+                top_opening_multiplier,
+                bottom_opening_multiplier,
+                leftside_opening_multiplier,
+                rightside_opening_multiplier,
+                airflow_permeability,
+            )
+        else:
+            raise LookupError(f"There is no Shading for Archetype with uri {archetype_uri} in the database.")
 
     def set_layer_functions(self, construction: Construction) -> Construction:
         number_of_layer = len(construction.layers)

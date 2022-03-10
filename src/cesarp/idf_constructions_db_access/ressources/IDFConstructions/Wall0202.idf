@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0202,			!-Name	
-   Outside Render_1948_0.0200	,			!- Outside Layer
-   LW Concrete Blocks_1948_0.2400	,			!- Layer 2
-   Inside Render_1948_0.0150	;			!- Layer 3

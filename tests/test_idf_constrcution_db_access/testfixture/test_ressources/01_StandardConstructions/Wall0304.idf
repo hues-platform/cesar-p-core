@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0304,			!-Name	
-   Outside Render_1978_0.0150	,			!- Outside Layer
-   Cellular concrete Blocks_1978_0.3000	,			!- Layer 2
-   Inside Render_1978_0.0050	;			!- Layer 3

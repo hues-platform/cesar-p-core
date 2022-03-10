@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -28,7 +28,7 @@ from cesarp.construction.construction_protocols import ArchetypicalBuildingConst
 from cesarp.construction.ConstructionBasics import ConstructionBasics
 from cesarp.model.EnergySource import EnergySource
 
-from cesarp.graphdb_access.BldgElementConstructionReader import BldgElementConstructionReader, GraphReaderProtocol
+from cesarp.graphdb_access.BldgElementConstructionReader import BldgElementConstructionReader, GraphReaderProtocol, BuildingElementConstrcutionsArchetype
 from cesarp.graphdb_access.ArchetypicalConstructionGraphDBBased import ArchetypicalConstructionGraphDBBased
 from cesarp.graphdb_access import _default_config_file
 
@@ -58,7 +58,7 @@ class GraphDBArchetypicalConstructionFactory:
         self._constr_reader = BldgElementConstructionReader(graph_data_reader, ureg, custom_config)
         self._construction_basics = ConstructionBasics(self._ureg, custom_config)
         self._ageclass_archetype = self._init_age_class_lookup()
-        self._archetypes_cache: Dict[str, ArchetypicalConstructionGraphDBBased] = dict()  # key is archetype URI
+        self._construction_cache: Dict[str, BuildingElementConstrcutionsArchetype] = dict()  # key is archetype URI
 
     def _init_age_class_lookup(self) -> Dict[AgeClass, str]:
         ageclass_archetype = {}
@@ -79,33 +79,34 @@ class GraphDBArchetypicalConstructionFactory:
         except Exception:
             logging.error(f"no archetype found for building with fid {bldg_fid} and year of construction {year_of_construction}")
 
-        if archetype_uri in self._archetypes_cache.keys():
-            archetype = self._archetypes_cache[archetype_uri]
+        if archetype_uri in self._construction_cache.keys():
+            constr_from_graph_db = self._construction_cache[archetype_uri]
         else:
             constr_from_graph_db = self._constr_reader.get_bldg_elem_construction_archetype(archetype_uri)
+            self._construction_cache[archetype_uri] = constr_from_graph_db
 
-            archetype = ArchetypicalConstructionGraphDBBased(
-                window_glass_constr_options=constr_from_graph_db.windows,
-                window_glass_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.windows, constr_from_graph_db.short_name),
-                window_frame_construction=self._construction_basics.get_fixed_window_frame_construction(),
-                window_shade_constr=self._construction_basics.get_window_shading_constr(year_of_construction),
-                roof_constr_options=constr_from_graph_db.roofs,
-                roof_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.roofs, constr_from_graph_db.short_name),
-                groundfloor_constr_options=constr_from_graph_db.grounds,
-                groundfloor_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.grounds, constr_from_graph_db.short_name),
-                wall_constr_options=constr_from_graph_db.walls,
-                wall_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.walls, constr_from_graph_db.short_name),
-                internal_ceiling_options=constr_from_graph_db.internal_ceilings,
-                internal_ceiling_default=self._constr_reader.get_default_construction(constr_from_graph_db.internal_ceilings, constr_from_graph_db.short_name),
-                glazing_ratio=self._constr_reader.get_glazing_ratio(constr_from_graph_db.name),
-                infiltration_rate=self._constr_reader.get_infiltration_rate(constr_from_graph_db.name),
-                infiltration_fraction_profile_value=self._cfg["FIXED_INFILTRATION_PROFILE_VALUE"] * self._ureg.dimensionless,
-                installations_characteristics=self._construction_basics.get_inst_characteristics(
-                    self._bldg_fid_to_dhw_ecarrier_lookup[bldg_fid],
-                    self._bldg_fid_to_heating_ecarrier_lookup[bldg_fid],
-                ),
-            )
-            self._archetypes_cache[archetype_uri] = archetype
+        archetype = ArchetypicalConstructionGraphDBBased(
+            window_glass_constr_options=constr_from_graph_db.windows,
+            window_glass_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.windows, constr_from_graph_db.short_name),
+            window_frame_construction=self._construction_basics.get_fixed_window_frame_construction(),
+            window_shade_constr=self._constr_reader.get_window_shading_constr(archetype_uri),
+            roof_constr_options=constr_from_graph_db.roofs,
+            roof_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.roofs, constr_from_graph_db.short_name),
+            groundfloor_constr_options=constr_from_graph_db.grounds,
+            groundfloor_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.grounds, constr_from_graph_db.short_name),
+            wall_constr_options=constr_from_graph_db.walls,
+            wall_constr_default=self._constr_reader.get_default_construction(constr_from_graph_db.walls, constr_from_graph_db.short_name),
+            internal_ceiling_options=constr_from_graph_db.internal_ceilings,
+            internal_ceiling_default=self._constr_reader.get_default_construction(constr_from_graph_db.internal_ceilings, constr_from_graph_db.short_name),
+            glazing_ratio=self._constr_reader.get_glazing_ratio(constr_from_graph_db.name),
+            infiltration_rate=self._constr_reader.get_infiltration_rate(constr_from_graph_db.name),
+            infiltration_fraction_profile_value=self._cfg["FIXED_INFILTRATION_PROFILE_VALUE"] * self._ureg.dimensionless,
+            installations_characteristics=self._construction_basics.get_inst_characteristics(
+                self._bldg_fid_to_dhw_ecarrier_lookup[bldg_fid],
+                self._bldg_fid_to_heating_ecarrier_lookup[bldg_fid],
+            ),
+        )
+
         return archetype
 
     def _get_archetype_uri_for(self, year_of_construction):

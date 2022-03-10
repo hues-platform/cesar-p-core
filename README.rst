@@ -98,7 +98,7 @@ The base methodology of CESAR-P regarding building simulation and retrofit is se
   (http://www.sciencedirect.com/science/article/pii/S0378778817337696)
 
 
-* To cite the CESAR-P OpenSource versions:
+* To cite the CESAR-P OpenSource version:
 
   Leonie Fierz, Urban Energy Systems Lab, Empa. (2021, April 13). hues-platform/cesar-p-core: 1.3.0 (Version 1.3.0).  Zenodo. http://doi.org/10.5281/zenodo.4682881
   

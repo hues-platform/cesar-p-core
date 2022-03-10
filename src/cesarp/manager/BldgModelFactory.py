@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -50,6 +50,7 @@ from cesarp.operation.protocols import PassiveCoolingOperationFactoryProtocol
 from cesarp.operation.PassiveCoolingOperationFactory import PassiveCoolingOperationFactory
 from cesarp.site.SingleSiteFactory import SingleSiteFactory
 from cesarp.site.SitePerSwissCommunityFactory import SitePerSwissCommunityFactory
+from cesarp.site.SitePerBuildingSpecificWeatherFile import SitePerBuildingSpecificWeatherFile
 from cesarp.construction.ConstructionBuilder import ConstructionBuilder
 from cesarp.construction.ConstructionFacade import ConstructionFacade
 from cesarp.model.BuildingModel import BuildingModel
@@ -263,7 +264,10 @@ class BldgModelFactory:
     def __create_site_factory(self) -> SiteFactoryProtocol:
         single_site_active = self._mgr_config["SINGLE_SITE"]["ACTIVE"]
         ch_sites_active = self._mgr_config["SITE_PER_CH_COMMUNITY"]["ACTIVE"]
-        assert not (single_site_active and ch_sites_active), "check configuration. only one of SITE_PER_CH_COMMUNITY, SINGLE_SITE should be active."
+        weather_file_per_bldg_active = self._mgr_config["WEATHER_FILE_PER_BUILDING"]["ACTIVE"]
+        assert not (
+            (single_site_active and ch_sites_active) or (single_site_active and weather_file_per_bldg_active) or (ch_sites_active and weather_file_per_bldg_active)
+        ), "check configuration. only one of SITE_PER_CH_COMMUNITY, SINGLE_SITE, WEATHER_FILE_PER_BUILDING should be active."
         if single_site_active:
             return SingleSiteFactory(self._mgr_config["SINGLE_SITE"]["WEATHER_FILE"], self._unit_reg, self._custom_config)
         elif ch_sites_active:
@@ -276,8 +280,19 @@ class BldgModelFactory:
                 index_column_name="bldg_fid",
             )
             return SitePerSwissCommunityFactory(bldg_fid_to_community_id["community_id"].to_dict(), self._unit_reg, self._custom_config)
+        elif weather_file_per_bldg_active:
+            mapping_file_cfg = self._mgr_config["WEATHER_FILE_PER_BUILDING"]["WEATHER_FILE_PER_BLDG_FILE"]
+            bldg_fid_to_weather_file = cesarp.common.read_csvy(
+                mapping_file_cfg["PATH"],
+                ["gis_fid", "weather"],
+                mapping_file_cfg["LABELS"],
+                mapping_file_cfg["SEPARATOR"],
+                index_column_name="gis_fid",
+            )
+            weather_files_folder_path = self._mgr_config["WEATHER_FILE_PER_BUILDING"]["WEATHER_FILES_FOLDER"]
+            return SitePerBuildingSpecificWeatherFile(bldg_fid_to_weather_file["weather"].to_dict(), weather_files_folder_path, self._unit_reg, self._custom_config)
         else:
-            raise Exception("no site strategy activated in config. set SITE_PER_CH_COMMUNITY or SINGLE_SITE active")
+            raise Exception("no site strategy activated in config. set SITE_PER_CH_COMMUNITY or SINGLE_SITE or WEATHER_FILE_PER_BUILDING active")
 
     def __add_target_glz_ratio_to_used_info_df(self, bldg_fid: int, target_glazing_ratio: Union[pint.Quantity, float]):
         if isinstance(target_glazing_ratio, pint.Quantity):

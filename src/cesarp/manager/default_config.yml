@@ -1,5 +1,5 @@
 ##
-## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+## Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 ##
 ## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 ##
@@ -132,4 +132,12 @@ MANAGER:
             LABELS:
                 bldg_fid: "bldg_fid"
                 community_id: "community_id" # numeric id should match with community ids defined in cesar.weather.swiss_communities Gemeinde_to_WeatherStation.csvy
-
+    WEATHER_FILE_PER_BUILDING:
+        ACTIVE: False
+        WEATHER_FILE_PER_BLDG_FILE:
+            PATH: "TBD_WEATHER_FILE_PER_BLDG_FILE.csv"
+            SEPARATOR: ","
+            LABELS:
+                gis_fid: "ORIG_FID"
+                weather: "WEATHER"
+        WEATHER_FILES_FOLDER: "./weather_files"

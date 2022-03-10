@@ -1,8 +1,0 @@
- !-   ===========  WINDOW CONSTRUCTION ===========	
-Construction,	
-   Window0802,			!-Name	
-   EN2PlusTroeschGlass_Outside_2014_0.0050	,			!- Outside Layer
-   Air_2014_0.0120	,			!- Layer 2
-   EurofloatTroeschGlass_2014_0.0050	,			!- Layer 3
-   Air_2014_0.0120	,			!- Layer 4
-   EN2PlusTroeschGlass_2014_0.0050	;			!- Layer 5

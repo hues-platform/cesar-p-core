@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -78,7 +78,7 @@ def are_files_equal(file_result, file_expected, ignore_line_nrs=[], ignore_case=
             res_line_to_cmp = res_line.translate(file_sep_dict)
             exp_line_to_cmp = exp[i].translate(file_sep_dict)
         if ignore_changing_config:
-            keys_to_ignore = ["PATH", "WEATHER_FILE", "DATE_CREATED", "GIT-", "_FILE", "Cesar-P Version"]
+            keys_to_ignore = ["PATH", "WEATHER_FILE", "DATE_CREATED", "GIT-", "_FILE", "Version"]
             if any([to_ignore in res_line_to_cmp for to_ignore in keys_to_ignore]):
                 print(f"Ignoring line nr with changing config {i+1}:\n{res_line_to_cmp}")
                 continue

@@ -5,7 +5,6 @@ CONSTRUCTION:
     # source for constructional data such as materials;
     # Options
     # GRAPH_DB: data source local TTL graph data file or remote GraphDB. See configuration in cesarp.graphdb_access.
-    # IDF_FILES_DB: legacy option using pre-defined IDF snippets, does not support retrofitting, see package cesarp.idf_constructions_db_access
     CONSTRUCTION_DB: "GRAPH_DB"
     # parameters for window frame are the same for all the buildings. 
     # SOURCE: those parameters where constants in cesar matlab version / co2 and pen: KBOB 2014
@@ -38,25 +37,7 @@ CONSTRUCTION:
         SHADING_OBJ_ROOF:
             diffuse_solar_reflectance_unglazed_part: 0.15 diffuse_solar_reflectance
             diffuse_visible_reflectance_unglazed_part: 0.1 diffuse_visible_reflectance
-            glazing_ratio: 0 dimensionless
-    # only used in case CONSTRUCTION_DB is set to IDF_FILES_DB; otherwis internal ceiling/floor is queried from GraphDB
-    FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS:
-        name: "cesar_default_internal_ceiling"
-        layers:
-            layer1:
-                thickness: 0.1 m
-                material: "cast_concrete_dense"
-    # only used in case above construction FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS is used
-    MATERIALS:
-        cast_concrete_dense:
-            name: "cast_concrete_dense"
-            roughness: "Rough"
-            conductivity: 1.4 W/m/K
-            density: 2100 kg/m**3
-            specific_heat: 840 J/kg/K
-            thermal_absorptance: 0.9 thermal_absorptance
-            solar_absorptance: 0.6 solar_absorptance
-            visible_absorptance: 0.6 visible_absorptance
+            glazing_ratio: 0 dimensionless 
 
 # energy strategy defines different constants used for operational cost and emission calculation and retrofitting with the EnergyPerspective2050RetrofitManager
 # each strategy defines a number of time periods, some of the linked files do then specify the parameters per time period
@@ -126,7 +107,7 @@ ENERGY_STRATEGY:
         MFH:
           PATH: "./ressources/new_energy_policy/retrofit/PartialRetrofitShares_MFH.csv"
           SEPARATOR: ";"
-
+ 
 GEOMETRY:
     NEIGHBOURHOOD:
         RADIUS:                     100  # meter; within this radius buildings around the main building are used as shading objects
@@ -145,7 +126,7 @@ GEOMETRY:
             ALLOWED_GLZ_RATIO_DEV: 0.02  # percentage deviation allowed between the set glazing ratio applied per wall and the resulting overall building glazing ratio
             EXCEPTION_ON_MISMATCH: True  # raise exception if glazing ratio mismatch is out of allowed deviation, if false only do only log as a warning
             DO_CHECK_BLD_WITH_ADJACENCIES: False  # if true, check is also on if some of the walls of the building are adjacent and thus have no windows
-
+ 
 GRAPHDB_ACCESS:
   FIXED_INFILTRATION_PROFILE_VALUE: 1  # the value to use for timesteps of the infiltration rate profile (constant profile)
   # choose between local or remote data source, only one of the two can be set to active at the same time
@@ -156,6 +137,7 @@ GRAPHDB_ACCESS:
   REMOTE:  # connect to a GraphDB server instance (remote server or on your local machine)
     ACTIVE: False
     SPARQL_ENDPOINT: "YOUR_GRAPHDB_ENDPOINT"  # GraphDB Endpoint URL, make sure to set the User and PW as environment variables (GRAPHDB_USER, GRAPHDB_PASSWORD) 
+    SAVE_DB_EXPORT: True
   # Lookup of retrofit construction for each building element. Regulation which was followed to define the retrofit construction
   # The retrofit construction linked to a construction with "ues:retrofitOf" must have "ues:targetRequirement" respectively "ues:minRequirement" respectively (if parameter "target_requirement" is False) 
   #set to the string value of the parameter "regulation"
@@ -264,37 +246,12 @@ GRAPHDB_ACCESS:
         ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2015_concrete_med_ins"
         WALL: "http://uesl_data/sources/archetypes/walls/Wall2015_flumroc_B335"
         GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2015_concrete_slab_medium_med_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2015_LowE_Xenon_Double"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2015_LowE_Xenon_Double" 
 
-IDF_CONSTRUCTIONS_DB_ACCESS:
-    FIXED_INFILTRATION_PROFILE_VALUE: 1
-    INPUT_FILES:
-        GLAZING_RATIO_PER_AGE_CLASS:
-            PATH: "ressources/GlazingRatio.csvy"
-            SEPARATOR: ";"
-            LABELS:
-                age_class_nr: "AgeClass"
-                min: "Min"
-                max: "Max"
-
-        INFILTRATION_PER_AGE_CLASS:
-            PATH: "ressources/InfiltrationRate.csvy"
-            SEPARATOR: ";"
-            LABELS:
-                age_class_nr: "AgeClass"
-                ACH_normal_pressure: 'ACH @ normal pressure'
-
-        BUILDING_ELEMENTS:
-            STANDARD_CONSTRUCTIONS_DIR: "ressources/IDFConstructions/"
-            MATERIAL_PER_AGE_CLASS_IDF: "ressources/IDFConstructions/Materials.idf"
-            MATERIAL_INTERNAL_IDF: "ressources/IDFConstructions/MaterialsInternalConstructions.idf"
-            INTERNAL_CEILING_IDF: "ressources/IDFConstructions/InternalCeiling.idf"
-            INTERNAL_FLOOR_IDF: "ressources/IDFConstructions/InternalFloor.idf"
 # PATHES: all following folders are relative to the basepath of the project, which is passed as a parameter when initializing SimulationManager 
 #         respectively the scenario folder in case when using the ProjectManager
 # Only the per-building inputs marked with MANDATORY must be given, the others can be set to inactive if you want to use the CESAR-P standards for them
-
-MANAGER:   
+MANAGER:    
     # how many worker-threads shall be used, -1 means half of the available processors will be used 
     # (applicable when using one of the built-in main classes, e.g. SimulationManager, ProjectManager)
     NR_OF_PARALLEL_WORKERS: -1  # -1 means half of the available processors will be used    
@@ -404,7 +361,16 @@ MANAGER:
             LABELS:
                 bldg_fid: "bldg_fid"
                 community_id: "community_id" # numeric id should match with community ids defined in cesar.weather.swiss_communities Gemeinde_to_WeatherStation.csvy
-
+    WEATHER_FILE_PER_BUILDING:
+        ACTIVE: False
+        WEATHER_FILE_PER_BLDG_FILE:
+            PATH: "TBD_WEATHER_FILE_PER_BLDG_FILE.csv"
+            SEPARATOR: ","
+            LABELS:
+                gis_fid: "ORIG_FID"
+                weather: "WEATHER"
+        WEATHER_FILES_FOLDER: "./weather_files"
+ 
 OPERATION:
   # Parameters for night ventilation, same parameters for all buildings are used 
   # (see PassiveCoolingOperationFactory, which is used by FixedBuildingOperationFactory as well as SIA2024Facade)
@@ -427,7 +393,7 @@ OPERATION:
     ACTIVE: True
     is_exterior: True  # type of shading device [False-interior True-exterior]
     rad_min_set: 90 W/m2   # minimum radiation set point 
-    shading_control_type: OnIfHighSolarOnWindow  # note that When changeing to not solar based, you have to adapt code to handle the Setpoint when writing the IDF correctly
+    shading_control_type: OnIfHighSolarOnWindow  # note that When changeing to not solar based, you have to adapt code to handle the Setpoint when writing the IDF correctly 
   # Parameters when using the FixedBuildingOperationFactory (same parameters and profiles for all buildings)
   # To enable FIXED operation parameters set config MANAGER -  BUILDING_OPERATION_FACTORY_CLASS to 
   # "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
@@ -457,11 +423,11 @@ RETROFIT:
   # in case buildings are retrofitted, infiltration rate is set to this value
   # indiependent of the original infiltration rate that was set in the BuildingModel 
   # being retrofitted
-  INFILRATION_RATE_AFTER_WINDOW_RETROFIT: 0.1 ACH
+  INFILRATION_RATE_AFTER_WINDOW_RETROFIT: 0.1 ACH 
   EMBODIED:
     # yml configuration with entries for insulation retrofit costs, see ConstructionRetrofitCost.py for required entries
     INSULATION_COST_LOOKUP: './ressources/insulation_retrofit_costs_geak_2014.yml'
-    WINDOW_COST_LOOKUP: './ressources/window_retrofit_costs_geak_2014.yml'
+    WINDOW_COST_LOOKUP: './ressources/window_retrofit_costs_geak_2014.yml' 
 
 # to use operational params from SIA2024 set config MANAGER - BUILDING_OPERATION_FACTORY_CLASS to "cesarp.SIA2024.SIA2024Facade.SIA2024Facade"
 # to use infiltration rate from SIA2024 set config MANAGER - INFILTRATION_RATE_SOURCE to "SIA2024"
@@ -509,7 +475,7 @@ SIA2024:
       ACTIVE: True # if not active, then the DHW power demand stated in the excel sheet is used, as in Matlab CESAR
       NOMINAL_TEMPERATURE: 60°C  # setpoint temperature for domestic hot water
       COLD_WATER_TEMPERATURE: 10°C  # assumend temperature of cold water inlet (used for domestic hot water)
-
+ 
 SITE:
   # some basic environmental properties used in EnergyPlus - constant for all buildings (even when you use multiple weather files wit SITE_PER_SWISS_COMMUNITY)
   GROUND_TEMPERATURES: # parameters are quite EnergyPlus specific, check out EnergyPlus reference for details
@@ -518,7 +484,7 @@ SITE:
     DEEP: 14 degreeC
     GROUND_TEMP_PER_MONTH: [1.6, 0.7, 2.3, 4.8, 11.2, 16.2, 19.6, 20.6, 18.9, 15, 9.8, 5]
     GROUND_TEMP_PER_MONTH_UNIT: degreeC
-  SIMULATION_YEAR: 2015 # should match one of defined period/year in config ENERGY_STRATEGY - XXX - TIME_PERIODS
+  SIMULATION_YEAR: 2015 # should match one of defined period/year in config ENERGY_STRATEGY - XXX - TIME_PERIODS 
 
 WEATHER:
   # to activate lookup of weather file based on the building l
@@ -532,7 +498,7 @@ WEATHER:
         station_name: "WeatherStationName" # entries should not have any special characters such as ü/é, adapt weather file names if necessary!
     WEATHER_FILES:
       PATH: "./ressources/weather_files"
-      EXTENSION: "epw"
+      EXTENSION: "epw" 
 
 EPLUS_ADAPTER:
     # energy plus version to use, if not specified in environment variable
@@ -565,7 +531,7 @@ EPLUS_ADAPTER:
     # check for instructions how to get the E+ variable names from rdd resp mdd file after a first test simulation run from
     # https://bigladdersoftware.com/epx/docs/8-0/input-output-reference/page-088.html#outputmeter-and-outputmetermeterfileonly
     # if you overwrite in your own config, you have to specify all parameters you want. the lists are not merged
-    OUTPUT_VARS:       
+    OUTPUT_VARS:
       HOURLY:
         - "Zone Air Temperature"
         - "Zone Ideal Loads Supply Air Total Heating Energy"
@@ -575,12 +541,12 @@ EPLUS_ADAPTER:
         - "Hot Water Equipment District Heating Rate"
     # same applies as for OUTPUT_VARS
     OUTPUT_METER:
-      HOURLY: 
+      ANNUAL:
         - "DistrictHeating:Building"  # DHW 
         - "DistrictHeating:HVAC"  # Heating
         - "DistrictCooling:Facility" # Cooling
         - "Electricity:Facility"  # Electricity
-      ANNUAL:
+      HOURLY: 
         - "DistrictHeating:Building"  # DHW 
         - "DistrictHeating:HVAC"  # Heating
         - "DistrictCooling:Facility" # Cooling

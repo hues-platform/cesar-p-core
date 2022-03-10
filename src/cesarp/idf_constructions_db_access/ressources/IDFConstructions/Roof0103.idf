@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0103,			!-Name	
-   Cement Screed_1918_0.0400	,			!- Outside Layer
-   Roofing Felt_1918_0.0010	,			!- Layer 2
-   Peat-Fiber-Boards_1918_0.0500	,			!- Layer 3
-   Reinforced Concrete_1918_0.1800	,			!- Layer 4
-   Gipsum Render_1918_0.0150	;			!- Layer 5

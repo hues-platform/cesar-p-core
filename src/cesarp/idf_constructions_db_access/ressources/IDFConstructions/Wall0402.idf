@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0402,			!-Name	
-   Outside Render_1994_0.0150	,			!- Outside Layer
-   Aerated Concrete_1994_0.2400	,			!- Layer 2
-   Inside Render_1994_0.0050	;			!- Layer 3

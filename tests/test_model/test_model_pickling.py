@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -33,7 +33,10 @@ import cesarp.common
 from cesarp.common.ScheduleFixedValue import ScheduleFixedValue
 from cesarp.common.ScheduleFile import ScheduleFile
 from cesarp.common.CesarpException import CesarpException
-from cesarp.model.Construction import BuildingElement
+from cesarp.model.Construction import BuildingElement, Construction
+from cesarp.model.Layer import Layer
+from cesarp.model.OpaqueMaterial import OpaqueMaterial, OpaqueMaterialRoughness
+from cesarp.model.TransparentMaterial import TransparentMaterial
 from cesarp.model.WindowConstruction import WindowConstruction, WindowFrameConstruction, WindowGlassConstruction
 from cesarp.model.BuildingModel import BuildingModel
 from cesarp.model.BuildingConstruction import BuildingConstruction, InstallationsCharacteristics, LightingCharacteristics
@@ -46,7 +49,6 @@ from cesarp.model.SiteGroundTemperatures import SiteGroundTemperatures
 from cesarp.model.EnergySource import EnergySource
 from cesarp.model.BldgType import BldgType
 from cesarp.model.WindowConstruction import WindowShadingMaterial
-from cesarp.idf_constructions_db_access.ConstructionAsIDF import ConstructionAsIDF
 from cesarp.geometry.GeometryBuilderFactory import GeometryBuilderFactory
 from cesarp.geometry.csv_input_parser import read_sitevertices_from_csv
 from cesarp.eplus_adapter.CesarIDFWriter import CesarIDFWriter
@@ -55,6 +57,8 @@ from cesarp.manager.BuildingContainer import BuildingContainer
 from cesarp.eplus_adapter.eplus_error_file_handling import EplusErrorLevel
 
 from dataclasses import dataclass
+
+from cesarp.model.WindowLayer import WindowLayer
 
 def get_schedule_file(filename, unit, type=cesarp.common.ScheduleTypeLimits.FRACTION()):
     return ScheduleFile(filename, type, 1, ",", 8760, 1, unit)
@@ -75,10 +79,8 @@ def fixture_folder():
     return str(os.path.dirname(__file__) / Path("testfixture"))
 
 @pytest.fixture
-def sample_model_with_idfconstr():
+def sample_model_with_constr():
     ureg = cesarp.common.init_unit_registry()
-    constr_idf = str(os.path.dirname(__file__) / Path("testfixture") / Path("SampleConstruction.idf"))
-    mat_idf = str(os.path.dirname(__file__) / Path("testfixture") / Path("SampleMaterials.idf"))
     ground_temps = SiteGroundTemperatures(building_surface=18*ureg.degreeC,
                                           shallow=17*ureg.degreeC,
                                           deep=15*ureg.degreeC,
@@ -110,13 +112,45 @@ def sample_model_with_idfconstr():
                 0
             )
 
+    test_opaque_material = OpaqueMaterial(
+                           "material",
+                           ureg("10 kg/m3"),
+                           OpaqueMaterialRoughness.ROUGH,
+                           ureg("0.9 solar_absorptance"),
+                           ureg("1200 J/K/kg"),
+                           ureg("0.9 thermal_absorptance"),
+                           ureg("0.9 W/(m*K)"),
+                           ureg("0.9 visible_absorptance")
+                           )
+    test_transparent_material = TransparentMaterial(
+                           "glass_material",
+                           ureg("0.9 back_side_infrared_hemispherical_emissivity"),
+                           ureg("0.9 back_side_solar_reflectance"),
+                           ureg("0.9 back_side_visible_reflectance"),
+                           ureg("0.9 W/(m*K)"),
+                           ureg("1.0 dirt_correction_factor"),
+                           ureg("0.9 front_side_infrared_hemispherical_emissivity"),
+                           ureg("0.9 front_side_solar_reflectance"),
+                           ureg("0.9 front_side_visible_reflectance"),
+                           ureg("0.0 infrared_transmittance"),
+                           ureg("0.31 solar_transmittance"),
+                           ureg("0.31 visible_transmittance"),
+
+    )
+    roof_constr = Construction("Roof", [Layer("Roof_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.ROOF)
+    wall_constr = Construction("Wall", [Layer("Wall_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.WALL)
+    ground_constr = Construction("Ground", [Layer("Ground_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.GROUNDFLOOR)
+    internal_ceiling_constr = Construction("InternalCeiling", [Layer("InternalCeiling_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.INTERNAL_CEILING)
+    window_glas_constr = WindowGlassConstruction("Glass", [WindowLayer("Glass_L1", ureg("0.02m"), test_transparent_material)])
+
+
     construction = BuildingConstruction(
         # NOTE: reusing the same ConstructionAsIDF object or path's as WindowPath breks pickling/unpickling because jsonpickle recognizes them as same objects but does not unpickle it correct....
-        window_construction=WindowConstruction(glass=ConstructionAsIDF(constr_idf, mat_idf), frame=win_frame, shade=win_shade),
-        roof_constr=ConstructionAsIDF(constr_idf, mat_idf),
-        groundfloor_constr=ConstructionAsIDF(constr_idf, mat_idf),
-        wall_constr=ConstructionAsIDF(constr_idf, mat_idf),
-        internal_ceiling_constr=ConstructionAsIDF(constr_idf, mat_idf),
+        window_construction=WindowConstruction(glass=window_glas_constr, frame=win_frame, shade=win_shade),
+        roof_constr=roof_constr,
+        groundfloor_constr=ground_constr,
+        wall_constr=wall_constr,
+        internal_ceiling_constr=internal_ceiling_constr,
         glazing_ratio=0.3,
         infiltration_rate=0.6 * ureg.ACH,
         infiltration_profile=ScheduleFixedValue(1 * ureg.dimensionless, cesarp.common.ScheduleTypeLimits.FRACTION()),
@@ -193,14 +227,13 @@ def res_folder():
     yield result_main_folder
     shutil.rmtree(result_main_folder)
 
-def test_model_serialize(sample_model_with_idfconstr, res_folder):
+def test_model_serialize(sample_model_with_constr, res_folder):
     save_path = res_folder / Path("sample_model.json")
-    cesarp.manager.json_pickling.save_to_disk(sample_model_with_idfconstr, save_path)
+    cesarp.manager.json_pickling.save_to_disk(sample_model_with_constr, save_path)
     parsed_model = cesarp.manager.json_pickling.read_from_disk(save_path)
     # just do some spot-checks
-    assert parsed_model.bldg_construction.infiltration_rate == sample_model_with_idfconstr.bldg_construction.infiltration_rate
-    assert parsed_model.site.site_ground_temperatures.deep == sample_model_with_idfconstr.site.site_ground_temperatures.deep
-    assert parsed_model.bldg_construction.window_constr.glass.idf_file_path == sample_model_with_idfconstr.bldg_construction.window_constr.glass.idf_file_path
+    assert parsed_model.bldg_construction.infiltration_rate == sample_model_with_constr.bldg_construction.infiltration_rate
+    assert parsed_model.site.site_ground_temperatures.deep == sample_model_with_constr.site.site_ground_temperatures.deep
     assert parsed_model.bldg_type == BldgType.MFH
     assert parsed_model.bldg_shape.windows
 
@@ -208,29 +241,30 @@ def test_model_serialize(sample_model_with_idfconstr, res_folder):
     my_idf_writer = CesarIDFWriter(res_folder / Path("sample_model.idf"), cesarp.common.init_unit_registry())
     my_idf_writer.write_bldg_model(parsed_model)
 
-def test_nested_df_serialize(sample_model_with_idfconstr, res_folder):
+def test_nested_df_serialize(sample_model_with_constr, res_folder):
     save_path = res_folder / Path("walls.json")
-    cesarp.manager.json_pickling.save_to_disk(sample_model_with_idfconstr.bldg_shape.walls, save_path)
+    cesarp.manager.json_pickling.save_to_disk(sample_model_with_constr.bldg_shape.walls, save_path)
     parsed_walls = cesarp.manager.json_pickling.read_from_disk(save_path)
     assert isinstance(parsed_walls[0][0], pd.DataFrame)
     assert all(parsed_walls[0][0].columns == ["x", "y", "z"])
 
-def test_pickle_BuildingConstruction(sample_model_with_idfconstr, res_folder):
+def test_pickle_BuildingConstruction(sample_model_with_constr, res_folder):
     """
     Note: jsonpickle can't handle a dictionary contianing the same object (in this case it was a WindowsPath or ConstructionAsIDF instance)
     """
     save_path = res_folder / Path("bldg_constr.json")
-    cesarp.manager.json_pickling.save_to_disk(sample_model_with_idfconstr.bldg_construction, save_path)
+    cesarp.manager.json_pickling.save_to_disk(sample_model_with_constr.bldg_construction, save_path)
     parsed_constructions = cesarp.manager.json_pickling.read_from_disk(save_path)
     assert isinstance(parsed_constructions.window_constr, WindowConstruction)
-    assert isinstance(parsed_constructions.roof_constr, ConstructionAsIDF)
+    # TODO improve testing
+    assert isinstance(parsed_constructions.roof_constr, Construction)
 
-def test_pickle_neighbour_construction(sample_model_with_idfconstr, res_folder):
+def test_pickle_neighbour_construction(sample_model_with_constr, res_folder):
     """
     Note: jsonpickle can't handle a dictionary contianing the same object (in this case it was a WindowsPath or ConstructionAsIDF instance)
     """
     save_path = res_folder / Path("neigh_constr.json")
-    cesarp.manager.json_pickling.save_to_disk(sample_model_with_idfconstr.neighbours_construction_props, save_path)
+    cesarp.manager.json_pickling.save_to_disk(sample_model_with_constr.neighbours_construction_props, save_path)
     parsed_constructions = cesarp.manager.json_pickling.read_from_disk(save_path)
     assert isinstance(parsed_constructions[BuildingElement.WALL.name], ShadingObjectConstruction)
     assert isinstance(parsed_constructions[BuildingElement.ROOF.name], ShadingObjectConstruction)
@@ -244,9 +278,9 @@ def test_enum_dict_keys(res_folder):
     assert loaded_dummy.neighbour_bldg_elems[BuildingElement.WALL.name]
 
 
-def test_pickle_operation(sample_model_with_idfconstr, res_folder):
+def test_pickle_operation(sample_model_with_constr, res_folder):
     save_path = res_folder / Path("bldg_op_file.json")
-    bldg_op = sample_model_with_idfconstr.bldg_operation_mapping.get_operation_for_floor(0)
+    bldg_op = sample_model_with_constr.bldg_operation_mapping.get_operation_for_floor(0)
     ureg = cesarp.common.init_unit_registry()
 
     cesarp.manager.json_pickling.save_to_disk(bldg_op, save_path)

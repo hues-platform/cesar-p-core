@@ -1,9 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0206,			!-Name	
-   Gipsum-Render_1948_0.0150	,			!- Outside Layer
-   Light Wood-Board Insulation_1948_0.0250	,			!- Layer 2
-   Reinforced Concrete_1948_0.1400	,			!- Layer 3
-   Mineral Wool Board_1948_0.0150	,			!- Layer 4
-   Asphalt_1948_0.0300	,			!- Layer 5
-   Parquet_1948_0.0200	;			!- Layer 6

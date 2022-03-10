@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0307,			!-Name	
-   Aparent Brick(Klinker)_1978_0.1150	,			!- Outside Layer
-   General Cavity Vent_1978_0.0700	,			!- Layer 2
-   Cellular concrete Blocks_1978_0.2400	,			!- Layer 3
-   Inside Render_1978_0.0050	;			!- Layer 4

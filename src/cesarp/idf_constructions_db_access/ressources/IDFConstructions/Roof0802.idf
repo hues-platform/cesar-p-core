@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0802,			!-Name	
-   Bitumen Layer_2014_0.0080	,			!- Outside Layer
-   Rockwool_2014_0.2200	,			!- Layer 2
-   Vapour Barrier_2014_0.0040	,			!- Layer 3
-   Concrete_2014_0.1800	,			!- Layer 4
-   Inside Render_2014_0.0100	;			!- Layer 5

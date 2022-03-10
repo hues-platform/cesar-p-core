@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0202,			!-Name	
-   Gipsum-Render_1948_0.0150	,			!- Outside Layer
-   Hollow-Elements Slab_1948_0.2400	,			!- Layer 2
-   Mineral Wool Board_1948_0.0100	,			!- Layer 3
-   Light Wood-Board Insulation_1948_0.0250	,			!- Layer 4
-   Parquet_1948_0.0240	;			!- Layer 5

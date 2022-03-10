@@ -1,6 +1,0 @@
- !-   ===========  WINDOW CONSTRUCTION ===========	
-Construction,	
-   Window0503,			!-Name	
-   EurofloatTroeschGlass_2001_0.0050	,			!- Outside Layer
-   Argon_2001_0.0120	,			!- Layer 2
-   EN2PlusTroeschGlass_2001_0.0050	;			!- Layer 3

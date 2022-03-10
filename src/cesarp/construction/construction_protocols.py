@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -27,7 +27,6 @@ from cesarp.common.ScheduleFile import ScheduleFile
 from cesarp.common.ScheduleFixedValue import ScheduleFixedValue
 from cesarp.model.WindowConstruction import WindowConstruction, WindowGlassConstruction
 from cesarp.model.ShadingObjectConstruction import ShadingObjectConstruction
-from cesarp.idf_constructions_db_access.ConstructionAsIDF import ConstructionAsIDF
 
 
 class ArchetypicalBuildingConstruction(Protocol):
@@ -37,13 +36,13 @@ class ArchetypicalBuildingConstruction(Protocol):
     def get_window_construction(self) -> WindowConstruction:
         ...
 
-    def get_roof_construction(self) -> Union[Construction, ConstructionAsIDF]:
+    def get_roof_construction(self) -> Construction:
         ...
 
-    def get_groundfloor_construction(self) -> Union[Construction, ConstructionAsIDF]:
+    def get_groundfloor_construction(self) -> Construction:
         ...
 
-    def get_wall_construction(self) -> Union[Construction, ConstructionAsIDF]:
+    def get_wall_construction(self) -> Construction:
         ...
 
     def get_glazing_ratio(self) -> pint.Quantity:
@@ -55,7 +54,7 @@ class ArchetypicalBuildingConstruction(Protocol):
     def get_infiltration_profile(self) -> Union[ScheduleFile, ScheduleFixedValue]:
         ...
 
-    def get_internal_ceiling_construction(self) -> Union[Construction, ConstructionAsIDF]:
+    def get_internal_ceiling_construction(self) -> Construction:
         ...
 
     def get_installation_characteristics(self) -> InstallationsCharacteristics:
@@ -70,5 +69,5 @@ class ArchetypicalConstructionFactoryProtocol(Protocol):
 class NeighbouringConstructionFactoryProtocol(Protocol):
     "where key of mapping should be name of cesarp.common.BuildingElement Enum member"
 
-    def get_neighbours_construction_props(self, window_glass_construction: Union[WindowGlassConstruction, ConstructionAsIDF]) -> Mapping[str, ShadingObjectConstruction]:
+    def get_neighbours_construction_props(self, window_glass_construction: WindowGlassConstruction) -> Mapping[str, ShadingObjectConstruction]:
         ...

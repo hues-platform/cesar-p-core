@@ -1,9 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0901,			!-Name	
-   Roofing Tiles_2015_0.0700	,			!- Outside Layer
-   General Cavity Vent_2015_0.0300	,			!- Layer 2
-   Bitumen Layer_2015_0.0080	,			!- Layer 3
-   Flumroc Plates_2015_0.2800	,			!- Layer 4
-   Vapour Barrier_2015_0.0040	,			!- Layer 5
-   Massive Spruce_2015_0.0240	;			!- Layer 6

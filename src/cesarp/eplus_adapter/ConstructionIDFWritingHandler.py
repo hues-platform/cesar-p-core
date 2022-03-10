@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -28,7 +28,6 @@ from cesarp.model.BuildingElement import BuildingElement
 from cesarp.model.Construction import Construction
 from cesarp.model.WindowConstruction import WindowGlassConstruction
 from cesarp.model.ShadingObjectConstruction import ShadingObjectConstruction
-from cesarp.idf_constructions_db_access.ConstructionAsIDF import ConstructionAsIDF
 from cesarp.model.BuildingConstruction import BuildingConstruction
 from cesarp.eplus_adapter import idf_writer_construction
 
@@ -52,15 +51,6 @@ class ConstructionIDFWritingHandler:
         self._shading_surfaces_construction = shading_surfaces_construction
         self.__constr_idf_obj_names_cache: Dict[str, str] = dict()
         self.__win_idf_obj_names_cache: Dict[str, str] = dict()
-        self.__partial_idf_files_used: List[str] = []
-
-    def get_partial_idf_files(self):
-        return self.unique_elements_of_list(self.__partial_idf_files_used)
-
-    def add_idf_construction(self, constr_idf_obj: ConstructionAsIDF):
-        self.__partial_idf_files_used.append(constr_idf_obj.idf_file_path)
-        self.__partial_idf_files_used.append(constr_idf_obj.materials_idf_file_path)
-        return constr_idf_obj.get_idf_obj_name()
 
     def add_construction(self, idf: IDF, bldg_elem: BuildingElement) -> str:
         """
@@ -71,9 +61,7 @@ class ConstructionIDFWritingHandler:
         """
         assert bldg_elem != BuildingElement.WINDOW, "please use add_window_frame/glass_construction() for BuildingElement WINDOW instead of using add_construction()"
         if bldg_elem == BuildingElement.INTERNAL_FLOOR:
-            construction: Union[WindowGlassConstruction, ConstructionAsIDF, Construction] = self._main_building_construction.get_construction_for_bldg_elem(
-                BuildingElement.INTERNAL_CEILING
-            )
+            construction: Union[WindowGlassConstruction, Construction] = self._main_building_construction.get_construction_for_bldg_elem(BuildingElement.INTERNAL_CEILING)
             if isinstance(construction, Construction):
                 construction = copy.deepcopy(construction)
                 construction.name = f"{construction.name}_mirrored"
@@ -84,8 +72,6 @@ class ConstructionIDFWritingHandler:
             return self.__constr_idf_obj_names_cache[construction.name]
         if isinstance(construction, Construction):
             idf_obj_name = idf_writer_construction.add_detailed_construction(idf, construction, self.unit_reg)
-        elif isinstance(construction, ConstructionAsIDF):
-            idf_obj_name = self.add_idf_construction(construction)
         else:
             raise Exception(f"{__name__} cannot handle construction of tpye {type(construction)} used for building element {bldg_elem}")
 
@@ -121,20 +107,13 @@ class ConstructionIDFWritingHandler:
         assert bldg_elem in [BuildingElement.ROOF, BuildingElement.WALL], f"only ROOF and WALL supported as shading surfaces, but {bldg_elem.name} was requested"
         shading_constr = self._shading_surfaces_construction[bldg_elem.name]
         glass_constr = shading_constr.window_glass_construction
-        if isinstance(glass_constr, ConstructionAsIDF):
-            glass_construction_idf_obj_name = self.add_idf_construction(glass_constr)
-        else:
-            glass_construction_idf_obj_name = self.__add_specific_window_glass_construction(idf, glass_constr, ureg=self.unit_reg)
+        glass_construction_idf_obj_name = self.__add_specific_window_glass_construction(idf, glass_constr, ureg=self.unit_reg)
         return idf_writer_construction.add_shading_surface_construction(idf, shading_constr, glass_construction_idf_obj_name, self.unit_reg)
 
-    def __add_specific_window_glass_construction(self, idf: IDF, win_glass_constr: Union[ConstructionAsIDF, WindowGlassConstruction], ureg: pint.UnitRegistry) -> str:
+    def __add_specific_window_glass_construction(self, idf: IDF, win_glass_constr: WindowGlassConstruction, ureg: pint.UnitRegistry) -> str:
         if win_glass_constr.name in self.__win_idf_obj_names_cache:
             return self.__win_idf_obj_names_cache[win_glass_constr.name]
-
-        if isinstance(win_glass_constr, ConstructionAsIDF):
-            return self.add_idf_construction(win_glass_constr)
-        else:
-            return idf_writer_construction.add_win_glass_construction(idf, win_glass_constr, ureg)
+        return idf_writer_construction.add_win_glass_construction(idf, win_glass_constr, ureg)
 
     @staticmethod
     def unique_elements_of_list(orig_list: List[Any]):

@@ -1,6 +1,0 @@
- !-   ===========  WINDOW CONSTRUCTION ===========	
-Construction,	
-   Window0302,			!-Name	
-   Standard Float Glass_1978_0.0050	,			!- Outside Layer
-   Air_1978_0.0100	,			!- Layer 2
-   Standard Float Glass_1978_0.0050	;			!- Layer 3

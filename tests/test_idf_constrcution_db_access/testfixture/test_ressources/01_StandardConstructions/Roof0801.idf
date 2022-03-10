@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0801,			!-Name	
-   Bitumen Layer_2014_0.0080	,			!- Outside Layer
-   EPS_2014_0.1900	,			!- Layer 2
-   Vapour Barrier_2014_0.0040	,			!- Layer 3
-   Massive Spruce_2014_0.0240	;			!- Layer 4

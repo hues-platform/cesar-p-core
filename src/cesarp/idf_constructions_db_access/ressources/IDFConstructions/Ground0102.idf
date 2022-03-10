@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0102,			!-Name	
-   Gipsum Render_1918_0.0150	,			!- Outside Layer
-   Reinforced Concrete_1918_0.1600	,			!- Layer 2
-   Peat-Fiber-Boards_1918_0.0300	,			!- Layer 3
-   Sand_1918_0.0200	,			!- Layer 4
-   Wood Planking_1918_0.0250	;			!- Layer 5

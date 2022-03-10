@@ -19,23 +19,30 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
+from typing import Dict
 import os
+import logging
+from pathlib import Path
 from cesarp.model.Site import Site
 from cesarp.site.SiteGroundTemperatureFactory import SiteGroundTemperatureFactory
 import cesarp.common
 from cesarp.site import _default_config_file
 
 
-class SingleSiteFactory:
-    def __init__(self, weather_file_path, unit_reg, custom_config={}):
+class SitePerBuildingSpecificWeatherFile:
+    def __init__(self, bldg_to_weather_file_mapping: Dict[int, str], weather_files_folder_path, unit_reg, custom_config={}):
+        """
+        :param bldg_to_weather_file_mapping: Dict mapping building fid to a weather file name
+        """
+        self.bldg_to_weather_file_mapping = bldg_to_weather_file_mapping
+        self.weather_files_folder_path = weather_files_folder_path
+        self.ground_temps = SiteGroundTemperatureFactory(unit_reg, custom_config).get_ground_temperatures()
         cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
-        if not os.path.isfile(weather_file_path):
-            raise Exception(f"{weather_file_path} does not exist. please provide an existing file when initializing SingleSiteFactory")
-        self.the_site = Site(
-            weather_file_path,
-            SiteGroundTemperatureFactory(unit_reg, custom_config).get_ground_temperatures(),
-            cfg["SIMULATION_YEAR"],
-        )
+        self.simulation_year = cfg["SIMULATION_YEAR"]
+        self._logger = logging.getLogger(__name__)
 
     def get_site(self, bldg_fid):
-        return self.the_site
+        weather_file_path = str(self.weather_files_folder_path / Path(self.bldg_to_weather_file_mapping[bldg_fid]))
+        if not os.path.exists(weather_file_path):
+            raise FileNotFoundError(f"{weather_file_path} does not exist. please provide an existing file for bldg_fid {bldg_fid} in the WEATHER_FILE_PER_BLDG_FILE")
+        return Site(weather_file_path, self.ground_temps, self.simulation_year)

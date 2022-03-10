@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0602,			!-Name	
-   Outside Render_2006_0.0050	,			!- Outside Layer
-   Rockwool_2006_0.1500	,			!- Layer 2
-   Brick_2006_0.1250	,			!- Layer 3
-   Inside Render_2006_0.0100	;			!- Layer 4

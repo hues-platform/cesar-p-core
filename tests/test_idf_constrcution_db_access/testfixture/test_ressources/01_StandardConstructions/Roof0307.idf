@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0307,			!-Name	
-   Bitumen Layer_1978_0.0200	,			!- Outside Layer
-   Foam Glass_1978_0.0400	,			!- Layer 2
-   Bitumen Layer_1978_0.0050	,			!- Layer 3
-   Reinforced Concrete_1978_0.1600	,			!- Layer 4
-   Gipsum-Render_1978_0.0150	;			!- Layer 5

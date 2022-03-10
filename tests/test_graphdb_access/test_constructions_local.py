@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -157,9 +157,9 @@ def test_construction_factory():
     custom_config = {"GRAPHDB_ACCESS": {"ARCHETYPES": {"1948_SFH_ARCHETYPE": {"DEFAULT_CONSTRUCTION_SPECIFIC": {
         "ACTIVE": False}}}}}
 
-    factory = GraphDBArchetypicalConstructionFactory({1:2001, 2:1950, 3:2018, 4:2017},
-                                                     {fid: EnergySource.DHW_OTHER for fid in range(1,5)},
-                                                     {fid: EnergySource.HEATING_OTHER for fid in range(1, 5)},
+    factory = GraphDBArchetypicalConstructionFactory({1:2001, 2:1950, 3:2018, 4:2017, 5:2019},
+                                                     {1:EnergySource.DHW_OTHER, 2:EnergySource.DHW_OTHER, 3:EnergySource.DHW_OTHER, 4:EnergySource.DHW_OTHER, 5:EnergySource.ELECTRICITY},
+                                                     {fid: EnergySource.HEATING_OTHER for fid in range(1, 6)},
                                                      local_reader,
                                                      ureg,
                                                      custom_config)
@@ -176,6 +176,8 @@ def test_construction_factory():
     assert win_constr.glass.short_name == "Window1978_StdAirIns_Double"
     assert win_constr.shade.short_name == "Shade0101"
     assert factory.get_archetype_for(3) == factory.get_archetype_for(4)
+    assert factory.get_archetype_for(4) != factory.get_archetype_for(5)
+    assert factory.get_archetype_for(4).get_installation_characteristics() != factory.get_archetype_for(5).get_installation_characteristics()
 
 def test_LayerFunction_mapping(local_db_access):
     layer_function = pandas.DataFrame(columns=["Construction", "Layer", "Function", "Material", "Material "
@@ -208,3 +210,15 @@ def test_LayerFunction_mapping(local_db_access):
     wall = Construction("Test_Wall", [wall_layer], BuildingElement.WALL)
     wall = local_db_access.set_layer_functions(wall)
     assert wall.layers[0].function == LayerFunction.INSULATION_OUTSIDE
+
+def test_shading_material(local_db_access: BldgElementConstructionReader):
+    shading = local_db_access.get_window_shading_constr("http://uesl_data/sources/archetypes/1918_SFH_Archetype")
+    ureg = local_db_access.ureg
+    assert(shading.name == "Shade0101")
+    assert(shading.is_shading_available)
+    assert(type(shading.airflow_permeability) == float)
+    assert(shading.conductivity.u == ureg.W / ureg.m / ureg.K)
+    assert(shading.solar_reflectance.u == ureg.solar_reflectance)
+    assert(shading.thickness.u == ureg.m)
+    assert(shading.airflow_permeability == pytest.approx(0))
+    assert(shading.solar_transmittance.m == pytest.approx(0.31))

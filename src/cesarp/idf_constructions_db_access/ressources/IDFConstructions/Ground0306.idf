@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0306,			!-Name	
-   Wood Planking_1978_0.0240	,			!- Outside Layer
-   Mineral Wool Board_1978_0.0400	,			!- Layer 2
-   Subfloor_1978_0.0240	,			!- Layer 3
-   Parquet_1978_0.0230	;			!- Layer 4

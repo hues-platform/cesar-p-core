@@ -1,9 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0702,			!-Name	
-   Rockwool_2009_0.1000	,			!- Outside Layer
-   Concrete_2009_0.1800	,			!- Layer 2
-   EPS_2009_0.0200	,			!- Layer 3
-   Glasswool_2009_0.0200	,			!- Layer 4
-   Cement Screed_2009_0.0700	,			!- Layer 5
-   Parquet_2009_0.0240	;			!- Layer 6

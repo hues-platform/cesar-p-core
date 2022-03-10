@@ -1,5 +1,5 @@
 ##
-## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+## Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 ##
 ## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 ##
@@ -31,7 +31,6 @@ CONSTRUCTION:
     # source for constructional data such as materials;
     # Options
     # GRAPH_DB: data source local TTL graph data file or remote GraphDB. See configuration in cesarp.graphdb_access.
-    # IDF_FILES_DB: legacy option using pre-defined IDF snippets, does not support retrofitting, see package cesarp.idf_constructions_db_access
     CONSTRUCTION_DB: "GRAPH_DB"
     # parameters for window frame are the same for all the buildings. 
     # SOURCE: those parameters where constants in cesar matlab version / co2 and pen: KBOB 2014
@@ -65,21 +64,3 @@ CONSTRUCTION:
             diffuse_solar_reflectance_unglazed_part: 0.15 diffuse_solar_reflectance
             diffuse_visible_reflectance_unglazed_part: 0.1 diffuse_visible_reflectance
             glazing_ratio: 0 dimensionless
-    # only used in case CONSTRUCTION_DB is set to IDF_FILES_DB; otherwis internal ceiling/floor is queried from GraphDB
-    FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS:
-        name: "cesar_default_internal_ceiling"
-        layers:
-            layer1:
-                thickness: 0.1 m
-                material: "cast_concrete_dense"
-    # only used in case above construction FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS is used
-    MATERIALS:
-        cast_concrete_dense:
-            name: "cast_concrete_dense"
-            roughness: "Rough"
-            conductivity: 1.4 W/m/K
-            density: 2100 kg/m**3
-            specific_heat: 840 J/kg/K
-            thermal_absorptance: 0.9 thermal_absorptance
-            solar_absorptance: 0.6 solar_absorptance
-            visible_absorptance: 0.6 visible_absorptance

@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -221,7 +221,7 @@ class FileStorageHandler:
             sum_file_path,
             sum_outp_conf["CSV_SEPARATOR"],
             float_format=sum_outp_conf["CSV_FLOAT_FORMAT"],
-            separate_metadata=self._mgr_config["SEPARATE_METADATA"]
+            separate_metadata=self._mgr_config["SEPARATE_METADATA"],
         )
         self.logger.info(f"simulation summary file written to {sum_file_path}")
         return sum_file_path
@@ -234,7 +234,7 @@ class FileStorageHandler:
             {"DESCRIPTION": "The data listed here was used during creation of the building models for this site."},
             all_per_bldg_info_used,
             self.get_bldg_infos_used_filepath(),
-            separate_metadata=self._mgr_config["SEPARATE_METADATA"]
+            separate_metadata=self._mgr_config["SEPARATE_METADATA"],
         )
 
     def save_weather_file_mapping(self, weather_file_mapping: Dict[int, str]):

@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0301,			!-Name	
-   Outside Render_1978_0.0200	,			!- Outside Layer
-   Brick_1978_0.3000	,			!- Layer 2
-   Inside Render_1978_0.0150	;			!- Layer 3

@@ -1,9 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0306,			!-Name	
-   Bitumen Layer_1978_0.0200	,			!- Outside Layer
-   Foam Insulation_1978_0.0600	,			!- Layer 2
-   Vapour Barrier_1978_0.0050	,			!- Layer 3
-   Bitumen Layer_1978_0.0050	,			!- Layer 4
-   Reinforced Concrete_1978_0.1800	,			!- Layer 5
-   Gipsum-Render_1978_0.0150	;			!- Layer 6

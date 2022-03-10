@@ -1,6 +1,0 @@
- !-   ===========  WINDOW CONSTRUCTION ===========	
-Construction,	
-   Window0501,			!-Name	
-   SELEKTTroeschGlass_2001_0.0060	,			!- Outside Layer
-   Air_2001_0.0120	,			!- Layer 2
-   EN2PlusTroeschGlass_2001_0.0050	;			!- Layer 3

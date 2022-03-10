@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -24,4 +24,4 @@
 
 __author__ = """Urban Energy Systems Lab"""
 __email__ = "https://www.empa.ch/web/s313/team"
-__version__ = "2.0.1"
+__version__ = "2.2.0"

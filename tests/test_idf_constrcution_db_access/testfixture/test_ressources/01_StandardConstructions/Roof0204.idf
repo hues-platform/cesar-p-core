@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0204,			!-Name	
-   Bitumen Layer_1948_0.0200	,			!- Outside Layer
-   Celular Concrete_1948_0.1750	,			!- Layer 2
-   Gipsum-Render_1948_0.0050	;			!- Layer 3

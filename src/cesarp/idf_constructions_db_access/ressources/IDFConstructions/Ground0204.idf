@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0204,			!-Name	
-   Ribbed Slab_1948_0.2100	,			!- Outside Layer
-   Mineral Wool Board_1948_0.0100	,			!- Layer 2
-   Asphalt_1948_0.0240	,			!- Layer 3
-   Linoleum_1948_0.0025	;			!- Layer 4

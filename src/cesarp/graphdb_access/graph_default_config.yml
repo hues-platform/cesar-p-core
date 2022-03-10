@@ -1,5 +1,5 @@
 ##
-## Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+## Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 ##
 ## This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 ##
@@ -28,6 +28,7 @@ GRAPHDB_ACCESS:
   REMOTE:  # connect to a GraphDB server instance (remote server or on your local machine)
     ACTIVE: False
     SPARQL_ENDPOINT: "YOUR_GRAPHDB_ENDPOINT"  # GraphDB Endpoint URL, make sure to set the User and PW as environment variables (GRAPHDB_USER, GRAPHDB_PASSWORD) 
+    SAVE_DB_EXPORT: True
   # Lookup of retrofit construction for each building element. Regulation which was followed to define the retrofit construction
   # The retrofit construction linked to a construction with "ues:retrofitOf" must have "ues:targetRequirement" respectively "ues:minRequirement" respectively (if parameter "target_requirement" is False) 
   #set to the string value of the parameter "regulation"

@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0306,			!-Name	
-   Aparent Brick(Klinker)_1978_0.1150	,			!- Outside Layer
-   General Cavity Still_1978_0.0600	,			!- Layer 2
-   Brick_1978_0.1150	,			!- Layer 3
-   Inside Render_1978_0.0150	;			!- Layer 4

@@ -1,6 +1,0 @@
- !-   ===========  WINDOW CONSTRUCTION ===========	
-Construction,	
-   Window0404,			!-Name	
-   EurofloatTroeschGlass_1994_0.0050	,			!- Outside Layer
-   Xenon_1994_0.0140	,			!- Layer 2
-   EurofloatTroeschGlass_1994_0.0050	;			!- Layer 3

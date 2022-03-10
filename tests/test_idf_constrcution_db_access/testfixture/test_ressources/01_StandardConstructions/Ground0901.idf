@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0901,			!-Name	
-   Concrete_2015_0.1800	,			!- Outside Layer
-   PUR Insulation_2015_0.1600	,			!- Layer 2
-   Cement Screed_2015_0.0800	,			!- Layer 3
-   Linoleum_2015_0.0025	;			!- Layer 4

@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0902,			!-Name	
-   Wood Cover_2014_0.0240	,			!- Outside Layer
-   General Cavity Vent_2015_0.0300	,			!- Layer 2
-   BPF030_2015_0.2400	,			!- Layer 3
-   Brick_2015_0.1750	,			!- Layer 4
-   Inside Render_2015_0.0150	;			!- Layer 5

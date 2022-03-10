@@ -139,7 +139,7 @@ publish-pypi-public:
     TWINE_PASSWORD: ${PYPI_PASSWORD}
   script:
     - poetry build
-    - pip3 install twine 
+    - pip3 install twine
     - python3 -m twine upload dist/*
   artifacts:
     paths:

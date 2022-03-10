@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -245,5 +245,34 @@ get_archetype_year_range_by_uri = (
     <$$$> ues:constructionYearRange ?YearRange.
     OPTIONAL { ?YearRange ues:hasMinValue ?minValue. }
     OPTIONAL { ?YearRange ues:hasMaxValue ?maxValue. }
+}"""
+)
+
+get_window_shading_constr_by_uri = (
+    prefixes
+    + """
+    select ?name ?isShadingAvailable ?solarTransmittance ?solarReflectance ?visibleTransmittance ?visibleReflectance
+           ?infraredHemisphericalEmissivity ?infraredTransmittance ?conductivity ?thickness  ?shadeToGlassDistance
+           ?topOpeningMultiplier  ?bottomOpeningMultiplier ?leftsideOpeningMultiplier ?rightsideOpeningMultiplier
+           ?airflowPermeability
+    where {
+    <$$$> ues:hasWindowShadingMaterial  ?ShadingMaterial.
+    ?ShadingMaterial rdfs:label ?name.
+    ?ShadingMaterial ues:isShadingAvailable ?isShadingAvailable.
+    ?ShadingMaterial ues:solarTransmittance ?solarTransmittance.
+    ?ShadingMaterial ues:solarReflectance ?solarReflectance.
+    ?ShadingMaterial ues:visibleTransmittance ?visibleTransmittance.
+    ?ShadingMaterial ues:visibleReflectance ?visibleReflectance.
+    ?ShadingMaterial ues:infraredHemisphericalEmissivity ?infraredHemisphericalEmissivity.
+    ?ShadingMaterial ues:infraredTransmittance ?infraredTransmittance.
+    ?ShadingMaterial ues:conductivity ?conductivity.
+    ?ShadingMaterial ues:thickness ?thickness.
+    ?ShadingMaterial ues:shadeToGlassDistance ?shadeToGlassDistance.
+    ?ShadingMaterial ues:topOpeningMultiplier ?topOpeningMultiplier.
+    ?ShadingMaterial ues:bottomOpeningMultiplier ?bottomOpeningMultiplier.
+    ?ShadingMaterial ues:leftsideOpeningMultiplier ?leftsideOpeningMultiplier.
+    ?ShadingMaterial ues:rightsideOpeningMultiplier ?rightsideOpeningMultiplier.
+    ?ShadingMaterial ues:airflowPermeability ?airflowPermeability.
+
 }"""
 )

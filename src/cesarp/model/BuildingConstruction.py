@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -21,10 +21,9 @@
 #
 import logging
 import pint
-from typing import Union, Optional
+from typing import Optional
 from dataclasses import dataclass
 from cesarp.model.Construction import BuildingElement, Construction
-from cesarp.idf_constructions_db_access.ConstructionAsIDF import ConstructionAsIDF
 from cesarp.model.WindowConstruction import WindowConstruction
 from cesarp.model.EnergySource import EnergySource
 
@@ -62,10 +61,10 @@ class BuildingConstruction:
     def __init__(
         self,
         window_construction: WindowConstruction,
-        roof_constr: Union[ConstructionAsIDF, Construction],
-        groundfloor_constr: Union[ConstructionAsIDF, Construction],
-        wall_constr: Union[ConstructionAsIDF, Construction],
-        internal_ceiling_constr: Union[ConstructionAsIDF, Construction],
+        roof_constr: Construction,
+        groundfloor_constr: Construction,
+        wall_constr: Construction,
+        internal_ceiling_constr: Construction,
         glazing_ratio: pint.Quantity,
         infiltration_rate: pint.Quantity,
         infiltration_profile,  # any schedule class from cesarp.common
@@ -108,7 +107,7 @@ class BuildingConstruction:
         :return: None
         """
         assert (bldg_elem == BuildingElement.WINDOW and isinstance(construction, WindowConstruction)) or (
-            bldg_elem != BuildingElement.WINDOW and (isinstance(construction, ConstructionAsIDF) or isinstance(construction, Construction))
+            bldg_elem != BuildingElement.WINDOW and (isinstance(construction, Construction))
         ), f"please check type of passed construction object, {type(construction)} not ok for {bldg_elem}"
         self.__constr_elems[bldg_elem.name] = construction
 

@@ -1,9 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0309,			!-Name	
-   Bitumen Layer_1978_0.0200	,			!- Outside Layer
-   General Cavity Vent_1978_0.1800	,			!- Layer 2
-   Mineral Wool_1978_0.0400	,			!- Layer 3
-   Vapour Barrier_1978_0.0020	,			!- Layer 4
-   Wood Planking_1978_0.0240	,			!- Layer 5
-   Gipsum Boards_1978_0.0100	;			!- Layer 6

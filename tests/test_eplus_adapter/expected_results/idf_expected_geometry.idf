@@ -3,6 +3,195 @@
 VERSION,
     9.5.0;                    !- Version Identifier
 
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L1,    !- Name
+    Rough,                    !- Roughness
+    0.015,                    !- Thickness
+    0.7,                      !- Conductivity
+    1600,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L2,    !- Name
+    Rough,                    !- Roughness
+    0.24,                     !- Thickness
+    0.83,                     !- Conductivity
+    500,                      !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L3,    !- Name
+    Rough,                    !- Roughness
+    0.01,                     !- Thickness
+    0.04,                     !- Conductivity
+    240,                      !- Density
+    760,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L4,    !- Name
+    Rough,                    !- Roughness
+    0.025,                    !- Thickness
+    0.09,                     !- Conductivity
+    750,                      !- Density
+    1300,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L5,    !- Name
+    Rough,                    !- Roughness
+    0.024,                    !- Thickness
+    0.2,                      !- Conductivity
+    800,                      !- Density
+    1300,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_L1,    !- Name
+    Rough,                    !- Roughness
+    0.1,                      !- Thickness
+    1.4,                      !- Conductivity
+    2100,                     !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L1,    !- Name
+    Rough,                    !- Roughness
+    0.115,                    !- Thickness
+    0.96,                     !- Conductivity
+    2000,                     !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L3,    !- Name
+    Rough,                    !- Roughness
+    0.115,                    !- Thickness
+    0.81,                     !- Conductivity
+    1500,                     !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L4,    !- Name
+    Rough,                    !- Roughness
+    0.015,                    !- Thickness
+    0.7,                      !- Conductivity
+    1100,                     !- Density
+    900,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Ro4_L1,    !- Name
+    Rough,                    !- Roughness
+    0.02,                     !- Thickness
+    0.17,                     !- Conductivity
+    1050,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.9,                      !- Solar Absorptance
+    0.9;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Ro4_L2,    !- Name
+    Rough,                    !- Roughness
+    0.175,                    !- Thickness
+    0.23,                     !- Conductivity
+    700,                      !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.8,                      !- Solar Absorptance
+    0.8;                      !- Visible Absorptance
+
+MATERIAL,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Ro4_L3,    !- Name
+    Rough,                    !- Roughness
+    0.005,                    !- Thickness
+    0.7,                      !- Conductivity
+    1600,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.6,                      !- Solar Absorptance
+    0.6;                      !- Visible Absorptance
+
+MATERIAL:AIRGAP,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L2,    !- Name
+    0.17500000000000002;      !- Thermal Resistance
+
+WINDOWMATERIAL:GLAZING,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L1,    !- Name
+    SpectralAverage,          !- Optical Data Type
+    ,                         !- Window Glass Spectral Data Set Name
+    0.006,                    !- Thickness
+    0.775,                    !- Solar Transmittance at Normal Incidence
+    0.071,                    !- Front Side Solar Reflectance at Normal Incidence
+    0.071,                    !- Back Side Solar Reflectance at Normal Incidence
+    0.881,                    !- Visible Transmittance at Normal Incidence
+    0.08,                     !- Front Side Visible Reflectance at Normal Incidence
+    0.08,                     !- Back Side Visible Reflectance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
+    0.84,                     !- Front Side Infrared Hemispherical Emissivity
+    0.84,                     !- Back Side Infrared Hemispherical Emissivity
+    0.9,                      !- Conductivity
+    1,                        !- Dirt Correction Factor for Solar and Visible Transmittance
+    No,                       !- Solar Diffusing
+    72000000000,              !- Youngs modulus
+    0.22;                     !- Poissons ratio
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/grounds/Ground1948_hollow_slab_medium,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L1,    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L2,    !- Layer 2
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L3,    !- Layer 3
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L4,    !- Layer 4
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L5;    !- Layer 5
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling,    !- Name
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_L1;    !- Outside Layer
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_mirrored,    !- Name
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_L1;    !- Outside Layer
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L1,    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L2,    !- Layer 2
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L3,    !- Layer 3
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wa7_L4;    !- Layer 4
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/roofs/Roof1948_cellular_concrete_medium,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Ro4_L1,    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Ro4_L2,    !- Layer 2
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Ro4_L3;    !- Layer 3
+
+CONSTRUCTION,
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Name
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L1;    !- Outside Layer
+
 GLOBALGEOMETRYRULES,
     LowerLeftCorner,          !- Starting Vertex Position
     CounterClockWise,         !- Vertex Entry Direction
@@ -43,7 +232,7 @@ ZONE,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor0_GroundFloor,    !- Name
     Floor,                    !- Surface Type
-    Ground0202,               !- Construction Name
+    http://uesl_data/sources/archetypes/grounds/Ground1948_hollow_slab_medium,    !- Construction Name
     ZoneFloor0,               !- Zone Name
     Ground,                   !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -67,7 +256,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor0_Wall_0,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor0,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -91,7 +280,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor0_Wall_1,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor0,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -115,7 +304,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor0_Wall_2,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor0,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -139,7 +328,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor0_Wall_3,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor0,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -163,7 +352,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor0_Ceiling,       !- Name
     Ceiling,                  !- Surface Type
-    Internal Ceiling,         !- Construction Name
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling,    !- Construction Name
     ZoneFloor0,               !- Zone Name
     Surface,                  !- Outside Boundary Condition
     ZoneFloor1_Floor,         !- Outside Boundary Condition Object
@@ -187,7 +376,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor1_Floor,         !- Name
     Floor,                    !- Surface Type
-    Internal Ceiling,         !- Construction Name
+    http://uesl_data/sources/archetypes/floors/cesar_default_internal_ceiling_mirrored,    !- Construction Name
     ZoneFloor1,               !- Zone Name
     Surface,                  !- Outside Boundary Condition
     ZoneFloor0_Ceiling,       !- Outside Boundary Condition Object
@@ -211,7 +400,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor1_Wall_0,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor1,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -235,7 +424,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor1_Wall_1,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor1,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -259,7 +448,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor1_Wall_2,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor1,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -283,7 +472,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor1_Wall_3,        !- Name
     Wall,                     !- Surface Type
-    Wall0207,                 !- Construction Name
+    http://uesl_data/sources/archetypes/walls/Wall1948_cavity_brick_medium,    !- Construction Name
     ZoneFloor1,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -307,7 +496,7 @@ BUILDINGSURFACE:DETAILED,
 BUILDINGSURFACE:DETAILED,
     ZoneFloor1_Roof,          !- Name
     Roof,                     !- Surface Type
-    Roof0204,                 !- Construction Name
+    http://uesl_data/sources/archetypes/roofs/Roof1948_cellular_concrete_medium,    !- Construction Name
     ZoneFloor1,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -331,7 +520,7 @@ BUILDINGSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor0_Wall_0_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor0_Wall_0,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
@@ -354,7 +543,7 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor0_Wall_1_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor0_Wall_1,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
@@ -377,7 +566,7 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor0_Wall_2_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor0_Wall_2,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
@@ -400,7 +589,7 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor0_Wall_3_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor0_Wall_3,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
@@ -423,7 +612,7 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor1_Wall_0_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor1_Wall_0,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
@@ -446,7 +635,7 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor1_Wall_1_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor1_Wall_1,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
@@ -469,7 +658,7 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor1_Wall_2_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor1_Wall_2,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
@@ -492,7 +681,7 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     ZoneFloor1_Wall_3_Win,    !- Name
     Window,                   !- Surface Type
-    Window0201,               !- Construction Name
+    http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Construction Name
     ZoneFloor1_Wall_3,        !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground

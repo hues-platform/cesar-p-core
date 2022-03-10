@@ -1,6 +1,0 @@
- !-   ===========  WINDOW CONSTRUCTION ===========	
-Construction,	
-   Window0403,			!-Name	
-   EurofloatTroeschGlass_1994_0.0050	,			!- Outside Layer
-   Krypton_1994_0.0120	,			!- Layer 2
-   EN2PlusTroeschGlass_1994_0.0050	;			!- Layer 3

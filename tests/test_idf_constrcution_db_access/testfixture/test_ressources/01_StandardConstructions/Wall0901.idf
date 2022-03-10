@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0901,			!-Name	
-   Outside Render_2015_0.0050	,			!- Outside Layer
-   Flumroc Plates_2015_0.0800	,			!- Layer 2
-   Wood Planking_2015_0.0160	,			!- Layer 3
-   Flumroc Plates_2015_0.1600	,			!- Layer 4
-   Wood Planking_2015_0.0180	;			!- Layer 5

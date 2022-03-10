@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0401,			!-Name	
-   Bitumen Layer_1994_0.0080	,			!- Outside Layer
-   Rockwool_1994_0.0600	,			!- Layer 2
-   Vapour Barrier_1994_0.0040	,			!- Layer 3
-   Reinforced Concrete_1994_0.1800	,			!- Layer 4
-   Inside Render_1994_0.0050	;			!- Layer 5

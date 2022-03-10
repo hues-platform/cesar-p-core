@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0501,			!-Name	
-   Outside Render_2001_0.0050	,			!- Outside Layer
-   EPS_2001_0.0900	,			!- Layer 2
-   Brick_2001_0.1250	,			!- Layer 3
-   Inside Render_2001_0.0100	;			!- Layer 4

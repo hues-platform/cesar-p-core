@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0303,			!-Name	
-   Outside Render_1978_0.0200	,			!- Outside Layer
-   Sand Limestone_1978_0.5100	,			!- Layer 2
-   Inside Render_1978_0.0150	;			!- Layer 3

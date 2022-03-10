@@ -1,8 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Wall0702,			!-Name	
-   Wood Cover_2009_0.0240	,			!- Outside Layer
-   General Cavity Vent_2009_0.0300	,			!- Layer 2
-   Rockwool_2009_0.1900	,			!- Layer 3
-   Inbetween Render_2009_0.0100	,			!- Layer 4
-   Sand Limestone_2009_0.1250	;			!- Layer 5

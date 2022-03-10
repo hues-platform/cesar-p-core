@@ -1,6 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0303,			!-Name	
-   Glass-Fiber-Board_1978_0.0400	,			!- Outside Layer
-   Light Wood-Board Insulation_1978_0.0250	,			!- Layer 2
-   Gipsum-Render_1978_0.0150	;			!- Layer 3

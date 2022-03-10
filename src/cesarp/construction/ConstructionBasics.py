@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -24,14 +24,9 @@ import pint
 
 import cesarp.common
 from cesarp.model.WindowConstruction import WindowFrameConstruction
-from cesarp.model.Construction import Construction
 from cesarp.model.BuildingConstruction import InstallationsCharacteristics, LightingCharacteristics
 from cesarp.construction import _default_config_file
-from cesarp.model.BuildingElement import BuildingElement
-from cesarp.model.OpaqueMaterial import OpaqueMaterial, OpaqueMaterialRoughness
-from cesarp.model.Layer import Layer
 from cesarp.model.EnergySource import EnergySource
-from cesarp.model.WindowConstruction import WindowShadingMaterial
 
 
 class ConstructionBasics:
@@ -67,88 +62,3 @@ class ConstructionBasics:
             e_carrier_dhw=e_carrier_dhw,
             e_carrier_heating=e_carrier_heating,
         )
-
-    def get_internal_ceiling_construction(self):
-        constr_props = self._cfg["FIXED_INTERNAL_CEILING_CONSTRUCTION_PARAMETERS"]
-        return self._get_internal_construction(constr_props, BuildingElement.INTERNAL_CEILING)
-
-    def _get_internal_construction(self, constr_props: Dict, bldg_element: BuildingElement):
-        layers = []
-        for layer in constr_props["layers"]:
-            material = self._get_internal_material(str(constr_props["layers"][layer]["material"]))
-            layers.append(Layer(name=layer, thickness=self.ureg(str(constr_props["layers"][layer]["thickness"])), material=material))
-        return Construction(name=constr_props["name"], layers=layers, bldg_element=bldg_element)
-
-    def _get_internal_material(self, material_name):
-        material_props = self._cfg["MATERIALS"][material_name]
-        return OpaqueMaterial(
-            name=material_name,
-            density=self.ureg(str(material_props["density"])),
-            roughness=OpaqueMaterialRoughness(str(material_props["roughness"])),
-            solar_absorptance=self.ureg(str(material_props["solar_absorptance"])),
-            specific_heat=self.ureg(str(material_props["specific_heat"])),
-            thermal_absorptance=self.ureg(str(material_props["thermal_absorptance"])),
-            conductivity=self.ureg(str(material_props["conductivity"])),
-            visible_absorptance=self.ureg(str(material_props["visible_absorptance"])),
-            co2_emission_per_kg=None,
-            non_renewable_primary_energy_per_kg=None,
-        )
-
-    def get_window_shading_constr(self, bldg_age: int) -> WindowShadingMaterial:
-        if bldg_age < 2010:
-            return WindowShadingMaterial(
-                True,
-                "Shade0101",
-                self.ureg("0.31 solar_transmittance"),
-                self.ureg("0.5 solar_reflectance"),
-                self.ureg("0.31 visible_transmittance"),
-                self.ureg("0.5 visible_reflectance"),
-                self.ureg("0.9 infrared_hemispherical_emissivity"),
-                self.ureg("0.0 infrared_transmittance"),
-                self.ureg("0.9 W/(m*K)"),
-                self.ureg("0.001 m"),
-                self.ureg("0.1 m"),
-                0,
-                0,
-                0,
-                0,
-                0,
-            )
-        elif bldg_age > 2010 and bldg_age < 2014:
-            return WindowShadingMaterial(
-                True,
-                "Shade0801",
-                self.ureg("0.28 solar_transmittance"),
-                self.ureg("0.6 solar_reflectance"),
-                self.ureg("0.28 visible_transmittance"),
-                self.ureg("0.6 visible_reflectance"),
-                self.ureg("0.9 infrared_hemispherical_emissivity"),
-                self.ureg("0.0 infrared_transmittance"),
-                self.ureg("0.9 W/(m*K)"),
-                self.ureg("0.001 m"),
-                self.ureg("0.1 m"),
-                0,
-                0,
-                0,
-                0,
-                0,
-            )
-        else:
-            return WindowShadingMaterial(
-                True,
-                "Shade0901",
-                self.ureg("0.2 solar_transmittance"),
-                self.ureg("0.7 solar_reflectance"),
-                self.ureg("0.2 visible_transmittance"),
-                self.ureg("0.7 visible_reflectance"),
-                self.ureg("0.9 infrared_hemispherical_emissivity"),
-                self.ureg("0.0 infrared_transmittance"),
-                self.ureg("0.9 W/(m*K)"),
-                self.ureg("0.001 m"),
-                self.ureg("0.1 m"),
-                0,
-                0,
-                0,
-                0,
-                0,
-            )

@@ -1,9 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Ground0902,			!-Name	
-   Glasswool_2015_0.2000	,			!- Outside Layer
-   Concrete_2015_0.1800	,			!- Layer 2
-   EPS_2015_0.0200	,			!- Layer 3
-   Glasswool_2015_0.0200	,			!- Layer 4
-   Cement Screed_2015_0.0700	,			!- Layer 5
-   Parquet_2015_0.0240	;			!- Layer 6

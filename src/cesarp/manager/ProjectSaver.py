@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -29,6 +29,7 @@ from zipfile import ZipFile
 import copy
 from importlib.metadata import version
 import sys
+import requests
 
 import cesarp.common.version_info
 from cesarp.manager.FileStorageHandler import FileStorageHandler
@@ -96,6 +97,7 @@ class ProjectSaver:
     RUNTIME_ENV_FOLDER = "runtime_environment"
     README_FILENAME = "README.md"
     MAIN_CONFIG_FILENAME = "main_config.yml"
+    CONSTRUCTION_DATA_FILENAME = "construction_and_retrofit_data.ttl"
 
     def __init__(
         self,
@@ -168,10 +170,8 @@ class ProjectSaver:
             self.add_cesarp_output_files(thezip, include_bldg_models, include_idfs, include_eplus_output)
             add_file_to_zip(thezip, self._main_script_path)
             add_file_to_zip(thezip, self.create_readme(include_bldg_models, include_idfs, include_eplus_output))
-        if self.is_graph_db_remote_source():
-            self._logger.warning(
-                "ATTENTION: ZIP exported, but results might not be reproducible because remote GraphDB instance was used to retrieve construction and retrofit data, which might change over time!"
-            )
+            self.add_construction_data_ttl_file(thezip)
+
         return str(self._zip_file_path)
 
     def create_readme(self, include_bldg_models, include_idfs, include_eplus_output):
@@ -224,11 +224,14 @@ class ProjectSaver:
     def add_building_containers(self, the_zip, cesarp_out_dir):
         zip_cont_folder_path = cesarp_out_dir / Path(os.path.basename(self._file_storage_handler.container_save_path))
         for fid, bldg_cont in self._bldg_containers.items():
-            bldg_cont_rel_pathes: BuildingContainer = bldg_cont.shallow_copy()
-            bldg_cont_rel_pathes.set_bldg_model(self._convert_bldg_model_to_rel_pathes(the_zip, bldg_cont_rel_pathes.get_bldg_model()))
-            tmp_bldg_cont_file = self._file_storage_handler.save_single_bldg_container(fid, bldg_cont_rel_pathes, self._temp_dir)
-            add_file_to_zip(the_zip, tmp_bldg_cont_file, zip_cont_folder_path)
-            os.remove(tmp_bldg_cont_file)
+            try:
+                bldg_cont_rel_pathes: BuildingContainer = bldg_cont.shallow_copy()
+                bldg_cont_rel_pathes.set_bldg_model(self._convert_bldg_model_to_rel_pathes(the_zip, bldg_cont_rel_pathes.get_bldg_model()))
+                tmp_bldg_cont_file = self._file_storage_handler.save_single_bldg_container(fid, bldg_cont_rel_pathes, self._temp_dir)
+                add_file_to_zip(the_zip, tmp_bldg_cont_file, zip_cont_folder_path)
+                os.remove(tmp_bldg_cont_file)
+            except KeyError:
+                self._logger.warning(f"Building Container for fid {fid} had an error and was therefore not included in the zip file.")
 
     def _convert_bldg_model_to_rel_pathes(self, the_zip, bldg_model: BuildingModel):
         """
@@ -282,13 +285,37 @@ class ProjectSaver:
         save_config_to_file(zip_relative_config, zip_cnf_tmp_path)
         add_file_to_zip(the_zip, zip_cnf_tmp_path)
 
-    def is_graph_db_remote_source(self) -> bool:
-        """
-        :return: True if a data base ressource is configured for construction and retrofit data (real db, if TTL file as graph db source is configured method returns False)
-        :rtype: bool
-        """
+    def add_construction_data_ttl_file(self, the_zip: ZipFile):
         graph_cfg = cesarp.common.load_config_for_package(graph_db_access_default_config, "cesarp.graphdb_access", self._main_config)
-        return graph_cfg["REMOTE"]["ACTIVE"]
+        if graph_cfg["REMOTE"]["ACTIVE"] and graph_cfg["REMOTE"]["SAVE_DB_EXPORT"]:
+            try:
+                user = os.environ["GRAPHDB_USER"]
+                passwd = os.environ["GRAPHDB_PASSWORD"]
+            except KeyError:
+                logging.error("please set username and passwort as environment variables GRAPHDB_USER and GRAPHDB_PASSWORD")
+
+            query = graph_cfg["REMOTE"]["SPARQL_ENDPOINT"] + "/statements?infer=False"
+            headers = {
+                "Accept": "text/turtle",
+                "cache-control": "no-store",
+                "connection": "keep-alive",
+                "content-disposition": "attachment; filename=statements.ttl",
+                "content-encoding": "gzip",
+                "content-language": "en-US",
+                "content-type": "text/turtle;charset=UTF-8",
+                "keep-alive": "timeout=60",
+                "server": "GraphDB-Free/9.3.0 RDF4J/3.2.0",
+                "transfer-encoding": "chunked",
+                "vary": "Accept",
+                "x-content-type-options": "nosniff",
+                "x-frame-options": "SAMEORIGIN",
+                "x-xss-protection": "1; mode=block",
+            }
+            ttl_tmp_path = self._temp_dir / Path(self.CONSTRUCTION_DATA_FILENAME)
+            r = requests.get(url=query, headers=headers, auth=(user, passwd))
+            with open(ttl_tmp_path, "wb") as fd:
+                fd.write(r.content)
+            add_file_to_zip(the_zip, ttl_tmp_path, self.PROJ_RESSOURCES_FOLDER, self.CONSTRUCTION_DATA_FILENAME)
 
     def add_files_from_config(self, the_zip: ZipFile, config: Dict[str, Any], path_in_zip: str):
         for k, val in config.items():

@@ -1,7 +1,0 @@
- !-   ===========  CONSTRUCTIONS ===========	
-Construction,	
-   Roof0308,			!-Name	
-   Bitumen Layer_1978_0.0050	,			!- Outside Layer
-   Foam Insulation_1978_0.0400	,			!- Layer 2
-   Vapour Barrier_1978_0.0050	,			!- Layer 3
-   Wood Planking_1978_0.0240	;			!- Layer 4

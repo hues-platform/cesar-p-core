@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2021, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -138,16 +138,7 @@ class SIA2024ParametersFactory:
         sia2024params = SIA2024Parameters.emptyObj()
         sia2024params.data_descr = self.data_descr
         sia2024params.name = name
-        self.__add_building_operation(
-            sia2024params,
-            area_pp_gen,
-            bldg_type,
-            monthly_variation,
-            nighttime_pattern_profile,
-            occ_prof_gen,
-            variability_active,
-            profile_start_date
-        )
+        self.__add_building_operation(sia2024params, area_pp_gen, bldg_type, monthly_variation, nighttime_pattern_profile, occ_prof_gen, variability_active, profile_start_date)
         self.__add_hvac(sia2024params, bldg_type, nighttime_pattern_profile, occ_prof_gen, area_pp_gen, variability_active)
         self.__add_infiltration(sia2024params, bldg_type, variability_active)
         self.profile_files_nr_counter += 1
@@ -164,15 +155,7 @@ class SIA2024ParametersFactory:
         return self.sia_base_data.get_bldg_type(bldg_type_key).is_residential
 
     def __add_building_operation(
-        self,
-        sia2024params,
-        area_pp_gen,
-        bldg_type,
-        monthly_variation,
-        nighttime_pattern_profile,
-        occ_prof_gen,
-        variability_active: bool,
-        profile_start_date
+        self, sia2024params, area_pp_gen, bldg_type, monthly_variation, nighttime_pattern_profile, occ_prof_gen, variability_active: bool, profile_start_date
     ):
         activity_gen = ActivityHeatGainCalculator(bldg_type, self.sia_base_data, self.ureg)  # activity has no variability option
 
