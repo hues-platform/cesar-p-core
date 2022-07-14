@@ -26,7 +26,7 @@ from cesarp.model.SiteGroundTemperatures import SiteGroundTemperatures
 
 
 class SiteGroundTemperatureFactory:
-    def __init__(self, ureg, custom_config={}):
+    def __init__(self, ureg, custom_config=None):
         """
         Create an instance of SiteGroundTemperatureFactory
 

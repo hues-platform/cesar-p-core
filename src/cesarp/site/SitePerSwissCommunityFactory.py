@@ -33,10 +33,12 @@ class WeahterChooserProtocol(Protocol):
 
 
 class SitePerSwissCommunityFactory:
-    def __init__(self, bldg_to_community_id_mapping: Dict[int, int], unit_reg, custom_config={}):
+    def __init__(self, bldg_to_community_id_mapping: Dict[int, int], unit_reg, custom_config=None):
         """
         :param bldg_to_community_id_mapping: Dict mapping building fid to a community name
         """
+        if custom_config is None:
+            custom_config = {}
         self.bldg_to_community_mapping = bldg_to_community_id_mapping
         self.weather_file_chooser = SwissCommunityWeatherChooser(custom_config)
         self.ground_temps = SiteGroundTemperatureFactory(unit_reg, custom_config).get_ground_temperatures()

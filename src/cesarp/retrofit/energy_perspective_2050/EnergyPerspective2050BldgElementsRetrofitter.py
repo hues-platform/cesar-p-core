@@ -88,7 +88,7 @@ class EnergyPerspective2050BldgElementsRetrofitter:
     year_of_construction in the range of 2001-2005, the assigned retrofit rates for age class 2001-2005 are ignored.
     """
 
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         """
         :param ureg:
         :param year_of_retrofit: must match one of cesarp.energy_strategy config "TIME_PERIODS"

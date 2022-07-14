@@ -109,6 +109,10 @@ def _add_shading_control_EP8(idf: IDF, shade_ctrl_idf_name: str, shade_mat_idf_n
         window_shading_control.Shading_Control_Type = shading_ctrl_model.shading_control_type
         window_shading_control.Setpoint = shading_ctrl_model.radiation_min_setpoint.to("W/m2").m
         window_shading_control.Shading_Device_Material_Name = shade_mat_idf_name
+        # energy plus complains about undefined Slat_Angle_Schedule_Name if not explizit set here (eppy does not put it by default)
+        # Type_of_Slat_Angle_Control_for_Blinds and Slat_Angle_Schedule_Name are set to their default values
+        window_shading_control.Type_of_Slat_Angle_Control_for_Blinds = "FixedSlatAngle"
+        window_shading_control.Slat_Angle_Schedule_Name = ""
     return shade_ctrl_idf_name
 
 

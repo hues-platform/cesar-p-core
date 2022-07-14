@@ -48,7 +48,7 @@ EPLUS_LOG_FILE_NAME = "eplusout.err"
 EPLUS_MAIN_RES_FILE_NAME = "eplusout.eso"
 
 
-def get_eplus_version(custom_config: Dict[str, Any] = {}, ep_config: Optional[Dict[str, Any]] = None):
+def get_eplus_version(custom_config: Optional[Dict[str, Any]] = None, ep_config: Optional[Dict[str, Any]] = None):
     """
     Returns energy plus version
     When called from top level, e.g. to log used eplus version, make sure to pass custom/main config which was used for simulation run (important if EnergyPlus version is set in that custom configuration, which can always be the case...)
@@ -73,7 +73,7 @@ def get_eplus_version(custom_config: Dict[str, Any] = {}, ep_config: Optional[Di
     return eplus_ver
 
 
-def get_idd_path(custom_config: Dict[str, Any] = {}, ep_config: Optional[Dict[str, Any]] = None):
+def get_idd_path(custom_config: Optional[Dict[str, Any]] = None, ep_config: Optional[Dict[str, Any]] = None):
     """
     Get Eplus IDD path.
 
@@ -113,7 +113,7 @@ def get_idd_path(custom_config: Dict[str, Any] = {}, ep_config: Optional[Dict[st
     return idd_path
 
 
-def get_eplus_executable(custom_config: Dict[str, Any] = {}, ep_config: Optional[Dict[str, Any]] = None) -> str:
+def get_eplus_executable(custom_config: Optional[Dict[str, Any]] = None, ep_config: Optional[Dict[str, Any]] = None) -> str:
     """
     Get the EnergyPlus install directory and executable path.
 
@@ -146,7 +146,7 @@ def get_eplus_executable(custom_config: Dict[str, Any] = {}, ep_config: Optional
     return eplus_exe
 
 
-def run_single(idffile, epwfile, output_path, ep_config: Optional[Dict[str, Any]] = None, custom_config: Dict[str, Any] = {}):
+def run_single(idffile, epwfile, output_path, ep_config: Optional[Dict[str, Any]] = None, custom_config: Optional[Dict[str, Any]] = None):
     """
     :param idffile: IDF file to run simulation for (full path)
     :param epwfile: Weather file to use for simulation (full path)
@@ -167,7 +167,7 @@ def run_batch(
     epw_files: Dict[int, Any],
     output_folders: Dict[int, Any],
     nr_of_parallel_workers,
-    custom_config: Dict[str, Any] = {},
+    custom_config: Optional[Dict[str, Any]] = None,
 ):
     ep_config = get_config(custom_config)
     logger = logging.getLogger(__name__)
@@ -189,7 +189,7 @@ def run_batch(
     __run_eplus_in_pool(simulation_list, nr_of_parallel_workers)
 
 
-def get_config(custom_config: Dict[str, Any] = {}):
+def get_config(custom_config: Optional[Dict[str, Any]] = None):
     return config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
 
 

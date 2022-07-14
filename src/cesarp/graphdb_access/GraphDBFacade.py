@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import pint
 from operator import xor
 
@@ -39,8 +39,10 @@ class GraphDBFacade:
     You can use a custom factory to create the constructional archetypes by setting the configuration parameter ARCHETYPE_CONSTRUCTION_FACTORY_CLASS.
     """
 
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         self._ureg = ureg
+        if custom_config is None:
+            custom_config = {}  # to be save as we initialize unkown constr factory class
         self._custom_config = custom_config
         self._cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         cfg_local_active = self._cfg["LOCAL"]["ACTIVE"]

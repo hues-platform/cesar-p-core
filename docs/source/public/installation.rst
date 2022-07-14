@@ -4,14 +4,32 @@ Installation
 CESAR-P has currently no executable, so here is the installation guide to install the cesar-p-core library.
 See :ref:`usage/set-up-simulation:Set up simulation` on instructions how to use the library.
 
-Steps to install cesar-p-core library:
+Quick steps to install cesar-p-core library:
 
-1. EnergyPlus
-2. Python
-3. Install cesar-p-core library python package
+1. Download and install EnergyPlus Version 9.5.0 https://energyplus.net/downloads (install to default location)
+2. Download and install Python 3.8 from https://www.python.org/downloads/
+3. Create and activate a virtual environment for Python 3.8
+    e.g. on windows you can use following commands in your shell to do this
+    
+    .. code-block::
+      
+      python -m venv %USERPROFILE%/venv-cesar-p
+      %USERPROFILE%/venv-cesar-p/Scripts/activate
 
-For instructions how to install if you want to adapt the code or develop new features, check the development section (:ref:`development/development-installation:Development Installation`).
-Installing the package as editable with -e is not tested and supported.
+4. Install cesar-p-core library    
+    .. code-block::
+      
+      pip install cesar-p
+      
+
+You have now a virtual environment set up in which you can use cesar-p library from your python script. 
+To get you started check out the examples on https://github.com/hues-platform/cesar-p-usage-examples
+
+
+Following are some more detaild installation instructions for customized setup. 
+
+In case you need to extend or modify the library itself, check out the installation guide for library 
+development under (:ref:`development/development-installation:Development Installation`).
 
 1. EnergyPlus
 --------------
@@ -24,7 +42,8 @@ Default installation location is C:/EnergyPlusV9-5-0/energyplus.exe.
 
 Download and install EnergyPlus from https://energyplus.net/downloads.
 
-Set follwoing environment variables if you do not want to use the default EnergyPlus version or your installation location is different:
+If you install EnergyPlus 9.5.0 to the default location mentioned above, you can skip the following step. 
+Otherwise, set follwoing environment variables to point to a specific EnergyPlus installation:
 
   ENERGYPLUS_VER
 
@@ -39,9 +58,10 @@ e.g. for EPlus 9.5.0 that would be
 
 2. Python
 ----------
-CESAR-P requires Python 3.8. Download and Install from https://www.python.org/downloads/.
+CESAR-P supports Python 3.8. Download and Install from https://www.python.org/downloads/.
+Newer Python Versions might well work, but are not fully tested.
 
-If you already have a Python installation, do not tick 'Add Python X.Y to Path' during installation procedure.
+If you already have a different Python version installed, do not tick 'Add Python X.Y to Path' during installation procedure.
 
 Note: using Anaconda is not recommended, as it might be more complicated to handle with your IDE
 
@@ -58,7 +78,7 @@ Note: using Anaconda is not recommended, as it might be more complicated to hand
 
   - If NOT preceed python with the path to your python installation in the following commands
 
-  - Create a new virtual environment (you can adapt the location of the venv as you wish - your home directory or any other location on the fileserver is not a sensible choice and might run out of space when installing all dependencies.
+  - Create a new virtual environment (you can adapt the location of the venv as you wish - any location on a fileserver with all dependencies the virtual environment will need some space).
 
     .. code-block::
 

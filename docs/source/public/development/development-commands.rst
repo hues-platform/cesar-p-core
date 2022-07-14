@@ -11,6 +11,9 @@ commands outlined below.
 Unittesting
 -------------------
 
+The tests depending on EnergyPlus assume that you have EnergyPlus 9.5.0 installed and configured in the environment 
+variables ENERGYPLUS_EXE and ENERGYPLUS_VER.
+
 I recommend to use your IDE support for running tests during development. 
 For the coverage there is no IDE support I know of, but maybe there is something out there as well.
 

@@ -22,7 +22,7 @@
 import logging
 import os
 import pandas
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from SPARQLWrapper import SPARQLWrapper, JSON
 
 import cesarp.graphdb_access.sparql_queries as sparql_queries
@@ -31,7 +31,7 @@ from cesarp.graphdb_access import _default_config_file
 
 
 class GraphDBReader:
-    def __init__(self, sparql_endpoint: str = None, custom_config: Dict[str, Any] = {}):
+    def __init__(self, sparql_endpoint: str = None, custom_config: Optional[Dict[str, Any]] = None):
         self.cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         if sparql_endpoint is None:
             sparql_endpoint = self.cfg["REMOTE"]["SPARQL_ENDPOINT"]

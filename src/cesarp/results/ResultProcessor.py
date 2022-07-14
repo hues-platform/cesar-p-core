@@ -96,9 +96,8 @@ class ResultProcessor:
 
     MULTI_IDX_NAMES = ["unit", "var_name"]
 
-    def __init__(self, ureg: pint.UnitRegistry, do_calc_op_emissions_and_costs: bool = True, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, do_calc_op_emissions_and_costs: bool = True, custom_config: Optional[Dict[str, Any]] = None):
         self.ureg = ureg
-        self._custom_config = custom_config
         self._do_calc_op_emissions_and_costs = do_calc_op_emissions_and_costs
         self._op_emission_cost_calc: Optional[OperationalEmissionsAndCosts] = None
         if self._do_calc_op_emissions_and_costs:

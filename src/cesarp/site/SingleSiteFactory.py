@@ -27,7 +27,9 @@ from cesarp.site import _default_config_file
 
 
 class SingleSiteFactory:
-    def __init__(self, weather_file_path, unit_reg, custom_config={}):
+    def __init__(self, weather_file_path, unit_reg, custom_config=None):
+        if custom_config is None:
+            custom_config = {}
         cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         if not os.path.isfile(weather_file_path):
             raise Exception(f"{weather_file_path} does not exist. please provide an existing file when initializing SingleSiteFactory")

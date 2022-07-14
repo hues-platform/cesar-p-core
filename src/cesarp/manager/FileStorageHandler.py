@@ -22,7 +22,7 @@
 import os
 import logging
 from pathlib import Path, PurePath
-from typing import Dict, Any, List, Sequence, Union
+from typing import Dict, Any, List, Sequence, Union, Optional
 from shutil import copyfileobj
 import pandas as pd
 from datetime import datetime
@@ -70,7 +70,7 @@ class FileStorageHandler:
       simulation scenario from existing building models
     """
 
-    def __init__(self, base_output_path, custom_config: Dict[str, Any], reloading=False):
+    def __init__(self, base_output_path, custom_config: Optional[Dict[str, Any]], reloading=False):
         """
         :param base_output_path: path to main folder to store files for that simulation run
         :param custom_config: custom config entries

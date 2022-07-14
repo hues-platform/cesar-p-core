@@ -3,13 +3,6 @@ Construction and Operation
 
 .. figure:: ./diagrams/Inputs_Config_ConstructionOperation.png
 
-Data source
------------
-There is the option to use constructions based on pre-defined snippet IDF's or read the information from GraphDB. For retrofit you must use GraphDB, as retrofit constructions are only available in the Graph DB. See config file of construction for switching.
-Note that the IDF snippet based construction database is DEPRECATED and will be removed in the next version.
-
-For more infos on GraphDB see: :ref:`usage/graph-db-read:GraphDB -  Read data`
-
 
 Construction - Internal ceiling/floor
 --------------------------------------
@@ -101,8 +94,6 @@ Full configuration is:
             LABELS:
                 gis_fid: "ORIG_FID"
                 year_of_construction: "BuildingAge"
-    CONSTRUCTION:
-        CONSTRUCTION_DB: "GRAPH_DB"  # this is the default, just for completness
     GRAPHDB_ACCESS:
         ARCHETYPE_CONSTRUCTION_FACTORY_CLASS: "cesarp.graphdb_access.GraphDBArchetypicalConstructionFactory.GraphDBArchetypicalConstructionFactory"  # this is also the default
 
@@ -128,5 +119,3 @@ Your Factory needs to meet following criteria:
 - initialization method (__init__) having identical parameters as cesarp.graphdb_access.GraphDBArchetypicalConstructionFactory.GraphDBArchetypicalConstructionFactory
 - satisfy protocol definition cesarp.construction.construction_protocols.ArchetypicalConstructionFactoryProtocol
 - make sure your class is in the PYTHONPATH, e.g. in the same folder as your main script is (make sure to change to that directory when calling the script)
-
-Note: a custom Factory in the scope of IDF based constructional Archetype is not possible. IDF based construction package is deprecated and will be removed in a future version of CESAR-P.

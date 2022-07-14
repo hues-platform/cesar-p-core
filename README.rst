@@ -24,6 +24,9 @@ Further CESAR-P is capable of calculating **operational cost and emissions** bas
 There is also the possibility to apply **retrofit measures** to the building construction and compare between different simulation runs. Output include besides the results 
 a detailed Log with the **retrofit measures** along with pricing and embodied emission infromation.
 
+The target audience of the software are energy planners, energy utilities, cities and researchers to identify the time-resolved 
+energy consumption of buildings at large scale to successfully in-tegrate renewable energy technologies in buildings and to 
+develop energy masterplans for neighborhoods and cities.
 
 Full documentation: https://cesar-p-core.readthedocs.io/en/latest/
 
@@ -51,8 +54,14 @@ The predecessor tool of CESAR-P is CESAR, for more details see section Reference
 
 - Programming Language and Version: 
 
-  - Python 3.8 
-  - should work with Python 3.9, due to incompatibilities of Python 3.9 Docker images and EnergyPlus installation for CI pipeline the test run with 3.8 and thus the default version remains on 3.8
+  - Python 3.8
+
+- Supported platforms:
+  
+  - Windows (development platform)
+  - Linux (Ubuntu system used for testing/CI)
+  - Mac (not tested)
+
 
 - License: CESAR-P is released under AGPLv3 open source license. Contact UES Lab to discuss about other licensing terms.
 
@@ -111,6 +120,18 @@ Installation & Usage
 - Installation guide: https://cesar-p-core.readthedocs.io/en/latest/installation.html
 - Usage instructions: https://cesar-p-core.readthedocs.io/en/latest/usage/index.html
 - Usage examples: https://github.com/hues-platform/cesar-p-usage-examples
+
+
+Contributing
+============
+
+You are welcome to open issues reporting bugs or creating pull requests with bugfixes or new features!
+
+We develop and test this library on our internal GitLab and synchronize new versions to GitHub.
+
+Before submitting your contribution as a pull request please make sure tests run through and code 
+complies with formatting and typing rules checked with the tools described under 
+https://cesar-p-core.readthedocs.io/en/latest/development/development-commands.html
 
 Credits
 =======

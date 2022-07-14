@@ -20,7 +20,7 @@
 # Contact: https://www.empa.ch/web/s313
 #
 import pint
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import logging
 
 import cesarp.common
@@ -32,7 +32,7 @@ from cesarp.model.Layer import LayerFunction
 
 
 class ConstructionRetrofitCosts:
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         self._cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         self.ureg = ureg
         self.insulation_cost_lookup = retrofit_input_parser.read_insulation_costs(self._cfg["INSULATION_COST_LOOKUP"], ureg)

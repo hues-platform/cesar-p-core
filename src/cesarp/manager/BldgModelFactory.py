@@ -90,7 +90,7 @@ class BldgModelFactory:
     _BLDG_I_COL_NR_OF_FLOORS = "nr_of_floors"
     _BLDG_I_COl_GROUNDFLOOR_AREA = "groundfloor_area"
 
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any], sia_params_generation_lock=None):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]], sia_params_generation_lock=None):
         """
         :param ureg: pint unit registry application instance
         :type ureg: pint.UnitRegistry
@@ -109,7 +109,7 @@ class BldgModelFactory:
         _bldg_type_per_bldg_series = self.__read_bldg_type()
         self._bldg_type_per_bldg: Dict[int, BldgType] = {fid: BldgType[bldg_type_str] for fid, bldg_type_str in _bldg_type_per_bldg_series.to_dict().items()}
 
-        self.per_bldg_infos_used = self.per_bldg_infos_used.append(self._year_of_constr_per_bldg)
+        self.per_bldg_infos_used = pd.concat([self.per_bldg_infos_used, self._year_of_constr_per_bldg])
         self.per_bldg_infos_used = pd.concat([self.per_bldg_infos_used, _bldg_type_per_bldg_series], axis="columns")
         self.per_bldg_infos_used[self._BLDG_I_COL_HEIGHT] = None
         self.per_bldg_infos_used[self._BLDG_I_COL_FLOOR_HEIGHT] = None

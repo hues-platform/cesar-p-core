@@ -25,7 +25,7 @@ import logging
 import esoreader
 import pandas as pd
 import pint
-from typing import Mapping, Sequence, Dict, Any
+from typing import Mapping, Sequence, Dict, Any, Optional
 from pathlib import Path
 import cesarp.common
 from cesarp.results.EnergyDemandSimulationResults import EnergyDemandSimulationResults
@@ -48,7 +48,7 @@ RES_KEY_COOLING_DEMAND = "DistrictCooling:Facility"
 _CESAR_SIMULATION_RESULT = [RES_KEY_HEATING_DEMAND, RES_KEY_DHW_DEMAND, RES_KEY_EL_DEMAND, RES_KEY_COOLING_DEMAND]
 
 
-def check_cesar_results_are_enabled(custom_config: Dict[str, Any] = {}) -> bool:
+def check_cesar_results_are_enabled(custom_config: Optional[Dict[str, Any]] = None) -> bool:
     all_annual_res = _get_all_annual_vars_from_config(custom_config)
     return all([req_res in all_annual_res for req_res in _CESAR_SIMULATION_RESULT])
 
@@ -181,7 +181,7 @@ def collect_multi_entry_annual_result(single_result_folder: str, var_name: str):
     return results_dict
 
 
-def _get_all_annual_vars_from_config(custom_config: Dict[str, Any] = {}):
+def _get_all_annual_vars_from_config(custom_config: Optional[Dict[str, Any]] = None):
     cfg = cesarp.common.config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
     try:
         output_meters = cfg["OUTPUT_METER"]["ANNUAL"]

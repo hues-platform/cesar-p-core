@@ -28,7 +28,7 @@ import cesarp.graphdb_access.sparql_queries as sparql_queries
 
 
 class LocalFileReader:
-    def __init__(self, filename=None, custom_config={}):
+    def __init__(self, filename=None, custom_config=None):
         self.cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         if filename is None:
             filename = self.cfg["LOCAL"]["PATH"]

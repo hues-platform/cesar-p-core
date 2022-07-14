@@ -1,8 +1,9 @@
 Development Installation
 ========================
 
-Follow those installation instructions to be able to develop cesar-p-core libarary.
-The project is set up using poetry for dependency management and packaging.
+Follow those installation instructions to be able to develop new features or bug fixes for cesar-p-core libarary.
+The project is set up using poetry for dependency management and packaging. 
+Note that installing the package as editable with -e option of pip is not supported.
 
 
 - Install EnergyPlus and Pyhton according to the general installation guide :ref:`installation:Installation`

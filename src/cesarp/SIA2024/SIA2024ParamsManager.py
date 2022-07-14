@@ -49,7 +49,7 @@ class SIA2024ParamsManager:
     only nominal or variable profiles can be loaded at the same time.
     """
 
-    def __init__(self, sia2024_params_factory: ParameterFactoryProtocol, ureg=cesarp.common.init_unit_registry(), custom_config={}):
+    def __init__(self, sia2024_params_factory: ParameterFactoryProtocol, ureg=cesarp.common.init_unit_registry(), custom_config=None):
         """
         :param sia2024_params_factory: SIA2024ParametersFactory instance or a NullParameterFactory instance in case parameter generation is not needed or enabled
         :type sia2024_params_factory: ParameterFactoryProtocol

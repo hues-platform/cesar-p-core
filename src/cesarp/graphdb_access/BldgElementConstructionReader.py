@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Protocol, Sequence, Union, Dict, Any, Tuple
+from typing import Protocol, Sequence, Union, Dict, Any, Tuple, Optional
 import pint
 import pandas as pd
 import logging
@@ -92,7 +92,7 @@ class GraphReaderProtocol(Protocol):
 
 
 class BldgElementConstructionReader:
-    def __init__(self, graph_reader: GraphReaderProtocol, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, graph_reader: GraphReaderProtocol, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         self.graph_reader = graph_reader
         self.ureg = ureg
         self._cfg = cesarp.common.config_loader.load_config_for_package(_default_config_file, __package__, custom_config)

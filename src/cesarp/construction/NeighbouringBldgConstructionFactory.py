@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Any, Mapping, Dict
+from typing import Any, Mapping, Dict, Optional
 import pint
 import cesarp.common
 from cesarp.model.WindowConstruction import WindowGlassConstruction
@@ -36,7 +36,7 @@ class NeighbouringBldgConstructionFactory:
     this package.
     """
 
-    def __init__(self, unit_reg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, unit_reg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         """
         :param custom_config: dictonary with configuration entries overwriting package default config
         """

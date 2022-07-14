@@ -30,7 +30,7 @@ from cesarp.model.EnergySource import EnergySource
 
 
 class ConstructionBasics:
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         self._cfg = cesarp.common.config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
         self.ureg = ureg
 

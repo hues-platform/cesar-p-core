@@ -21,7 +21,7 @@
 #
 import pint
 import copy
-from typing import Dict, Any, Protocol
+from typing import Dict, Any, Protocol, Optional
 
 import cesarp.common
 from cesarp.model.Construction import Construction
@@ -56,7 +56,7 @@ class GraphReaderRetrofitProtocol(Protocol):
 
 
 class ConstructionRetrofitter:
-    def __init__(self, graph_access: GraphReaderRetrofitProtocol, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, graph_access: GraphReaderRetrofitProtocol, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         self._ureg = ureg
         self._graph_access = graph_access
         self._cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)

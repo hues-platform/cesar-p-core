@@ -74,7 +74,7 @@ class CesarIDFWriter:
         idf_file_path,
         unit_registry,
         profiles_files_handler: Optional[ProfileFilesHandler] = None,
-        custom_config={},
+        custom_config=None,
     ):
         """
         You can only use one construction type at a time. All three constr_xxx callables take a construction object as the first argument.
@@ -92,7 +92,6 @@ class CesarIDFWriter:
         assert not os.path.exists(idf_file_path), f"Cannot create IDF File {idf_file_path}. Already existing."
         self.logger = logging.getLogger(__name__)
         self._cfg = config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
-        self._custom_config = custom_config
         self.unit_registry = unit_registry
         idd_path = get_idd_path(ep_config=self._cfg)
         self.logger.info(f"using IDD {idd_path}")

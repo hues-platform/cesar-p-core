@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 import pandas as pd
 
 from cesarp.common.AgeClass import AgeClass
@@ -39,7 +39,7 @@ class RetrofitRates:
     _COL_LABEL_PARTIAL_AC_MAPPING = "AgeRangePartialRetrofit"
     _COL_LABEL_BLDG_ELEMS = "Building Element"
 
-    def __init__(self, custom_config: Dict[str, Any] = {}):
+    def __init__(self, custom_config: Optional[Dict[str, Any]] = None):
         self._es_cfg = get_selected_energy_strategy_cfg(custom_config)
         self._full_rates = {
             BldgType.SFH: self.__read_full_rates(BldgType.SFH),

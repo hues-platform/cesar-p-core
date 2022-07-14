@@ -37,9 +37,8 @@ class FixedBuildingOperationFactory:
     Implements the :py:class:`cesarp.manager.manager_protocols.BuildingOperationFactoryProtocol` and thus can be set as "BUILDING_OPERATION_FACTORY_CLASS" in the config of package :py:class:`cesarp.manager`
     """
 
-    def __init__(self, passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol, unit_registry, custom_config={}):
+    def __init__(self, passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol, unit_registry, custom_config=None):
         self._unit_registry = unit_registry
-        self._custom_config = custom_config
         self._cfg = config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
         self._passive_cooling_op_fact = passive_cooling_op_fact
 

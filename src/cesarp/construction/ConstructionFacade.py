@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from enum import Enum
 import pint
 
@@ -38,7 +38,7 @@ class ConstructionFacade:
         bldg_fid_to_dhw_ecarrier_lookup: Dict[int, EnergySource],
         bldg_fid_to_heating_ecarrier_lookup: Dict[int, EnergySource],
         ureg: pint.UnitRegistry,
-        custom_config: Dict[str, Any],
+        custom_config: Optional[Dict[str, Any]],
     ) -> ArchetypicalConstructionFactoryProtocol:
         """
         Returns a GraphDB based construction factory according to package configuration (parameter CONSTRUCTION_DB).
@@ -52,7 +52,7 @@ class ConstructionFacade:
         :param ureg: unit registry application instance
         :type ureg: pint.UnitRegistry
         :param custom_config: dict with main/custom configuration parameters, overwriting the package defaults
-        :type custom_config: Dict[str, Any]
+        :type custom_config: Dict[str, Any], optional
         :raises CesarpException: in case CONSTRUCTION_DB parameter is set to invalid value
         :return: factory to query for constructional archetypes for each of your buildings
         :rtype: ArchetypicalConstructionFactoryProtocol

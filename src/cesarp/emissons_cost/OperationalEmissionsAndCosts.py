@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import pint
 from dataclasses import dataclass
 
@@ -65,7 +65,7 @@ class OperationalEmissionsAndCosts:
     Operational cost and emissions can only be calculated if energy carrier for domestic hot water and heating is given. See configuration of :py:mod:`cesarp.manager`
     """
 
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         self._ureg = ureg
         self._energy_strategy = EnergyStrategy(ureg, custom_config)
 

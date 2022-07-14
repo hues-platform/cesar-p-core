@@ -56,8 +56,10 @@ def compare_folders_recursivly(pathExpected, pathResult):
             foldersAreIdentical = False
     return foldersAreIdentical
 
-def are_files_equal(file_result, file_expected, ignore_line_nrs=[], ignore_case=False, ignore_filesep_mismatch=False,
+def are_files_equal(file_result, file_expected, ignore_line_nrs=None, ignore_case=False, ignore_filesep_mismatch=False,
                     ignore_changing_config=False):
+    if ignore_line_nrs is None:
+        ignore_line_nrs = []
     res = list(open(file_result))
     exp = list(open(file_expected))
     if len(res) != len(exp):

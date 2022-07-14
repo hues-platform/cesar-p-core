@@ -43,7 +43,7 @@ class SIA2024DataAccessor:
 
     __PROFILE_SETTINGS_KEY = "PROFILE_SETTINGS"
 
-    def __init__(self, ureg, custom_config={}):
+    def __init__(self, ureg, custom_config=None):
         self.ureg = ureg
         cfg = cesarp.common.config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
         sia_sheet_cfg_file = cfg["PROFILE_GENERATION"]["SIA_SHEET_CONFIG_FILE"]

@@ -42,7 +42,7 @@ class GeometryBuilder:
     returned by cesarp.geometry.vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint.
     """
 
-    def __init__(self, main_bldg_fid, site_bldgs: pd.DataFrame, glazing_ratio: float, custom_config: Dict[str, Any] = {}):
+    def __init__(self, main_bldg_fid, site_bldgs: pd.DataFrame, glazing_ratio: float, custom_config: Optional[Dict[str, Any]] = None):
         """
         :param main_bldg_fid: gis_fid of main building which will be simulated. gis_fid must be containted in
                                   site_bldgs

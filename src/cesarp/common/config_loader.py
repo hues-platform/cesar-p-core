@@ -21,7 +21,7 @@
 """
 Keep an eye on handling relative pathes. When loading the configuration all detected relative pathes are converted to absolute ones. The detection relies on some keywords of the config keys and values, such as known file extensions. Details see cesarp.common.config_loader.
 """
-from typing import Any, List, Dict, Union
+from typing import Any, List, Dict, Union, Optional
 import logging
 import yaml
 import os
@@ -56,7 +56,7 @@ class UniqueKeyLoader(yaml.SafeLoader):
         return super().construct_mapping(node, deep)
 
 
-def load_config_for_package(cfg_file_name, full_package_name, custom_config: Dict[str, Any] = {}) -> Dict[str, Any]:
+def load_config_for_package(cfg_file_name, full_package_name, custom_config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """
     Loads the parameters for given package from the configuration file and custom config
 
@@ -68,6 +68,8 @@ def load_config_for_package(cfg_file_name, full_package_name, custom_config: Dic
     :return: dict with configuration entries for the package given. might be hierarchical, thus having another dict
                 as entry
     """
+    if custom_config is None:
+        custom_config = {}
     package_name_parts: List[str] = full_package_name.split(".")
     default_cfg: Dict[str, Any] = load_config_full(cfg_file_name)
     default_cfg_for_pckg: Dict[str, Any] = __get_config_for_package(default_cfg, package_name_parts)
@@ -182,7 +184,7 @@ def save_config_to_file(config: Dict[str, Any], filepath: Union[str, Path]):
         yaml.dump(config, fd)
 
 
-def combine_configs(all_cfg_files: List[str], custom_config: Dict[str, Any] = {}):
+def combine_configs(all_cfg_files: List[str]):
     all_config_dict: Dict[str, Any] = {}
     for cfg_file in all_cfg_files:
         cfg_entries = load_config_full(cfg_file, ignore_metadata=False)

@@ -21,7 +21,7 @@
 #
 import pandas as pd
 import pint
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from cesarp.geometry.GeometryBuilder import GeometryBuilder
 from cesarp.manager.manager_protocols import GeometryBuilderProtocol
 from cesarp.geometry import vertices_basics
@@ -34,7 +34,7 @@ class GeometryBuilderFactory:
     several times if simulating several buildings on the same site (which is the CESAR-P default workflow).
     """
 
-    def __init__(self, flat_site_vertices_list: pd.DataFrame, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, flat_site_vertices_list: pd.DataFrame, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         self._site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices_list)
         self._custom_config = custom_config
         self.ureg = ureg

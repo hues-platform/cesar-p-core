@@ -99,7 +99,7 @@ def _init_params_from_dict(
     schedule_file_template: cesarp.common.ScheduleFile,
     schedule_name_prefix: str,
     unit_registry,
-    skip_attributes=[],
+    skip_attributes=None,
 ):
     """
     Sub-classes are supported. The main class ("class_name") and all sub-classes have to provide an "emptyObj()" class method which returns an empty object.
@@ -109,6 +109,8 @@ def _init_params_from_dict(
     :param class_name:
     :return:
     """
+    if skip_attributes is None:
+        skip_attributes = []
     obj_to_init = locate(class_name).emptyObj()  # type: ignore
 
     for attr_name in vars(obj_to_init).keys():
@@ -150,7 +152,9 @@ def _init_params_from_dict(
     return obj_to_init
 
 
-def _convert_obj_to_dict(obj, skip_attributes=[]):
+def _convert_obj_to_dict(obj, skip_attributes=None):
+    if skip_attributes is None:
+        skip_attributes = []
     parameters = {}
     profiles = pd.DataFrame()
     for attr_name, attr_value in vars(obj).items():

@@ -31,9 +31,6 @@ which means after some time you wont be able to reproduce the exact same results
 
 The package is not a strict data access, as there is some business logic included.
 
-This data access is a replacement for the :py:mod:`cesarp.idf_construction_db_access` relying on partial IDF files.
-
-
 Main API classes
 
 ===================================================================================== ===========================================================

@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import pint
 
 from cesarp.energy_strategy import get_selected_energy_strategy_cfg
@@ -35,7 +35,7 @@ class EnergyStrategy:
     *RetrofitRates* is not included, as it is not used together with the operational emission and cost values.
     """
 
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         es_cfg = get_selected_energy_strategy_cfg(custom_config)
         self.fuel_cost_factors = FuelCosts(ureg, es_cfg)
         self.system_efficiencis = SystemEfficiencies(es_cfg)

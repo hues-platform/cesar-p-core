@@ -23,7 +23,7 @@
 from pathlib import Path
 import logging
 import pandas as pd
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from cesarp.weather.swiss_communities import _default_config_file
 import cesarp.common
 
@@ -35,13 +35,12 @@ class SwissCommunityWeatherChooser:
     Based on a lookup table mapping each community to one of those weather stations the assignment of the weather file is made.
     """
 
-    def __init__(self, custom_config: Dict[str, Any] = {}):
+    def __init__(self, custom_config: Optional[Dict[str, Any]] = None):
         """
         Create an instance of SwissCommunityWeatherChooser
 
         :param custom_config: dict with custom configuration entries, for options see swiss_communities_weather.yml
         """
-        self.custom_config = custom_config
         self.cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         self.communityID_to_stationID = self.__read_community_station_mapping(self.cfg["COMMUNITY_TO_STATION"])
 

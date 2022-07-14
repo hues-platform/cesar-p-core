@@ -30,10 +30,12 @@ from cesarp.site import _default_config_file
 
 
 class SitePerBuildingSpecificWeatherFile:
-    def __init__(self, bldg_to_weather_file_mapping: Dict[int, str], weather_files_folder_path, unit_reg, custom_config={}):
+    def __init__(self, bldg_to_weather_file_mapping: Dict[int, str], weather_files_folder_path, unit_reg, custom_config=None):
         """
         :param bldg_to_weather_file_mapping: Dict mapping building fid to a weather file name
         """
+        if custom_config is None:
+            custom_config = {}
         self.bldg_to_weather_file_mapping = bldg_to_weather_file_mapping
         self.weather_files_folder_path = weather_files_folder_path
         self.ground_temps = SiteGroundTemperatureFactory(unit_reg, custom_config).get_ground_temperatures()

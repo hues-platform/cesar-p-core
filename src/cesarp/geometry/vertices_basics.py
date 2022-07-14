@@ -125,6 +125,7 @@ def calc_center_of_rectangle(rectangle_vertices) -> Dict[str, cesarp.common.NUME
 def convert_flat_site_vertices_to_per_bldg_footprint(flat_entries: pd.DataFrame):
     """
     converts flat site vertices list to pandas DataFrame with one row per FID
+    "gis_fid" expected to be numeric
     :param flat_entries: pd.DataFrame with columns "gis_fid", "height", "x", "y"
     :return: pd.DataFrame with columns "gis_fid", "hight", "footprint_shape", "main_vertex_x", "main_vertex_y" where footprint_shape is a nested DataFrame
     """
@@ -137,15 +138,16 @@ def convert_flat_site_vertices_to_per_bldg_footprint(flat_entries: pd.DataFrame)
         entries_for_fid = entries_for_fid.drop_duplicates()  # remove duplicate vertex at end if one is present
         entries_for_fid = entries_for_fid.reset_index(drop=True)
         entries_for_fid = entries_for_fid.astype(float)
-        all_buildings = all_buildings.append(
+        this_building = pd.DataFrame(
             {
-                "gis_fid": fid,
-                "height": float(height[0]),
-                "footprint_shape": entries_for_fid[["x", "y"]],
-                "main_vertex_x": entries_for_fid.loc[0, "x"],
-                "main_vertex_y": entries_for_fid.loc[0, "y"],
-            },
-            ignore_index=True,
+                "gis_fid": [fid],
+                "height": [float(height[0])],
+                "footprint_shape": [entries_for_fid[["x", "y"]]],
+                "main_vertex_x": [entries_for_fid.loc[0, "x"]],
+                "main_vertex_y": [entries_for_fid.loc[0, "y"]],
+            }
         )
+        all_buildings = pd.concat([all_buildings, this_building], ignore_index=True)
+    all_buildings = all_buildings.astype({"gis_fid": "int"})
     all_buildings = all_buildings.set_index("gis_fid", drop=False)
     return all_buildings

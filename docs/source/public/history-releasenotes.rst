@@ -16,6 +16,20 @@ MAJOR.MINOR.PATCH.a0
 
 For all released Version there is a Tag/Release in GitLab.
 
+2.3.0
+-----
+
+- added paper folder which contains published papers and added JOSS paper
+- cleanup of documentation
+- updating all dependencies
+
+
+Bugfixes
+
+- set default arguments to None and initialize correctly afterwards. Otherwise could result in unexpected behavior
+- fixed pandas future warning
+
+
 2.2.0
 -----
 

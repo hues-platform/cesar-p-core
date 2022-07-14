@@ -117,17 +117,17 @@ class ProjectSaver:
         :type main_script_path: str
         :param file_storage_handler: file storage handler instance of the project. needed to know where which files are located.
         :type file_storage_handler: FileStorageHandler
-        :param temp_dir: temporary directory where to store contents to be added to ZIP, such as the README, if None system TEMP folder will be used, defaults to None
+        :param temp_dir: temporary directory where to store contents to be added to ZIP, such as the README, if None system TEMP resp TMPDIR folder will be used, defaults to None
         :type temp_dir: Optional[Path], optional
         :param bldg_containers: if serialized *BuildingContainer*, pass the *BuildingContainer* objects here, defaults to None
         :type bldg_containers: Dict[int, BuildingContainer], optional
-        :raises Exception: CesarpException if system TEMP dir is not available and no temp_dir is passed
+        :raises Exception: CesarpException if environment variable TEMP nor TMPDIR is defined and no temp_dir is passed
         """
         if not temp_dir:
-            try:
-                temp_dir = os.environ["TEMP"] / Path("cesar-p-saveproj")
-            except KeyError:
-                raise CesarpException("Please specify destination_dir_tmp as parameter for ProjectSaver() as TEMP was not found in environment.")
+            sys_tmp_dir = os.environ.get("TMPDIR") or os.environ.get("TEMP")
+            if not sys_tmp_dir:
+                raise CesarpException("Please specify destination_dir_tmp as parameter for ProjectSaver() as neither TEMP nor TMPDIR was found in environment.")
+            temp_dir = sys_tmp_dir / Path("cesar-p-saveproj")
 
         shutil.rmtree(temp_dir, ignore_errors=True)
         os.makedirs(temp_dir)

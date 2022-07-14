@@ -26,7 +26,7 @@ import cesarp.common
 from cesarp.SIA2024 import _default_config_file
 from cesarp.model.BuildingOperation import BuildingOperation, Occupancy, InstallationOperation, HVACOperation
 from cesarp.model.BuildingOperationMapping import BuildingOperationMapping
-from cesarp.SIA2024.SIA2024ParamsManager import SIA2024ParamsManager
+from cesarp.SIA2024.SIA2024ParamsManager import SIA2024ParamsManager, ParameterFactoryProtocol
 from cesarp.SIA2024.SIA2024ParametersFactory import SIA2024ParametersFactory
 from cesarp.SIA2024.NullParametersFactory import NullParameterFactory
 from cesarp.SIA2024.SIA2024DataAccessor import SIA2024DataAccessor
@@ -78,7 +78,7 @@ class SIA2024Facade:
         bldg_fid_bldg_type_lookup: Mapping[int, str],
         passive_cooling_op_fact: PassiveCoolingOperationFactoryProtocol,
         ureg: pint.UnitRegistry,
-        custom_config: Dict[str, Any] = {},
+        custom_config: Optional[Dict[str, Any]] = None,
     ):
         """
         Initialization of the facade.
@@ -90,8 +90,10 @@ class SIA2024Facade:
         :param ureg: instance of pint unit registry
         :type ureg: pint.UnitRegistry
         :param custom_config: dict with custom configuration entries
-        :type custom_config: Dict[str, Any]
+        :type custom_config: Dict[str, Any], optional
         """
+        if custom_config is None:
+            custom_config = {}
         self.bldg_fid_params_lookup: Dict[int, SIA2024Parameters] = dict()
         self._cfg = cesarp.common.load_config_for_package(_default_config_file, __package__, custom_config)
         # Initialize params manager with or without possibility to generate parameter sets. Option necessary, as SIA2024 base data needed to generate profiles is not
@@ -101,16 +103,16 @@ class SIA2024Facade:
         self._passive_cooling_op_fact = passive_cooling_op_fact
 
     @staticmethod
-    def __create_params_manager(ureg, custom_config, with_parameter_generation=True):
+    def __create_params_manager(ureg, custom_config: Optional[Dict[str, Any]], with_parameter_generation=True):
         if with_parameter_generation:
             sia_base_data = SIA2024DataAccessor(ureg, custom_config)
-            params_factory = SIA2024ParametersFactory(sia_base_data, ureg, custom_config)
+            params_factory: ParameterFactoryProtocol = SIA2024ParametersFactory(sia_base_data, ureg, custom_config)
         else:
             params_factory = NullParameterFactory()
         return SIA2024ParamsManager(params_factory, ureg, custom_config)
 
     @staticmethod
-    def generate_all_parameter_sets(custom_config={}, cleanup_existing_profiles=True):
+    def generate_all_parameter_sets(custom_config=None, cleanup_existing_profiles=True):
         params_mgr = SIA2024Facade.__create_params_manager(ureg=cesarp.common.init_unit_registry(), custom_config=custom_config)
         all_bldg_types = list(SIA2024BldgTypeKeys)
         params_mgr.create_and_save_param_sets_nominal(all_bldg_types, cleanup_existing_profiles)

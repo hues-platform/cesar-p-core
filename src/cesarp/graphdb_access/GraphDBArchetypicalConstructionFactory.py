@@ -19,7 +19,7 @@
 #
 # Contact: https://www.empa.ch/web/s313
 #
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import pint
 import logging
 import cesarp.common
@@ -48,7 +48,7 @@ class GraphDBArchetypicalConstructionFactory:
         bldg_fid_to_heating_ecarrier_lookup: Dict[int, EnergySource],
         graph_data_reader: GraphReaderProtocol,
         ureg: pint.UnitRegistry,
-        custom_config: Dict[str, Any] = {},
+        custom_config: Optional[Dict[str, Any]] = None,
     ):
         self._ureg = ureg
         self._cfg = cesarp.common.config_loader.load_config_for_package(_default_config_file, __package__, custom_config)

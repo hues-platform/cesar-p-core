@@ -69,7 +69,7 @@ class BuildingElementsRetrofitter:
         BuildingElement.WINDOW,
     ]
 
-    def __init__(self, ureg: pint.UnitRegistry, custom_config: Dict[str, Any] = {}):
+    def __init__(self, ureg: pint.UnitRegistry, custom_config: Optional[Dict[str, Any]] = None):
         """
         Initialize. See set_year_of_retrofit() and set_bldgs_elems_to_retrofit() for further
         configuration options.

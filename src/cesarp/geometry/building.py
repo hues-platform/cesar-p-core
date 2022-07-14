@@ -28,7 +28,7 @@ import math
 import pandas as pd
 from contracts import ic
 from contracts import positive_number
-from typing import List, Callable, Dict, Any
+from typing import List, Callable, Dict, Any, Optional
 
 from cesarp.model.BldgShape import BldgShapeEnvelope, BldgShapeDetailed
 from cesarp.common import config_loader
@@ -227,7 +227,7 @@ def create_bldg_shape_detailed(
     glazing_ratio: float,
     get_adjacent_footprint_vertices: Callable[..., pd.DataFrame],
     *args_to_get_adjacent_footprint_vertices,
-    custom_config: Dict[str, Any] = {},  # make sure to pass as a named parameter, otherwise the previous param consumes it...
+    custom_config: Optional[Dict[str, Any]] = None,  # make sure to pass as a named parameter, otherwise the previous param consumes it...
 ) -> BldgShapeDetailed:
     """
     Define building shape as cesarp.manager.manager_protocols.BldgShapeDetailed
