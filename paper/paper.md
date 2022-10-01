@@ -86,9 +86,9 @@ stored in archetypes. The target audience of the software are energy planners, e
   challenging to track assumptions used in published studies. The use of semantic web technologies such as RDF enables
   the user to query the results and underlying data used to build the simulation inputs. The use of ontologies will
   enable the linking of concepts and data models used in other studies using TBox inferences.
-- Evaluation of retrofitting options and strategies
+- Evaluation of retrofitting options and strategies.
 - Simulation and comparison of energy demand for scenarios with different building parametrization, for example to
-  evaluate passive cooling potential (@SILVA_ET_AL_2022)
+  evaluate passive cooling potential (@SILVA_ET_AL_2022).
 - Since CESAR-P uses EnergyPlus, which is a continually developed energy simulation tool within the research field, the
   capabilities of CESAR-P can be extended to accommodate future developments and improve modelling accuracy.
 - The tool can be applied at various scales and can be used for predicting the energy consumption of a single building,
