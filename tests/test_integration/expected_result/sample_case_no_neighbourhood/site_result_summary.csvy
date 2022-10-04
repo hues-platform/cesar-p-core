@@ -198,7 +198,7 @@ METADATA:
     the configuration entries for ENERGY_STRATEGY
   SOURCE_LINK: null
   VERSION_INFO:
-    Cesar-P Version: 2.3.0
+    Cesar-P Version: 2.3.1
     GIT-BRANCH: development
     GIT-INFO: CESAR-P-V1.1.0-112-g0dc5d6a
     GIT-REMOTE: https://gitlab.empa.ch/ues-lab/cesar-p/cesar-p-core.git
