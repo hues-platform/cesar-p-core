@@ -24,4 +24,4 @@
 
 __author__ = """Urban Energy Systems Lab"""
 __email__ = "https://www.empa.ch/web/s313/team"
-__version__ = "2.3.1"
+__version__ = "2.3.2"
