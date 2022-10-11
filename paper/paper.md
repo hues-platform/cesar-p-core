@@ -17,6 +17,7 @@ authors:
   - name: James Allan
     affiliation: 1
   - name: Sven Eggimann
+    orcid: 0000-0003-3655-2328
     affiliation: 1 
   - name: Natasa Vulic
     affiliation: 1 
