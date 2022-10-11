@@ -20,6 +20,8 @@ authors:
     affiliation: 1 
   - name: Natasa Vulic
     affiliation: 1 
+  - name: Aaron Bojarski
+    affiliation: 1 
 affiliations:
   - name: Urban Energy Systems Laboratory, Empa, Duebendorf, Switzerland
     index: 1
@@ -93,7 +95,7 @@ stored in archetypes. The target audience of the software are energy planners, e
   capabilities of CESAR-P can be extended to accommodate future developments and improve modelling accuracy.
 - The tool can be applied at various scales and can be used for predicting the energy consumption of a single building,
   of whole neighbourhoods with thousands of buildings (@WANG_ET_AL_2018) or, in combination with clustering approaches,
-  for calculating national building energy demands (@MURRAY_ET_AL_2020 @EGGIMANN_ET_AL_2022).
+  for calculating national building energy demands (@MURRAY_ET_AL_2020, @EGGIMANN_ET_AL_2022).
 
 # Example
 
