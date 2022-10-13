@@ -47,8 +47,8 @@ The predecessor tool of CESAR-P is CESAR, for more details see section Reference
 - Contributors
 
   - Léonie Fierz (main developer until July 2021)
+  - Aaron Bojarski (package graphdb_access, main maintainer since July 2021)
   - Ricardo Parreira da Silva (Passive Cooling: window shading and night ventilation)
-  - Aaron Bojarski (package graphdb_access)
   - James Allan (Graph Database data for Archetypical constructions)
   - Sven Eggimann (shapefile parser for reading site vertices)
 
