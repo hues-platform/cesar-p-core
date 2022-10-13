@@ -49,29 +49,14 @@ for geometry. Building usage type and construction information is used to popula
 files are executed with a weather file (EnergyPlus epw weather data format) of the geographic location which provides
 the necessary climatic context for the building. The results consist of a configurable set of yearly demand values and
 hourly resolved times series for each building from EnergyPlus and additional operational costs and emissions. The
-retrofit module can be used to update the building models according to a specified retrofit strategy. Retrofit
-strategies specify the frequency of retrofits to the main building elements such as walls, windows and roofs across the
-building stock. The output of the retrofit module include, in addition to the above-mentioned operational indicators,
-costs and embodied emissions of retrofitting interventions. All simulation steps can also be run in parallel on multiple
-cores. The code is platform-independent and is tested to run on Linux and Windows. The source code for CESAR-P has been
-archived to Zenodo [@cesar-p-zenodo] 
+retrofit module can be used to modify the parameters of individual building models according to a specified retrofit strategy. Retrofit strategies specify the frequency of retrofits to the main building elements such as walls, windows and roofs across the building stock. The output of the retrofit module include, in addition to the above-mentioned operational indicators, costs and embodied emissions of retrofitting interventions. All simulation steps can also be run in parallel on multiple cores. The code is platform-independent and is tested to run on Linux and Windows. The source code for CESAR-P has been archived to Zenodo [@cesar-p-zenodo] 
 
 # Statement of need and Key features 
 
 Building energy simulation is used to generate the expected energy demand profiles of buildings. Building energy demand
 profiles are useful for planners to evaluate current performance and investigate how buildings will perform under
-different scenarios (e.g. building retrofits, changing climate). Measured demands are often unavailable which makes
-building energy simulation a key tool for decision-making. Urban building energy modelling (UBEM) has been established
-in recent years to support the implementation of energy conservation measures and the integration of renewable energy
-technologies at city and district scale. UBEM tools can be classified as taking a top-down or a bottom-up modelling
-approach. Top-down approaches rely on aggregated data and different drivers (e.g. socio-economic indicators or climate
-data), whereas bottom-up modelling approaches are based on data at an individual building scale and include either
-statistical or engineering based modelling techniques to compute energy demand data of a set of individual buildings
-[@JOHARI_ET_AL_2020]. Various review papers summarize available tools, including their key-features and limitations
-[@JOHARI_ET_AL_2020]. The here presented tool CESAR-P falls within the category of bottom-up modelling approaches. CESAR-P
-uses EnergyPlus as the simulation engine, an open-source building energy simulation software that is widely-used in both
-academia and industry. CESAR-P simplifies the creation of EnergyPlus input files using a set of key parameters which are
-stored in archetypes. The target audience of the software are energy planners, energy utilities, cities and researchers. The time-resolved energy consumption of buildings at large scale that CESAR-P simulates are crucial for developing renewable energy integration and retrofit strategies at different scales, from the building to the neighborhood and city scale. Key features of CESAR-P include: 
+different scenarios (e.g. building retrofits, changing climate). Building energy simulation is an important tool for decision making becasue monitored energy demands are often unavailable. Urban building energy modelling (UBEM) has been established in recent years to support the implementation of energy conservation measures and the integration of renewable energy technologies at city and district scale. UBEM tools can be classified as taking a top-down or a bottom-up modelling approach. Top-down approaches rely on aggregated data and different drivers (e.g. socio-economic indicators or climate data), whereas bottom-up modelling approaches are based on data at an individual building scale and include either statistical or engineering based modelling techniques to compute energy demand data of a set of individual buildings [@JOHARI_ET_AL_2020]. Various review papers summarize available tools, including their key-features and limitations [@JOHARI_ET_AL_2020]. The CESAR-P software, presented in this paper, falls within the category of bottom-up modelling approaches. CESAR-P uses EnergyPlus as the simulation engine, an open-source building energy simulation software that is widely-used in both academia and industry. CESAR-P simplifies the creation of EnergyPlus input files using a set of key parameters which are stored in archetypes. The target audience of the software are energy planners, energy utilities, cities and researchers. The time-resolved energy demand profile of buildings simulated by CESAR-P are crucial for evaluating renewable energy integration and retrofit strategies. 
+CESAR-P can be used for spatial scales ranging from the building to the neighbourhood and city scale. Key features of CESAR-P include: 
 
 - Modelling of indoor temperatures, heating and cooling loads, domestic hot 
   water consumption, electricity consumption, comfort parameters, operational 
@@ -157,7 +142,7 @@ The `SiteVertices.csv` defines the footprints and height of all the buildings on
 | ...        |
 
 The `BuildingInformation.csv` file defines the properties of the buildings. 
-The configuration entry `BLDG_FID_FILE` requires the column `ORIG_FID`, entry `BLDG_TYPE_PER_BLDG_FILE` column `SIA2024BuildingType` and entry `BLDG_AGE_FILE` column `BuildingAge`. This example above includes a few more columns per building, which will be explained further down.
+The configuration entry `BLDG_FID_FILE` requires the column `ORIG_FID`, entry `BLDG_TYPE_PER_BLDG_FILE` column `SIA2024BuildingType` and entry `BLDG_AGE_FILE` column `BuildingAge`. The example above includes a few more columns per building, which will be explained further down.
 Usually you will have one file defining all the properties of your buildings, but the configuration gives you 
 the flexibility to point to separate files for the different building properties and also to map to custom column names to allow using input data files without pre-processing (see the sub-entries for `BLDG_FID_FILE`).
 
@@ -175,12 +160,12 @@ The last required input is the weather data in EnergyPlus epw format, in the exa
 
 The main source for constructional parameters are the archetype definitions (included in the library) and assigned by
 the age of a building. Operational parameters such as occupancy or loads from appliances are based on a Swiss norm
-(SIA2024). A few further parameters and constants can be set in the YMAL configuration. You find an overview of all the
-parameters you can specify in the YAML in
+(SIA2024). Additional parameters and constants can be set in the YMAL configuration. You find an overview of all the
+parameters you can customize in the YAML file
 [cesar-p-config-overview.yaml](https://github.com/hues-platform/cesar-p-core/blob/master/cesar-p-config-overview.yaml).
-You only need to overwrite the properties you want to change in your project specific YAML configuration. The configuration entries should be placed under the correct category, while paying attention to the indentation.  The example below overwrites the following properties:
+You only need to overwrite the parameters you want to change in your project specific YAML configuration. The configuration entries should be placed under the correct category, while paying attention to the indentation.  The example below overwrites the following properties:
 
-- `RANDOM_CONSTRUCTIONS` if set to `True`, CESAR-P randomly chooses one of the available construction archetypes, if
+- `RANDOM_CONSTRUCTIONS` if set to `True`, CESAR-P chooses randomly one of the available construction archetypes, if
   there are several matching the age class of the processed building. 
 - `GLAZING_RATIO_PER_BLDG_FILE` by default the glazing ratio is defined by a lookup based on the age of the buildindg. 
   If you have information of the glazing ratio per building, add this information e.g. to your 
@@ -206,7 +191,7 @@ MAIN_BLDG_SHAPE:
 	MINIMAL_STORY_HEIGHT: 2.2 # meter
 ```
 
-If you need even more customization, you can plug in your own implementation for assignment of the constructional and
+If you need additional customization, you can plug in your own implementation for assignment of the constructional and
 operational parameters per building. See
 [custom_constr_archetype_mapping](https://github.com/hues-platform/cesar-p-usage-examples/tree/master/advanced_examples/custom_constr_archetype_mapping) and
 [operation_params_per_floor](https://github.com/hues-platform/cesar-p-usage-examples/tree/master/advanced_examples/operation_params_per_floor), respectively,
@@ -301,11 +286,8 @@ and
 following more complex rules to decide on retrofit measures. These manager classes are used instead of the
 `SimulationManager` to run your simulations. One can also implement a custom retrofit manager that defines which retrofit measures are carried out on which buildings.
 
-A summary of the simulation results of each scenario is saved to `all_scenarios_result_summary.csvy`. As an example the
-table below shows a comparison of annual specific heating demand for three different scenarios, `orig` being the
-baseline, scenario `roof` where roof construction was retrofitted and `wall_win_groundf` where wall, windows and
-ground floor were retrofitted. Details about retrofit measures, costs and embodied emissions is available in
-`retrofit_log.csv` in each scenario result subfolder. Summarized figures out of those files are included in the table.
+A summary of the simulation results of each scenario is saved to 
+`all_scenarios_result_summary.csvy`. As an example the table below shows a comparison of annual specific heating demand for three different scenarios, `orig` being the baseline, scenario `roof` where roof construction was retrofitted and `wall_win_groundf` where wall, windows and ground floor were retrofitted. Details about retrofit measures, costs and embodied emissions is available in `retrofit_log.csv` in each scenario result subfolder. Summarized figures out of those files are included in the table.
 
 | Building | Scenario         | Heating Annual specific | Retrofit Costs | Retrofit embodied CO2 emissions |
 | -------- | ---------------- | ----------------------- | -------------- | ------------------------------- |
