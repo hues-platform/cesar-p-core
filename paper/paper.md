@@ -54,7 +54,7 @@ strategies specify the frequency of retrofits to the main building elements such
 building stock. The output of the retrofit module include, in addition to the above-mentioned operational indicators,
 costs and embodied emissions of retrofitting interventions. All simulation steps can also be run in parallel on multiple
 cores. The code is platform-independent and is tested to run on Linux and Windows. The source code for CESAR-P has been
-archived to Zenodo: [@cesar-p-zenodo] 
+archived to Zenodo [@cesar-p-zenodo] 
 
 # Statement of need and Key features 
 
@@ -180,7 +180,7 @@ parameters you can specify in the YAML in
 [cesar-p-config-overview.yaml](https://github.com/hues-platform/cesar-p-core/blob/master/cesar-p-config-overview.yaml).
 You only need to overwrite the properties you want to change in your project specific YAML configuration. The configuration entries should be placed under the correct category, while paying attention to the indentation.  The example below overwrites the following properties:
 
-- `RANDOM_CONSTRUCTIONS` if set to `True`, CESAR-P chooses randomly one of the available construction archetypes, if
+- `RANDOM_CONSTRUCTIONS` if set to `True`, CESAR-P randomly chooses one of the available construction archetypes, if
   there are several matching the age class of the processed building. 
 - `GLAZING_RATIO_PER_BLDG_FILE` by default the glazing ratio is defined by a lookup based on the age of the buildindg. 
   If you have information of the glazing ratio per building, add this information e.g. to your 
@@ -334,8 +334,7 @@ see those features in action.
 
 The development of the software CESAR-P has been financially supported by SCCER FEEB&D (CTI.1155000149) and by Empa. We
 acknowledge contributions from Danhong Wang, Jonas Landolt, Georgios Mavromatidis and Portia Murray to CESAR, the
-predecessor version of CESAR-P. We would also like to acknowledge Aaron Bojarski who supported the development of
-CESAR-P and the development of the urban energy simulation ontology. Further we would like to acknowledge Ricardo
+predecessor version of CESAR-P. Further we would like to acknowledge Ricardo
 Parreira da Silva for the implementation of passive cooling features.
 
 # References 
