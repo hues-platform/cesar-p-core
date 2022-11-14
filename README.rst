@@ -101,7 +101,9 @@ Include follwoing information for a bug report:
 References
 ==========
 
-The base methodology of CESAR-P regarding building simulation and retrofit is set up according to CESAR Matlab. For details refer to following documents:
+* Orehounig et al., (2022). CESAR-P: A dynamic urban building energy simulation tool. Journal of Open Source Software, 7(78), 4261, https://doi.org/10.21105/joss.04261
+
+The base methodology of CESAR-P regarding building simulation and retrofit is set up according to CESAR Matlab. For details refer to following publication:
 
 * Danhong Wang, Jonas Landolt, Georgios Mavromatidis, Kristina Orehounig, Jan Carmeliet,
   CESAR: A bottom-up building stock modelling tool for Switzerland to address sustainable energy transformation strategies,
@@ -110,7 +112,6 @@ The base methodology of CESAR-P regarding building simulation and retrofit is se
 
 
 * To cite the CESAR-P OpenSource version:
-
 
   Léonie Fierz, Aaron Bojarski, Urban Energy Systems Lab, Empa. (2022)
   hues-platform/cesar-p-core. Zenodo. https://doi.org/10.5281/zenodo.4682880
