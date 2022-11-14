@@ -2,6 +2,9 @@
 cesar-p - readme
 ================
 
+.. image:: https://joss.theoj.org/papers/10.21105/joss.04261/status.svg
+   :target: https://doi.org/10.21105/joss.04261
+
 CESAR-P (Combined Energy Simulation And Retrofitting - Python) calculates the energy demand for a district or other site with
 a bottom-up approach by using the building simulation tool EnergyPlus. The steps involved are gathering and calculating 
 the parameters per building on your site, generation of the simulation input files (IDF), 
@@ -29,7 +32,6 @@ energy consumption of buildings at large scale to successfully in-tegrate renewa
 develop energy masterplans for neighborhoods and cities.
 
 Full documentation: https://cesar-p-core.readthedocs.io/en/latest/
-
 
 Project Info
 ============
