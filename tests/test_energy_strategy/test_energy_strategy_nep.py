@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -41,13 +41,15 @@ expected_res_folder = os.path.dirname(__file__) / Path("expected_results")
 def ureg():
     return cesarp.common.init_unit_registry()
 
+
 @pytest.fixture
 def custom_conf_nep():
     return {"ENERGY_STRATEGY": {"ENERGY_STRATEGY_SELECTION": "NEP"}}
 
+
 @pytest.fixture
 def nep_es_cfg():
-    return get_selected_energy_strategy_cfg({"ENERGY_STRATEGY":{"ENERGY_STRATEGY_SELECTION": "NEP"}})
+    return get_selected_energy_strategy_cfg({"ENERGY_STRATEGY": {"ENERGY_STRATEGY_SELECTION": "NEP"}})
 
 
 def test_energy_mix_co2_coeffs(ureg, nep_es_cfg):
@@ -76,7 +78,7 @@ def test_system_efficiencies(nep_es_cfg):
 
 def test_fuel_costs(ureg, nep_es_cfg):
     fuel_costs = FuelCosts(ureg, nep_es_cfg)
-    assert fuel_costs.get_fuel_cost_factor(EnergySource.COAL, 2050).m == pytest.approx(10.23/100, abs=0.0001)
+    assert fuel_costs.get_fuel_cost_factor(EnergySource.COAL, 2050).m == pytest.approx(10.23 / 100, abs=0.0001)
 
 
 def test_full_retrofit_rate(custom_conf_nep):
@@ -88,8 +90,7 @@ def test_full_retrofit_rate(custom_conf_nep):
 
 def test_partial_retrofit_rate_withebox(custom_conf_nep):
     ret_rates = RetrofitRates(custom_conf_nep)
-    partial_ret_share_per_ac = ret_rates._get_all_partial_retrofit_shares(sim_year=2020,
-                                                                            bldg_type=BldgType.SFH)
+    partial_ret_share_per_ac = ret_rates._get_all_partial_retrofit_shares(sim_year=2020, bldg_type=BldgType.SFH)
     assert len(partial_ret_share_per_ac) == 4
     for ac, partial_ret_shares in partial_ret_share_per_ac.items():
         assert len(partial_ret_shares) == 15
@@ -112,4 +113,3 @@ def test_partial_retrofit_rate(custom_conf_nep):
     for bldg_elems, ret_rate in partial_ret_rates:
         ret_rate_sum += ret_rate
     assert ret_rate_sum == ret_rates.get_full_retrofit_rate_per_age_class(sim_year=2030, bldg_type=BldgType.SFH)[ac_to_test]
-

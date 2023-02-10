@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -37,8 +37,8 @@ class EnergyTargetLookup:
     def __init__(self, file_path, ureg: pint.UnitRegistry):
         self._ureg = ureg
         self._energy_target_cfg = config_loader.load_config_full(file_path)
-        self.pen_unit = ureg.MJ * ureg.Oileq / ureg.m ** 2 / ureg.year
-        self.co2_unit = ureg.kg * ureg.CO2eq / ureg.m ** 2 / ureg.year
+        self.pen_unit = ureg.MJ * ureg.Oileq / ureg.m**2 / ureg.year
+        self.co2_unit = ureg.kg * ureg.CO2eq / ureg.m**2 / ureg.year
 
     def get_resi_op_pen_target(self, new_bldg: bool) -> pint.Quantity:
         """

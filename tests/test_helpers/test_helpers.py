@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -35,12 +35,7 @@ def compare_folders_recursivly(pathExpected, pathResult):
     foldersAreIdentical = True
     compareRes = filecmp.dircmp(pathExpected, pathResult, ignore=["*.xlsx", "*.html", "*.err"])
 
-    if (
-        compareRes.diff_files
-        or compareRes.funny_files
-        or compareRes.right_only
-        or compareRes.left_only
-    ):
+    if compareRes.diff_files or compareRes.funny_files or compareRes.right_only or compareRes.left_only:
         print("Files diff/funny:")
         print(compareRes.diff_files)
         print(compareRes.funny_files)
@@ -50,14 +45,12 @@ def compare_folders_recursivly(pathExpected, pathResult):
         foldersAreIdentical = False
     for y in compareRes.common_dirs:
         print(y)
-        if not compare_folders_recursivly(
-            os.path.join(pathExpected, y), os.path.join(pathResult, y)
-        ):
+        if not compare_folders_recursivly(os.path.join(pathExpected, y), os.path.join(pathResult, y)):
             foldersAreIdentical = False
     return foldersAreIdentical
 
-def are_files_equal(file_result, file_expected, ignore_line_nrs=None, ignore_case=False, ignore_filesep_mismatch=False,
-                    ignore_changing_config=False):
+
+def are_files_equal(file_result, file_expected, ignore_line_nrs=None, ignore_case=False, ignore_filesep_mismatch=False, ignore_changing_config=False):
     if ignore_line_nrs is None:
         ignore_line_nrs = []
     res = list(open(file_result))
@@ -84,11 +77,10 @@ def are_files_equal(file_result, file_expected, ignore_line_nrs=None, ignore_cas
             if any([to_ignore in res_line_to_cmp for to_ignore in keys_to_ignore]):
                 print(f"Ignoring line nr with changing config {i+1}:\n{res_line_to_cmp}")
                 continue
-        if res_line_to_cmp != exp_line_to_cmp\
-                and i+1 not in ignore_line_nrs:
+        if res_line_to_cmp != exp_line_to_cmp and i + 1 not in ignore_line_nrs:
             files_equal = False
-            print("Line Nr ", i+1, "not ok")
-            print(f'RESULT:\t\t {res_line.strip()}')
-            print(f'EXPECTED:\t {exp[i].strip()}')
+            print("Line Nr ", i + 1, "not ok")
+            print(f"RESULT:\t\t {res_line.strip()}")
+            print(f"EXPECTED:\t {exp[i].strip()}")
 
     return files_equal

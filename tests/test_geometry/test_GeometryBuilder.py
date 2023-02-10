@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -41,21 +41,18 @@ _test_bldg_small_walls_input_data["height"] = 12.6
 
 _set_glz_ratio = 0.16
 
+
 def stub_get_adjacent_footprint_vertices_for_test_bldg(main_bldg, neighbours):
     return [pd.DataFrame({"x": [0, 25], "y": [10, 10]})]
+
 
 def stub_no_adjacencies(main_bldg, neighbours):
     return [pd.DataFrame()]
 
+
 @pytest.fixture
 def bldg_shape():
-    return cesarp.geometry.building.create_bldg_shape_detailed(
-            _test_bldg_input_data,
-            _set_glz_ratio,
-            stub_get_adjacent_footprint_vertices_for_test_bldg,
-            [],
-            custom_config={}
-            )
+    return cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, _set_glz_ratio, stub_get_adjacent_footprint_vertices_for_test_bldg, [], custom_config={})
 
 
 @pytest.fixture
@@ -65,14 +62,7 @@ def flat_site_vertices():
 
 
 def test_glazing_ratio_check_exception(bldg_shape, flat_site_vertices):
-    custom_cfg = {"GEOMETRY":
-                    {"MAIN_BLDG_SHAPE":
-                        {"GLAZING_RATIO_CHECK":
-                            {
-                                "ALLOWED_GLZ_RATIO_DEV": 0.01,
-                                "EXCEPTION_ON_MISMATCH": True,
-                                "DO_CHECK_BLD_WITH_ADJACENCIES": True
-                            }}}}
+    custom_cfg = {"GEOMETRY": {"MAIN_BLDG_SHAPE": {"GLAZING_RATIO_CHECK": {"ALLOWED_GLZ_RATIO_DEV": 0.01, "EXCEPTION_ON_MISMATCH": True, "DO_CHECK_BLD_WITH_ADJACENCIES": True}}}}
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices)
     geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, custom_cfg)
     with pytest.raises(CesarpException):
@@ -80,14 +70,7 @@ def test_glazing_ratio_check_exception(bldg_shape, flat_site_vertices):
 
 
 def test_glz_ratio_check_logging(bldg_shape, flat_site_vertices, caplog):
-    custom_cfg = {"GEOMETRY":
-                    {"MAIN_BLDG_SHAPE":
-                        {"GLAZING_RATIO_CHECK":
-                            {
-                                "ALLOWED_GLZ_RATIO_DEV": 0.01,
-                                "EXCEPTION_ON_MISMATCH": True,
-                                "DO_CHECK_BLD_WITH_ADJACENCIES": False
-                            }}}}
+    custom_cfg = {"GEOMETRY": {"MAIN_BLDG_SHAPE": {"GLAZING_RATIO_CHECK": {"ALLOWED_GLZ_RATIO_DEV": 0.01, "EXCEPTION_ON_MISMATCH": True, "DO_CHECK_BLD_WITH_ADJACENCIES": False}}}}
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices)
     geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, custom_cfg)
 
@@ -96,14 +79,7 @@ def test_glz_ratio_check_logging(bldg_shape, flat_site_vertices, caplog):
 
 
 def test_glz_ratio_check_ignore_adjacent_bldg(bldg_shape, flat_site_vertices):
-    custom_cfg = {"GEOMETRY":
-                    {"MAIN_BLDG_SHAPE":
-                        {"GLAZING_RATIO_CHECK":
-                            {
-                                "ALLOWED_GLZ_RATIO_DEV": 0.01,
-                                "EXCEPTION_ON_MISMATCH": True,
-                                "DO_CHECK_BLD_WITH_ADJACENCIES": False
-                            }}}}
+    custom_cfg = {"GEOMETRY": {"MAIN_BLDG_SHAPE": {"GLAZING_RATIO_CHECK": {"ALLOWED_GLZ_RATIO_DEV": 0.01, "EXCEPTION_ON_MISMATCH": True, "DO_CHECK_BLD_WITH_ADJACENCIES": False}}}}
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices)
     geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, custom_cfg)
 
@@ -112,28 +88,18 @@ def test_glz_ratio_check_ignore_adjacent_bldg(bldg_shape, flat_site_vertices):
 
 
 def test_glz_ratio_check_walls_too_small(flat_site_vertices, caplog):
-    custom_cfg = {"GEOMETRY":
-                    {"MAIN_BLDG_SHAPE":
-                        {"GLAZING_RATIO_CHECK":
-                            {
-                                "ALLOWED_GLZ_RATIO_DEV": 0.005,
-                                "EXCEPTION_ON_MISMATCH": False,
-                                "DO_CHECK_BLD_WITH_ADJACENCIES": False
-                            },
-                        "WINDOW":
-                            {
-                                "MIN_WALL_WIDTH_FOR_WINDOW":  0.5,  # meter
-                                "MIN_WINDOW_WIDTH":           0.08 # meter
-                            }
-                        }}}
+    custom_cfg = {
+        "GEOMETRY": {
+            "MAIN_BLDG_SHAPE": {
+                "GLAZING_RATIO_CHECK": {"ALLOWED_GLZ_RATIO_DEV": 0.005, "EXCEPTION_ON_MISMATCH": False, "DO_CHECK_BLD_WITH_ADJACENCIES": False},
+                "WINDOW": {"MIN_WALL_WIDTH_FOR_WINDOW": 0.5, "MIN_WINDOW_WIDTH": 0.08},  # meter  # meter
+            }
+        }
+    }
 
     bldg_shape_small_walls = cesarp.geometry.building.create_bldg_shape_detailed(
-            _test_bldg_small_walls_input_data,
-            _set_glz_ratio,
-            stub_no_adjacencies,
-            [],
-            custom_config=custom_cfg
-            )
+        _test_bldg_small_walls_input_data, _set_glz_ratio, stub_no_adjacencies, [], custom_config=custom_cfg
+    )
 
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices)
     geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, custom_cfg)

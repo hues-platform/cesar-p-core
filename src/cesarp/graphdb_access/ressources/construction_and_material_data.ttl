@@ -22952,9 +22952,9 @@ ues:Source rdfs:comment "An energy source" .
   ues:hasMinValue "2010"^^xsd:int .
 
 <http://uesl_data/sources/archetypes/aoc_ranges/-1918> ues:hasMaxValue "1918"^^xsd:int;
-  ues:hasMinValue "-"^^xsd:int .
+  ues:hasMinValue "-"^^xsd:string .
 
-<http://uesl_data/sources/archetypes/aoc_ranges/2015-> ues:hasMaxValue "-"^^xsd:int;
+<http://uesl_data/sources/archetypes/aoc_ranges/2015-> ues:hasMaxValue "-"^^xsd:string;
   ues:hasMinValue "2015"^^xsd:int .
 
 <http://uesl_data/sources/archetypes/gr_ranges/10-16> ues:hasMaxValue "16"^^xsd:int;

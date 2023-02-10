@@ -1,6 +1,14 @@
 # This is an overview of all possible configuration parameters. It will not automatically be updated when configuration parameters for a package are added.
 # This file has been created with the script cesar-p-usage-examples/development_scripts/combine_all_config_files.py
 
+METADATA: # metadata for default CONSTRUCTION config parameters
+  SOURCE:
+    - embodied co2 and pen for window frame were looked up in KBOB 2014, assuming wood-aluminium frame
+    - Installation characteristic, shading parameters, frame properties were transfered from hard-coded values
+      in matlab cesar version.
+      Window dividers were removed from the model (as most buildings probably have
+      no frame dividers nowadays and adding fixed dividers for all buildings adds thus more inaccuracy and uncertainity
+      than it helps to get more accurate results.)
 CONSTRUCTION:
     # source for constructional data such as materials;
     # Options
@@ -37,7 +45,7 @@ CONSTRUCTION:
         SHADING_OBJ_ROOF:
             diffuse_solar_reflectance_unglazed_part: 0.15 diffuse_solar_reflectance
             diffuse_visible_reflectance_unglazed_part: 0.1 diffuse_visible_reflectance
-            glazing_ratio: 0 dimensionless 
+            glazing_ratio: 0 dimensionless
 
 # energy strategy defines different constants used for operational cost and emission calculation and retrofitting with the EnergyPerspective2050RetrofitManager
 # each strategy defines a number of time periods, some of the linked files do then specify the parameters per time period
@@ -246,7 +254,7 @@ GRAPHDB_ACCESS:
         ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2015_concrete_med_ins"
         WALL: "http://uesl_data/sources/archetypes/walls/Wall2015_flumroc_B335"
         GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2015_concrete_slab_medium_med_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2015_LowE_Xenon_Double" 
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2015_LowE_Xenon_Double"
 
 # PATHES: all following folders are relative to the basepath of the project, which is passed as a parameter when initializing SimulationManager 
 #         respectively the scenario folder in case when using the ProjectManager
@@ -370,7 +378,7 @@ MANAGER:
                 gis_fid: "ORIG_FID"
                 weather: "WEATHER"
         WEATHER_FILES_FOLDER: "./weather_files"
- 
+
 OPERATION:
   # Parameters for night ventilation, same parameters for all buildings are used 
   # (see PassiveCoolingOperationFactory, which is used by FixedBuildingOperationFactory as well as SIA2024Facade)
@@ -418,7 +426,7 @@ OPERATION:
       SEPARATOR: ","
       NUM_OF_HEADER_ROWS: 0  # no header assumed
       DATA_COLUMN: 1  # we assume each profile in its own file with only one column
-
+      
 RETROFIT:
   # in case buildings are retrofitted, infiltration rate is set to this value
   # indiependent of the original infiltration rate that was set in the BuildingModel 

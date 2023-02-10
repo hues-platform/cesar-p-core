@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -33,17 +33,18 @@ from tests.test_helpers import test_helpers
 _TESTFIXTURE_FOLDER = os.path.dirname(__file__) / Path("testfixture")
 _TEST_WEATHER_FILE_PATH = str(os.path.dirname(__file__) / Path("testfixture") / Path("sample_case") / Path("Zurich_1.epw"))
 
+
 @pytest.fixture(scope="module")
 def ep_version_setup():
     try:
-        previous_set_ver = os.environ['ENERGYPLUS_VER']
+        previous_set_ver = os.environ["ENERGYPLUS_VER"]
     except KeyError:
         previous_set_ver = None
 
-    os.environ['ENERGYPLUS_VER'] = "8.5"
+    os.environ["ENERGYPLUS_VER"] = "8.5"
     yield None
     if previous_set_ver:
-        os.environ['ENERGYPLUS_VER'] = previous_set_ver
+        os.environ["ENERGYPLUS_VER"] = previous_set_ver
 
 
 @pytest.fixture
@@ -53,6 +54,7 @@ def result_main_folder():
     os.mkdir(result_main_folder)
     yield result_main_folder
     shutil.rmtree(result_main_folder, ignore_errors=True)
+
 
 @pytest.fixture
 def default_main_cfg():
@@ -75,7 +77,7 @@ def config_many_vertices():
     config["MANAGER"]["BUILDING_OPERATION_FACTORY_CLASS"] = "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
     config["CONSTRUCTION"] = {"CONSTRUCTION_DB": "GRAPH_DB"}
     config["OPERATION"] = {"WINDOW_SHADING_CONTROL": {"ACTIVE": True}, "NIGHT_VENTILATION": {"ACTIVE": True}}
-    config["GEOMETRY"] = {"MAIN_BLDG_SHAPE":{"WINDOW": {"MIN_WALL_WIDTH_FOR_WINDOW":  0.09, "MIN_WINDOW_WIDTH": 0.01, "WINDOW_FRAME": {"WIDTH": 0.002}}}}
+    config["GEOMETRY"] = {"MAIN_BLDG_SHAPE": {"WINDOW": {"MIN_WALL_WIDTH_FOR_WINDOW": 0.09, "MIN_WINDOW_WIDTH": 0.01, "WINDOW_FRAME": {"WIDTH": 0.002}}}}
     return config
 
 
@@ -84,12 +86,12 @@ def test_window_shading(result_main_folder, default_main_cfg, ep_version_setup):
     all_config = cesarp.common.load_config_full(default_main_cfg)
     if "EPLUS_ADAPTER" not in all_config.keys():
         all_config["EPLUS_ADAPTER"] = {}
-    #all_config["OPERATION"]= {"WINDOW_SHADING_CONTROL": {"ACTIVE": True}}
+    # all_config["OPERATION"]= {"WINDOW_SHADING_CONTROL": {"ACTIVE": True}}
     if "GEOMETRY" not in all_config.keys():
         all_config["GEOMETRY"] = {}
     if "NEIGHBOURHOIOD" not in all_config["GEOMETRY"].keys():
         all_config["GEOMETRY"]["NEIGHBOURHOOD"] = {}
-    all_config["GEOMETRY"]["NEIGHBOURHOOD"]["RADIUS"] = 0 # to get less complicated IDF
+    all_config["GEOMETRY"]["NEIGHBOURHOOD"]["RADIUS"] = 0  # to get less complicated IDF
     base_folder = str(result_main_folder / Path("win_shading_ep85"))
     sim_manager = SimulationManager(base_folder, all_config, cesarp.common.init_unit_registry(), fids_to_use=[4])
 

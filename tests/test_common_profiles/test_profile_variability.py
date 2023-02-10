@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -23,11 +23,12 @@ import logging
 import pytest
 from cesarp.common.profiles import profile_variability
 
+
 def test_randomize_vertical():
-    variable_vals = profile_variability.randomize_vertical([0.8]*12, 0.15)
+    variable_vals = profile_variability.randomize_vertical([0.8] * 12, 0.15)
     assert len(variable_vals) == 12
     for val in variable_vals:
-        assert 0.8-0.15 <= val and 0.8+0.15 > val
+        assert 0.8 - 0.15 <= val and 0.8 + 0.15 > val
 
 
 def test_randomize_vertical_limit_max():
@@ -38,7 +39,7 @@ def test_randomize_vertical_limit_max():
 
 
 def test_horizontal_variability():
-    profile = [h for h in range(1,25)] * 365
+    profile = [h for h in range(1, 25)] * 365
     assert len(profile) == 8760
     breaks = [8, 17, 24]
     profile_shuffled = profile_variability.horizontal_variability(profile, breaks)
@@ -46,17 +47,17 @@ def test_horizontal_variability():
     assert profile_shuffled != profile
     break_start_hour = 1
     for break_hour in breaks:
-        profile_block = profile_shuffled[break_start_hour - 1:break_hour]
+        profile_block = profile_shuffled[break_start_hour - 1 : break_hour]
         print(profile_block)
-        print(f'unshuffled would be {[i for i in range(break_start_hour,break_hour+1)]}')
-        assert profile_block != [i for i in range(break_start_hour,break_hour+1)]
+        print(f"unshuffled would be {[i for i in range(break_start_hour,break_hour+1)]}")
+        assert profile_block != [i for i in range(break_start_hour, break_hour + 1)]
         assert max(profile_block) == break_hour
         assert min(profile_block) == break_start_hour
-        break_start_hour = break_hour+1
+        break_start_hour = break_hour + 1
 
 
 def test_horizontal_variability_span_overnight():
-    profile = [h for h in range(1,25)] * 365
+    profile = [h for h in range(1, 25)] * 365
     assert len(profile) == 8760
     breaks = [8, 21]
     profile_shuffled = profile_variability.horizontal_variability(profile, breaks)
@@ -64,28 +65,28 @@ def test_horizontal_variability_span_overnight():
     assert len(profile_shuffled) == len(profile)
     assert profile_shuffled != profile
 
-    very_first_block_expected = list(range(1,9))
-    very_last_block_expected = list(range(21,25))
+    very_first_block_expected = list(range(1, 9))
+    very_last_block_expected = list(range(21, 25))
     overnight_values_expected = very_first_block_expected + very_last_block_expected
-    middle_block_expected = list(range(9,22))
-    logging.debug(f'very first block {profile_shuffled[0:8]}')
-    logging.debug(f'first overnight block {profile_shuffled[21:24 + 8]}, {len(profile_shuffled[21:24 + 8])}')
-    logging.debug(f'first middle block {profile_shuffled[24 + 9:24 + 22]}, {len(profile_shuffled[24 + 9:24 + 22])}')
-    logging.debug(f'third or so overnight block {profile_shuffled[69:79]}, {len(profile_shuffled[69:79])}')
-    logging.debug(f'third or so middle block {profile_shuffled[80:93]}, {len(profile_shuffled[80:93])}')
-    logging.debug(f'forth or so overnight block {profile_shuffled[94:94 + 11]}, {len(profile_shuffled[94:94 + 11])}')
-    logging.debug(f'very last block {profile_shuffled[-3:len(profile_shuffled)]}')
+    middle_block_expected = list(range(9, 22))
+    logging.debug(f"very first block {profile_shuffled[0:8]}")
+    logging.debug(f"first overnight block {profile_shuffled[21:24 + 8]}, {len(profile_shuffled[21:24 + 8])}")
+    logging.debug(f"first middle block {profile_shuffled[24 + 9:24 + 22]}, {len(profile_shuffled[24 + 9:24 + 22])}")
+    logging.debug(f"third or so overnight block {profile_shuffled[69:79]}, {len(profile_shuffled[69:79])}")
+    logging.debug(f"third or so middle block {profile_shuffled[80:93]}, {len(profile_shuffled[80:93])}")
+    logging.debug(f"forth or so overnight block {profile_shuffled[94:94 + 11]}, {len(profile_shuffled[94:94 + 11])}")
+    logging.debug(f"very last block {profile_shuffled[-3:len(profile_shuffled)]}")
 
     assert all(item in very_first_block_expected for item in profile_shuffled[0:8])
-    assert all(item in overnight_values_expected for item in profile_shuffled[21:24+8])
-    assert all(item in middle_block_expected for item in profile_shuffled[24+9:24+21])
+    assert all(item in overnight_values_expected for item in profile_shuffled[21 : 24 + 8])
+    assert all(item in middle_block_expected for item in profile_shuffled[24 + 9 : 24 + 21])
     assert all(item in overnight_values_expected for item in profile_shuffled[69:79])
     assert all(item in middle_block_expected for item in profile_shuffled[80:93])
     assert all(item in middle_block_expected for item in profile_shuffled[80:93])
-    assert all(item in very_last_block_expected for item in profile_shuffled[-3:len(profile_shuffled)])
+    assert all(item in very_last_block_expected for item in profile_shuffled[-3 : len(profile_shuffled)])
 
 
-def test_triang_dist():   
+def test_triang_dist():
     orig_min = 30
     orig_max = 70
     peak = 40
@@ -93,7 +94,7 @@ def test_triang_dist():
     assert x[0] == pytest.approx(22.980869, abs=0.00001)
     assert x[1] == pytest.approx(80.8783009, abs=0.00001)
 
-    # MATLAB call & solution 
+    # MATLAB call & solution
     # x0 = [30 - 1, 70 + 1]
     # [x, z, exitflag]=fsolve(@(x)my_triang(x, 30, 70, 40), x0)
     # x = 22.9809   80.8792

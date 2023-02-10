@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -25,6 +25,7 @@ from tests.test_helpers.mock_objects_generator import get_mock_wall_construction
 from cesarp.retrofit.embodied.RetrofitEmbodiedEmissions import RetrofitEmbodiedEmissions
 from cesarp.model.WindowConstruction import WindowConstruction, WindowGlassConstruction
 
+
 def test_retrofit_embodied_emissions_lookup_opaque_bldg_elem():
     ureg = cesarp.common.init_unit_registry()
     mock_wall = get_mock_wall_construction_for_emission_calc(ureg)
@@ -37,8 +38,8 @@ def test_retrofit_embodied_emissions_lookup_opaque_bldg_elem():
     co2_l2 = 3 * ureg.kg * ureg.CO2eq / ureg.kg * density_l2
     pen_l1_l3 = 2 * ureg.MJ * ureg.Oileq / ureg.kg * density_l1_l3
     pen_l2 = 6 * ureg.MJ * ureg.Oileq / ureg.kg * density_l2
-    expected_pen = ( 0.5 * ureg.m * pen_l2 + 0.1 * ureg.m * pen_l1_l3).to(pen_res_unit)
-    expected_co2 = ( 0.5 * ureg.m * co2_l2 + 0.1 * ureg.m * co2_l1_l3).to(co2_res_unit)
+    expected_pen = (0.5 * ureg.m * pen_l2 + 0.1 * ureg.m * pen_l1_l3).to(pen_res_unit)
+    expected_co2 = (0.5 * ureg.m * co2_l2 + 0.1 * ureg.m * co2_l1_l3).to(co2_res_unit)
 
     res_pen = ret_em.get_constr_ret_emb_non_renewable_pen(mock_wall)
     assert res_pen.u == pen_res_unit
@@ -47,18 +48,20 @@ def test_retrofit_embodied_emissions_lookup_opaque_bldg_elem():
     assert res_co2.u == co2_res_unit
     assert res_co2.m == pytest.approx(expected_co2.m)
 
+
 def test_win_glass_emissions():
     ureg = cesarp.common.init_unit_registry()
     ret_em = RetrofitEmbodiedEmissions(ureg)
-    win_glass_emb_co2 = 32.2  * ureg.kg * ureg.CO2eq / ureg.m ** 2
+    win_glass_emb_co2 = 32.2 * ureg.kg * ureg.CO2eq / ureg.m**2
     test_win = WindowConstruction(
         frame=None,
-        glass=WindowGlassConstruction(name="http://uesl_data/sources/archetypes/windows/Window2001_LowE_Xenon_Double",
-                                      layers= None,
-                                      emb_co2_emission_per_m2 = win_glass_emb_co2,
-                                      emb_non_ren_primary_energy_per_m2 = None
-                                      ),
-        shade=None
+        glass=WindowGlassConstruction(
+            name="http://uesl_data/sources/archetypes/windows/Window2001_LowE_Xenon_Double",
+            layers=None,
+            emb_co2_emission_per_m2=win_glass_emb_co2,
+            emb_non_ren_primary_energy_per_m2=None,
+        ),
+        shade=None,
     )
     assert ret_em.get_win_ret_glass_emb_co2(test_win) == win_glass_emb_co2
     assert ret_em.get_win_ret_glass_emb_non_renewable_pen(test_win) == None

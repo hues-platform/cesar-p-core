@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -65,7 +65,7 @@ def check_eplus_error_level(eplus_err_file: Union[str, Path]) -> EplusErrorLevel
             identifier_to_search = bytearray(map(ord, eplusout_err_identifiers[err_level_key]))
             if err_level_key == EplusErrorLevel.WARNING:
                 # match ** Warning **, but not ** Warning ** -- IP Note
-                the_regex = re.compile(br"(?!\s*\*\*\sWarning\s\*\*\s+.*IP:\sNote\s+--.*)(?=\s*\*\*\sWarning\s\*\*\.*).*")
+                the_regex = re.compile(rb"(?!\s*\*\*\sWarning\s\*\*\s+.*IP:\sNote\s+--.*)(?=\s*\*\*\sWarning\s\*\*\.*).*")
                 if re.search(the_regex, err_file_content):  # type: ignore
                     return EplusErrorLevel.WARNING
             elif err_file_content.find(identifier_to_search) != -1:

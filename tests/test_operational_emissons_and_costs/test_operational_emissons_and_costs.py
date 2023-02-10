@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -45,25 +45,16 @@ def test_emissions_and_costs(ureg):
     :return:
     """
     EL = "electricity"
-    HEATING="heating"
-    DHW="dhw"
-    TOT="total"
+    HEATING = "heating"
+    DHW = "dhw"
+    TOT = "total"
     chf_year = ureg.CHF / ureg.year
     # expected results as were calculated by matlab
-    expected_fuel_costs_fid_2 = {HEATING: 19840.28747 * chf_year,
-                                 DHW: 2150.536616 * chf_year,
-                                 EL: 18348.015 * chf_year
-                                 }
+    expected_fuel_costs_fid_2 = {HEATING: 19840.28747 * chf_year, DHW: 2150.536616 * chf_year, EL: 18348.015 * chf_year}
     expected_pen_unit = ureg.MJ * ureg.Oileq / ureg.m**2 / ureg.year
     expected_co2_emission_unit = ureg.kg * ureg.CO2eq / ureg.m**2 / ureg.year
-    expected_pen_fid_2 = {HEATING: 766.8884093,
-                          DHW: 83.12966182,
-                          EL: 545.006484,
-                          TOT: 1395.024555}
-    expected_co2_emisson_fid_2 = {HEATING: 51.74938047,
-                                  DHW: 5.609562545,
-                                  EL: 8.55846684,
-                                  TOT: 65.91740985}
+    expected_pen_fid_2 = {HEATING: 766.8884093, DHW: 83.12966182, EL: 545.006484, TOT: 1395.024555}
+    expected_co2_emisson_fid_2 = {HEATING: 51.74938047, DHW: 5.609562545, EL: 8.55846684, TOT: 65.91740985}
 
     # demand values for fid 2 of example site wiht 9 buildning, neighbour radios 100
     kWh_per_year = ureg.kW * ureg.h / ureg.year
@@ -78,15 +69,17 @@ def test_emissions_and_costs(ureg):
     tot_el_demand = 71953 * kWh_per_year
     op_calc = OperationalEmissionsAndCosts(ureg)
 
-    op_consumption_res = op_calc.get_operational_emissions_and_costs(specific_dhw_demand=dhw_demand,
-                                                total_dhw_demand=tot_dhw_demand,
-                                                dhw_carrier=dhw_carrier,
-                                                specific_heating_demand=heating_demand,
-                                                total_heating_demand=tot_heating_demand,
-                                                heating_carrier=heating_carrier,
-                                                specific_electricity_demand=el_demand,
-                                                total_electricity_demand=tot_el_demand,
-                                                sim_year=2015)
+    op_consumption_res = op_calc.get_operational_emissions_and_costs(
+        specific_dhw_demand=dhw_demand,
+        total_dhw_demand=tot_dhw_demand,
+        dhw_carrier=dhw_carrier,
+        specific_heating_demand=heating_demand,
+        total_heating_demand=tot_heating_demand,
+        heating_carrier=heating_carrier,
+        specific_electricity_demand=el_demand,
+        total_electricity_demand=tot_el_demand,
+        sim_year=2015,
+    )
 
     # FUEL COSTS
     assert op_consumption_res.heating_system.fuel_cost.u == expected_fuel_costs_fid_2[HEATING].u
@@ -122,9 +115,9 @@ def test_emissions_and_costs_no_ec(ureg):
     test that emission and costs are zero if no ennergy carrier for heating and dhw were chosen
     """
     EL = "electricity"
-    HEATING="heating"
-    DHW="dhw"
-    TOT="total"
+    HEATING = "heating"
+    DHW = "dhw"
+    TOT = "total"
     # expected results as were calculated by matlab
     expected_pen_unit = ureg.MJ * ureg.Oileq / ureg.m**2 / ureg.year
     expected_co2_emission_unit = ureg.kg * ureg.CO2eq / ureg.m**2 / ureg.year
@@ -143,15 +136,17 @@ def test_emissions_and_costs_no_ec(ureg):
     tot_el_demand = 71953 * kWh_per_year
     op_calc = OperationalEmissionsAndCosts(ureg)
 
-    op_consumption_res = op_calc.get_operational_emissions_and_costs(specific_dhw_demand=dhw_demand,
-                                                total_dhw_demand=tot_dhw_demand,
-                                                dhw_carrier=dhw_carrier,
-                                                specific_heating_demand=heating_demand,
-                                                total_heating_demand=tot_heating_demand,
-                                                heating_carrier=heating_carrier,
-                                                specific_electricity_demand=el_demand,
-                                                total_electricity_demand=tot_el_demand,
-                                                sim_year=2015)
+    op_consumption_res = op_calc.get_operational_emissions_and_costs(
+        specific_dhw_demand=dhw_demand,
+        total_dhw_demand=tot_dhw_demand,
+        dhw_carrier=dhw_carrier,
+        specific_heating_demand=heating_demand,
+        total_heating_demand=tot_heating_demand,
+        heating_carrier=heating_carrier,
+        specific_electricity_demand=el_demand,
+        total_electricity_demand=tot_el_demand,
+        sim_year=2015,
+    )
 
     # FUEL COSTS
     assert op_consumption_res.heating_system.fuel_cost.u == expected_fuel_cost_unit

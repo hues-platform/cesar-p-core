@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -41,13 +41,16 @@ expected_res_folder = os.path.dirname(__file__) / Path("expected_results")
 def ureg():
     return cesarp.common.init_unit_registry()
 
+
 @pytest.fixture
 def custom_conf_wwb():
     return {"ENERGY_STRATEGY": {"ENERGY_STRATEGY_SELECTION": "WWB"}}
 
+
 @pytest.fixture
 def wwb_es_cfg():
-    return get_selected_energy_strategy_cfg({"ENERGY_STRATEGY":{"ENERGY_STRATEGY_SELECTION": "WWB"}})
+    return get_selected_energy_strategy_cfg({"ENERGY_STRATEGY": {"ENERGY_STRATEGY_SELECTION": "WWB"}})
+
 
 def test_energy_mix_co2_coeffs(ureg, wwb_es_cfg):
     energy_mix = EnergyMix(ureg, wwb_es_cfg)
@@ -68,11 +71,7 @@ def test_energy_mix_pen_factors(ureg, wwb_es_cfg):
 
 
 def test_time_period_in_mix_file_missing(ureg):
-    custom_config = {"ENERGY_STRATEGY": {
-                                         "ENERGY_STRATEGY_SELECTION": "WWB",
-                                         "WWB": {"TIME_PERIODS": ["2015", "2020", "2060", "2080"]}
-                                         }
-                     }
+    custom_config = {"ENERGY_STRATEGY": {"ENERGY_STRATEGY_SELECTION": "WWB", "WWB": {"TIME_PERIODS": ["2015", "2020", "2060", "2080"]}}}
     es_cfg = get_selected_energy_strategy_cfg(custom_config)
     with pytest.raises(EnergyMixInputDataBad):
         energy_mix = EnergyMix(unit_registry=ureg, energy_strategy_config=es_cfg)
@@ -86,7 +85,7 @@ def test_system_efficiencies(wwb_es_cfg):
 
 def test_fuel_costs(ureg, wwb_es_cfg):
     fuel_costs = FuelCosts(ureg, wwb_es_cfg)
-    assert fuel_costs.get_fuel_cost_factor(EnergySource.COAL, 2050).m == pytest.approx(7.22/100, abs=0.0001)
+    assert fuel_costs.get_fuel_cost_factor(EnergySource.COAL, 2050).m == pytest.approx(7.22 / 100, abs=0.0001)
 
 
 def test_full_retrofit_rate(custom_conf_wwb):
@@ -98,8 +97,7 @@ def test_full_retrofit_rate(custom_conf_wwb):
 
 def test_partial_retrofit_rate_withebox(custom_conf_wwb):
     ret_rates = RetrofitRates(custom_conf_wwb)
-    partial_ret_share_per_ac = ret_rates._get_all_partial_retrofit_shares(sim_year=2020,
-                                                                            bldg_type=BldgType.SFH)
+    partial_ret_share_per_ac = ret_rates._get_all_partial_retrofit_shares(sim_year=2020, bldg_type=BldgType.SFH)
     assert len(partial_ret_share_per_ac) == 4
     for ac, partial_ret_shares in partial_ret_share_per_ac.items():
         assert len(partial_ret_shares) == 15
@@ -122,4 +120,3 @@ def test_partial_retrofit_rate(custom_conf_wwb):
     for bldg_elems, ret_rate in partial_ret_rates:
         ret_rate_sum += ret_rate
     assert ret_rate_sum == ret_rates.get_full_retrofit_rate_per_age_class(sim_year=2030, bldg_type=BldgType.SFH)[ac_to_test]
-

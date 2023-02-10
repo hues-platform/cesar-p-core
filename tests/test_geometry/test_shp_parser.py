@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -29,7 +29,7 @@ from tests.test_helpers.test_helpers import are_files_equal
 
 
 def test_shp_sitevertices_parser():
-    """ just a simple test if reading works... not really testing if data is read correctly """
+    """just a simple test if reading works... not really testing if data is read correctly"""
 
     try:
         import geopandas
@@ -41,13 +41,11 @@ def test_shp_sitevertices_parser():
     # required columns available?
     assert set(sitevertices.columns) == set(_REQUIRED_SITEVERTICES_PD_COLUMNS)
     # minimum is 5 vertices per building, as the startpoint must be repeated at the end
-    assert sitevertices['gis_fid'].value_counts().min() >= 5
+    assert sitevertices["gis_fid"].value_counts().min() >= 5
     # check if the height is always the same for the same building fid
-    assert all(len(set(sitevertices[sitevertices['gis_fid']==fid]['height'])) == 1 for fid in set(sitevertices['gis_fid']))
+    assert all(len(set(sitevertices[sitevertices["gis_fid"] == fid]["height"])) == 1 for fid in set(sitevertices["gis_fid"]))
     temp_vertices_from_shp_file = "./temp_vertices_from_shp.csv"
     sitevertices.to_csv(temp_vertices_from_shp_file, index=False)
-    expected_sitevertices_file =  os.path.dirname(__file__) / Path("./expected_results/shp/SiteVerticesReadFromShp.csv")
+    expected_sitevertices_file = os.path.dirname(__file__) / Path("./expected_results/shp/SiteVerticesReadFromShp.csv")
     assert are_files_equal(temp_vertices_from_shp_file, expected_sitevertices_file), "SiteVertices generated from shp file not as expected."
     os.remove(temp_vertices_from_shp_file)
-
-

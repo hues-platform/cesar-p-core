@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -26,12 +26,13 @@ def test_idf_batches_create():
     batches = define_fid_batches(range(1, 1000), 30)
     assert batches[0] == range(1, 35)
     for i in range(1, 29):
-        assert batches[i] == range(i*34+1, (i+1)*34+1)
+        assert batches[i] == range(i * 34 + 1, (i + 1) * 34 + 1)
     assert batches[29] == range(987, 1000)
+
 
 def test_batches_small_nr_of_bldgs():
     batches = define_fid_batches(range(1, 33), 30)
     assert batches[0] == range(1, 11)
     assert batches[1] == range(11, 21)
     assert batches[2] == range(21, 31)
-    assert batches[3] == range(31, 33)    
+    assert batches[3] == range(31, 33)

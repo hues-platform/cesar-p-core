@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -87,19 +87,19 @@ class SIA2024DataAccessor:
         self.ventilation_rate_per_m2_nominal = self.__extract_from_raw_data(
             self._cfg_sia_sheet["VENTILATION_RATE_PER_M2_NOMINAL"],
             has_unit=True,
-            convert_to_unit=self.ureg.m ** 3 / self.ureg.seconds / self.ureg.m ** 2,
+            convert_to_unit=self.ureg.m**3 / self.ureg.seconds / self.ureg.m**2,
         )
         self.ventilation_rate_per_p_nominal = self.__extract_from_raw_data(
             self._cfg_sia_sheet["VENTILATION_RATE_PER_P_NOMINAL"],
             has_unit=True,
             additional_unit=1 / self.ureg.person,
-            convert_to_unit=self.ureg.m ** 3 / self.ureg.seconds / self.ureg.person,
+            convert_to_unit=self.ureg.m**3 / self.ureg.seconds / self.ureg.person,
         )
         self.ventilation_rate_night_per_p_nominal = self.__extract_from_raw_data(
             self._cfg_sia_sheet["VENTILATION_RATE_NIGHT_PER_P_NOMINAL"],
             has_unit=True,
             additional_unit=1 / self.ureg.person,
-            convert_to_unit=self.ureg.m ** 3 / (self.ureg.seconds * self.ureg.person),
+            convert_to_unit=self.ureg.m**3 / (self.ureg.seconds * self.ureg.person),
         )
         self.dhw_power_per_area_triple = self.__extract_triple_from_raw_data(self._cfg_sia_sheet["DHW_POWER_PER_AREA"], has_unit=True)
         self.dhw_liter_per_day_pp_triple = self.__extract_triple_from_raw_data(

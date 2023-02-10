@@ -41,7 +41,7 @@ dynamic building energy simulation tool EnergyPlus [@CRAWLEY_ET_AL_2001]. It com
 indoor temperatures at the building level and takes into account shading and reflections of surrounding buildings. After
 the current energy demand is computed, retrofitting measures for individual buildings can be evaluated in terms of
 energy savings, embodied emissions and costs. The default library of CESAR-P is based on Swiss archetypal buildings
-created from standards and statistics about the Swiss building stock; however, users are able to define their own
+created from standards and statistics about the Swiss building stock; however, users can define their custom
 constructions and internal conditions for their buildings. CESAR-P is written in Python and is a further development of
 the tool CESAR [@WANG_ET_AL_2018]. The building model generator of CESAR-P creates EnergyPlus input data files (.IDF)
 for each building within a specified extent, and can process geo-referenced input data as shapefiles (ESRI .shp format)
@@ -49,20 +49,20 @@ for geometry. Building usage type and construction information is used to popula
 files are executed with a weather file (EnergyPlus epw weather data format) of the geographic location which provides
 the necessary climatic context for the building. The results consist of a configurable set of yearly demand values and
 hourly resolved times series for each building from EnergyPlus and additional operational costs and emissions. The
-retrofit module can be used to modify the parameters of individual building models according to a specified retrofit strategy. Retrofit strategies specify the frequency of retrofits to the main building elements such as walls, windows and roofs across the building stock. The output of the retrofit module include, in addition to the above-mentioned operational indicators, costs and embodied emissions of retrofitting interventions. All simulation steps can also be run in parallel on multiple cores. The code is platform-independent and is tested to run on Linux and Windows. The source code for CESAR-P has been archived to Zenodo [@cesar-p-zenodo] 
+retrofit module can be used to modify the parameters of individual building models according to a specified retrofit strategy. Retrofit strategies specify the frequency of retrofits to the main building elements such as walls, windows and roofs across the building stock. The output of the retrofit module includes, in addition to the above-mentioned operational indicators, costs and embodied emissions of retrofitting interventions. All simulation steps can also be run in parallel on multiple cores. The code is platform-independent and is tested to run on Linux and Windows. The source code for CESAR-P has been archived to Zenodo [@cesar-p-zenodo] 
 
 # Statement of need and Key features 
 
 Building energy simulation is used to generate the expected energy demand profiles of buildings. Building energy demand
 profiles are useful for planners to evaluate current performance and investigate how buildings will perform under
-different scenarios (e.g. building retrofits, changing climate). Building energy simulation is an important tool for decision making becasue monitored energy demands are often unavailable. Urban building energy modelling (UBEM) has been established in recent years to support the implementation of energy conservation measures and the integration of renewable energy technologies at city and district scale. UBEM tools can be classified as taking a top-down or a bottom-up modelling approach. Top-down approaches rely on aggregated data and different drivers (e.g. socio-economic indicators or climate data), whereas bottom-up modelling approaches are based on data at an individual building scale and include either statistical or engineering based modelling techniques to compute energy demand data of a set of individual buildings [@JOHARI_ET_AL_2020]. Various review papers summarize available tools, including their key-features and limitations [@JOHARI_ET_AL_2020]. The CESAR-P software, presented in this paper, falls within the category of bottom-up modelling approaches. CESAR-P uses EnergyPlus as the simulation engine, an open-source building energy simulation software that is widely-used in both academia and industry. CESAR-P simplifies the creation of EnergyPlus input files using a set of key parameters which are stored in archetypes. The target audience of the software are energy planners, energy utilities, cities and researchers. The time-resolved energy demand profile of buildings simulated by CESAR-P are crucial for evaluating renewable energy integration and retrofit strategies. 
+different scenarios (e.g. building retrofits, changing climate). Building energy simulation is an important tool for decision-making because monitored energy demands are often unavailable. Urban building energy modelling (UBEM) has been established in recent years to support the implementation of energy conservation measures and the integration of renewable energy technologies at the city and district scales. UBEM tools can be classified as taking a top-down or a bottom-up modelling approach. Top-down approaches rely on aggregated data and different drivers (e.g. socio-economic indicators or climate data), whereas bottom-up modelling approaches are based on data at an individual building scale and include either statistical or engineering-based modelling techniques to compute energy demand data of a set of individual buildings [@JOHARI_ET_AL_2020]. Various review papers summarize available tools, including their key features and limitations [@JOHARI_ET_AL_2020]. The CESAR-P software, presented in this paper, falls within the category of bottom-up modelling approaches. CESAR-P uses EnergyPlus as the simulation engine, an open-source building energy simulation software that is widely used in both academia and industry. CESAR-P simplifies the creation of EnergyPlus input files using a set of key parameters which are stored in archetypes. The target audience of the software are energy planners, energy utilities, cities and researchers. The time-resolved energy demand profiles of buildings simulated by CESAR-P are crucial for evaluating renewable energy integration and retrofit strategies. 
 CESAR-P can be used for spatial scales ranging from the building to the neighbourhood and city scale. Key features of CESAR-P include: 
 
 - Modelling of indoor temperatures, heating and cooling loads, domestic hot 
   water consumption, electricity consumption, comfort parameters, operational 
   costs and emissions, embodied emissions and investment costs of retrofitting 
   solutions, and solar irradiance on external surfaces.
-- Capability to automate extraction of building geometries from commonly used geometric file types (such as
+- The capability to automate the extraction of building geometries from commonly used geometric file types (such as
   shapefiles), simplifying the generation of required input files.
 - The archetypes used to parameterize the building models are stored as RDF triples (in TTL files). The triples contain
   ABox statements related to the construction properties defined by each archetype. The statements conform to classes
@@ -90,14 +90,13 @@ usage
 example](https://github.com/hues-platform/cesar-p-usage-examples/blob/master/advanced_examples/basic_cesar_usage.py) in
 [cesar-p-usage-examples](https://github.com/hues-platform/cesar-p-usage-examples).
 
-The main API class of `cesar-p-core` library is the `SimulationManager`. On initialization of the class you need to pass
+The main API class of `cesar-p-core` library is the `SimulationManager`. On initialization of the class, you need to pass
 the configuration and the output folder for your project. Additionally, a process wide instance of the unit registry
-(handling conversion of physical units) must be provided. A minimal code-snippet looks like:
+(handling conversion of physical units) must be provided. Here is an example minimal code snippet:
 
 ``` python
 import cesarp.common
 from cesarp.manager.SimulationManager import SimulationManager
-
 if __name__ == "__main__":
     sim_manager = SimulationManager(base_output_path="results", 
                                     main_config="simple_main_config.yml",
@@ -105,8 +104,8 @@ if __name__ == "__main__":
     sim_manager.run_all_steps()
 ```
 
-In the YAML configuration you need to define the input files of your project. Below is the minimal set of YAML
-configuration you need for any project. The code above refers to this file as `simple_main_config.yml`.
+In the YAML configuration, you need to define the input files of your project. Below is the minimal set of YAML
+configuration statements you need for any project. The code above refers to this file as `simple_main_config.yml`.
 
 ```
 MANAGER:
@@ -143,8 +142,8 @@ The `SiteVertices.csv` defines the footprints and height of all the buildings on
 
 The `BuildingInformation.csv` file defines the properties of the buildings. 
 The configuration entry `BLDG_FID_FILE` requires the column `ORIG_FID`, entry `BLDG_TYPE_PER_BLDG_FILE` column `SIA2024BuildingType` and entry `BLDG_AGE_FILE` column `BuildingAge`. The example above includes a few more columns per building, which will be explained further down.
-Usually you will have one file defining all the properties of your buildings, but the configuration gives you 
-the flexibility to point to separate files for the different building properties and also to map to custom column names to allow using input data files without pre-processing (see the sub-entries for `BLDG_FID_FILE`).
+Usually, you will have one file defining all the properties of your buildings, but the configuration gives you 
+the flexibility to point to separate files for the different building properties and also to map to custom column names to allow the use of input data files without pre-processing (see the sub-entries for `BLDG_FID_FILE`).
 
 | ORIG_FID | SIA2024BuildingType | BuildingAge | ECarrierHeating | ECarrierDHW | GlazingRatio |
 | -------- | ------------------- | ----------- | --------------- | ----------- | ------------ |
@@ -158,23 +157,23 @@ The last required input is the weather data in EnergyPlus epw format, in the exa
 
 ## Building model parametrization
 
-The main source for constructional parameters are the archetype definitions (included in the library) and assigned by
+The main source of construction parameters is the archetype definitions (included in the library), which are typically assigned by
 the age of a building. Operational parameters such as occupancy or loads from appliances are based on a Swiss norm
-(SIA2024). Additional parameters and constants can be set in the YMAL configuration. You find an overview of all the
-parameters you can customize in the YAML file
+(SIA2024). Additional parameters and constants can be set in the YAML configuration. You find an overview of all the customizable
+parameters in this example YAML file
 [cesar-p-config-overview.yaml](https://github.com/hues-platform/cesar-p-core/blob/master/cesar-p-config-overview.yaml).
-You only need to overwrite the parameters you want to change in your project specific YAML configuration. The configuration entries should be placed under the correct category, while paying attention to the indentation.  The example below overwrites the following properties:
+You only need to overwrite the parameters that need to be changed in your project-specific YAML configuration. The configuration statements should be declared under the correct category, using the correct indentation. The example below overwrites the following properties:
 
 - `RANDOM_CONSTRUCTIONS` if set to `True`, CESAR-P chooses randomly one of the available construction archetypes, if
   there are several matching the age class of the processed building. 
-- `GLAZING_RATIO_PER_BLDG_FILE` by default the glazing ratio is defined by a lookup based on the age of the buildindg. 
-  If you have information of the glazing ratio per building, add this information e.g. to your 
+- `GLAZING_RATIO_PER_BLDG_FILE` by default the glazing ratio is defined by a lookup based on the age of the building. 
+  If you have information on the glazing ratio per building, add this information e.g. to your 
    `BuildingInformation.csv` under a column heading `GlazingRatio`.
 - `RADIUS` defines the radius around a building in which other buildings are simulated as shading objects
 - `MINIMAL_STORY_HEIGHT` defines the default minimum floor height to use. The number of floors is defined
   by the integer division of building height and MINIMAL_STORY_HEIGHT.
 
-Your YAML configuration including those parameters would look like:
+Here is an example implementation in YAML of these parameters:
 
 ```
 MANAGER:
@@ -191,7 +190,7 @@ MAIN_BLDG_SHAPE:
 	MINIMAL_STORY_HEIGHT: 2.2 # meter
 ```
 
-If you need additional customization, you can plug in your own implementation for assignment of the constructional and
+If you need additional customization, you can also define constructional and
 operational parameters per building. See
 [custom_constr_archetype_mapping](https://github.com/hues-platform/cesar-p-usage-examples/tree/master/advanced_examples/custom_constr_archetype_mapping) and
 [operation_params_per_floor](https://github.com/hues-platform/cesar-p-usage-examples/tree/master/advanced_examples/operation_params_per_floor), respectively,
@@ -200,7 +199,7 @@ in [cesar-p-usage-examples repository](https://github.com/hues-platform/cesar-p-
 
 ## Results
 
-The results consist of a set of parameters from EnergyPlus results in a table format, as absolute annual values and converted to specific per m2 values. Additionally you can choose to calculate operational emissions. For this, you need to specify the energy installation per building. In the configuration, point to the file containing the data and activate the feature:
+The results consist of a set of parameters from EnergyPlus results in a table format, as absolute annual values and converted to specific per m2 values. Additionally, you can choose to calculate operational emissions. For this, you need to specify the energy installation per building. In the configuration, point to the file containing the data and activate the feature:
 
 ```
 MANAGER:
@@ -211,11 +210,11 @@ MANAGER:
 		PATH: "../example_project_files/BuildingInformation.csv"
 ```
 
-The reuqired columns in the linked file are `ECarrierHeating`, `ECarrierDHW` defining the number key of the energy
+The required columns in the linked file are `ECarrierHeating`, `ECarrierDHW` defining the number key of the energy
 source used for space heating and domestic hot water, respectively. The allowed options are defined in the enumeration
 [EnergySource](https://github.com/hues-platform/cesar-p-core/blob/master/src/cesarp/model/EnergySource.py).
 
-The table below is an extract of the `site_result_summary.csvy` showing most important annual results per building:
+The table below is an extract of the `site_result_summary.csvy` showing the most important annual results per building:
 
 | Bldg | Heating Annual specific | DHW Annual specific | Electricity Annual specific | Cooling Annual specific | Total PEN | Total CO2 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -225,7 +224,7 @@ The table below is an extract of the `site_result_summary.csvy` showing most imp
 | ...  |
 
 
-Full list of result values reported is shown in the table below:
+The full list of result values reported is shown in the table below:
 
 | Variable                             | Unit                   |
 | ------------------------------------ | ---------------------- |
@@ -256,7 +255,7 @@ It is a good practice to check the column `EnergyPlus error level` to make sure 
 EnergyPlus simulation. If there are, the details of the error are provided in the `eplus_error_summary.err` file.
 
 In case the details about the building model geometry are desired, they are available in the
-`bldgs_infos_model_generation.csv` file. For example, one can find the number of stories  and the resulting floor height of each building's geometry, as well as information on the effective glazing ratio, which can differ from your setting in case there are many small walls not having space for a window.
+`bldgs_infos_model_generation.csv` file. For example, one can find the number of storeys and the resulting floor height of each building's geometry, as well as information on the effective glazing ratio, which can differ from your setting in case there are many small walls not having space for a window.
 
 If hourly results are needed, adding the following line to the main script would output the domestic hot water and heating hourly values as a pandas data frame:
 
@@ -267,7 +266,7 @@ from cesarp.eplus_adapter.eplus_eso_results_handling
 from cesarp.eplus_adapter.idf_strings import ResultsFrequency
 ```
 
-After the simulation run, you can qurey the results form your `SimulationManager` instance:
+After the simulation run, you can query the results from your `SimulationManager` instance:
 
 ```
 hourly_demand = 
@@ -278,7 +277,7 @@ hourly_demand =
 
 ## Retrofit
 
-For retrofitting the general procedure is to first define a baseline simulation and then run on top one or more retrofit
+For retrofitting, the general procedure is to first define a baseline simulation and then run the desired retrofit
 scenarios. There are two retrofit managers implemented, the basic
 [SimpleRetrofitManager](https://github.com/hues-platform/cesar-p-core/blob/master/src/cesarp/retrofit/all_bldgs/SimpleRetrofitManager.py)
 and
@@ -287,7 +286,7 @@ following more complex rules to decide on retrofit measures. These manager class
 `SimulationManager` to run your simulations. One can also implement a custom retrofit manager that defines which retrofit measures are carried out on which buildings.
 
 A summary of the simulation results of each scenario is saved to 
-`all_scenarios_result_summary.csvy`. As an example the table below shows a comparison of annual specific heating demand for three different scenarios, `orig` being the baseline, scenario `roof` where roof construction was retrofitted and `wall_win_groundf` where wall, windows and ground floor were retrofitted. Details about retrofit measures, costs and embodied emissions is available in `retrofit_log.csv` in each scenario result subfolder. Summarized figures out of those files are included in the table.
+`all_scenarios_result_summary.csvy`. As an example the table below shows a comparison of annual specific heating demand for three different scenarios, `orig` being the baseline, scenario `roof` where roof construction was retrofitted and `wall_win_groundf` where wall, windows and ground floor were retrofitted. Details about retrofit measures, costs and embodied emissions are available in `retrofit_log.csv` in each scenario result subfolder. Summarized figures out of those files are included in the table.
 
 | Building | Scenario         | Heating Annual specific | Retrofit Costs | Retrofit embodied CO2 emissions |
 | -------- | ---------------- | ----------------------- | -------------- | ------------------------------- |
@@ -304,8 +303,8 @@ See the [retrofit example](https://github.com/hues-platform/cesar-p-usage-exampl
 
 ## Project handling
 
-There are several features to simplify project management, including comparison between different simulation runs with
-changed parameters, re-loading existing projects to avoid re-generation of building models or simulating existing IDF
+There are several features to simplify project management, including a comparison between different simulation runs with
+changed parameters, re-loading existing projects to avoid the re-creation of building models or simulating existing IDF
 files. To allow for exchanging or backing up projects, there is the option to save all input files including the
 constructions database in a ZIP file. Check out the [basic usage
 example](https://github.com/hues-platform/cesar-p-usage-examples/blob/master/advanced_examples/basic_cesar_usage.py) to
@@ -316,8 +315,8 @@ see those features in action.
 
 The development of the software CESAR-P has been financially supported by SCCER FEEB&D (CTI.1155000149) and by Empa. We
 acknowledge contributions from Danhong Wang, Jonas Landolt, Georgios Mavromatidis and Portia Murray to CESAR, the
-predecessor version of CESAR-P. Further we would like to acknowledge Ricardo
+predecessor version of CESAR-P. Further, we would like to acknowledge Ricardo
 Parreira da Silva for the implementation of passive cooling features.
 
-# References 
+# References
 

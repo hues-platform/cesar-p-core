@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -53,7 +53,8 @@ import shutil
 
 __sitevertices_labels = {"gis_fid": "TARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"}
 
-_RESULT_FOLDER =  os.path.dirname(__file__) / Path("results")
+_RESULT_FOLDER = os.path.dirname(__file__) / Path("results")
+
 
 @pytest.fixture
 def res_folder():
@@ -62,12 +63,13 @@ def res_folder():
     yield res_folder
     shutil.rmtree(res_folder, ignore_errors=True)
 
+
 @pytest.fixture
 def ureg():
     return cesarp.common.init_unit_registry()
 
-@pytest.fixture
 
+@pytest.fixture
 def idf():
     eplus_cfg = cesarp.common.config_loader.load_config_for_package(eplus_adpater_config_file, "cesarp.eplus_adapter")
     IDF.setiddname(eplus_cfg["CUSTOM_IDD_9_5"])
@@ -78,7 +80,7 @@ def idf():
 
 
 def get_sched_file_watt_per_squaremeter(ureg):
-    return cesarp.common.ScheduleFile("testprofile.csv", cesarp.common.ScheduleTypeLimits.ANY(), 2, ";", 8760, 1, ureg.W/ureg.m**2)
+    return cesarp.common.ScheduleFile("testprofile.csv", cesarp.common.ScheduleTypeLimits.ANY(), 2, ";", 8760, 1, ureg.W / ureg.m**2)
 
 
 def get_sched_fixed_fraction(ureg):
@@ -87,34 +89,32 @@ def get_sched_fixed_fraction(ureg):
 
 def __get_constr_for(bldg_fid, year_of_construction, ureg):
     reader = LocalFileReader()
-    construction_factory = GraphDBArchetypicalConstructionFactory({bldg_fid: year_of_construction},
-                                                           {bldg_fid: EnergySource.DHW_OTHER},
-                                                           {bldg_fid: EnergySource.HEATING_OTHER},
-                                                           reader,
-                                                           ureg)
+    construction_factory = GraphDBArchetypicalConstructionFactory(
+        {bldg_fid: year_of_construction}, {bldg_fid: EnergySource.DHW_OTHER}, {bldg_fid: EnergySource.HEATING_OTHER}, reader, ureg
+    )
     constr_archetype = construction_factory.get_archetype_for(bldg_fid)
     return ConstructionBuilder(bldg_fid, constr_archetype).build()
 
 
 def __get_shading_constr(glass_constr, ureg):
-    return {BuildingElement.WALL.name:
-                ShadingObjectConstruction(
-                        diffuse_solar_reflectance_unglazed_part = 0.3 * ureg.diffuse_solar_reflectance,
-                        diffuse_visible_reflectance_unglazed_part = 0.3 * ureg.diffuse_visible_reflectance,
-                        glazing_ratio = 0.3 * ureg.dimensionless,
-                        window_glass_construction=glass_constr),
-                BuildingElement.ROOF.name:
-                     ShadingObjectConstruction(
-                         diffuse_solar_reflectance_unglazed_part=0.15 * ureg.diffuse_solar_reflectance,
-                         diffuse_visible_reflectance_unglazed_part=0.1 * ureg.diffuse_visible_reflectance,
-                         glazing_ratio=0 * ureg.dimensionless,
-                         window_glass_construction=glass_constr)
-            }
+    return {
+        BuildingElement.WALL.name: ShadingObjectConstruction(
+            diffuse_solar_reflectance_unglazed_part=0.3 * ureg.diffuse_solar_reflectance,
+            diffuse_visible_reflectance_unglazed_part=0.3 * ureg.diffuse_visible_reflectance,
+            glazing_ratio=0.3 * ureg.dimensionless,
+            window_glass_construction=glass_constr,
+        ),
+        BuildingElement.ROOF.name: ShadingObjectConstruction(
+            diffuse_solar_reflectance_unglazed_part=0.15 * ureg.diffuse_solar_reflectance,
+            diffuse_visible_reflectance_unglazed_part=0.1 * ureg.diffuse_visible_reflectance,
+            glazing_ratio=0 * ureg.dimensionless,
+            window_glass_construction=glass_constr,
+        ),
+    }
 
 
 def test_simulations_basic_settings(ureg, res_folder):
-    expected_file_path = os.path.dirname(__file__) / Path(
-        "./expected_results/idf_expected_simulation_basics.idf")
+    expected_file_path = os.path.dirname(__file__) / Path("./expected_results/idf_expected_simulation_basics.idf")
 
     os.makedirs(res_folder, exist_ok=True)
     aux_files_handler = RelativeAuxiliaryFilesHandler()
@@ -145,14 +145,14 @@ def test_building_geometry(ureg, res_folder):
     my_idf_writer = CesarIDFWriter(idf_file_path, ureg, aux_files_handler)
 
     bldg_constr = __get_constr_for(main_bldg_fid, 1930, ureg)
-    bldg_constr.infiltration_rate = infiltration_rate # overwrite because the default has higher precision than what was written with the matlab version
+    bldg_constr.infiltration_rate = infiltration_rate  # overwrite because the default has higher precision than what was written with the matlab version
     idf = IDF(str(idf_file_path))
     my_idf_writer.add_building_geometry(idf, bldg_shape, ConstructionIDFWritingHandler(bldg_constr, None, ureg))
     idf.save()
     assert are_files_equal(idf_file_path, expected_file_path, ignore_line_nrs=[1])
 
     # test wrong infiltration rate unit
-    bldg_constr.infiltration_rate = 3 * ureg.m ** 3 / ureg.sec
+    bldg_constr.infiltration_rate = 3 * ureg.m**3 / ureg.sec
     with pytest.raises(Exception):
         my_idf_writer.add_building_geometry(idf, bldg_shape, ConstructionIDFWritingHandler(bldg_constr, None, ureg))
 
@@ -211,7 +211,7 @@ def test_full_idf(res_folder):
 def test_write_schedule_fixed(ureg, idf):
     sched_fixed = get_sched_fixed_fraction(ureg)
     cesarp.eplus_adapter.idf_writing_helpers.add_schedule(idf, sched_fixed, required_type=cesarp.common.ScheduleTypeLimits.FRACTION())
-    my_idf_sched_obj =  idf.getobject('SCHEDULE:CONSTANT', 'Constant_0.9')
+    my_idf_sched_obj = idf.getobject("SCHEDULE:CONSTANT", "Constant_0.9")
     assert my_idf_sched_obj is not None
     assert my_idf_sched_obj.Hourly_Value == 0.9
 
@@ -219,8 +219,8 @@ def test_write_schedule_fixed(ureg, idf):
 def test_write_schedule_file(ureg, idf):
     sched = get_sched_file_watt_per_squaremeter(ureg)
     sched.name = "test"
-    cesarp.eplus_adapter.idf_writing_helpers.add_schedule(idf, sched, required_unit=ureg.W/ureg.m**2)
-    my_idf_sched_obj =  idf.getobject('SCHEDULE:FILE', 'test')
+    cesarp.eplus_adapter.idf_writing_helpers.add_schedule(idf, sched, required_unit=ureg.W / ureg.m**2)
+    my_idf_sched_obj = idf.getobject("SCHEDULE:FILE", "test")
     assert my_idf_sched_obj is not None
 
 
@@ -228,15 +228,15 @@ def test_write_schedule_fixed_unit_error(ureg, idf):
     sched_fixed = get_sched_fixed_fraction(ureg)
     with pytest.raises(Exception):
         cesarp.eplus_adapter.idf_writing_helpers.add_schedule(idf, sched_fixed, required_unit=ureg.W)
-    my_idf_sched_obj =  idf.getobject('SCHEDULE:CONSTANT', 'Constant_0.9')
+    my_idf_sched_obj = idf.getobject("SCHEDULE:CONSTANT", "Constant_0.9")
     assert my_idf_sched_obj is None
 
 
 def test_write_schedule_file_unit_error(ureg, idf):
     sched = get_sched_file_watt_per_squaremeter(ureg)
     with pytest.raises(Exception):
-        cesarp.eplus_adapter.idf_writing_helpers.add_schedule(idf, sched, required_unit=ureg.W/ureg.m**3)
-    my_idf_sched_obj =  idf.getobject('SCHEDULE:FILE', 'test')
+        cesarp.eplus_adapter.idf_writing_helpers.add_schedule(idf, sched, required_unit=ureg.W / ureg.m**3)
+    my_idf_sched_obj = idf.getobject("SCHEDULE:FILE", "test")
     assert my_idf_sched_obj is None
 
 
@@ -244,7 +244,5 @@ def test_write_schedule_type_error(ureg, idf):
     sched_fixed = get_sched_fixed_fraction(ureg)
     with pytest.raises(Exception):
         cesarp.eplus_adapter.idf_writing_helpers.add_schedule(idf, sched_fixed, required_type=cesarp.common.ScheduleTypeLimits.ON_OFF())
-    my_idf_sched_obj =  idf.getobject('SCHEDULE:CONSTANT', 'Constant_0.9')
+    my_idf_sched_obj = idf.getobject("SCHEDULE:CONSTANT", "Constant_0.9")
     assert my_idf_sched_obj is None
-
-

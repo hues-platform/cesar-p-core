@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "cesar-p"
-version = "2.3.2"
+version = "2.3.3"
 description = "Combined Energy Simulation And Retrofit"
 authors = ["Urban Energy Systems Lab - Empa"]
 homepage = "https://github.com/hues-platform/cesar-p-core"
@@ -46,10 +46,10 @@ requests = "^2.26.0"
 types-requests = "^2.26.2"
 
 [tool.poetry.dev-dependencies]
-pytest = "^coverage>=5.5"
+pytest = "^7.1.2"
 pytest-cov = "^2.12"
 flake8 = "^3.9.2"
-black = "^21.7b0"
+black = "^22.3"
 sphinx = "^4.1.1"
 sphinx_rtd_theme = "^0.5.2"
 MyPy = "^0.910"

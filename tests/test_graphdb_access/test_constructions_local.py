@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -42,6 +42,7 @@ def local_db_access():
     reader = BldgElementConstructionReader(local_reader, ureg)
     return reader
 
+
 @pytest.fixture
 def remote_db_access():
     """
@@ -52,6 +53,7 @@ def remote_db_access():
     db_access = GraphDBReader()
     reader = BldgElementConstructionReader(db_access, ureg)
     return reader
+
 
 def test_get_construction_archetype(local_db_access):
     ureg = local_db_access.ureg
@@ -64,10 +66,12 @@ def test_get_construction_archetype(local_db_access):
             assert [layer.thickness.m for layer in wall.layers] == [0.024, 0.13, 0.12]
             assert wall.layers[0].material.conductivity == ureg.Quantity("0.13 W / kelvin / meter")
 
+
 def test_get_ageclass_for_archetype(local_db_access):
     ac = local_db_access.get_age_class_of_archetype("http://uesl_data/sources/archetypes/1918_SFH_Archetype")
     assert ac.min_age == None
     assert ac.max_age == 1918
+
 
 def test_default_construction(local_db_access):
     myArchetype = local_db_access.get_bldg_elem_construction_archetype(archetype_uri="http://uesl_data/sources/archetypes/2006_SFH_Archetype")
@@ -86,7 +90,6 @@ def test_default_construction(local_db_access):
 
     default_window = local_db_access.get_default_construction(myArchetype.windows)
     assert default_window.short_name == "Window2006_LowE_Krypton_Double"
-
 
     default_constructions = open(str(os.path.dirname(__file__) / Path("list_with_default_constr.txt")), "r").read()
     for year in [1918, 1948, 1978, 1994, 2001, 2006, 2009, 2014, 2015]:
@@ -121,7 +124,6 @@ def test_retrofit_construction(local_db_access):
         retrofitted_window = local_db_access.get_retrofitted_construction(myArchetype.windows[0]).short_name
 
 
-
 def test_win_glass_emissions(local_db_access: BldgElementConstructionReader):
     ureg = local_db_access.ureg
     win_glass_no_emissions_uri = "http://uesl_data/sources/archetypes/windows/Window1994_LowE_Xenon_Double"
@@ -147,22 +149,22 @@ def test_material_properties_not_found(local_db_access):
 def test_glazing_and_infiltration(local_db_access):
     # TODO assert units
     assert local_db_access.get_glazing_ratio("http://uesl_data/sources/archetypes/2015_SFH_Archetype")._max == 0.38
-    assert local_db_access.get_infiltration_rate("http://uesl_data/sources/archetypes/1948_SFH_Archetype") == \
-           local_db_access.ureg.Quantity("0.71125 ACH")
+    assert local_db_access.get_infiltration_rate("http://uesl_data/sources/archetypes/1948_SFH_Archetype") == local_db_access.ureg.Quantity("0.71125 ACH")
 
 
 def test_construction_factory():
     ureg = cesarp.common.init_unit_registry()
     local_reader = LocalFileReader()
-    custom_config = {"GRAPHDB_ACCESS": {"ARCHETYPES": {"1948_SFH_ARCHETYPE": {"DEFAULT_CONSTRUCTION_SPECIFIC": {
-        "ACTIVE": False}}}}}
+    custom_config = {"GRAPHDB_ACCESS": {"ARCHETYPES": {"1948_SFH_ARCHETYPE": {"DEFAULT_CONSTRUCTION_SPECIFIC": {"ACTIVE": False}}}}}
 
-    factory = GraphDBArchetypicalConstructionFactory({1:2001, 2:1950, 3:2018, 4:2017, 5:2019},
-                                                     {1:EnergySource.DHW_OTHER, 2:EnergySource.DHW_OTHER, 3:EnergySource.DHW_OTHER, 4:EnergySource.DHW_OTHER, 5:EnergySource.ELECTRICITY},
-                                                     {fid: EnergySource.HEATING_OTHER for fid in range(1, 6)},
-                                                     local_reader,
-                                                     ureg,
-                                                     custom_config)
+    factory = GraphDBArchetypicalConstructionFactory(
+        {1: 2001, 2: 1950, 3: 2018, 4: 2017, 5: 2019},
+        {1: EnergySource.DHW_OTHER, 2: EnergySource.DHW_OTHER, 3: EnergySource.DHW_OTHER, 4: EnergySource.DHW_OTHER, 5: EnergySource.ELECTRICITY},
+        {fid: EnergySource.HEATING_OTHER for fid in range(1, 6)},
+        local_reader,
+        ureg,
+        custom_config,
+    )
     archetype2001 = factory.get_archetype_for(1)
     inf_rate = archetype2001.get_infiltration_rate()
     assert inf_rate.u == ureg.ACH
@@ -179,9 +181,9 @@ def test_construction_factory():
     assert factory.get_archetype_for(4) != factory.get_archetype_for(5)
     assert factory.get_archetype_for(4).get_installation_characteristics() != factory.get_archetype_for(5).get_installation_characteristics()
 
+
 def test_LayerFunction_mapping(local_db_access):
-    layer_function = pandas.DataFrame(columns=["Construction", "Layer", "Function", "Material", "Material "
-                                                                                                "Conductivity"])
+    layer_function = pandas.DataFrame(columns=["Construction", "Layer", "Function", "Material", "Material " "Conductivity"])
     filename = str(os.path.dirname(__file__) / Path("ressources/construction_layer_LayerFunctions.csv"))
     layer_function_lookup = pandas.read_csv(filename)
     for year in [1918, 1948, 1978, 1994, 2001, 2006, 2009, 2014, 2015]:
@@ -189,20 +191,33 @@ def test_LayerFunction_mapping(local_db_access):
         for construction in myArchetype.walls:
             construction = local_db_access.get_retrofitted_construction(construction)
             for layer in construction.layers:
-                layer_function.loc[len(layer_function.index)] = [construction.short_name, layer.short_name, str(layer.function),
-                                                                 layer.material.short_name,
-                                                                 layer.material.conductivity.m]
+                layer_function.loc[len(layer_function.index)] = [
+                    construction.short_name,
+                    layer.short_name,
+                    str(layer.function),
+                    layer.material.short_name,
+                    layer.material.conductivity.m,
+                ]
         for construction in myArchetype.grounds:
             construction = local_db_access.get_retrofitted_construction(construction)
             for layer in construction.layers:
-                layer_function.loc[len(layer_function.index)] = [construction.short_name, layer.short_name, str(layer.function),
-                                                                 layer.material.short_name, layer.material.conductivity.m]
+                layer_function.loc[len(layer_function.index)] = [
+                    construction.short_name,
+                    layer.short_name,
+                    str(layer.function),
+                    layer.material.short_name,
+                    layer.material.conductivity.m,
+                ]
         for construction in myArchetype.roofs:
             construction = local_db_access.get_retrofitted_construction(construction)
             for layer in construction.layers:
-                layer_function.loc[len(layer_function.index)] = [construction.short_name, layer.short_name,
-                                                                 str(layer.function),
-                                                                 layer.material.short_name, layer.material.conductivity.m]
+                layer_function.loc[len(layer_function.index)] = [
+                    construction.short_name,
+                    layer.short_name,
+                    str(layer.function),
+                    layer.material.short_name,
+                    layer.material.conductivity.m,
+                ]
     pandas.testing.assert_frame_equal(layer_function, layer_function_lookup, check_dtype=False)
 
     myArchetype = local_db_access.get_bldg_elem_construction_archetype("http://uesl_data/sources/archetypes/1948_SFH_Archetype")
@@ -211,14 +226,15 @@ def test_LayerFunction_mapping(local_db_access):
     wall = local_db_access.set_layer_functions(wall)
     assert wall.layers[0].function == LayerFunction.INSULATION_OUTSIDE
 
+
 def test_shading_material(local_db_access: BldgElementConstructionReader):
     shading = local_db_access.get_window_shading_constr("http://uesl_data/sources/archetypes/1918_SFH_Archetype")
     ureg = local_db_access.ureg
-    assert(shading.name == "Shade0101")
-    assert(shading.is_shading_available)
-    assert(type(shading.airflow_permeability) == float)
-    assert(shading.conductivity.u == ureg.W / ureg.m / ureg.K)
-    assert(shading.solar_reflectance.u == ureg.solar_reflectance)
-    assert(shading.thickness.u == ureg.m)
-    assert(shading.airflow_permeability == pytest.approx(0))
-    assert(shading.solar_transmittance.m == pytest.approx(0.31))
+    assert shading.name == "Shade0101"
+    assert shading.is_shading_available
+    assert type(shading.airflow_permeability) == float
+    assert shading.conductivity.u == ureg.W / ureg.m / ureg.K
+    assert shading.solar_reflectance.u == ureg.solar_reflectance
+    assert shading.thickness.u == ureg.m
+    assert shading.airflow_permeability == pytest.approx(0)
+    assert shading.solar_transmittance.m == pytest.approx(0.31)

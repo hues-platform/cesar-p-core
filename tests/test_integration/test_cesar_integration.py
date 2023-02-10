@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -37,6 +37,7 @@ from tests.test_helpers.test_helpers import are_files_equal
 _TESTFIXTURE_FOLDER = os.path.dirname(__file__) / Path("testfixture")
 _TEST_WEATHER_FILE_PATH = str(os.path.dirname(__file__) / Path("testfixture") / Path("sample_case") / Path("Zurich_1.epw"))
 
+
 @pytest.fixture
 def result_main_folder():
     result_main_folder = os.path.dirname(__file__) / Path("result")
@@ -46,7 +47,6 @@ def result_main_folder():
         pass
     yield result_main_folder
     #shutil.rmtree(result_main_folder)
-
 
 
 @pytest.fixture
@@ -64,10 +64,7 @@ def config_sample_case():
     config["MANAGER"]["BUILDING_OPERATION_FACTORY_CLASS"] = "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
     config["CONSTRUCTION"] = dict()
     config["CONSTRUCTION"]["CONSTRUCTION_DB"] = "GRAPH_DB"
-    config["OPERATION"] = {
-                                "WINDOW_SHADING_CONTROL": {"ACTIVE": False},
-                                "NIGHT_VENTILATION": {"ACTIVE": False}
-                              }
+    config["OPERATION"] = {"WINDOW_SHADING_CONTROL": {"ACTIVE": False}, "NIGHT_VENTILATION": {"ACTIVE": False}}
     return config
 
 
@@ -88,17 +85,18 @@ def config_no_adjacencies_case():
     config["CONSTRUCTION"] = dict()
     config["CONSTRUCTION"]["CONSTRUCTION_DB"] = "GRAPH_DB"
     config["GEOMETRY"] = {"NEIGHBOURHOOD": {"RADIUS": 50}}
-    config["OPERATION"] = {"FIXED": {
-                                        "SCHED_THERMOSTAT_HEATING": os.path.dirname(__file__) / Path("./testfixture/no_adjacencies_case/mfh_nominal_thermostat_heating.csv"),
-                                        "SCHED_DHW_PATH": os.path.dirname(__file__) / Path("./testfixture/no_adjacencies_case/mfh_nominal_dhw.csv")
-                                    },
-                            "WINDOW_SHADING_CONTROL": {"ACTIVE": False},
-                            "NIGHT_VENTILATION": {"ACTIVE": False}
-                          }
+    config["OPERATION"] = {
+        "FIXED": {
+            "SCHED_THERMOSTAT_HEATING": os.path.dirname(__file__) / Path("./testfixture/no_adjacencies_case/mfh_nominal_thermostat_heating.csv"),
+            "SCHED_DHW_PATH": os.path.dirname(__file__) / Path("./testfixture/no_adjacencies_case/mfh_nominal_dhw.csv"),
+        },
+        "WINDOW_SHADING_CONTROL": {"ACTIVE": False},
+        "NIGHT_VENTILATION": {"ACTIVE": False},
+    }
     return config
 
 
-#@pytest.mark.skipif(sys.platform != "win32",reason="E+ not running on git ci")
+# @pytest.mark.skipif(sys.platform != "win32",reason="E+ not running on git ci")
 def test_run_cesar_no_neighbourhood(config_sample_case, result_main_folder):
     config = config_sample_case
     res_base_path = result_main_folder / Path("sample_case_no_neighbourhood")
@@ -117,13 +115,10 @@ def test_run_cesar_no_neighbourhood(config_sample_case, result_main_folder):
     sim_mgr = SimulationManager(res_base_path, config, cesarp.common.init_unit_registry(), fids_to_use=[gis_fid])
     sim_mgr.run_all_steps()
 
-    assert are_files_equal(result_idf_file_path,
-                           expected_idf_file_path,
-                           ignore_line_nrs=[1],
-                           ignore_filesep_mismatch=True) is True, "IDF files not equal"
+    assert are_files_equal(result_idf_file_path, expected_idf_file_path, ignore_line_nrs=[1], ignore_filesep_mismatch=True) is True, "IDF files not equal"
 
     # Line 0 and 177 contain energyplus veriosn and date/time of execution, thus ignore those
-    assert are_files_equal(result_file_path, expected_res_file_path, ignore_line_nrs=[1,178]) is True, "E+ results not equal"
+    assert are_files_equal(result_file_path, expected_res_file_path, ignore_line_nrs=[1, 178]) is True, "E+ results not equal"
     assert are_files_equal(result_summary_path, expected_res_sum_path, ignore_line_nrs=[189], ignore_changing_config=True)
 
 
@@ -140,10 +135,7 @@ def test_create_idf_with_SIA_generated_profiles(config_sample_case, result_main_
     sim_mgr = SimulationManager(res_base_path, config, cesarp.common.init_unit_registry(), fids_to_use=[gis_fid])
     sim_mgr.create_bldg_models()
     sim_mgr.create_IDFs()
-    assert are_files_equal(sim_mgr.idf_pathes[gis_fid],
-                           expected_idf_file_path,
-                           ignore_line_nrs=[1],
-                           ignore_filesep_mismatch=True)
+    assert are_files_equal(sim_mgr.idf_pathes[gis_fid], expected_idf_file_path, ignore_line_nrs=[1], ignore_filesep_mismatch=True)
 
 
 def test_run_cesar_with_neighbourhood(config_sample_case, result_main_folder):
@@ -160,20 +152,16 @@ def test_run_cesar_with_neighbourhood(config_sample_case, result_main_folder):
     config["GEOMETRY"] = {"NEIGHBOURHOOD": {"RADIUS": 100}}
     ureg = cesarp.common.init_unit_registry()
     run_single_bldg(gis_fid, _TEST_WEATHER_FILE_PATH, result_idf_file_path, result_eplus_folder, config, ureg)
-    assert are_files_equal(result_idf_file_path,
-                           expected_idf_file_path,
-                           ignore_line_nrs=[1],
-                           ignore_filesep_mismatch=True
-                           ) is True, "IDF files not equal"
+    assert are_files_equal(result_idf_file_path, expected_idf_file_path, ignore_line_nrs=[1], ignore_filesep_mismatch=True) is True, "IDF files not equal"
     # Line 0 and 177 contain energyplus veriosn and date/time of execution, thus ignore those
-    assert are_files_equal(result_file_path,
-                           expected_res_file_path,
-                           ignore_line_nrs=[1,178, 751]  # on line 751 there is a small numeric difference when run on windows vs linux...
-                           ) is True, "E+ results not equal"
+    assert (
+        are_files_equal(result_file_path, expected_res_file_path, ignore_line_nrs=[1, 178, 751])  # on line 751 there is a small numeric difference when run on windows vs linux...
+        is True
+    ), "E+ results not equal"
 
 
 def test_no_adjacencies(config_no_adjacencies_case, result_main_folder):
-    """ Testcase data provided by Manolis """
+    """Testcase data provided by Manolis"""
     """ Tests usage of parallel workers, as the run_all_steps() function is called and not the run_single_bldg() as in the other testcases """
     config = config_no_adjacencies_case
     expected_folder_path = os.path.dirname(__file__) / Path("expected_result") / Path("no_adjacencies_case")
@@ -187,27 +175,24 @@ def test_no_adjacencies(config_no_adjacencies_case, result_main_folder):
     sim_mgr.run_all_steps()
 
     for bldg_fid in bldg_fids:
-        assert are_files_equal(sim_mgr.idf_pathes[bldg_fid],
-                               expected_idf_file_path.format(bldg_fid),
-                               ignore_line_nrs = [1],
-                               ignore_filesep_mismatch = True) is True, f'IDF files not equal for {bldg_fid}'
+        assert (
+            are_files_equal(sim_mgr.idf_pathes[bldg_fid], expected_idf_file_path.format(bldg_fid), ignore_line_nrs=[1], ignore_filesep_mismatch=True) is True
+        ), f"IDF files not equal for {bldg_fid}"
         # Line 0 and 177 contain energyplus veriosn and date/time of execution, thus ignore those;
         # on line 709 and 1463 there is a small numeric difference when run on windows vs linux...
-        assert are_files_equal(sim_mgr.output_folders[bldg_fid] / Path("eplustbl.csv") , expected_result_file_path.format(bldg_fid), ignore_line_nrs=[1,178,709, 1463]) is True, f'result files not equal for {bldg_fid}'
+        assert (
+            are_files_equal(sim_mgr.output_folders[bldg_fid] / Path("eplustbl.csv"), expected_result_file_path.format(bldg_fid), ignore_line_nrs=[1, 178, 709, 1463]) is True
+        ), f"result files not equal for {bldg_fid}"
 
 
 def test_window_shading(result_main_folder):
-    """ validated agains matlab implementation of ricardo """
+    """validated agains matlab implementation of ricardo"""
     cfg_file = _TESTFIXTURE_FOLDER / Path("cooling") / Path("main_config.yml")
     cfg = cesarp.common.load_config_full(cfg_file)
-    cfg["OPERATION"] = {
-                            "WINDOW_SHADING_CONTROL": {"ACTIVE": True},
-                            "NIGHT_VENTILATION": {"ACTIVE": False}
-                          }
+    cfg["OPERATION"] = {"WINDOW_SHADING_CONTROL": {"ACTIVE": True}, "NIGHT_VENTILATION": {"ACTIVE": False}}
     # Note: trick to debug results: remove deleting result folder in res_folder(), then run it once, then uncomment
     #       sim_mgr.run_all_steps(), change load_from_disk=True and then debug and check the results...
-    sim_mgr = SimulationManager(result_main_folder / Path("sim_test"), cfg, cesarp.common.init_unit_registry(),
-                                load_from_disk=False)
+    sim_mgr = SimulationManager(result_main_folder / Path("sim_test"), cfg, cesarp.common.init_unit_registry(), load_from_disk=False)
     sim_mgr.run_all_steps()
     results = sim_mgr.get_all_results_summary()
     dhw_annual_expected = pytest.approx(10351.6, rel=0.005)
@@ -236,14 +221,10 @@ def test_window_shading(result_main_folder):
 def test_night_ventilation(result_main_folder):
     cfg_file = _TESTFIXTURE_FOLDER / Path("cooling") / Path("main_config.yml")
     cfg = cesarp.common.load_config_full(cfg_file)
-    cfg["OPERATION"] = {
-                            "WINDOW_SHADING_CONTROL": {"ACTIVE": False},
-                            "NIGHT_VENTILATION": {"ACTIVE": True}
-                          }
+    cfg["OPERATION"] = {"WINDOW_SHADING_CONTROL": {"ACTIVE": False}, "NIGHT_VENTILATION": {"ACTIVE": True}}
     # Note: trick to debug results: remove deleting result folder in res_folder(), then run it once, then uncomment
     #       sim_mgr.run_all_steps(), change load_from_disk=True and then debug and check the results...
-    sim_mgr = SimulationManager(result_main_folder / Path("sim_test"), cfg, cesarp.common.init_unit_registry(),
-                                load_from_disk=False, fids_to_use=[7])
+    sim_mgr = SimulationManager(result_main_folder / Path("sim_test"), cfg, cesarp.common.init_unit_registry(), load_from_disk=False, fids_to_use=[7])
     sim_mgr.run_all_steps()
     results = sim_mgr.get_all_results_summary()
     dhw_annual_expected = pytest.approx(10364.1775, rel=0.005)

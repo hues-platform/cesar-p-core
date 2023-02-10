@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -27,13 +27,15 @@ import pytest
 __HELLO_expected_test_config = {"WORLD": "How are you?", "SUNSHINE": "good"}
 
 _TEST_CFG_PATH = os.path.dirname(__file__) / Path("./testfixture/testConfig.yml")
-_TEST_SUBPKG_CONFIG_PATH  = os.path.dirname(__file__) / Path("./testfixture/testConfigSubpackage.yml")
+_TEST_SUBPKG_CONFIG_PATH = os.path.dirname(__file__) / Path("./testfixture/testConfigSubpackage.yml")
 _TEST_DUPLICATES_CONFIG_PATH = os.path.dirname(__file__) / Path("./testfixture/testConfigDuplicateKey.yml")
+
 
 def test_config_default():
     config = config_loader.load_config_for_package(_TEST_CFG_PATH, "cesarp.hello")
     assert isinstance(config["WORLD"], str)
     assert config == __HELLO_expected_test_config
+
 
 def test_config_with_custom():
     custom_cfg = {"HELLO": {"SUNSHINE": "warm", "DARKNESS": "cold"}}
@@ -43,11 +45,13 @@ def test_config_with_custom():
     assert config["DARKNESS"] == "cold"
     assert config["SUNSHINE"] == "warm"
 
+
 def test_merge_config():
     default = {"manager": {"path": "default_path", "separator": ","}, "geometry": {"win": "xy"}}
     custom = {"manager": {"path": "custom_path"}}
     res = config_loader.merge_config_recursive(default, custom)
     assert res == {"manager": {"path": "custom_path", "separator": ","}, "geometry": {"win": "xy"}}
+
 
 def test_convert_pathes():
     config_path = _TEST_CFG_PATH
@@ -55,10 +59,13 @@ def test_convert_pathes():
     config = config_loader.load_config_full(config_path)
     config_loader.__convert_entries_to_abs_pathes(config, config_dir)
 
-    assert(config["HELLO"] == __HELLO_expected_test_config) # entries in HELLO should be unchanged, no pathes
-    assert(config["ABS_PATHES_TEST"] == {"TESTFILE": str(config_dir / Path("../test/test.txt")),
-                                         "TEST_PATH": str(config_dir / Path("./yapath/subdir")),
-                                         "SOMETHING": str(config_dir / Path("testfile.idf"))})
+    assert config["HELLO"] == __HELLO_expected_test_config  # entries in HELLO should be unchanged, no pathes
+    assert config["ABS_PATHES_TEST"] == {
+        "TESTFILE": str(config_dir / Path("../test/test.txt")),
+        "TEST_PATH": str(config_dir / Path("./yapath/subdir")),
+        "SOMETHING": str(config_dir / Path("testfile.idf")),
+    }
+
 
 def test_config_subpackage():
     custom_cfg = {"MOM": {"CHILD": {"STATE": "smiling"}}}
@@ -72,23 +79,23 @@ def test_config_validation_wrong_hierarchy():
     SIM_SET_KEY = "SIMULATION_SETTINGS"
     custom_cfg_wrong = {SIM_SET_KEY: {"TIMING": {"MIN_SYSTEM_TIMESTAMP": 2}}}
     (wrong, corrected, not_found) = config_loader.validate_custom_config([_TEST_CFG_PATH, _TEST_SUBPKG_CONFIG_PATH], custom_cfg_wrong)
-    assert SIM_SET_KEY in wrong 
-    assert isinstance(wrong[SIM_SET_KEY], str) # check that the key was marked
+    assert SIM_SET_KEY in wrong
+    assert isinstance(wrong[SIM_SET_KEY], str)  # check that the key was marked
     EP_KEY = "EPLUS_ADAPTER"
     assert EP_KEY in corrected
-    assert SIM_SET_KEY in corrected[EP_KEY] 
+    assert SIM_SET_KEY in corrected[EP_KEY]
     assert isinstance(corrected[EP_KEY][SIM_SET_KEY], str)
     assert not_found == {}
 
 
 def test_config_validation_not_existing():
-    CO_SIM_KEY= "CO-SIMULATION"
+    CO_SIM_KEY = "CO-SIMULATION"
     custom_cfg_not_existing = {CO_SIM_KEY: {"FMU": True}}
     custom_cfg = copy.deepcopy(custom_cfg_not_existing)
     custom_cfg.update({"HELLO": {"SUNSHINE": "warm"}})
     (wrong, corrected, not_found) = config_loader.validate_custom_config([_TEST_CFG_PATH, _TEST_SUBPKG_CONFIG_PATH], custom_cfg_not_existing)
     assert CO_SIM_KEY in wrong
-    assert isinstance(wrong[CO_SIM_KEY], str) # check that the key was marked
+    assert isinstance(wrong[CO_SIM_KEY], str)  # check that the key was marked
     assert len(wrong) == 1
     assert corrected == {}
     assert CO_SIM_KEY in not_found
@@ -101,6 +108,6 @@ def test_config_validation_duplicate_keys():
 
 
 def test_get_default_config_files():
-    all_config_files = config_loader.get_config_file_pathes('cesarp', recursive=True)
+    all_config_files = config_loader.get_config_file_pathes("cesarp", recursive=True)
     expected_config_entry = "retrofit_embodied_config.yml"
-    assert any(str(cfg_file).find(expected_config_entry) for cfg_file in all_config_files)    
+    assert any(str(cfg_file).find(expected_config_entry) for cfg_file in all_config_files)

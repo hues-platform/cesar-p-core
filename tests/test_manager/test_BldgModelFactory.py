@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -27,20 +27,19 @@ from cesarp.manager.BldgModelFactory import BldgModelFactory
 import cesarp.common
 from cesarp.model.EnergySource import EnergySource
 
+
 def test_EnergySource_mapping():
     # test mapping between value as string, name as string or matlab cesar legacy number for energy carriers to
     # EnergySource
     KEY_DHW = "ECarrierDHW"
     KEY_HEATING = "ECarrierHeating"
-    e_carriers_raw = pd.read_csv(str(os.path.dirname(__file__) / Path("./testfixture/BuildingECarriers.csv")),
-                               index_col="ORIG_FID")
-    e_carriers = e_carriers_raw.loc[:, [KEY_DHW, KEY_HEATING]].applymap(
-        lambda x: EnergySource(x)
-    )
-    assert(e_carriers.loc[2, KEY_DHW]) == EnergySource.DHW_OTHER
+    e_carriers_raw = pd.read_csv(str(os.path.dirname(__file__) / Path("./testfixture/BuildingECarriers.csv")), index_col="ORIG_FID")
+    e_carriers = e_carriers_raw.loc[:, [KEY_DHW, KEY_HEATING]].applymap(lambda x: EnergySource(x))
+    assert (e_carriers.loc[2, KEY_DHW]) == EnergySource.DHW_OTHER
     assert (e_carriers.loc[2, KEY_HEATING]) == EnergySource.HEATING_OTHER
-    assert(e_carriers.loc[8, KEY_DHW]) == EnergySource.ELECTRICITY
+    assert (e_carriers.loc[8, KEY_DHW]) == EnergySource.ELECTRICITY
     assert (e_carriers.loc[8, KEY_HEATING]) == EnergySource.HEATING_OIL
+
 
 def test_factory_init():
     bldg_age_file = str(os.path.dirname(__file__) / Path("./testfixture/BuildingYearOfCreation.csv"))
@@ -50,19 +49,19 @@ def test_factory_init():
     bldg_e_carriers = str(os.path.dirname(__file__) / Path("./testfixture/BuildingECarriers.csv"))
     site_vertices = str(os.path.dirname(__file__) / Path("./testfixture/SiteVertices.csv"))
     weather = str(os.path.dirname(__file__) / Path("./testfixture/Zurich_1.epw"))
-    config ={"MANAGER":
-                 {
-                     "BLDG_AGE_FILE": {"PATH": bldg_age_file},
-                     "SITE_VERTICES_FILE": {"PATH": site_vertices},
-                     "BLDG_TYPE_PER_BLDG_FILE": {"PATH": bldg_sia_type},
-                     "BLDG_INSTALLATION_FILE": {"PATH": bldg_e_carriers},
-                     "SINGLE_SITE": {"WEATHER_FILE": weather}
-                 }
-             }
+    config = {
+        "MANAGER": {
+            "BLDG_AGE_FILE": {"PATH": bldg_age_file},
+            "SITE_VERTICES_FILE": {"PATH": site_vertices},
+            "BLDG_TYPE_PER_BLDG_FILE": {"PATH": bldg_sia_type},
+            "BLDG_INSTALLATION_FILE": {"PATH": bldg_e_carriers},
+            "SINGLE_SITE": {"WEATHER_FILE": weather},
+        }
+    }
     myFact = BldgModelFactory(cesarp.common.init_unit_registry(), config)
 
     assert myFact._site_factory != None
-    assert myFact._glazing_ratio_provider == None # no per building glazing ratio, thus None
+    assert myFact._glazing_ratio_provider == None  # no per building glazing ratio, thus None
     assert myFact._bldg_operation_factory != None
     assert myFact._geometry_builder_factory != None
     assert myFact._neighbouring_bldg_constr_factory != None
@@ -72,4 +71,3 @@ def test_factory_init():
     my_bldg_model = myFact.create_bldg_model(1)
     assert not my_bldg_model.bldg_operation_mapping.get_operation_for_floor(0).night_vent.is_active
     assert my_bldg_model.bldg_operation_mapping.get_operation_for_floor(0).win_shading_ctrl.is_active
-

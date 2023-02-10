@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -186,10 +186,10 @@ class ResultProcessor:
         sim_res_rows_tot_demand = []
         sim_res_rows_specific_demand = []
         row_index = []
-        demand_specific_u = ureg.kW * ureg.h / ureg.m ** 2 / ureg.year
+        demand_specific_u = ureg.kW * ureg.h / ureg.m**2 / ureg.year
         demand_tot_u = ureg.kW * ureg.h / ureg.year
 
-        floor_area_unit = ureg.m ** 2
+        floor_area_unit = ureg.m**2
         sim_res_floor_area = pd.DataFrame(columns=["floor_area"])
         sim_res_floor_area.columns = pd.MultiIndex.from_arrays(
             [[floor_area_unit], [ColHeaderSimResult.FLOOR_AREA.value]],

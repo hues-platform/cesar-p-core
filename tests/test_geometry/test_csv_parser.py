@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -30,6 +30,7 @@ import cesarp.geometry.csv_input_parser as cesar_parser
 
 __sitevertices_labels = {"gis_fid": "TARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"}
 
+
 def test_sitevertices_parser():
     sitevertices_fullfile = os.path.dirname(__file__) / Path("./testfixture/SiteVertices.csv")
     flat_site_vertices = cesar_parser.read_sitevertices_from_csv(sitevertices_fullfile, __sitevertices_labels)
@@ -43,21 +44,16 @@ def test_sitevertices_parser():
         )
         expected_wall_vertices.reset_index()
         expected_wall_vertices = expected_wall_vertices.astype(float)
-        pandas.util.testing.assert_frame_equal(
-            row["footprint_shape"], expected_wall_vertices.drop("height", axis=1)
-        )
+        pandas.util.testing.assert_frame_equal(row["footprint_shape"], expected_wall_vertices.drop("height", axis=1))
+
 
 def test_sitevertices_parser_csv_heading_wrong():
     sitevertices_fullfile = os.path.dirname(__file__) / Path("./testfixture/SiteVertices.csv")
     with pytest.raises(KeyError) as e_info:
-        sitevertices = cesar_parser.read_sitevertices_from_csv(
-            sitevertices_fullfile,
-            {"gis_fid": "TTARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"}
-        )
+        sitevertices = cesar_parser.read_sitevertices_from_csv(sitevertices_fullfile, {"gis_fid": "TTARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"})
+
 
 def test_sitevertices_parser_label_keys_wrong():
     sitevertices_fullfile = os.path.dirname(__file__) / Path("./testfixture/SiteVertices.csv")
     with pytest.raises(AssertionError) as e_info:
-       sitevertices = cesar_parser.read_sitevertices_from_csv(sitevertices_fullfile,
-                                                              {"giss_fid": "TARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"})
-
+        sitevertices = cesar_parser.read_sitevertices_from_csv(sitevertices_fullfile, {"giss_fid": "TARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"})

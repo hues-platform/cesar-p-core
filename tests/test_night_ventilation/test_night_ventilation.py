@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -40,6 +40,7 @@ from cesarp.eplus_adapter import idf_writer_night_vent
 _RESULT_FOLDER = os.path.dirname(__file__) / Path("results")
 _EXPECTED_FOLDER = os.path.dirname(__file__) / Path("expected_results")
 
+
 @pytest.fixture
 def res_folder():
     res_folder = Path(_RESULT_FOLDER).absolute()
@@ -47,7 +48,7 @@ def res_folder():
     yield res_folder
     if os.path.exists(res_folder):
         pass
-        #shutil.rmtree(res_folder)
+        # shutil.rmtree(res_folder)
 
 
 @pytest.fixture
@@ -63,18 +64,17 @@ def idf():
 def test_add_night_vent_zone_flowrate(res_folder, idf):
     ureg = cesarp.common.init_unit_registry()
     expected_file_path = _EXPECTED_FOLDER / Path("./night_vent_zone_expected.idf")
-    myModel = NightVent(is_active=True,
+    myModel = NightVent(
+        is_active=True,
         flow_rate=ureg("2.5 ACH"),
         min_indoor_temperature=ureg("24 degreeC"),
         maximum_in_out_deltaT=ureg("2 degreeC"),
-        max_wind_speed=ureg("40 m/s"),          # maximum wind speed threshold (m/s) - above this value the occupant closes the window - 40m/s is default in EnergyPlus Version 8.5
-        start_hour="20:00",        # night ventilation starting hour (00:00 format)
-        end_hour="6:00",          # night ventilation ending hour (00:00 format)
-        maximum_indoor_temp_profile=ScheduleFixedValue(value=ureg("25 degreeC"), type_limit=ScheduleTypeLimits.TEMPERATURE()))
+        max_wind_speed=ureg("40 m/s"),  # maximum wind speed threshold (m/s) - above this value the occupant closes the window - 40m/s is default in EnergyPlus Version 8.5
+        start_hour="20:00",  # night ventilation starting hour (00:00 format)
+        end_hour="6:00",  # night ventilation ending hour (00:00 format)
+        maximum_indoor_temp_profile=ScheduleFixedValue(value=ureg("25 degreeC"), type_limit=ScheduleTypeLimits.TEMPERATURE()),
+    )
     idf_writer_night_vent.add_night_ventilation_for_zone(idf, "myzone", myModel)
-    idf_file_path = res_folder / Path('night_vent_zone_result.idf')
+    idf_file_path = res_folder / Path("night_vent_zone_result.idf")
     idf.save(idf_file_path)
     assert are_files_equal(idf_file_path, expected_file_path, ignore_line_nrs=[1])
-
-
-

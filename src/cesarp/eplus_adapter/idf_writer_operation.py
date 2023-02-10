@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -67,7 +67,7 @@ def add_people(idf, zone_idf_name, occupancy: Occupancy, fraction_radiant_from_a
     people_idf_obj.Zone_or_ZoneList_Name = zone_idf_name
     people_idf_obj.Number_of_People_Schedule_Name = occupancy_sched_idf_name
     people_idf_obj.Number_of_People_Calculation_Method = idf_strings.NumOfPeopleCalc.area_per_person
-    people_idf_obj.Zone_Floor_Area_per_Person = occupancy.floor_area_per_person.to(ureg.m ** 2 / ureg.person).m
+    people_idf_obj.Zone_Floor_Area_per_Person = occupancy.floor_area_per_person.to(ureg.m**2 / ureg.person).m
     people_idf_obj.Fraction_Radiant = fraction_radiant_from_activity.to(ureg.dimensionless).m
     people_idf_obj.Activity_Level_Schedule_Name = activity_sched_idf_name
 
@@ -79,7 +79,7 @@ def add_lights(idf, zone_idf_name, lighting_op: InstallationOperation, lighting_
     lights_idf_obj.Zone_or_ZoneList_Name = zone_idf_name
     lights_idf_obj.Schedule_Name = lighting_sched_idf_name
     lights_idf_obj.Design_Level_Calculation_Method = idf_strings.DesignLevelCalc.watts_per_area
-    lights_idf_obj.Watts_per_Zone_Floor_Area = lighting_op.power_demand_per_area.to(ureg.W / ureg.m ** 2).m
+    lights_idf_obj.Watts_per_Zone_Floor_Area = lighting_op.power_demand_per_area.to(ureg.W / ureg.m**2).m
     lights_idf_obj.Return_Air_Fraction = lighting_characteristics.return_air_fraction.to(ureg.dimensionless).m
     lights_idf_obj.Fraction_Radiant = lighting_characteristics.fraction_radiant.to(ureg.dimensionless).m
     lights_idf_obj.Fraction_Visible = lighting_characteristics.fraction_visible.to(ureg.dimensionless).m
@@ -92,7 +92,7 @@ def add_hot_water_equipment(idf, zone_idf_name, dhw_op: InstallationOperation, d
     hot_water_equ_idf_obj.Zone_or_ZoneList_Name = zone_idf_name
     hot_water_equ_idf_obj.Schedule_Name = dhw_schedule_idf_name
     hot_water_equ_idf_obj.Design_Level_Calculation_Method = idf_strings.DesignLevelCalc.watts_per_area
-    hot_water_equ_idf_obj.Power_per_Zone_Floor_Area = dhw_op.power_demand_per_area.to(ureg.W / ureg.m ** 2).m
+    hot_water_equ_idf_obj.Power_per_Zone_Floor_Area = dhw_op.power_demand_per_area.to(ureg.W / ureg.m**2).m
     hot_water_equ_idf_obj.Fraction_Lost = dhw_fraction_lost.to(ureg.dimensionless).m
 
 
@@ -103,7 +103,7 @@ def add_electric_equipment(idf, zone_idf_name, el_app_op: InstallationOperation,
     el_equ_idf_obj.Zone_or_ZoneList_Name = zone_idf_name
     el_equ_idf_obj.Schedule_Name = applicance_sched_idf_name
     el_equ_idf_obj.Design_Level_Calculation_Method = idf_strings.DesignLevelCalc.watts_per_area
-    el_equ_idf_obj.Watts_per_Zone_Floor_Area = el_app_op.power_demand_per_area.to(ureg.W / ureg.m ** 2).m
+    el_equ_idf_obj.Watts_per_Zone_Floor_Area = el_app_op.power_demand_per_area.to(ureg.W / ureg.m**2).m
     el_equ_idf_obj.Fraction_Radiant = el_app_fraction_radiant.to(ureg.dimensionless).m
 
 
@@ -127,7 +127,7 @@ def add_outdoor_air_sepc(idf, ventilation_schedule, outdoor_air_flow_per_floor_a
         outdoor_air_spec_idf_obj = idf.newidfobject(idf_obj_type)
         outdoor_air_spec_idf_obj.Name = name
         outdoor_air_spec_idf_obj.Outdoor_Air_Method = idf_strings.OutdoorAirCalcMethod.flow_per_area
-        outdoor_air_spec_idf_obj.Outdoor_Air_Flow_per_Zone_Floor_Area = outdoor_air_flow_per_floor_area.to(ureg.m ** 3 / ureg.s / ureg.m ** 2).m
+        outdoor_air_spec_idf_obj.Outdoor_Air_Flow_per_Zone_Floor_Area = outdoor_air_flow_per_floor_area.to(ureg.m**3 / ureg.s / ureg.m**2).m
         # clean up default values: set to zero because calc method changed to flow/area
         outdoor_air_spec_idf_obj.Outdoor_Air_Flow_per_Person = 0
         if idf.idd_version[0] < 9 and idf.idd_version[1] < 6:
@@ -167,6 +167,6 @@ def add_zone_infiltration(idf, zone_idf_obj_name, infiltration_rate, infiltratio
     except DimensionalityError:
         try:
             infiltration_idf_obj.Design_Flow_Rate_Calculation_Method = idf_strings.FlowRateCalculationMethod.flow_per_zone_area
-            infiltration_idf_obj.Flow_per_Zone_Floor_Area = infiltration_rate.to(ureg.m ** 3 / ureg.s / ureg.m ** 2).m
+            infiltration_idf_obj.Flow_per_Zone_Floor_Area = infiltration_rate.to(ureg.m**3 / ureg.s / ureg.m**2).m
         except DimensionalityError:
             raise Exception(f"infiltration rate should be in ACH or m3/s/m2 but was {str(infiltration_rate)}")

@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -29,36 +29,27 @@ from cesarp.site.SitePerSwissCommunityFactory import SitePerSwissCommunityFactor
 __SITE_DEEP_TEMP = 14
 __SITE_GROUND_TEMP_NOV = 9.8
 
+
 def get_testfixture_config():
     community_to_station_file = os.path.dirname(__file__) / Path("./testfixture/Testfixture_Gemeinde_to_WeatherStation.csv")
     weather_files_folder = os.path.dirname(__file__) / Path("./testfixture/weather_files")
     weather_confg = {
-        'WEATHER':
-            {
-                'SWISS_COMMUNITIES':
-                    {
-                        'COMMUNITY_TO_STATION':
-                            {'PATH': community_to_station_file,
-                             'LABELS':
-                                 {'community_id': "BFS Gde-nummer",
-                                  'station_name': "WeatherStationName"}
-                             },
-                        'WEATHER_FILES':
-                            {'PATH': weather_files_folder}
-                    }
-            },
-        'SITE':
-            {
-                'GROUND_TEMPERATURES':
-                    {
-                        'DEEP': f'{__SITE_DEEP_TEMP} degC',
-                        'GROUND_TEMP_PER_MONTH': [1.6, 0.7, 2.3, 4.8, 11.2, 16.2, 19.6, 20.6, 18.9, 15, __SITE_GROUND_TEMP_NOV, 5],
-                        'GROUND_TEMP_PER_MONTH_UNIT': 'degC'
-                    }
-
+        "WEATHER": {
+            "SWISS_COMMUNITIES": {
+                "COMMUNITY_TO_STATION": {"PATH": community_to_station_file, "LABELS": {"community_id": "BFS Gde-nummer", "station_name": "WeatherStationName"}},
+                "WEATHER_FILES": {"PATH": weather_files_folder},
             }
+        },
+        "SITE": {
+            "GROUND_TEMPERATURES": {
+                "DEEP": f"{__SITE_DEEP_TEMP} degC",
+                "GROUND_TEMP_PER_MONTH": [1.6, 0.7, 2.3, 4.8, 11.2, 16.2, 19.6, 20.6, 18.9, 15, __SITE_GROUND_TEMP_NOV, 5],
+                "GROUND_TEMP_PER_MONTH_UNIT": "degC",
+            }
+        },
     }
     return weather_confg
+
 
 @pytest.fixture
 def weather_chooser():
@@ -83,10 +74,7 @@ def test_weather_pointing_to_nonexisting_file(weather_chooser):
 
 def test_ch_site_factory():
     ureg = cesarp.common.init_unit_registry()
-    fid_to_community = {1: 191, # Dübendorf
-                        2: 152, # Herrliberg
-                        3: 3681, # Avers
-                        4: 751} # Täuffelen
+    fid_to_community = {1: 191, 2: 152, 3: 3681, 4: 751}  # Dübendorf  # Herrliberg  # Avers  # Täuffelen
     myfact = SitePerSwissCommunityFactory(fid_to_community, ureg, get_testfixture_config())
     assert "Davos" in myfact.get_site(3).weather_file_path
     assert "Bern" in myfact.get_site(4).weather_file_path
@@ -94,9 +82,7 @@ def test_ch_site_factory():
     assert duebi.site_ground_temperatures.deep == ureg.Quantity(__SITE_DEEP_TEMP, ureg.degC)
     assert duebi.site_ground_temperatures.ground_temp_per_month[10] == ureg.Quantity(__SITE_GROUND_TEMP_NOV, ureg.degC)
 
+
 def test_default_package_config():
     weather_chooser = SwissCommunityWeatherChooser()
     assert "Zuerich-SMA.epw" in weather_chooser.get_weather_file(69)
-
-
-

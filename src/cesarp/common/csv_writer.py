@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -87,7 +87,7 @@ def write_csv_with_header(header_data: Dict[Any, Any], csv_data: pd.DataFrame, f
     """
     if separate_metadata:
         with open(filepath, "w") as file_handle:
-            csv_data.to_csv(file_handle, index=True, sep=csv_separator, float_format=float_format, line_terminator="\n")
+            csv_data.to_csv(file_handle, index=True, sep=csv_separator, float_format=float_format, lineterminator="\n")
             logging.getLogger(__name__).debug(f"saved to {file_handle.name} successfully - plain csv")
 
         filepath_and_name, file_ext = os.path.splitext(filepath)
@@ -101,5 +101,5 @@ def write_csv_with_header(header_data: Dict[Any, Any], csv_data: pd.DataFrame, f
             file_handle.write(_CSVY_FILEFORMAT_COMMENT)
             yaml.dump(header_data, file_handle)
             file_handle.write(_YAML_SEPARATOR)
-            csv_data.to_csv(file_handle, index=True, sep=csv_separator, float_format=float_format, line_terminator="\n")
+            csv_data.to_csv(file_handle, index=True, sep=csv_separator, float_format=float_format, lineterminator="\n")
             logging.getLogger(__name__).debug(f"saved to {file_handle.name} successfully")

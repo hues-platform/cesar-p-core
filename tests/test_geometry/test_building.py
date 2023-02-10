@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -37,34 +37,18 @@ _test_data_floors = [
 
 # walls resulting from _test_data_floors
 _test_data_walls = [
-        [
-            pd.DataFrame(
-                [[0, 10, 0], [0, 0, 0], [0, 0, 2.5], [0, 10, 2.5]], columns=["x", "y", "z"]
-            ).astype(float),
-            pd.DataFrame(
-                [[25, 10, 0], [0, 10, 0], [0, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]
-            ).astype(float),
-            pd.DataFrame(
-                [[25, 0, 0], [25, 10, 0], [25, 10, 2.5], [25, 0, 2.5]], columns=["x", "y", "z"]
-            ).astype(float),
-            pd.DataFrame(
-                [[0, 0, 0], [25, 0, 0], [25, 0, 2.5], [0, 0, 2.5]], columns=["x", "y", "z"]
-            ).astype(float),
-        ],
-        [
-            pd.DataFrame(
-                [[0, 10, 2.5], [0, 0, 2.5], [0, 0, 5], [0, 10, 5]], columns=["x", "y", "z"]
-            ).astype(float),
-            pd.DataFrame(
-                [[25, 10, 2.5], [0, 10, 2.5], [0, 10, 5], [25, 10, 5]], columns=["x", "y", "z"]
-            ).astype(float),
-            pd.DataFrame(
-                [[25, 0, 2.5], [25, 10, 2.5], [25, 10, 5], [25, 0, 5]], columns=["x", "y", "z"]
-            ).astype(float),
-            pd.DataFrame(
-                [[0, 0, 2.5], [25, 0, 2.5], [25, 0, 5], [0, 0, 5]], columns=["x", "y", "z"]
-            ).astype(float),
-        ]
+    [
+        pd.DataFrame([[0, 10, 0], [0, 0, 0], [0, 0, 2.5], [0, 10, 2.5]], columns=["x", "y", "z"]).astype(float),
+        pd.DataFrame([[25, 10, 0], [0, 10, 0], [0, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]).astype(float),
+        pd.DataFrame([[25, 0, 0], [25, 10, 0], [25, 10, 2.5], [25, 0, 2.5]], columns=["x", "y", "z"]).astype(float),
+        pd.DataFrame([[0, 0, 0], [25, 0, 0], [25, 0, 2.5], [0, 0, 2.5]], columns=["x", "y", "z"]).astype(float),
+    ],
+    [
+        pd.DataFrame([[0, 10, 2.5], [0, 0, 2.5], [0, 0, 5], [0, 10, 5]], columns=["x", "y", "z"]).astype(float),
+        pd.DataFrame([[25, 10, 2.5], [0, 10, 2.5], [0, 10, 5], [25, 10, 5]], columns=["x", "y", "z"]).astype(float),
+        pd.DataFrame([[25, 0, 2.5], [25, 10, 2.5], [25, 10, 5], [25, 0, 5]], columns=["x", "y", "z"]).astype(float),
+        pd.DataFrame([[0, 0, 2.5], [25, 0, 2.5], [25, 0, 5], [0, 0, 5]], columns=["x", "y", "z"]).astype(float),
+    ],
 ]
 
 _test_data_walls_adjacency = [[False, True, False, True], [False, True, False, True]]
@@ -82,11 +66,14 @@ _test_bldg_input_data = dict()
 _test_bldg_input_data["footprint_shape"] = pd.DataFrame({"x": [0, 0, 25, 25], "y": [0, 10, 10, 0]})
 _test_bldg_input_data["height"] = 12.6
 
+
 def stub_get_adjacent_footprint_vertices_for_test_bldg(main_bldg, neighbours, max_distance_adjacency):
     return [pd.DataFrame({"x": [0, 25], "y": [10, 10]})]
 
+
 def stub_get_adjacent_footprint_vertices_no_adjacencies(main_bldg, neighbours, max_distance_adjacency):
     return [pd.DataFrame()]
+
 
 def test_define_bldg_floors():
     input_bldg = _test_bldg_input_data
@@ -130,7 +117,10 @@ def test_define_window_in_wall_preconditions():
 
 def test_define_window_in_wall_parallel_to_y():
     wall = pd.DataFrame([[0, 10, 0], [0, 0, 0], [0, 0, 2.5], [0, 10, 2.5]], columns=["x", "y", "z"]).astype(float)
-    expected_window = pd.DataFrame([[0, 6.0833, 0.5], [0, 3.9167, 0.5], [0, 3.9167, 2.0], [0, 6.0833, 2]], columns=["x", "y", "z"],).astype(float)
+    expected_window = pd.DataFrame(
+        [[0, 6.0833, 0.5], [0, 3.9167, 0.5], [0, 3.9167, 2.0], [0, 6.0833, 2]],
+        columns=["x", "y", "z"],
+    ).astype(float)
     result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
     pandas.testing.assert_frame_equal(result_window, expected_window, check_exact=False)
 
@@ -143,9 +133,7 @@ def test_define_window_in_wall_parallel_to_y_counterclock():
 
 
 def test_define_window_in_wall_parallel_to_x():
-    wall = pd.DataFrame(
-        [[25, 10, 0], [0, 10, 0], [0, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]
-    ).astype(float)
+    wall = pd.DataFrame([[25, 10, 0], [0, 10, 0], [0, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]).astype(float)
     expected_window = pd.DataFrame(
         [[15.2083, 10, 0.5], [9.7917, 10, 0.5], [9.7917, 10, 2], [15.2083, 10, 2.0]],
         columns=["x", "y", "z"],
@@ -155,84 +143,63 @@ def test_define_window_in_wall_parallel_to_x():
 
 
 def test_define_window_wall_too_small():
-    wall = pd.DataFrame(
-        [[25, 10, 0], [24.91, 10, 0], [24.91, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]
-    ).astype(float)
+    wall = pd.DataFrame([[25, 10, 0], [24.91, 10, 0], [24.91, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]).astype(float)
     result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
     assert result_window is None
 
 
 def test_define_window_window_too_small():
-    wall = pd.DataFrame(
-        [[25, 10, 0], [21.01, 10, 0], [21.01, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]
-    ).astype(float)
+    wall = pd.DataFrame([[25, 10, 0], [21.01, 10, 0], [21.01, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]).astype(float)
     result_window = cesarp.geometry.building.define_window_in_wall(wall, 0.001, 0.25, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
     assert result_window is None
 
 
 def test_define_bldg_windows():
     input_walls_per_floor = [
-            # groundfloor
-            [
-                pd.DataFrame(
-                    [[0, 10, 0], [0, 0, 0], [0, 0, 2.5], [0, 10, 2.5]], columns=["x", "y", "z"]
-                ).astype(float),
-                pd.DataFrame(
-                    [[25, 10, 0], [0, 10, 0], [0, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]
-                ).astype(float),
-            ],
-            # firstfloor
-            [
-                pd.DataFrame(
-                    [[0, 10, 2.5], [0, 0, 2.5], [0, 0, 5], [0, 10, 5]], columns=["x", "y", "z"]
-                ).astype(float),
-                pd.DataFrame(
-                    [[25, 10, 2.5], [0, 10, 2.5], [0, 10, 5], [25, 10, 5]], columns=["x", "y", "z"]
-                ).astype(float),
-            ],
-        ]
-
+        # groundfloor
+        [
+            pd.DataFrame([[0, 10, 0], [0, 0, 0], [0, 0, 2.5], [0, 10, 2.5]], columns=["x", "y", "z"]).astype(float),
+            pd.DataFrame([[25, 10, 0], [0, 10, 0], [0, 10, 2.5], [25, 10, 2.5]], columns=["x", "y", "z"]).astype(float),
+        ],
+        # firstfloor
+        [
+            pd.DataFrame([[0, 10, 2.5], [0, 0, 2.5], [0, 0, 5], [0, 10, 5]], columns=["x", "y", "z"]).astype(float),
+            pd.DataFrame([[25, 10, 2.5], [0, 10, 2.5], [0, 10, 5], [25, 10, 5]], columns=["x", "y", "z"]).astype(float),
+        ],
+    ]
 
     expected_windows = [
-            # groundfloor
-            [
-                pd.DataFrame(
-                    [[0, 6.0833, 0.5], [0, 3.9167, 0.5], [0, 3.9167, 2.0], [0, 6.0833, 2]],
-                    columns=["x", "y", "z"],
-                ).astype(float),
-                pd.DataFrame(
-                    [[15.2083, 10, 0.5], [9.7917, 10, 0.5], [9.7917, 10, 2], [15.2083, 10, 2.0]],
-                    columns=["x", "y", "z"],
-                ).astype(float),
-            ],
-            # firstfloor
-            [
-                pd.DataFrame(
-                    [[0, 6.0833, 3], [0, 3.9167, 3], [0, 3.9167, 4.5], [0, 6.0833, 4.5]],
-                    columns=["x", "y", "z"],
-                ).astype(float),
-                pd.DataFrame(
-                    [[15.2083, 10, 3], [9.7917, 10, 3], [9.7917, 10, 4.5], [15.2083, 10, 4.5]],
-                    columns=["x", "y", "z"],
-                ).astype(float),
-            ],
-        ]
+        # groundfloor
+        [
+            pd.DataFrame(
+                [[0, 6.0833, 0.5], [0, 3.9167, 0.5], [0, 3.9167, 2.0], [0, 6.0833, 2]],
+                columns=["x", "y", "z"],
+            ).astype(float),
+            pd.DataFrame(
+                [[15.2083, 10, 0.5], [9.7917, 10, 0.5], [9.7917, 10, 2], [15.2083, 10, 2.0]],
+                columns=["x", "y", "z"],
+            ).astype(float),
+        ],
+        # firstfloor
+        [
+            pd.DataFrame(
+                [[0, 6.0833, 3], [0, 3.9167, 3], [0, 3.9167, 4.5], [0, 6.0833, 4.5]],
+                columns=["x", "y", "z"],
+            ).astype(float),
+            pd.DataFrame(
+                [[15.2083, 10, 3], [9.7917, 10, 3], [9.7917, 10, 4.5], [15.2083, 10, 4.5]],
+                columns=["x", "y", "z"],
+            ).astype(float),
+        ],
+    ]
 
     result_windows = cesarp.geometry.building.define_windows_for_walls(input_walls_per_floor, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
 
     # .....frame_equal does not work for whole dataframe with nested dataframes as it seems, thus compare each entry...
-    pandas.testing.assert_frame_equal(
-        result_windows[0][0], expected_windows[0][0], check_exact=False
-    )
-    pandas.testing.assert_frame_equal(
-        result_windows[0][1], expected_windows[0][1], check_exact=False
-    )
-    pandas.testing.assert_frame_equal(
-        result_windows[1][0], expected_windows[1][0], check_exact=False
-    )
-    pandas.testing.assert_frame_equal(
-        result_windows[1][1], expected_windows[1][1], check_exact=False
-    )
+    pandas.testing.assert_frame_equal(result_windows[0][0], expected_windows[0][0], check_exact=False)
+    pandas.testing.assert_frame_equal(result_windows[0][1], expected_windows[0][1], check_exact=False)
+    pandas.testing.assert_frame_equal(result_windows[1][0], expected_windows[1][0], check_exact=False)
+    pandas.testing.assert_frame_equal(result_windows[1][1], expected_windows[1][1], check_exact=False)
 
 
 def test_define_bldg_shape_neighbour():
@@ -249,9 +216,7 @@ def test_define_bldg_shape_neighbour():
 
     assert len(result_bldg_shape.walls) == 1
     assert len(result_bldg_shape.walls[0]) == 4
-    pandas.testing.assert_frame_equal(
-        result_bldg_shape.walls[0][0], expected_wall_0_0, check_names=False
-    )
+    pandas.testing.assert_frame_equal(result_bldg_shape.walls[0][0], expected_wall_0_0, check_names=False)
 
     pandas.testing.assert_frame_equal(result_bldg_shape.groundfloor, expected_groundfloor, check_names=False)
     pandas.testing.assert_frame_equal(result_bldg_shape.roof, expected_roof, check_names=False)
@@ -259,9 +224,9 @@ def test_define_bldg_shape_neighbour():
 
 def test_filter_adjacent_walls():
     input_adjacency = [
-                        pd.DataFrame([[25, 10], [0, 10]], index=[0, 1], columns=["x", "y"]),
-                        pd.DataFrame([[0, 0], [25, 0]], index=[0, 1], columns=["x", "y"]),
-                      ]
+        pd.DataFrame([[25, 10], [0, 10]], index=[0, 1], columns=["x", "y"]),
+        pd.DataFrame([[0, 0], [25, 0]], index=[0, 1], columns=["x", "y"]),
+    ]
 
     result_adjacencies = cesarp.geometry.building.find_adjacent_walls(_test_data_walls, input_adjacency)
     assert result_adjacencies == _test_data_walls_adjacency
@@ -269,29 +234,24 @@ def test_filter_adjacent_walls():
 
 def test_filter_adjacent_walls_with_three_adjacent_vertices():
     input_adjacency = [
-            pd.DataFrame([[25, 10], [12, 5], [0, 10]], index=[0, 1, 2], columns=["x", "y"]),
-            pd.DataFrame([[0, 0], [25, 0]], index=[0, 1], columns=["x", "y"]),
-        ]
+        pd.DataFrame([[25, 10], [12, 5], [0, 10]], index=[0, 1, 2], columns=["x", "y"]),
+        pd.DataFrame([[0, 0], [25, 0]], index=[0, 1], columns=["x", "y"]),
+    ]
 
     result_adjacencies = cesarp.geometry.building.find_adjacent_walls(_test_data_walls_three_point_wall, input_adjacency)
     assert result_adjacencies == _test_data_walls_three_adjacencies
 
 
 def test_remove_windows_in_adjacent_walls():
-    windows = cesarp.geometry.building.define_windows_for_walls(_test_data_walls,  0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
+    windows = cesarp.geometry.building.define_windows_for_walls(_test_data_walls, 0.13, 1.5, 0.1, 0.04, MAX_GLZ_RATIO_WALL_WIDTH)
     windows_without_adjacencies = cesarp.geometry.building.remove_windows_in_adjacent_walls(windows, _test_data_walls_adjacency)
     assert windows_without_adjacencies[0][0] is not None
     assert windows_without_adjacencies[0][1] is None
 
+
 def test_create_building_shape_detailed():
     # no checking in details, but make sure creating the integration method to create a building geometry works...
-    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(
-            _test_bldg_input_data,
-            0.16,
-            stub_get_adjacent_footprint_vertices_for_test_bldg,
-            [],
-            {}
-    )
+    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, stub_get_adjacent_footprint_vertices_for_test_bldg, [], {})
     assert isinstance(bldg_shape.walls, list)
     assert not bldg_shape.walls[0][0].empty
     assert isinstance(bldg_shape.windows, list)
@@ -306,25 +266,15 @@ def test_create_building_shape_detailed():
     assert bldg_shape.adjacent_walls_bool[0][1]  # 2nd wall is adjacent
     assert isinstance(bldg_shape.window_frame, dict)
 
+
 def test_check_overall_glazing_ratio_matching():
-    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(
-            _test_bldg_input_data,
-            0.16,
-            stub_get_adjacent_footprint_vertices_no_adjacencies,
-            [],
-            {}
-    )
+    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, stub_get_adjacent_footprint_vertices_no_adjacencies, [], {})
     overall_bldg_glz_ratio = cesarp.geometry.building.calc_glz_ratio_for_bldg(bldg_shape)
     assert 0.16 == overall_bldg_glz_ratio  # glazing ratio matches exaclty if all walls get a window
 
+
 def test_check_overall_glazing_ratio_not_matching():
     # when there are adjacent buildings, those walls get no window and thus resulting overall glazing ratio is smaller than value set
-    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(
-            _test_bldg_input_data,
-            0.16,
-            stub_get_adjacent_footprint_vertices_for_test_bldg,
-            [],
-            {}
-    )
+    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, stub_get_adjacent_footprint_vertices_for_test_bldg, [], {})
     overall_bldg_glz_ratio = cesarp.geometry.building.calc_glz_ratio_for_bldg(bldg_shape)
     assert pytest.approx(0.10, abs=0.005) == overall_bldg_glz_ratio  # glazing ratio matches exaclty if all walls get a window

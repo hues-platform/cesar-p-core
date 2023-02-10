@@ -94,6 +94,7 @@ pages-public:
   script:
     - mkdir public
     - cd docs/source/public
+    - poetry add sphinxcontrib-svg2pdfconverter
     - poetry run sphinx-build . ../../../public
   artifacts:
     paths:
@@ -106,6 +107,9 @@ pdfdoc-public:
     - apt-get install -y --no-install-recommends texlive-latex-recommended texlive-fonts-recommended
     - apt-get install -y --no-install-recommends texlive-latex-extra texlive-fonts-extra texlive-lang-all
     - apt-get install -y latexmk
+    - apt-get install librsvg2-2
+    - apt-get install librsvg2-bin
+    - poetry add sphinxcontrib-svg2pdfconverter
     - mkdir pdfdoc
     - cd docs/source/public
     - poetry run sphinx-build -b latex . _latex

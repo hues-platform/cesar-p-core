@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -33,6 +33,7 @@ from eppy.modeleditor import IDF
 _TESTFIXTURE_FOLDER = os.path.dirname(__file__) / Path("testfixture")
 _TEST_WEATHER_FILE_PATH = str(os.path.dirname(__file__) / Path("testfixture") / Path("sample_case") / Path("Zurich_1.epw"))
 
+
 @pytest.fixture
 def result_main_folder():
     result_main_folder = os.path.dirname(__file__) / Path("result_nosim")
@@ -40,6 +41,7 @@ def result_main_folder():
     os.mkdir(result_main_folder)
     yield result_main_folder
     shutil.rmtree(result_main_folder, ignore_errors=True)
+
 
 @pytest.fixture
 def default_main_cfg():
@@ -62,8 +64,9 @@ def config_many_vertices():
     config["MANAGER"]["BUILDING_OPERATION_FACTORY_CLASS"] = "cesarp.operation.fixed.FixedBuildingOperationFactory.FixedBuildingOperationFactory"
     config["MANAGER"]["CONSTRUCTION_DB"] = "GRAPH_DB"
     config["EPLUS_ADAPTER"] = {"WINDOW_SHADING": True, "NIGHT_VENTILATION": True}
-    config["GEOMETRY"] = {"MAIN_BLDG_SHAPE":{"WINDOW": {"MIN_WALL_WIDTH_FOR_WINDOW":  0.05, "MIN_WINDOW_WIDTH": 0.01, "WINDOW_FRAME": {"WIDTH": 0.002}}}}
+    config["GEOMETRY"] = {"MAIN_BLDG_SHAPE": {"WINDOW": {"MIN_WALL_WIDTH_FOR_WINDOW": 0.05, "MIN_WINDOW_WIDTH": 0.01, "WINDOW_FRAME": {"WIDTH": 0.002}}}}
     return config
+
 
 def test_weather_per_community(result_main_folder, default_main_cfg):
     base_folder = str(result_main_folder / Path("weather_per_community"))

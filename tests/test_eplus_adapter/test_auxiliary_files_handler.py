@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -36,19 +36,19 @@ _MFH_PROFILES_VAR_2_PATH_SRC = os.path.dirname(__file__) / Path("./testfixture/a
 _MFH_PROFILES_VAR_2_PATH_DEST = _TESTDEST_PATH / Path("./profiles/profiles_var_2.csv")
 
 
-
 @pytest.fixture
 def testdest():
     testdest = Path(_TESTDEST_PATH)
     yield testdest
     shutil.rmtree(testdest)
 
+
 def test_saving_basic(testdest):
     aux_files_handler = RelativeAuxiliaryFilesHandler()
     aux_files_handler.set_destination(testdest, "profiles")
     rel_path_var_1 = aux_files_handler.add_file(_MFH_PROFILES_VAR_1_PATH_SRC)
     assert rel_path_var_1 == Path("profiles/profiles_var_1.csv")
-    rel_path_var_1 = aux_files_handler.add_file(_MFH_PROFILES_VAR_1_PATH_SRC) # try adding same file again, that should be possible
+    rel_path_var_1 = aux_files_handler.add_file(_MFH_PROFILES_VAR_1_PATH_SRC)  # try adding same file again, that should be possible
     assert rel_path_var_1 == Path("profiles/profiles_var_1.csv")
     assert os.path.isfile(_MFH_PROFILES_VAR_1_PATH_DEST)
     rel_path_var_2 = aux_files_handler.add_file(_MFH_PROFILES_VAR_2_PATH_SRC)

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -25,17 +25,12 @@ from cesarp.geometry import vertices_basics
 
 
 def test_set_first_corner_as_origin():
-    test_input = pd.DataFrame([[10, 5], [10, 10], [25, 10], [25, 5]], columns=["x", "y"]).astype(
-        "float64"
-    )
-    expected_output = pd.DataFrame([[0, 0], [0, 5], [15, 5], [15, 0]], columns=["x", "y"]).astype(
-        "float64"
-    )
+    test_input = pd.DataFrame([[10, 5], [10, 10], [25, 10], [25, 5]], columns=["x", "y"]).astype("float64")
+    expected_output = pd.DataFrame([[0, 0], [0, 5], [15, 5], [15, 0]], columns=["x", "y"]).astype("float64")
     test_output = vertices_basics.set_first_corner_as_origin(test_input)
     pandas.util.testing.assert_frame_equal(test_output, expected_output)
 
+
 def test_circumference():
-    test_input = pd.DataFrame([[10, 5], [10, 10], [25, 10], [25, 5]], columns=["x", "y"]).astype(
-        "float64"
-    )
+    test_input = pd.DataFrame([[10, 5], [10, 10], [25, 10], [25, 5]], columns=["x", "y"]).astype("float64")
     assert vertices_basics.calc_circumference_of_polygon(test_input) == 40

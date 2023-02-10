@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -141,7 +141,7 @@ class DHWDemandBasedOnLiterPerDayGenerator:
         """
         room_area_per_person = self._base_data.get_area_per_person_std(room_type)
 
-        power_per_area = 0 * self._ureg.W / self._ureg.m ** 2
+        power_per_area = 0 * self._ureg.W / self._ureg.m**2
         if room_area_per_person > 0:
             volume_per_day_pp = self._get_dhw_demand_liter_per_day_per_person_for_room_method(room_type)
 
@@ -161,4 +161,4 @@ class DHWDemandBasedOnLiterPerDayGenerator:
             dhw_full_load_hours_per_year = sum(full_load_dhw_profile) * self._ureg.hour
             power_per_area = energy_per_area_per_day * (365 * self._ureg.d) / dhw_full_load_hours_per_year
 
-        return power_per_area.to(self._ureg.W / self._ureg.m ** 2)
+        return power_per_area.to(self._ureg.W / self._ureg.m**2)

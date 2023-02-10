@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -130,7 +130,7 @@ def add_opaque_material(idf: IDF, idf_obj_name: str, mat_def: OpaqueMaterial, th
         idf_mat.Thickness = thickness.to(ureg.m).m
         idf_mat.Conductivity = mat_def.conductivity.to(ureg.W / (ureg.m * ureg.K)).m
         # checking for mass properties at begin, thus ignore type warning due to Optional[] declaration
-        idf_mat.Density = mat_def.density.to(ureg.kg / ureg.m ** 3).m  # type: ignore
+        idf_mat.Density = mat_def.density.to(ureg.kg / ureg.m**3).m  # type: ignore
         idf_mat.Specific_Heat = mat_def.specific_heat.to(ureg.J / (ureg.kg * ureg.K)).m  # type: ignore
         idf_mat.Thermal_Absorptance = mat_def.thermal_absorptance.to(ureg.dimensionless).m
         idf_mat.Solar_Absorptance = mat_def.solar_absorptance.to(ureg.dimensionless).m
@@ -151,7 +151,7 @@ def add_material_no_mass(idf: IDF, idf_obj_name: str, mat_def: OpaqueMaterial, t
         idf_mat = idf.newidfobject(idf_strings.IDFObjects.material_no_mass)
         idf_mat.Name = idf_obj_name
         idf_mat.Roughness = get_idf_roughness_string_for(mat_def.roughness)
-        idf_mat.Thermal_Resistance = thermal_resistance.to((ureg.m ** 2 * ureg.K) / ureg.W).m
+        idf_mat.Thermal_Resistance = thermal_resistance.to((ureg.m**2 * ureg.K) / ureg.W).m
         idf_mat.Thermal_Absorptance = mat_def.thermal_absorptance.to(ureg.dimensionless).m
         idf_mat.Solar_Absorptance = mat_def.solar_absorptance.to(ureg.dimensionless).m
         idf_mat.Visible_Absorptance = mat_def.visible_absorptance.to(ureg.dimensionless).m
@@ -180,7 +180,7 @@ def add_airgap(idf: IDF, idf_obj_name: str, thermal_resistance: pint.Quantity, u
     if not idf_writing_helpers.exists_in_idf(idf, idf_strings.IDFObjects.material_air_gap, idf_obj_name):
         idf_mat = idf.newidfobject(idf_strings.IDFObjects.material_air_gap)
         idf_mat.Name = idf_obj_name
-        idf_mat.Thermal_Resistance = thermal_resistance.to(ureg.m ** 2 * ureg.K / ureg.W).m
+        idf_mat.Thermal_Resistance = thermal_resistance.to(ureg.m**2 * ureg.K / ureg.W).m
 
 
 def add_window_material_gas(idf: IDF, idf_obj_name: str, thickness: pint.Quantity, mat_def: Gas, ureg: pint.UnitRegistry) -> None:
@@ -236,7 +236,7 @@ def add_win_frame_construction(idf: IDF, frame_constr: WindowFrameConstruction, 
     assert not idf_writing_helpers.exists_in_idf(idf, idf_strings.IDFObjects.window_property_frame_and_divider, idf_obj_name)
     f_and_d_idf_obj = idf.newidfobject(idf_strings.IDFObjects.window_property_frame_and_divider)
     f_and_d_idf_obj.Name = idf_obj_name
-    f_and_d_idf_obj.Frame_Conductance = frame_constr.frame_conductance.to(ureg.W / ureg.m ** 2 / ureg.K).m
+    f_and_d_idf_obj.Frame_Conductance = frame_constr.frame_conductance.to(ureg.W / ureg.m**2 / ureg.K).m
     f_and_d_idf_obj.Frame_Solar_Absorptance = frame_constr.frame_solar_absorptance.to(ureg.dimensionless).m
     f_and_d_idf_obj.Frame_Visible_Absorptance = frame_constr.frame_visible_absorptance.to(ureg.dimensionless).m
     f_and_d_idf_obj.Outside_Reveal_Solar_Absorptance = frame_constr.outside_reveal_solar_absorptance.to(ureg.dimensionless).m

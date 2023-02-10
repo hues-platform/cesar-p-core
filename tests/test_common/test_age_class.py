@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -20,6 +20,7 @@
 # Contact: https://www.empa.ch/web/s313
 #
 from cesarp.common.AgeClass import AgeClass
+
 
 def test_age_class_init_from_string():
     the_ac = AgeClass.from_string(" < 1918")
@@ -46,51 +47,32 @@ def test_age_class_init_from_string():
     assert the_ac.min_age == 2050
     assert the_ac.max_age == None
 
+
 def test_age_classes_consecutive_ok():
-    myAgeClasses = [
-            AgeClass(None, 1918),
-            AgeClass(1919, 1925),
-            AgeClass(1926, None)            
-    ]
+    myAgeClasses = [AgeClass(None, 1918), AgeClass(1919, 1925), AgeClass(1926, None)]
     assert AgeClass.are_age_classes_consecutive(myAgeClasses)
+
 
 def test_age_classes_consecutive_ok_fully_defined():
-    myAgeClasses = [
-            AgeClass(1900, 1918),
-            AgeClass(1919, 1925),
-            AgeClass(1926, 1933)            
-    ]
+    myAgeClasses = [AgeClass(1900, 1918), AgeClass(1919, 1925), AgeClass(1926, 1933)]
     assert AgeClass.are_age_classes_consecutive(myAgeClasses)
 
+
 def test_age_classes_consecutive_gap():
-    myAgeClasses = [
-        AgeClass(None, 1918),
-        AgeClass(1919, 1925),
-        AgeClass(1926, 1933),
-        AgeClass(1935, None)  # it's not consecutive here, gap of 2 years
-    ]
+    myAgeClasses = [AgeClass(None, 1918), AgeClass(1919, 1925), AgeClass(1926, 1933), AgeClass(1935, None)]  # it's not consecutive here, gap of 2 years
     assert AgeClass.are_age_classes_consecutive(myAgeClasses) == False
+
 
 def test_age_classes_consecutive_overlap():
-    myAgeClasses = [
-        AgeClass(1900, 1918),
-        AgeClass(1919, 1925),
-        AgeClass(1922, None)  # overlap here!
-    ]
+    myAgeClasses = [AgeClass(1900, 1918), AgeClass(1919, 1925), AgeClass(1922, None)]  # overlap here!
     assert AgeClass.are_age_classes_consecutive(myAgeClasses) == False
+
 
 def test_age_classes_consecutive_open_range_max():
-    myAgeClasses = [
-        AgeClass(1900, 1918),
-        AgeClass(1919, None),  # open range in between!
-        AgeClass(1921, None) 
-    ]
+    myAgeClasses = [AgeClass(1900, 1918), AgeClass(1919, None), AgeClass(1921, None)]  # open range in between!
     assert AgeClass.are_age_classes_consecutive(myAgeClasses) == False
 
+
 def test_age_classes_consecutive_open_range_min():
-    myAgeClasses = [
-        AgeClass(1900, 1918),
-        AgeClass(None, 1933),  # open range in between!
-        AgeClass(1934, None) 
-    ]
-    assert AgeClass.are_age_classes_consecutive(myAgeClasses) == False    
+    myAgeClasses = [AgeClass(1900, 1918), AgeClass(None, 1933), AgeClass(1934, None)]  # open range in between!
+    assert AgeClass.are_age_classes_consecutive(myAgeClasses) == False

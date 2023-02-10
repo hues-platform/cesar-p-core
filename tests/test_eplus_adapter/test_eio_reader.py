@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -25,15 +25,18 @@ from pathlib import Path
 import cesarp.common
 from cesarp.eplus_adapter.EPlusEioResultAnalyzer import EPlusEioResultAnalyzer
 
+
 @pytest.fixture
 def eio_reader():
     ureg = cesarp.common.init_unit_registry()
-    eplus_sample_res = os.path.dirname(__file__) / Path("testfixture")/ Path("eplus_output")/Path("fid_307143")
-    return EPlusEioResultAnalyzer(eplus_sample_res,ureg=ureg)
+    eplus_sample_res = os.path.dirname(__file__) / Path("testfixture") / Path("eplus_output") / Path("fid_307143")
+    return EPlusEioResultAnalyzer(eplus_sample_res, ureg=ureg)
+
 
 @pytest.fixture
 def ureg():
     return cesarp.common.init_unit_registry()
+
 
 def test_total_floor_area(eio_reader, ureg):
     assert eio_reader.get_total_floor_area() == 1307.24 * ureg.m**2

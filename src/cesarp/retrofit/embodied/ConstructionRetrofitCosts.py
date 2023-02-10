@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -52,12 +52,12 @@ class ConstructionRetrofitCosts:
         :param insulation_thickness: thickness of added insulation
         :return: costs for retrofit in CHF/m2, returns 0 if no matching cost entry was found
         """
-        return_unit_chf_m2 = self.ureg.CHF / self.ureg.m ** 2
+        return_unit_chf_m2 = self.ureg.CHF / self.ureg.m**2
         insulation_thickness_in_m = insulation_thickness.to(self.ureg.m)
         for retrofit_cost in self.insulation_cost_lookup:
             if retrofit_cost.layer_function == layer_function and bldg_elem in retrofit_cost.applicable_to:
                 last_thickness_in_m = 0 * self.ureg.m
-                last_costs = 0 * self.ureg.CHF / self.ureg.m ** 2
+                last_costs = 0 * self.ureg.CHF / self.ureg.m**2
                 for thickness_entry, current_costs in retrofit_cost.cost_per_thickness.items():
                     current_thickness_in_m = thickness_entry.to(self.ureg.m)
                     if insulation_thickness_in_m == current_thickness_in_m:
@@ -86,7 +86,7 @@ class ConstructionRetrofitCosts:
         modeled as separate layers.
         Returns 0 if no retrofit measures were applied to that construction.
         """
-        sum_of_costs = 0 * self.ureg.CHF / self.ureg.m ** 2
+        sum_of_costs = 0 * self.ureg.CHF / self.ureg.m**2
         for layer in constr.layers:
             if layer.retrofitted:
                 try:
@@ -110,5 +110,5 @@ class ConstructionRetrofitCosts:
             costs = self._window_cost_lookup[window_constr.glass.name]
         except KeyError:
             self.logger.info(f"No retrofit costs assigned for {window_constr}.")
-            costs = 0 * self.ureg.CHF / self.ureg.m ** 2
+            costs = 0 * self.ureg.CHF / self.ureg.m**2
         return costs

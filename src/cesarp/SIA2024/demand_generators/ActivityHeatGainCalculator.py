@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -65,8 +65,8 @@ class ActivityHeatGainCalculator:
         :param ureg: pint unit registry
         :return: heat gain from activity in Watt/Person, aggregated for the whole building
         """
-        BODY_SURFACE_AREA = 1.8 * self._unit_reg.m ** 2
-        MET_TO_W_M2 = 58 * self._unit_reg.W / self._unit_reg.m ** 2
+        BODY_SURFACE_AREA = 1.8 * self._unit_reg.m**2
+        MET_TO_W_M2 = 58 * self._unit_reg.W / self._unit_reg.m**2
 
         synth_activity_level = self.bldg_type.synthesize_value_by_room_area(self.base_data.get_activity_level_per_person)
 

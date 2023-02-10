@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -196,7 +196,7 @@ class BldgElementConstructionReader:
             thermal_absorptance = self.ureg(df.at[0, "thermalAbsorptance"])
             visible_absorptance = self.ureg(df.at[0, "visibleAbsorptance"])
             if df.at[0, "specificHeat"]:
-                density = self.ureg(df.at[0, "density"]).to(self.ureg.kg / self.ureg.m ** 3)
+                density = self.ureg(df.at[0, "density"]).to(self.ureg.kg / self.ureg.m**3)
                 specific_heat = self.ureg(df.at[0, "specificHeat"])
 
                 # NOTE pint converts "kg CO2eq / kg" to "CO2", because kg/kg = dimensionless

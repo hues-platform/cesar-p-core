@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -40,18 +40,17 @@ from cesarp.emissons_cost.OperationalEmissionsAndCosts import OperationalEmissio
 
 from cesarp.retrofit.energy_perspective_2050.EnergyPerspective2050BldgElementsRetrofitter import EnergyPerspective2050BldgElementsRetrofitter
 
+
 class ConstrRetrofitterMock:
     retrofit_log = RetrofitLog()
+
     def set_year_of_retrofit(self, year):
         pass
 
     def set_bldg_elems_to_retrofit(self, bldg_elems):
         pass
 
-    def retrofit_bldg_construction(self,
-                                   bldg_fid: int,
-                                   bldg_construction: BuildingConstruction,
-                                   bldg_shape_detailed: BldgShapeDetailed):
+    def retrofit_bldg_construction(self, bldg_fid: int, bldg_construction: BuildingConstruction, bldg_shape_detailed: BldgShapeDetailed):
         pass
 
     def reset_retrofit_log(self):
@@ -62,25 +61,20 @@ class ConstrRetrofitterMock:
 def mock_ret_rates_cfg():
     fixture_path = os.path.dirname(__file__) / Path("testfixture") / Path("energy_strategy")
     ret_rates_input_files = {
-        "ENERGY_STRATEGY":
-        {
+        "ENERGY_STRATEGY": {
             "ENERGY_STRATEGY_SELECTION": "WWB",
-            "WWB":
-                {
-                    "RETROFIT" :
-                    {
-                        "FULL_RATES" :
-                        {
-                            "SFH": {"PATH": fixture_path / Path("FullyRetrofitRates_EFH_Mock.csv")},
-                            "MFH": {"PATH": fixture_path / Path("FullyRetrofitRates_MFH_Mock.csv")}
-                        },
-                        "PARTIAL_SHARES":
-                        {
-                            "SFH": {"PATH": fixture_path / Path("PartialRetrofitShares_EFH_Mock.csv")},
-                            "MFH": {"PATH": fixture_path / Path("PartialRetrofitShares_MFH_Mock.csv")}
-                        }
+            "WWB": {
+                "RETROFIT": {
+                    "FULL_RATES": {
+                        "SFH": {"PATH": fixture_path / Path("FullyRetrofitRates_EFH_Mock.csv")},
+                        "MFH": {"PATH": fixture_path / Path("FullyRetrofitRates_MFH_Mock.csv")},
                     },
-            }
+                    "PARTIAL_SHARES": {
+                        "SFH": {"PATH": fixture_path / Path("PartialRetrofitShares_EFH_Mock.csv")},
+                        "MFH": {"PATH": fixture_path / Path("PartialRetrofitShares_MFH_Mock.csv")},
+                    },
+                },
+            },
         }
     }
     return ret_rates_input_files
@@ -89,20 +83,21 @@ def mock_ret_rates_cfg():
 def create_mock_bldg_containers(ureg):
     mock_containers = {fid: BuildingContainer() for fid in range(1, 8)}
 
-    bldg_constr = BuildingConstruction(None,None,None,None,None,None,None,None,
-                                       InstallationsCharacteristics(None, None, None, None,
-                                                                    EnergySource.ELECTRICITY, # DHW
-                                                                    EnergySource.HEATING_OIL)) # Heating
+    bldg_constr = BuildingConstruction(
+        None, None, None, None, None, None, None, None, InstallationsCharacteristics(None, None, None, None, EnergySource.ELECTRICITY, EnergySource.HEATING_OIL)  # DHW
+    )  # Heating
 
-    mock_model = BuildingModel(fid=1,
-                               year_of_construction=1977,
-                               site=Site("", None, 2020),
-                               bldg_shape=None,
-                               neighbours=None,
-                               neighbours_construction_props=None,
-                               bldg_construction=bldg_constr,
-                               bldg_operation_mapping=None,
-                               bldg_type=BldgType.MFH)
+    mock_model = BuildingModel(
+        fid=1,
+        year_of_construction=1977,
+        site=Site("", None, 2020),
+        bldg_shape=None,
+        neighbours=None,
+        neighbours_construction_props=None,
+        bldg_construction=bldg_constr,
+        bldg_operation_mapping=None,
+        bldg_type=BldgType.MFH,
+    )
 
     bldg_model_1 = copy.deepcopy(mock_model)
     bldg_model_1.fid = 1
@@ -147,14 +142,15 @@ def create_mock_bldg_containers(ureg):
 def create_mock_containers_with_results(ureg):
     mock_containers = create_mock_bldg_containers(ureg)
     prev_sim_year = 2015
-    kwh_year=ureg.kW*ureg.h/ureg.year
+    kwh_year = ureg.kW * ureg.h / ureg.year
 
     energy_demand_res = EnergyDemandSimulationResults(
-                                tot_dhw_demand=10000 * kwh_year,
-                                tot_heating_demand=180000 * kwh_year,
-                                tot_electricity_demand=80000 * kwh_year,
-                                tot_cooling_demand=0 * kwh_year,
-                                total_floor_area=250*ureg.m**2)
+        tot_dhw_demand=10000 * kwh_year,
+        tot_heating_demand=180000 * kwh_year,
+        tot_electricity_demand=80000 * kwh_year,
+        tot_cooling_demand=0 * kwh_year,
+        total_floor_area=250 * ureg.m**2,
+    )
 
     for c in mock_containers.values():
         c.get_bldg_model().site.simulation_year = prev_sim_year
@@ -162,17 +158,16 @@ def create_mock_containers_with_results(ureg):
         c.set_retrofit_log(RetrofitLog())
 
     retrofit_log_fid3 = RetrofitLog()
-    retrofit_log_fid3.log_retrofit_measure(3, BuildingElement.WALL, None, prev_sim_year, None, None, None, None,
-                                           "old_wall_constr", "new_wall_constr")
+    retrofit_log_fid3.log_retrofit_measure(3, BuildingElement.WALL, None, prev_sim_year, None, None, None, None, "old_wall_constr", "new_wall_constr")
     mock_containers[3].set_retrofit_log(retrofit_log_fid3)
 
-
     energy_demand_low = EnergyDemandSimulationResults(
-                                tot_dhw_demand=5000 * kwh_year,
-                                tot_heating_demand=60000 * kwh_year,
-                                tot_electricity_demand=5000 * kwh_year,
-                                tot_cooling_demand=0 * kwh_year,
-                                total_floor_area=250*ureg.m**2)
+        tot_dhw_demand=5000 * kwh_year,
+        tot_heating_demand=60000 * kwh_year,
+        tot_electricity_demand=5000 * kwh_year,
+        tot_cooling_demand=0 * kwh_year,
+        total_floor_area=250 * ureg.m**2,
+    )
 
     mock_containers[4].set_energy_demand_sim_res(energy_demand_low)
 
@@ -222,7 +217,6 @@ def test_with_full_retrofit_only(mock_ret_rates_cfg):
             assert x.nr_of_bldgs_retrofitted == 0
 
 
-
 def test_with_partial_retrofit(mock_ret_rates_cfg):
     ureg = cesarp.common.init_unit_registry()
     mock_ret_rates_cfg["ENERGY_PERSPECTIVE_2050"] = {"DO_PARTIAL_RETROFIT": True}
@@ -233,18 +227,18 @@ def test_with_partial_retrofit(mock_ret_rates_cfg):
     retrofitter.retrofit_site(2020, containers_current, containers_prev_sim)
 
     for x in retrofitter._retrofit_categories_last_run[BldgType.SFH]:
-        #print(f"{x.constr_ac}; {x.bldg_elems_to_retrofit}; {x.target_nr_of_bldgs_to_retrofit}; {x.nr_of_bldgs_retrofitted}")
+        # print(f"{x.constr_ac}; {x.bldg_elems_to_retrofit}; {x.target_nr_of_bldgs_to_retrofit}; {x.nr_of_bldgs_retrofitted}")
         if x.constr_ac == AgeClass(min_age=1991, max_age=1995):
             if x.bldg_elems_to_retrofit == [BuildingElement.WINDOW]:
                 assert x.target_nr_of_bldgs_to_retrofit == 1
-                assert x.nr_of_bldgs_retrofitted ==1
+                assert x.nr_of_bldgs_retrofitted == 1
             else:
                 x.target_nr_of_bldgs_to_retrofit == 0
 
     tot_retrofitted_ac_1977 = 0
     tot_to_retrofit_ac_1977 = 0
     for x in retrofitter._retrofit_categories_last_run[BldgType.MFH]:
-        #print(f"{x.constr_ac}; {x.bldg_elems_to_retrofit}; {x.target_nr_of_bldgs_to_retrofit}; {x.nr_of_bldgs_retrofitted}")
+        # print(f"{x.constr_ac}; {x.bldg_elems_to_retrofit}; {x.target_nr_of_bldgs_to_retrofit}; {x.nr_of_bldgs_retrofitted}")
         if x.constr_ac == AgeClass(min_age=1971, max_age=1980):
             tot_retrofitted_ac_1977 += x.nr_of_bldgs_retrofitted
             tot_to_retrofit_ac_1977 += x.target_nr_of_bldgs_to_retrofit
@@ -257,7 +251,3 @@ def test_with_partial_retrofit(mock_ret_rates_cfg):
 
     assert 3 == tot_to_retrofit_ac_1977
     assert 1 == tot_retrofitted_ac_1977
-
-
-
-

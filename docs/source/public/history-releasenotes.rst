@@ -16,6 +16,12 @@ MAJOR.MINOR.PATCH.a0
 
 For all released Version there is a Tag/Release in GitLab.
 
+2.3.3
+-----
+- updates for JOSS paper
+- updating dependencies
+- no functionality changes
+
 2.3.2
 -----
 - updates list of authors in JOSS paper

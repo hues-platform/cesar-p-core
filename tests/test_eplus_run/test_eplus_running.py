@@ -1,7 +1,7 @@
 # coding=utf-8
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -36,6 +36,7 @@ from subprocess import check_call, CalledProcessError
 from six import StringIO
 from typing import Dict, Any, Optional, Sequence
 import pytest
+
 
 def __trace_error(value):
     logging.error("Exception happened during EnergyPlus Simulation")
@@ -161,6 +162,7 @@ def __parse_error(tmp_err, output_dir):
 class EnergyPlusRunError(Exception):
     pass
 
+
 def abs_path(path, basepath) -> str:
     """
     Converts given path to an absolute path. If path exists and is relative to current execution directory,
@@ -183,21 +185,24 @@ def abs_path(path, basepath) -> str:
 def __abs_path(path):
     return abs_path(path, os.path.abspath(__file__))
 
+
 # Test can be used for debugging if you want to check if EnergyPlus Installation on CI system works correctly
 @pytest.mark.skipif(sys.platform == "win32", reason="E+ pathes setup for gitlab-CI run")
 def test_eplus():
     out_dir = __abs_path("./eplus_out")
-    shutil.rmtree(out_dir, ignore_errors = True)
+    shutil.rmtree(out_dir, ignore_errors=True)
     os.mkdir(out_dir)
-    #eplus_path = "C:/EnergyPlusV8-5/"
+    # eplus_path = "C:/EnergyPlusV8-5/"
     eplus_path = "/usr/local/bin"
     eplus_exe = eplus_path / Path("EnergyPlus")
     idd_path = eplus_path / Path("Energy+.idd")
-    run_eplus(idf_path=__abs_path("./test.idf"),
-                weather=__abs_path("./Zurich_1.epw"),
-                idd=idd_path,
-                ep_executable_path=eplus_exe,
-                output_directory=out_dir,
-                expandobjects=True,
-                verbose="v")
+    run_eplus(
+        idf_path=__abs_path("./test.idf"),
+        weather=__abs_path("./Zurich_1.epw"),
+        idd=idd_path,
+        ep_executable_path=eplus_exe,
+        output_directory=out_dir,
+        expandobjects=True,
+        verbose="v",
+    )
     assert os.path.exists(out_dir / Path("eplustbl.csv"))

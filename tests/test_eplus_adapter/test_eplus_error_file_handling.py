@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -31,7 +31,7 @@ from cesarp.eplus_adapter.eplus_error_file_handling import check_eplus_error_lev
         ("eplusout_warning.err", EplusErrorLevel.WARNING),
         ("eplusout_severe.err", EplusErrorLevel.SEVERE),
         ("eplusout_fatal.err", EplusErrorLevel.FATAL),
-    ]
+    ],
 )
 def test_get_eplus_error_level(err_file_name, expected_err_level):
     eplus_err_file = os.path.dirname(__file__) / Path("testfixture") / Path(err_file_name)

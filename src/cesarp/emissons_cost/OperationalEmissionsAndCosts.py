@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -174,7 +174,7 @@ class OperationalEmissionsAndCosts:
                 f"Could not calculate dhw cost and emissions because dhw system efficiency for energy carrier {dhw_energy_carrier} " f"and simulation year {sim_year} is 0"
             )
 
-        specific_dhw_energy_demand = specific_dhw_energy_demand.to(self._ureg.MJ / self._ureg.m ** 2 / self._ureg.year)
+        specific_dhw_energy_demand = specific_dhw_energy_demand.to(self._ureg.MJ / self._ureg.m**2 / self._ureg.year)
         pen = specific_dhw_energy_demand / dhw_sys_eff * pen_factor * heating_value_factor
         co2_emission = specific_dhw_energy_demand / dhw_sys_eff * co2_coeff * heating_value_factor
         fuel_demand = total_dhw_energy_demand / dhw_sys_eff

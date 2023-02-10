@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -27,13 +27,13 @@ import cesarp.common
 from cesarp.results.ResultProcessor import ResultProcessor
 from cesarp.model.EnergySource import EnergySource
 
+
 @pytest.fixture
 def example_res_folders():
-    return \
-        {
-            307143: os.path.dirname(__file__) / Path("./testfixture/eplus_output/fid_307143"),
-            1150082: os.path.dirname(__file__) / Path("./testfixture/eplus_output/fid_1150082"),
-        }
+    return {
+        307143: os.path.dirname(__file__) / Path("./testfixture/eplus_output/fid_307143"),
+        1150082: os.path.dirname(__file__) / Path("./testfixture/eplus_output/fid_1150082"),
+    }
 
 
 def test_basic_running(example_res_folders):
@@ -43,9 +43,5 @@ def test_basic_running(example_res_folders):
         res_processor.process_results_for(fid, res_folder, EnergySource.HEATING_OIL, EnergySource.HEATING_OIL, 2015)
 
     the_res = res_processor.get_all_results()
-    co2_total = the_res.loc[307143,"CO2eq * kilogram / meter ** 2 / year"]["Total CO2"]
+    co2_total = the_res.loc[307143, "CO2eq * kilogram / meter ** 2 / year"]["Total CO2"]
     assert co2_total == pytest.approx(63.405, abs=0.01)
-
-
-
-

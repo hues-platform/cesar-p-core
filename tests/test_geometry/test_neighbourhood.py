@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -31,16 +31,14 @@ import cesarp.geometry.neighbourhood as cesar_nh
 
 __sitevertices_labels = {"gis_fid": "TARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"}
 
+
 def test_distance():
-    assert (cesar_nh.calc_distance_between_vertices(pd.DataFrame([0, 5]), pd.DataFrame([0, 22])) == 17)
-    assert (cesar_nh.calc_distance_between_vertices(pd.DataFrame([9, 0]), pd.DataFrame([-7, 0])) == 16)
-    assert (cesar_nh.calc_distance_between_vertices(pd.DataFrame([16, 1]), pd.DataFrame([20, -2])) == 5)
-    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([0, 0]), pd.DataFrame([-20, 10])) == \
-        pytest.approx(22.36, 0.01)
-    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([-20, 10]), pd.DataFrame([0, 0])) == \
-        pytest.approx(22.36, 0.01)
-    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([-20, 10]), pd.DataFrame([20, 20])) == \
-        pytest.approx(41.23, 0.01)
+    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([0, 5]), pd.DataFrame([0, 22])) == 17
+    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([9, 0]), pd.DataFrame([-7, 0])) == 16
+    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([16, 1]), pd.DataFrame([20, -2])) == 5
+    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([0, 0]), pd.DataFrame([-20, 10])) == pytest.approx(22.36, 0.01)
+    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([-20, 10]), pd.DataFrame([0, 0])) == pytest.approx(22.36, 0.01)
+    assert cesar_nh.calc_distance_between_vertices(pd.DataFrame([-20, 10]), pd.DataFrame([20, 20])) == pytest.approx(41.23, 0.01)
 
 
 def test_search_neighbouring_buildings_for():

@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# Copyright (c) 2022, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
+# Copyright (c) 2023, Empa, Leonie Fierz, Aaron Bojarski, Ricardo Parreira da Silva, Sven Eggimann.
 #
 # This file is part of CESAR-P - Combined Energy Simulation And Retrofit written in Python
 #
@@ -167,8 +167,8 @@ class BuildingElementsRetrofitter:
         """
         if bldg_elem == BuildingElement.WINDOW:
             # glass and frame area for all windows of building
-            win_glass_area = self.area_calc_win_glass_method(bldg_shape_detailed) * self._ureg.m ** 2
-            win_frame_area = self.area_calc_win_frame_method(bldg_shape_detailed) * self._ureg.m ** 2
+            win_glass_area = self.area_calc_win_glass_method(bldg_shape_detailed) * self._ureg.m**2
+            win_frame_area = self.area_calc_win_frame_method(bldg_shape_detailed) * self._ureg.m**2
             costs = self.costs.get_costs_for_window_retrofit(retrofitted_constr) * win_glass_area
             co2_emission = (
                 self.emissions.get_win_ret_glass_emb_co2(retrofitted_constr) * win_glass_area + self.emissions.get_win_ret_frame_emb_co2(retrofitted_constr) * win_frame_area
@@ -180,7 +180,7 @@ class BuildingElementsRetrofitter:
             elem_area = win_glass_area + win_frame_area
         else:
             # area e.g. for all walls of building
-            elem_area = self.area_calc_methods[bldg_elem](bldg_shape_detailed) * self._ureg.m ** 2
+            elem_area = self.area_calc_methods[bldg_elem](bldg_shape_detailed) * self._ureg.m**2
             costs = self.costs.get_costs_for_construction_retrofit(retrofitted_constr) * elem_area
             co2_emission = self.emissions.get_constr_ret_emb_co2(retrofitted_constr) * elem_area
             pen = self.emissions.get_constr_ret_emb_non_renewable_pen(retrofitted_constr) * elem_area
