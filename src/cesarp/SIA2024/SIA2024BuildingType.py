@@ -21,6 +21,7 @@
 #
 from typing import Dict, Callable, List
 from enum import Enum
+import logging
 
 from cesarp.common.profiles import HOURS_PER_YEAR
 
@@ -34,7 +35,12 @@ class SIA2024BldgTypeKeys(Enum):
     SCHOOL = 4
     SHOP = 5
     RESTAURANT = 6
-    HOSPITAL = 7
+    ASSEMBLY_HALL = 7
+    HOSPITAL = 8
+    INDUSTRY = 9
+    WAREHOUSE = 10
+    SPORTS_BUILDING = 11
+    SWIMMINGPOOL = 12
 
 
 class SIA2024BuildingType:
@@ -69,7 +75,11 @@ class SIA2024BuildingType:
         synth_prof = [0] * HOURS_PER_YEAR
         for room_type, room_area_fraction in self.__rooms.items():
             if additional_factor_per_room_method is not None:
-                add_factor_room = (additional_factor_per_room_method(room_type) / add_factor_synth).m
+                if add_factor_synth.m == 0:
+                    logging.getLogger(__name__).warning(f"Room {room_type} has all applience values of 0. Therefore factor of 1 is used.")
+                    add_factor_room = 1
+                else:
+                    add_factor_room = (additional_factor_per_room_method(room_type) / add_factor_synth).m
             else:
                 add_factor_room = 1
             profile_room = profile_per_room_method(room_type)

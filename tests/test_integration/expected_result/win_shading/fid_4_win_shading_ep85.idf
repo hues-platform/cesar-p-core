@@ -1727,7 +1727,8 @@ WINDOWPROPERTY:SHADINGCONTROL,
     No,                       !- Shading Control Is Scheduled
     No,                       !- Glare Control Is Active
     Shade0101,                !- Shading Device Material Name
-    FixedSlatAngle;           !- Type of Slat Angle Control for Blinds
+    FixedSlatAngle,           !- Type of Slat Angle Control for Blinds
+    ;                         !- Slat Angle Schedule Name
 
 WINDOWPROPERTY:FRAMEANDDIVIDER,
     cesar-wood-aluminium-default,    !- Name

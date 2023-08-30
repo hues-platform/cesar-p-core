@@ -149,38 +149,6 @@ def sample_model_with_constr():
     internal_ceiling_constr = Construction("InternalCeiling", [Layer("InternalCeiling_L1", ureg("0.3m"), test_opaque_material)], BuildingElement.INTERNAL_CEILING)
     window_glas_constr = WindowGlassConstruction("Glass", [WindowLayer("Glass_L1", ureg("0.02m"), test_transparent_material)])
 
-    test_opaque_material = OpaqueMaterial(
-                           "material",
-                           ureg("10 kg/m3"),
-                           OpaqueMaterialRoughness.ROUGH,
-                           ureg("0.9 solar_absorptance"),
-                           ureg("1200 J/K/kg"),
-                           ureg("0.9 thermal_absorptance"),
-                           ureg("0.9 W/(m*K)"),
-                           ureg("0.9 visible_absorptance")
-                           )
-    test_transparent_material = TransparentMaterial(
-                           "glass_material",
-                           ureg("0.9 back_side_infrared_hemispherical_emissivity"),
-                           ureg("0.9 back_side_solar_reflectance"),
-                           ureg("0.9 back_side_visible_reflectance"),
-                           ureg("0.9 W/(m*K)"),
-                           ureg("1.0 dirt_correction_factor"),
-                           ureg("0.9 front_side_infrared_hemispherical_emissivity"),
-                           ureg("0.9 front_side_solar_reflectance"),
-                           ureg("0.9 front_side_visible_reflectance"),
-                           ureg("0.0 infrared_transmittance"),
-                           ureg("0.31 solar_transmittance"),
-                           ureg("0.31 visible_transmittance"),
-
-    )
-    roof_constr = Construction("Roof", [Layer("Roof_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.ROOF)
-    wall_constr = Construction("Wall", [Layer("Wall_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.WALL)
-    ground_constr = Construction("Ground", [Layer("Ground_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.GROUNDFLOOR)
-    internal_ceiling_constr = Construction("InternalCeiling", [Layer("InternalCeiling_L1", ureg("0.3m"), test_opaque_material)],BuildingElement.INTERNAL_CEILING)
-    window_glas_constr = WindowGlassConstruction("Glass", [WindowLayer("Glass_L1", ureg("0.02m"), test_transparent_material)])
-
-
     construction = BuildingConstruction(
         # NOTE: reusing the same ConstructionAsIDF object or path's as WindowPath breks pickling/unpickling because jsonpickle recognizes them as same objects but does not unpickle it correct....
         window_construction=WindowConstruction(glass=window_glas_constr, frame=win_frame, shade=win_shade),
@@ -209,7 +177,7 @@ def sample_model_with_constr():
         ),
         {"GEOMETRY": {"NEIGHBOURHOOD": {"RADIUS": 100}}},
     )
-    geom_builder = geom_fact.get_geometry_builder(5, 0.3)
+    geom_builder = geom_fact.get_geometry_builder(5, 0.3, BldgType.MFH)
     bldg_shape_detailed = geom_builder.get_bldg_shape_detailed()
     neighbours = geom_builder.get_bldg_shape_of_neighbours()
 

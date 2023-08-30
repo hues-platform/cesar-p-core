@@ -33,6 +33,7 @@ from cesarp.model.BuildingElement import BuildingElement
 from cesarp.model.WindowConstruction import WindowConstruction, WindowFrameConstruction, WindowGlassConstruction
 from cesarp.model.TransparentMaterial import TransparentMaterial
 from cesarp.model.Gas import Gas
+from cesarp.model.BldgType import BldgType
 
 
 def get_mock_wall_construction_for_emission_calc(ureg: pint.UnitRegistry):
@@ -87,7 +88,7 @@ def bldg_shape_detailed_test_site_fid2():
         ),
         {"GEOMETRY": {"NEIGHBOURHOOD": {"RADIUS": 0}}},
     )
-    geom_builder = geom_fact.get_geometry_builder(2, 0.16)
+    geom_builder = geom_fact.get_geometry_builder(2, 0.16, BldgType.MFH)
     return geom_builder.get_bldg_shape_detailed()
 
 
@@ -99,5 +100,5 @@ def bldg_shape_detailed_non_rect_footprint():
         ),
         {"GEOMETRY": {"NEIGHBOURHOOD": {"RADIUS": 0}}},
     )
-    geom_builder = geom_fact.get_geometry_builder(22, 0.16)
+    geom_builder = geom_fact.get_geometry_builder(22, 0.16, BldgType.MFH)
     return geom_builder.get_bldg_shape_detailed()

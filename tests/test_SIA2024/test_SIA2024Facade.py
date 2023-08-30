@@ -29,7 +29,8 @@ from cesarp.operation.PassiveCoolingOperationFactory import PassiveCoolingOperat
 
 NR_OF_LINES_EXPECTED_NOMINAL_PROFILE = [84, 87]  # depending on wether we run from git checkout or on CI, we have the lines for GIT status or not...
 # variable profiles have currently one line less metadata because they were not re-generated with 2.0.0
-NR_OF_LINES_EXPECTED_VARIABLE_PROFILE = [83, 86]  # depending on wether we run from git checkout or on CI, we have the lines for GIT status or not...
+NR_OF_LINES_EXPECTED_VARIABLE_PROFILE = [83, 84, 86, 87]  # depending on wether we run from git checkout or on CI, we have the lines for GIT status or not...
+
 
 
 def test_init():

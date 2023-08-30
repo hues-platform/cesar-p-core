@@ -379,6 +379,31 @@ WINDOWMATERIAL:GLAZING,
     72000000000,              !- Youngs modulus
     0.22;                     !- Poissons ratio
 
+WINDOWMATERIAL:GLAZING,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L3,    !- Name
+    SpectralAverage,          !- Optical Data Type
+    ,                         !- Window Glass Spectral Data Set Name
+    0.005,                    !- Thickness
+    0.775,                    !- Solar Transmittance at Normal Incidence
+    0.071,                    !- Front Side Solar Reflectance at Normal Incidence
+    0.071,                    !- Back Side Solar Reflectance at Normal Incidence
+    0.881,                    !- Visible Transmittance at Normal Incidence
+    0.08,                     !- Front Side Visible Reflectance at Normal Incidence
+    0.08,                     !- Back Side Visible Reflectance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
+    0.84,                     !- Front Side Infrared Hemispherical Emissivity
+    0.84,                     !- Back Side Infrared Hemispherical Emissivity
+    0.9,                      !- Conductivity
+    1,                        !- Dirt Correction Factor for Solar and Visible Transmittance
+    No,                       !- Solar Diffusing
+    72000000000,              !- Youngs modulus
+    0.22;                     !- Poissons ratio
+
+WINDOWMATERIAL:GAS,
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L2,    !- Name
+    Air,                      !- Gas Type
+    0.01;                     !- Thickness
+
 CONSTRUCTION,
     http://uesl_data/sources/archetypes/grounds/Ground1948_hollow_slab_medium,    !- Name
     http://uesl_data/sources/archetypes/constructionLayers/1948_Gr2_L1,    !- Outside Layer
@@ -410,7 +435,9 @@ CONSTRUCTION,
 
 CONSTRUCTION,
     http://uesl_data/sources/archetypes/windows/Window1948_Standard,    !- Name
-    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L1;    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L1,    !- Outside Layer
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L2,    !- Layer 2
+    http://uesl_data/sources/archetypes/constructionLayers/1948_Wi1_L3;    !- Layer 3
 
 GLOBALGEOMETRYRULES,
     LowerLeftCorner,          !- Starting Vertex Position

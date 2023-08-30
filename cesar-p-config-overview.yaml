@@ -16,6 +16,7 @@ CONSTRUCTION:
     CONSTRUCTION_DB: "GRAPH_DB"
     # parameters for window frame are the same for all the buildings. 
     # SOURCE: those parameters where constants in cesar matlab version / co2 and pen: KBOB 2014
+    # https://www.kbob.admin.ch/dam/kbob/de/dokumente/Publikationen/Nachhaltiges%20Bauen/Archiv_2010-2014/2009_1_2014_Empfehlung_Oekobilanzdaten_Baubereich.pdf.download.pdf/2009_1_2014_Empfehlung_Oekobilanzdaten_Baubereich.pdf
     FIXED_WINDOW_FRAME_CONSTRUCTION_PARAMETERS:
         name: "cesar-wood-aluminium-default"
         frame_conductance: 9.5 W/m**2/K
@@ -122,6 +123,9 @@ GEOMETRY:
         MAX_DISTANCE_ADJACENCY:     0.1  # meter; if the distance between two buildings is below this threshold they are considered to be adjacent (no windows, different properties for wall)
 
     MAIN_BLDG_SHAPE:
+        # The story height can be fixed or chosen by the building type. For values see GeometryBuilder.get_bldg_story_height_from_bldg_type()
+        STORY_HEIGHT_FROM_BLDG_TYPE:
+            ACTIVE: False   # if active the story height is chosen by bldg type. otherwise the MINIMAL_STORY_HEIGHT is used.
         MINIMAL_STORY_HEIGHT:          2.4  # meter; minimal floor height; if the building height is not dividable by 2.4, the floor height is rounded up
         WINDOW:
             HEIGHT:                         1.5  # meter; fixed height for a window, width is set to match specified glazing ratio
@@ -215,16 +219,6 @@ GRAPHDB_ACCESS:
         WALL: "http://uesl_data/sources/archetypes/walls/Wall2001_concrete_med_ins"
         GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2001_concrete_slab_medium"
         WINDOW: "http://uesl_data/sources/archetypes/windows/Window2001_LowE_Argon_Double"
-    2006_SFH_ARCHETYPE:
-      URI: "http://uesl_data/sources/archetypes/2006_SFH_Archetype"
-      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
-        ACTIVE: False
-      DEFAULT_CONSTRUCTION_SPECIFIC:
-        ACTIVE: True
-        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2006_wood_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2006_concrete_high_ins"
-        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2006_concrete_slab_medium_high_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2006_LowE_Krypton_Double"
     2009_SFH_ARCHETYPE:
       URI: "http://uesl_data/sources/archetypes/2009_SFH_Archetype"
       DEFAULT_CONSTRUCTION_MEAN_UVALUE:
@@ -232,29 +226,39 @@ GRAPHDB_ACCESS:
       DEFAULT_CONSTRUCTION_SPECIFIC:
         ACTIVE: True
         ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2009_wood_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2009_brick_low_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2009_concrete_high_ins"
         GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2009_concrete_slab_medium_high_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2009_LowE_Xenon_Double"
-    2014_SFH_ARCHETYPE:
-      URI: "http://uesl_data/sources/archetypes/2014_SFH_Archetype"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2009_LowE_Krypton_Double"
+    2020_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2020_SFH_Archetype"
       DEFAULT_CONSTRUCTION_MEAN_UVALUE:
         ACTIVE: False
       DEFAULT_CONSTRUCTION_SPECIFIC:
         ACTIVE: True
-        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2014_wood_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2014_stone_cavity_woodplank"
-        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2014_concrete_slab_medium"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2014_LowE_Xenon_Double"
-    2015_SFH_ARCHETYPE:
-      URI: "http://uesl_data/sources/archetypes/2015_SFH_Archetype"
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2020_wood_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2020_brick_low_ins"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2020_concrete_slab_medium_high_ins"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2020_LowE_Xenon_Double"
+    2030_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2030_SFH_Archetype"
       DEFAULT_CONSTRUCTION_MEAN_UVALUE:
         ACTIVE: False
       DEFAULT_CONSTRUCTION_SPECIFIC:
         ACTIVE: True
-        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2015_concrete_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2015_flumroc_B335"
-        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2015_concrete_slab_medium_med_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2015_LowE_Xenon_Double"
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2030_wood_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2030_stone_cavity_woodplank"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2030_concrete_slab_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2030_LowE_Xenon_Double"
+    2031_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2031_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2031_concrete_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2031_flumroc_B335"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2031_concrete_slab_medium_med_ins"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2031_LowE_Xenon_Double"
 
 # PATHES: all following folders are relative to the basepath of the project, which is passed as a parameter when initializing SimulationManager 
 #         respectively the scenario folder in case when using the ProjectManager
@@ -302,6 +306,11 @@ MANAGER:
             height:   "HEIGHT"
             x:        "POINT_X"
             y:        "POINT_Y"
+        # The SHP_OPEN_POLYGON_OPTION is only relevant if you are using a *.shp file. You can chose what happens if a polygon is not closed. Default will crash the whole simulation.
+        # "CRASH" will stop the whole simulation.
+        # "SKIP" will skip this building. It will not be simulated or used for shading.
+        # "FILL" will fill the hole in the polygon.
+        SHP_OPEN_POLYGON_OPTION: "CRASH" 
     # MANDATORY list of building fids to be used as main buildings
     BLDG_FID_FILE:
         PATH: "TBD_BLDG_FID_FILE.csv"
@@ -428,10 +437,14 @@ OPERATION:
       DATA_COLUMN: 1  # we assume each profile in its own file with only one column
       
 RETROFIT:
-  # in case buildings are retrofitted, infiltration rate is set to this value
-  # indiependent of the original infiltration rate that was set in the BuildingModel 
-  # being retrofitted
-  INFILRATION_RATE_AFTER_WINDOW_RETROFIT: 0.1 ACH 
+  # in case buildings are retrofitted, infiltration rate is set to the following value
+  # new_value = maximum(
+  #     INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_MINIMUM, 
+  #     old_value * INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_MULTIPLICATIVE_FACTOR + INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_ADDITIVE_FACTOR
+  #     )
+  INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_MINIMUM: 0.1 ACH
+  INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_ADDITIVE_FACTOR: 0 ACH
+  INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_MULTIPLICATIVE_FACTOR: 1
   EMBODIED:
     # yml configuration with entries for insulation retrofit costs, see ConstructionRetrofitCost.py for required entries
     INSULATION_COST_LOOKUP: './ressources/insulation_retrofit_costs_geak_2014.yml'
@@ -453,6 +466,7 @@ SIA2024:
   PROFILE_NOMINAL_FILENAME_PATTERN_REL: 'SIA2024_{0}_nominal.csvy' # filename for standard profile; {0} -> bldg type name
   PROFILE_VARIABLE_FILENAME_PATTERN_REL: 'SIA2024_{0}_variable_{1}.csvy' # filename for variable profiles; {0} -> bldg type name, {1} param set nr
   # parameters to control generation of the parameters and profile files from the SIA2024 base data
+  
   PROFILE_GENERATION:
     # set to True if you want profile generation active; not that if the profiles are already available in the output save folder profiles are not re-generated
     # if you activate, make sure to set valid pathes for the SIA_SHEET_CONFIG_FILE and BUILDING_TYPES_CONFIG_FILE 
@@ -540,6 +554,8 @@ EPLUS_ADAPTER:
     # https://bigladdersoftware.com/epx/docs/8-0/input-output-reference/page-088.html#outputmeter-and-outputmetermeterfileonly
     # if you overwrite in your own config, you have to specify all parameters you want. the lists are not merged
     OUTPUT_VARS:
+      ANNUAL:
+      MONTHLY:
       HOURLY:
         - "Zone Air Temperature"
         - "Zone Ideal Loads Supply Air Total Heating Energy"
@@ -547,6 +563,8 @@ EPLUS_ADAPTER:
         - "Hot Water Equipment District Heating Energy"
         - "Zone Ideal Loads Supply Air Sensible Heating Rate"
         - "Hot Water Equipment District Heating Rate"
+      TIMESTEP:
+      DETAILED:
     # same applies as for OUTPUT_VARS
     OUTPUT_METER:
       ANNUAL:
@@ -554,11 +572,14 @@ EPLUS_ADAPTER:
         - "DistrictHeating:HVAC"  # Heating
         - "DistrictCooling:Facility" # Cooling
         - "Electricity:Facility"  # Electricity
+      MONTHLY:
       HOURLY: 
         - "DistrictHeating:Building"  # DHW 
         - "DistrictHeating:HVAC"  # Heating
         - "DistrictCooling:Facility" # Cooling
         - "Electricity:Facility"  # Electricity
+      TIMESTEP:
+      DETAILED:
     # parameters used to read floor area from EIO file
     # if E+ does not change anything in the EIO output format, you do not need to change those
     EIO_READER:

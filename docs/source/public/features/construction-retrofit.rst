@@ -50,6 +50,7 @@ There are some material having no emission factors, namely the Gases (used betwe
 (modeled as OpaqueMaterial without mass, used in roof constructions).
 
 Values used are according to **KBOB 2014** (were transfered construction retrofit Excel DB of CESAR Matlab).
+https://www.kbob.admin.ch/dam/kbob/de/dokumente/Publikationen/Nachhaltiges%20Bauen/Archiv_2010-2014/2009_1_2014_Empfehlung_Oekobilanzdaten_Baubereich.pdf.download.pdf/2009_1_2014_Empfehlung_Oekobilanzdaten_Baubereich.pdf
 
 Costs
 ~~~~~~~

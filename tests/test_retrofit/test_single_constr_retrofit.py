@@ -68,9 +68,9 @@ def constr_retrofitter():
 
 
 def test_get_construction_retrofit(constr_retrofitter):
-    myConstr = Construction(layers=[], name="http://uesl_data/sources/archetypes/walls/Wall2006_wood_construction", bldg_element=BuildingElement.WALL)
+    myConstr = Construction(layers=[], name="http://uesl_data/sources/archetypes/walls/Wall2009_wood_construction", bldg_element=BuildingElement.WALL)
     retrofitted_constr = constr_retrofitter.get_retrofitted_construction(myConstr)
-    assert retrofitted_constr.short_name == "Wall2006_wood_construction_R_SIA-380-1_MinReq"
+    assert retrofitted_constr.short_name == "Wall2009_wood_construction_R_SIA-380-1_MinReq"
 
 
 def test_get_construction_not_found(constr_retrofitter):

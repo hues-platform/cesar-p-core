@@ -58,13 +58,6 @@ def local_db_access():
 
 
 @pytest.fixture
-def local_db_access():
-    ureg = cesarp.common.init_unit_registry()
-    local_reader = LocalFileReader()
-    reader = BldgElementConstructionReader(local_reader, ureg)
-    return reader
-
-@pytest.fixture
 def res_folder():
     res_folder = Path(_RESULT_FOLDER).absolute()
     os.makedirs(res_folder, exist_ok=True)
@@ -93,7 +86,7 @@ def test_basic_Shade0101(res_folder, idf, local_db_access):
 
 def test_basic_Shade0801(res_folder, idf, local_db_access):
     expected_file_path = _EXPECTED_FOLDER / Path("./Shade0801.idf")
-    shade_mat_idf_name = idf_writer_window_shading._add_shading_mat(idf, local_db_access.get_window_shading_constr("http://uesl_data/sources/archetypes/2014_SFH_Archetype"))
+    shade_mat_idf_name = idf_writer_window_shading._add_shading_mat(idf, local_db_access.get_window_shading_constr("http://uesl_data/sources/archetypes/2030_SFH_Archetype"))
     idf_file_path = res_folder / Path("Shade0801_compare.idf")
     idf.save(idf_file_path)
     assert are_files_equal(idf_file_path, expected_file_path, ignore_line_nrs=[1])
@@ -101,7 +94,7 @@ def test_basic_Shade0801(res_folder, idf, local_db_access):
 
 def test_basic_Shade0901(res_folder, idf, local_db_access):
     expected_file_path = _EXPECTED_FOLDER / Path("./Shade0901.idf")
-    shade_mat_idf_name = idf_writer_window_shading._add_shading_mat(idf, local_db_access.get_window_shading_constr("http://uesl_data/sources/archetypes/2015_SFH_Archetype"))
+    shade_mat_idf_name = idf_writer_window_shading._add_shading_mat(idf, local_db_access.get_window_shading_constr("http://uesl_data/sources/archetypes/2031_SFH_Archetype"))
     idf_file_path = res_folder / Path("Shade0901_compare.idf")
     idf.save(idf_file_path)
     assert are_files_equal(idf_file_path, expected_file_path, ignore_line_nrs=[1])

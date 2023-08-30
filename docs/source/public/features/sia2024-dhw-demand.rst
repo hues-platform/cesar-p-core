@@ -127,11 +127,16 @@ As SIA2024/2016 does not state any range for that value, other approaches had to
 
 **Distribution of dhw demand for residential room types**
 
-Measurement data was used to identify the distribution for residential room types (SFH and MFH). 
-The measurement data originates from BFE P&D Projekt "2000-Watt Gesellschaft leben" (SI/501502-01) over Hochschule Luzern. 
-The measurement includes data for 2 years for ~35 households, which are part of a experimental neighbourhood.
+**NOTE**: The following text written in *italic* describes how the distribution of dhw demand was for residential room types previous to version 2.4.0 of cesar-p-core.
+The distribution according to the measurements resulted in too high demand. It was therefore decided to use a triangular distribution with limits +/- 20% around the nominal value given by SIA.
+This was done to ensure better agreement in annual demands between simulations using nominal and variable profiles.
 
-There are approx 10'000 daily measurements. The data I used was preprocessed. The values per household were aggregated to weekly demands to 
+
+*Measurement data was used to identify the distribution for residential room types (SFH and MFH). 
+The measurement data originates from BFE P&D Projekt "2000-Watt Gesellschaft leben" (SI/501502-01) over Hochschule Luzern. 
+The measurement includes data for 2 years for ~35 households, which are part of a experimental neighbourhood.*
+
+*There are approx 10'000 daily measurements. The data I used was preprocessed. The values per household were aggregated to weekly demands to 
 filter out housholds with a sudden change of DHW usage during the year (due to change of renter).
 Those weekly demands were mapped again to get mean values per day per person for each household and year.
 The mean over the two values for the year 2019 and 2020 are used for the further analysis.
@@ -145,10 +150,10 @@ The figure shows the measurements as a histogram, with a gamma distribution fitt
 .. figure:: ./diagrams/SIA2024/DHW/dhw_demand_BFEProj_histogram_mean_per_houshold.png
    :width: 1800
 
-For the CESAR Matlab implementation for DHW demand variation a triangular distribution was used. So this was done here as well. We could have used the gamma distribution as well, but with the triangular distribution the parameters a,b,c are easier traceable and comprehensible.
+*For the CESAR Matlab implementation for DHW demand variation a triangular distribution was used. So this was done here as well. We could have used the gamma distribution as well, but with the triangular distribution the parameters a,b,c are easier traceable and comprehensible.
 Following diagram shows the gamma distribution fitted along with a triangular distribution, where min/max was set to the minimum resp. second but last biggest mean value from all households (23 l/d/person resp 118 l/d/person). The maximum value is such an outlyer that it would flatten the distribution too much towards big values.
 The peak value used for the triangular distribution corresponds to the nominal demand value from SIA2024/2016, thus for MFH 35 l/d/person and for EFH 40 l/d/person.
-In CESAR-P implementation when using a triangular distribution, the limits for the distribution function are shiftet, so that the target min/max are withing 0.05 resp 0.95 Percentile (see function cesarp.common.profile_variability::triang_dist_limits). 
+In CESAR-P implementation when using a triangular distribution, the limits for the distribution function are shiftet, so that the target min/max are withing 0.05 resp 0.95 Percentile (see function cesarp.common.profile_variability::triang_dist_limits).* 
 This results in a final triangular distribution with a=10, b=35, c=144.
 
 .. figure:: ./diagrams/SIA2024/DHW/dhw_demand_BFEProj_data_distribution_fits.png

@@ -44,7 +44,8 @@ Retrofit of building envelope
   - SIA. (2009). Thermische Energie im Hochbau (SIA 380/1). Zürich: SIA.
   - Berkley Lab. (02. 04 2016). Window LBNL Software. Von https://windows.lbl.gov/software/window/window.html abgerufen
 
-- Retrofit emissions (cesarp.graphdb_access.ressources construction_and_material_data.ttl, cesarp.construction.default_config.yml): KBOB, eco-bau, IPB. (2014). Ökobilanzdaten im Baubereich. Zürich: KBOB. See also https://www.kbob.admin.ch/kbob/de/home/themen-leistungen/nachhaltiges-bauen/oekobilanzdaten_baubereich.html for newest dataset.
+- Retrofit emissions (cesarp.graphdb_access.ressources construction_and_material_data.ttl, cesarp.construction.default_config.yml): KBOB, eco-bau, IPB. (2014). Ökobilanzdaten im Baubereich. Zürich: KBOB. https://www.kbob.admin.ch/dam/kbob/de/dokumente/Publikationen/Nachhaltiges%20Bauen/Archiv_2010-2014/2009_1_2014_Empfehlung_Oekobilanzdaten_Baubereich.pdf.download.pdf/2009_1_2014_Empfehlung_Oekobilanzdaten_Baubereich.pdf
+  See also https://www.kbob.admin.ch/kbob/de/home/themen-leistungen/nachhaltiges-bauen/oekobilanzdaten_baubereich.html for newest dataset.
 - Retrofit costs (cesarp.retrofit.embodied.ressources): **GEAK. (2014). Kosten Gebäudehüllensanierung. Zürich: GEAK.**
 
 

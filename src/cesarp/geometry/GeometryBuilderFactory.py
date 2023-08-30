@@ -39,7 +39,7 @@ class GeometryBuilderFactory:
         self._custom_config = custom_config
         self.ureg = ureg
 
-    def get_geometry_builder(self, bldg_fid, glazing_ratio) -> GeometryBuilderProtocol:
+    def get_geometry_builder(self, bldg_fid, glazing_ratio, bldg_type) -> GeometryBuilderProtocol:
         if isinstance(glazing_ratio, pint.Quantity):
             glazing_ratio = glazing_ratio.to(self.ureg.dimensionless).m
-        return GeometryBuilder(bldg_fid, self._site_bldgs, glazing_ratio, self._custom_config)
+        return GeometryBuilder(bldg_fid, self._site_bldgs, glazing_ratio, bldg_type, self._custom_config)

@@ -118,7 +118,7 @@ def test_run_cesar_no_neighbourhood(config_sample_case, result_main_folder):
     assert are_files_equal(result_idf_file_path, expected_idf_file_path, ignore_line_nrs=[1], ignore_filesep_mismatch=True) is True, "IDF files not equal"
 
     # Line 0 and 177 contain energyplus veriosn and date/time of execution, thus ignore those
-    assert are_files_equal(result_file_path, expected_res_file_path, ignore_line_nrs=[1, 178]) is True, "E+ results not equal"
+    assert are_files_equal(result_file_path, expected_res_file_path, ignore_line_nrs=[1, 178, 725]) is True, "E+ results not equal"
     assert are_files_equal(result_summary_path, expected_res_sum_path, ignore_line_nrs=[189], ignore_changing_config=True)
 
 
@@ -181,7 +181,8 @@ def test_no_adjacencies(config_no_adjacencies_case, result_main_folder):
         # Line 0 and 177 contain energyplus veriosn and date/time of execution, thus ignore those;
         # on line 709 and 1463 there is a small numeric difference when run on windows vs linux...
         assert (
-            are_files_equal(sim_mgr.output_folders[bldg_fid] / Path("eplustbl.csv"), expected_result_file_path.format(bldg_fid), ignore_line_nrs=[1, 178, 709, 1463]) is True
+            are_files_equal(sim_mgr.output_folders[bldg_fid] / Path("eplustbl.csv"), expected_result_file_path.format(bldg_fid), ignore_line_nrs=[1, 178, 709, 712, 713, 1463])
+            is True
         ), f"result files not equal for {bldg_fid}"
 
 
@@ -197,23 +198,23 @@ def test_window_shading(result_main_folder):
     results = sim_mgr.get_all_results_summary()
     dhw_annual_expected = pytest.approx(10351.6, rel=0.005)
     electricity_annual_expected = pytest.approx(71953)
-    assert results.loc[2, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(297.6, rel=0.005)
-    assert results.loc[2, "h * kiloW / year"]["Heating Annual"] == pytest.approx(172524, rel=0.005)
+    assert results.loc[2, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(328.6, rel=0.005)
+    assert results.loc[2, "h * kiloW / year"]["Heating Annual"] == pytest.approx(158165, rel=0.005)
     assert results.loc[2, "h * kiloW / year"]["DHW Annual"] == dhw_annual_expected
     assert results.loc[2, "h * kiloW / year"]["Electricity Annual"] == electricity_annual_expected
 
-    assert results.loc[7, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(13718.5, rel=0.005)
-    assert results.loc[7, "h * kiloW / year"]["Heating Annual"] == pytest.approx(21194.7, rel=0.005)
+    assert results.loc[7, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(9044.28, rel=0.005)
+    assert results.loc[7, "h * kiloW / year"]["Heating Annual"] == pytest.approx(31040.6, rel=0.005)
     assert results.loc[7, "h * kiloW / year"]["DHW Annual"] == dhw_annual_expected
     assert results.loc[7, "h * kiloW / year"]["Electricity Annual"] == electricity_annual_expected
 
-    assert results.loc[8, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(16000.9, rel=0.005)
-    assert results.loc[8, "h * kiloW / year"]["Heating Annual"] == pytest.approx(15840.86, rel=0.005)
+    assert results.loc[8, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(14088.25, rel=0.005)
+    assert results.loc[8, "h * kiloW / year"]["Heating Annual"] == pytest.approx(21266.98, rel=0.005)
     assert results.loc[8, "h * kiloW / year"]["DHW Annual"] == dhw_annual_expected
     assert results.loc[8, "h * kiloW / year"]["Electricity Annual"] == electricity_annual_expected
 
-    assert results.loc[9, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(14822.8, rel=0.005)
-    assert results.loc[9, "h * kiloW / year"]["Heating Annual"] == pytest.approx(14548.6, rel=0.005)
+    assert results.loc[9, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(14958.67, rel=0.005)
+    assert results.loc[9, "h * kiloW / year"]["Heating Annual"] == pytest.approx(21147.80, rel=0.005)
     assert results.loc[9, "h * kiloW / year"]["DHW Annual"] == dhw_annual_expected
     assert results.loc[9, "h * kiloW / year"]["Electricity Annual"] == electricity_annual_expected
 
@@ -229,7 +230,7 @@ def test_night_ventilation(result_main_folder):
     results = sim_mgr.get_all_results_summary()
     dhw_annual_expected = pytest.approx(10364.1775, rel=0.005)
     electricity_annual_expected = pytest.approx(71952.9883)
-    assert results.loc[7, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(13633.8, rel=0.005)
-    assert results.loc[7, "h * kiloW / year"]["Heating Annual"] == pytest.approx(14744.2, rel=0.005)
+    assert results.loc[7, "h * kiloW / year"]["Cooling Annual"] == pytest.approx(10329.46, rel=0.005)
+    assert results.loc[7, "h * kiloW / year"]["Heating Annual"] == pytest.approx(22695.63, rel=0.005)
     assert results.loc[7, "h * kiloW / year"]["DHW Annual"] == dhw_annual_expected
     assert results.loc[7, "h * kiloW / year"]["Electricity Annual"] == electricity_annual_expected

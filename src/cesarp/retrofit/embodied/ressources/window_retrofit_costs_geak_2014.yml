@@ -23,5 +23,5 @@ METADATA:
                you used other retrofit window construtions than de default costs include
   SOURCE: GEAK 2014
 COST_PER_WINDOW_TYPE: #key: window URI as in RDF data, value: cost from glass + default frame per m2 glass
-  http://uesl_data/sources/archetypes/windows/Window2001_LowE_Xenon_Double: 850 CHF/m**2 # frame: wood-aluminium
-  http://uesl_data/sources/archetypes/windows/Window2014_DoubleLowE_Air_Triple: 1000 CHF/m**2 # frame: wood-aluminius
+  http://uesl_data/sources/archetypes/windows/Window2020_SingleLowE_Argon_Triple: 850 CHF/m**2 # frame: wood-aluminium
+  http://uesl_data/sources/archetypes/windows/Window2031_DoubleLowE_Argon_Triple: 1000 CHF/m**2 # frame: wood-aluminius

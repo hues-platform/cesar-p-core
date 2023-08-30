@@ -130,7 +130,11 @@ class BuildingElementsRetrofitter:
             try:
                 if bldg_elem == BuildingElement.WINDOW:
                     retrofitted_construction = self.construction_retrofitter.get_retrofitted_window(current_construction)
-                    bldg_construction.infiltration_rate = self._ureg(self._cfg["INFILRATION_RATE_AFTER_WINDOW_RETROFIT"])
+                    bldg_construction.infiltration_rate = max(
+                        self._ureg(self._cfg["INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_MINIMUM"]),
+                        bldg_construction.infiltration_rate * self._cfg["INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_MULTIPLICATIVE_FACTOR"]
+                        + self._ureg(self._cfg["INFILTRATION_RATE_AFTER_WINDOW_RETROFIT_ADDITIVE_FACTOR"]),
+                    )
                 else:
                     retrofitted_construction = self.construction_retrofitter.get_retrofitted_construction(current_construction)
             except KeyError:

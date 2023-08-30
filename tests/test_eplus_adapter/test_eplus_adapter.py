@@ -37,6 +37,7 @@ from cesarp.model.BuildingElement import BuildingElement
 from cesarp.model.ShadingObjectConstruction import ShadingObjectConstruction
 from cesarp.model.BuildingOperation import WindowShadingControl
 from cesarp.model.WindowConstruction import WindowShadingMaterial
+from cesarp.model.BldgType import BldgType
 from cesarp.construction.NeighbouringBldgConstructionFactory import NeighbouringBldgConstructionFactory
 from cesarp.eplus_adapter.CesarIDFWriter import CesarIDFWriter
 import cesarp.eplus_adapter.idf_writing_helpers
@@ -136,7 +137,7 @@ def test_building_geometry(ureg, res_folder):
     infiltration_rate = 0.71 * ureg.ACH
     flat_vertices = cesarp.geometry.csv_input_parser.read_sitevertices_from_csv(site_vertices_file, __sitevertices_labels)
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_vertices)
-    bldg_geometry = GeometryBuilder(main_bldg_fid, site_bldgs, glazing_ratio)
+    bldg_geometry = GeometryBuilder(main_bldg_fid, site_bldgs, glazing_ratio, BldgType.MFH)
     bldg_shape = bldg_geometry.get_bldg_shape_detailed()
 
     idf_file_path = res_folder / Path("idf_geometry.idf")
@@ -165,7 +166,7 @@ def test_neighbour_shading_objects(ureg, res_folder):
 
     flat_vertices = cesarp.geometry.csv_input_parser.read_sitevertices_from_csv(site_vertices_file, __sitevertices_labels)
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_vertices)
-    bldg_geometry = GeometryBuilder(main_bldg_fid, site_bldgs, glazing_ratio)
+    bldg_geometry = GeometryBuilder(main_bldg_fid, site_bldgs, glazing_ratio, BldgType.MFH)
     neighbours = bldg_geometry.get_bldg_shape_of_neighbours()
 
     idf_file_path = res_folder / Path("idf_neighbours.idf")

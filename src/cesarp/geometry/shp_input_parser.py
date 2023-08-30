@@ -27,6 +27,9 @@ See also https://github.com/Toblerity/Fiona#windows
 I needed to manually copy geos_c.dll, geos.dll to .venv/Library/bin from a geopandas installation with conda....
 """
 import pandas as pd
+import logging
+from enum import Enum
+from shapely.geometry import Polygon
 
 try:
     import geopandas as gpd
@@ -34,7 +37,13 @@ except ModuleNotFoundError:
     pass
 
 
-def read_sitevertices_from_shp(file_path):
+class OpenPolygonOption(Enum):
+    CRASH = "CRASH"
+    SKIP = "SKIP"
+    FILL = "FILL"
+
+
+def read_sitevertices_from_shp(file_path, shp_open_polygon_mode: OpenPolygonOption):
     """
     Read building shape information from shp and aggregate to a DataFrame.
     To each building a unique bld_id is assigned.
@@ -54,6 +63,8 @@ def read_sitevertices_from_shp(file_path):
     except NameError:
         raise ModuleNotFoundError(f"to use read_sitevertices_from_shp please install geopandas. See instructions {__file__}")
 
+    logger = logging.getLogger(__name__)
+
     required_keys = ["TARGET_FID", "HEIGHT"]
 
     gdf_columns = gdf_shp.columns.tolist()
@@ -71,7 +82,30 @@ def read_sitevertices_from_shp(file_path):
         height = gdf_shp.loc[building_index]["HEIGHT"]
 
         # Check if closed polygon
-        assert building_geometry.boundary.is_ring, "Polygon with target_fid {} is not closed".format(target_fid)
+        if not building_geometry.boundary.is_ring:
+            if shp_open_polygon_mode == OpenPolygonOption.FILL:
+                logger.info(
+                    f"Polygon with target_fid {target_fid} is not closed. This hole in the polygon has been filled. For other options see MANAGER SITE_VERTICES_FILE SHP_OPEN_POLYGON_OPTION config."
+                )
+                if building_geometry.interiors:
+                    building_geometry = Polygon(list(building_geometry.exterior.coords))
+                if not building_geometry.boundary.is_ring:
+                    logger.info(f"Polygon with target_fid {target_fid} is still not closed. Filling did not help. The building will now be skipped.")
+                    continue
+            elif shp_open_polygon_mode == OpenPolygonOption.SKIP:
+                logger.info(
+                    f"Polygon with target_fid {target_fid} is not closed. This building will be skipped. For other options see MANAGER SITE_VERTICES_FILE SHP_OPEN_POLYGON_OPTION config."
+                )
+                continue
+            elif shp_open_polygon_mode == OpenPolygonOption.CRASH:
+                logger.info(
+                    f"Polygon with target_fid {target_fid} is not closed. This building will be skipped. For other options see MANAGER SITE_VERTICES_FILE SHP_OPEN_POLYGON_OPTION config."
+                )
+                raise ValueError(
+                    "Polygon with target_fid {} is not closed. For options to solve this issue see MANAGER SITE_VERTICES_FILE SHP_OPEN_POLYGON_OPTION config.".format(target_fid)
+                )
+            else:
+                raise ValueError("Invalid option for shp_open_polygon_mode")
 
         # Get boundary coordinates
         clockwise_coordinates = list(building_geometry.boundary.coords)

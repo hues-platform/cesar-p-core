@@ -225,6 +225,7 @@ def find_adjacent_walls(walls: List[List[pd.DataFrame]], adjacent_footprint_vert
 def create_bldg_shape_detailed(
     bldg: pd.DataFrame,
     glazing_ratio: float,
+    story_height_from_bldg_type: float,
     get_adjacent_footprint_vertices: Callable[..., pd.DataFrame],
     *args_to_get_adjacent_footprint_vertices,
     custom_config: Optional[Dict[str, Any]] = None,  # make sure to pass as a named parameter, otherwise the previous param consumes it...
@@ -249,7 +250,12 @@ def create_bldg_shape_detailed(
 
     cfg = config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
 
-    floors = define_bldg_floors(bldg["footprint_shape"], bldg["height"], min_story_height=cfg["MAIN_BLDG_SHAPE"]["MINIMAL_STORY_HEIGHT"])
+    if cfg["MAIN_BLDG_SHAPE"]["STORY_HEIGHT_FROM_BLDG_TYPE"]["ACTIVE"]:
+        min_story_height = story_height_from_bldg_type
+    else:
+        min_story_height = cfg["MAIN_BLDG_SHAPE"]["MINIMAL_STORY_HEIGHT"]
+
+    floors = define_bldg_floors(bldg["footprint_shape"], bldg["height"], min_story_height)
 
     walls = define_bldg_walls_per_floor(floors)
     adj_footprint_vertices = get_adjacent_footprint_vertices(*((bldg,) + args_to_get_adjacent_footprint_vertices))

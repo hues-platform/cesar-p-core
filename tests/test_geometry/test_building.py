@@ -251,7 +251,7 @@ def test_remove_windows_in_adjacent_walls():
 
 def test_create_building_shape_detailed():
     # no checking in details, but make sure creating the integration method to create a building geometry works...
-    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, stub_get_adjacent_footprint_vertices_for_test_bldg, [], {})
+    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, 2.4, stub_get_adjacent_footprint_vertices_for_test_bldg, [], {})
     assert isinstance(bldg_shape.walls, list)
     assert not bldg_shape.walls[0][0].empty
     assert isinstance(bldg_shape.windows, list)
@@ -268,13 +268,13 @@ def test_create_building_shape_detailed():
 
 
 def test_check_overall_glazing_ratio_matching():
-    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, stub_get_adjacent_footprint_vertices_no_adjacencies, [], {})
+    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, 2.4, stub_get_adjacent_footprint_vertices_no_adjacencies, [], {})
     overall_bldg_glz_ratio = cesarp.geometry.building.calc_glz_ratio_for_bldg(bldg_shape)
     assert 0.16 == overall_bldg_glz_ratio  # glazing ratio matches exaclty if all walls get a window
 
 
 def test_check_overall_glazing_ratio_not_matching():
     # when there are adjacent buildings, those walls get no window and thus resulting overall glazing ratio is smaller than value set
-    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, stub_get_adjacent_footprint_vertices_for_test_bldg, [], {})
+    bldg_shape = cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, 0.16, 2.4, stub_get_adjacent_footprint_vertices_for_test_bldg, [], {})
     overall_bldg_glz_ratio = cesarp.geometry.building.calc_glz_ratio_for_bldg(bldg_shape)
     assert pytest.approx(0.10, abs=0.005) == overall_bldg_glz_ratio  # glazing ratio matches exaclty if all walls get a window

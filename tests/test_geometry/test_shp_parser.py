@@ -24,6 +24,7 @@ from pathlib import Path
 
 from cesarp.geometry import _REQUIRED_SITEVERTICES_PD_COLUMNS
 import cesarp.geometry.shp_input_parser
+from cesarp.geometry.shp_input_parser import OpenPolygonOption
 
 from tests.test_helpers.test_helpers import are_files_equal
 
@@ -37,7 +38,7 @@ def test_shp_sitevertices_parser():
         pytest.skip("geopandas not available")
 
     sitevertices_fullfile = os.path.dirname(__file__) / Path("./testfixture/shp/test_shp_buildings.shp")
-    sitevertices = cesarp.geometry.shp_input_parser.read_sitevertices_from_shp(sitevertices_fullfile)
+    sitevertices = cesarp.geometry.shp_input_parser.read_sitevertices_from_shp(sitevertices_fullfile, OpenPolygonOption.CRASH)
     # required columns available?
     assert set(sitevertices.columns) == set(_REQUIRED_SITEVERTICES_PD_COLUMNS)
     # minimum is 5 vertices per building, as the startpoint must be repeated at the end

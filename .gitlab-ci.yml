@@ -50,7 +50,7 @@ unit_test:
   artifacts:
     paths:
     - unit_test_report.html
-    - ./htmlcov
+    - ./htmlcov  
     expire_in: 1 week
     when: always
   timeout: 20 minutes

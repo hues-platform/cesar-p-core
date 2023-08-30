@@ -112,6 +112,7 @@ def test_simple_construction_retrofitter(mock_bldg_construction, bldg_shape_deta
     my_retrofitter.construction_retrofitter = MockRetrofitter()
     my_retrofitter.set_bldg_elems_to_retrofit([BuildingElement.ROOF, BuildingElement.WINDOW, BuildingElement.WALL])
     orig_bldg_constr = copy.deepcopy(mock_bldg_construction)
+    mock_bldg_construction.infiltration_rate = ureg("0.1 ACH")
     my_retrofitter.retrofit_bldg_construction(33, mock_bldg_construction, bldg_shape_detailed_test_site_fid2)
 
     assert orig_bldg_constr.roof_constr.name != mock_bldg_construction.roof_constr.name

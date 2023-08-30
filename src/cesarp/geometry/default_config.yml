@@ -24,6 +24,9 @@ GEOMETRY:
         MAX_DISTANCE_ADJACENCY:     0.1  # meter; if the distance between two buildings is below this threshold they are considered to be adjacent (no windows, different properties for wall)
 
     MAIN_BLDG_SHAPE:
+        # The story height can be fixed or chosen by the building type. For values see GeometryBuilder.get_bldg_story_height_from_bldg_type()
+        STORY_HEIGHT_FROM_BLDG_TYPE:
+            ACTIVE: False   # if active the story height is chosen by bldg type. otherwise the MINIMAL_STORY_HEIGHT is used.
         MINIMAL_STORY_HEIGHT:          2.4  # meter; minimal floor height; if the building height is not dividable by 2.4, the floor height is rounded up
         WINDOW:
             HEIGHT:                         1.5  # meter; fixed height for a window, width is set to match specified glazing ratio

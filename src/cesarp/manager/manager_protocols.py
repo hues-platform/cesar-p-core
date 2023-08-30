@@ -23,6 +23,7 @@ from typing import Protocol
 import cesarp.model.BuildingOperationMapping
 import cesarp.model.Site
 from cesarp.model.BldgShape import BldgShapeDetailed
+from cesarp.model.BldgType import BldgType
 
 
 class GeometryBuilderProtocol(Protocol):
@@ -36,7 +37,7 @@ class GeometryBuilderProtocol(Protocol):
 
 
 class GeometryBuilderFactoryProtocol(Protocol):
-    def get_geometry_builder(self, bldg_fid: int, glazing_ratio: float) -> GeometryBuilderProtocol:
+    def get_geometry_builder(self, bldg_fid: int, glazing_ratio: float, bldg_type: BldgType) -> GeometryBuilderProtocol:
         ...
 
 

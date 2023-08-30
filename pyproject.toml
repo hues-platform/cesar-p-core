@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "cesar-p"
-version = "2.3.3"
+version = "2.4.0"
 description = "Combined Energy Simulation And Retrofit"
 authors = ["Urban Energy Systems Lab - Empa"]
 homepage = "https://github.com/hues-platform/cesar-p-core"

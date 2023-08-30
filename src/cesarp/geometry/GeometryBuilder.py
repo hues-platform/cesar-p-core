@@ -29,6 +29,7 @@ from cesarp.geometry import neighbourhood
 from cesarp.geometry import vertices_basics
 from cesarp.geometry import _default_config_file
 from cesarp.model.BldgShape import BldgShapeEnvelope, BldgShapeDetailed
+from cesarp.model.BldgType import BldgType
 
 
 class GeometryBuilder:
@@ -42,7 +43,7 @@ class GeometryBuilder:
     returned by cesarp.geometry.vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint.
     """
 
-    def __init__(self, main_bldg_fid, site_bldgs: pd.DataFrame, glazing_ratio: float, custom_config: Optional[Dict[str, Any]] = None):
+    def __init__(self, main_bldg_fid, site_bldgs: pd.DataFrame, glazing_ratio: float, bldg_type: BldgType, custom_config: Optional[Dict[str, Any]] = None):
         """
         :param main_bldg_fid: gis_fid of main building which will be simulated. gis_fid must be containted in
                                   site_bldgs
@@ -56,6 +57,7 @@ class GeometryBuilder:
         self.bldg_main = self.site_bldgs.loc[main_bldg_fid].to_dict()  # as it contains a nested DF, for pickling we need to convert to dict....
         self.origin_vertex = {"x": self.bldg_main["main_vertex_x"], "y": self.bldg_main["main_vertex_y"], "z": 0}
         self.glazing_ratio = glazing_ratio
+        self.bldg_type = bldg_type
         self._cfg = config_loader.load_config_for_package(_default_config_file, __package__, custom_config)
         self._custom_config = custom_config
         self._neighbours: Optional[pd.DataFrame] = None
@@ -63,6 +65,30 @@ class GeometryBuilder:
 
     def _init_neighbours(self):
         self._neighbours = neighbourhood.search_neighbouring_buildings_for(self.bldg_main, self.site_bldgs, radius=self._cfg["NEIGHBOURHOOD"]["RADIUS"])
+
+    def get_bldg_story_height_from_bldg_type(self) -> float:
+        """calculating floor height assumption based on
+        https://www.seco.admin.ch/dam/seco/de/dokumente/Arbeit/Arbeitsbedingungen/Arbeitsgese[…]eitungen%204/ArGV4_art05.pdf.download.pdf/ArGV4_art05_de.pdf
+        http://www2.zhlex.zh.ch/Appl/zhlex_r.nsf/0/54B0935ED718E15CC12581DE0036ED9A/$file/700.1_7.9.75_99.pdf
+        :return: floor_h_assump
+        :rtype: float
+        """
+        ftp = vertices_basics.calc_proj_area_of_polygon(self.bldg_main["footprint_shape"])
+
+        if self.bldg_type in ["SFH", "MFH"]:
+            floor_h_assump = 2.85
+            floor_slab_thickness = 0.3
+        else:
+            floor_slab_thickness = 0.5
+            if ftp <= 100:
+                floor_h_assump = 2.75 + floor_slab_thickness
+            elif ftp <= 250:
+                floor_h_assump = 3 + floor_slab_thickness
+            elif ftp <= 400:
+                floor_h_assump = 3.5 + floor_slab_thickness
+            elif ftp > 400:
+                floor_h_assump = 4.0 + floor_slab_thickness
+        return floor_h_assump
 
     def get_bldg_shape_detailed(self) -> BldgShapeDetailed:
         """
@@ -76,9 +102,12 @@ class GeometryBuilder:
         if self._neighbours is None:
             self._init_neighbours()
 
+        story_height_from_bldg_type = self.get_bldg_story_height_from_bldg_type()
+
         bldg_shape = building.create_bldg_shape_detailed(
             self.bldg_main,
             self.glazing_ratio,
+            story_height_from_bldg_type,
             neighbourhood.find_adjacent_footprint_vertices_for,
             self._neighbours,
             self._cfg["NEIGHBOURHOOD"]["MAX_DISTANCE_ADJACENCY"],

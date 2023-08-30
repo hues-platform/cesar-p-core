@@ -30,7 +30,7 @@ from cesarp.model.Layer import Layer, LayerFunction
 def test_window_costs():
     ureg = cesarp.common.init_unit_registry()
     retCosts = ConstructionRetrofitCosts(ureg, {})
-    glass_constr = WindowGlassConstruction("http://uesl_data/sources/archetypes/windows/Window2014_DoubleLowE_Air_Triple", None, None, None)
+    glass_constr = WindowGlassConstruction("http://uesl_data/sources/archetypes/windows/Window2031_DoubleLowE_Argon_Triple", None, None, None)
     ret_win = WindowConstruction(glass=glass_constr, frame=None, shade=None)
     assert retCosts.get_costs_for_window_retrofit(ret_win) == 1000 * ureg.CHF / ureg.m**2
 

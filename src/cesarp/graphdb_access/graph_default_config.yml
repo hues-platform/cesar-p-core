@@ -98,16 +98,6 @@ GRAPHDB_ACCESS:
         WALL: "http://uesl_data/sources/archetypes/walls/Wall2001_concrete_med_ins"
         GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2001_concrete_slab_medium"
         WINDOW: "http://uesl_data/sources/archetypes/windows/Window2001_LowE_Argon_Double"
-    2006_SFH_ARCHETYPE:
-      URI: "http://uesl_data/sources/archetypes/2006_SFH_Archetype"
-      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
-        ACTIVE: False
-      DEFAULT_CONSTRUCTION_SPECIFIC:
-        ACTIVE: True
-        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2006_wood_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2006_concrete_high_ins"
-        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2006_concrete_slab_medium_high_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2006_LowE_Krypton_Double"
     2009_SFH_ARCHETYPE:
       URI: "http://uesl_data/sources/archetypes/2009_SFH_Archetype"
       DEFAULT_CONSTRUCTION_MEAN_UVALUE:
@@ -115,26 +105,36 @@ GRAPHDB_ACCESS:
       DEFAULT_CONSTRUCTION_SPECIFIC:
         ACTIVE: True
         ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2009_wood_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2009_brick_low_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2009_concrete_high_ins"
         GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2009_concrete_slab_medium_high_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2009_LowE_Xenon_Double"
-    2014_SFH_ARCHETYPE:
-      URI: "http://uesl_data/sources/archetypes/2014_SFH_Archetype"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2009_LowE_Krypton_Double"
+    2020_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2020_SFH_Archetype"
       DEFAULT_CONSTRUCTION_MEAN_UVALUE:
         ACTIVE: False
       DEFAULT_CONSTRUCTION_SPECIFIC:
         ACTIVE: True
-        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2014_wood_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2014_stone_cavity_woodplank"
-        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2014_concrete_slab_medium"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2014_LowE_Xenon_Double"
-    2015_SFH_ARCHETYPE:
-      URI: "http://uesl_data/sources/archetypes/2015_SFH_Archetype"
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2020_wood_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2020_brick_low_ins"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2020_concrete_slab_medium_high_ins"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2020_LowE_Xenon_Double"
+    2030_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2030_SFH_Archetype"
       DEFAULT_CONSTRUCTION_MEAN_UVALUE:
         ACTIVE: False
       DEFAULT_CONSTRUCTION_SPECIFIC:
         ACTIVE: True
-        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2015_concrete_med_ins"
-        WALL: "http://uesl_data/sources/archetypes/walls/Wall2015_flumroc_B335"
-        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2015_concrete_slab_medium_med_ins"
-        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2015_LowE_Xenon_Double"
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2030_wood_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2030_stone_cavity_woodplank"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2030_concrete_slab_medium"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2030_LowE_Xenon_Double"
+    2031_SFH_ARCHETYPE:
+      URI: "http://uesl_data/sources/archetypes/2031_SFH_Archetype"
+      DEFAULT_CONSTRUCTION_MEAN_UVALUE:
+        ACTIVE: False
+      DEFAULT_CONSTRUCTION_SPECIFIC:
+        ACTIVE: True
+        ROOF: "http://uesl_data/sources/archetypes/roofs/Roof2031_concrete_med_ins"
+        WALL: "http://uesl_data/sources/archetypes/walls/Wall2031_flumroc_B335"
+        GROUNDFLOOR: "http://uesl_data/sources/archetypes/grounds/Ground2031_concrete_slab_medium_med_ins"
+        WINDOW: "http://uesl_data/sources/archetypes/windows/Window2031_LowE_Xenon_Double"

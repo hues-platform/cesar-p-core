@@ -6,6 +6,7 @@ Usage
 
    workflow
    set-up-simulation
+   inputs
    input-files-format
    configuration-structure
    configuration-overview

@@ -16,6 +16,19 @@ MAJOR.MINOR.PATCH.a0
 
 For all released Version there is a Tag/Release in GitLab.
 
+2.4.0
+-----
+- MAJOR change in AgeClass assumptions. See the new AgeClasses in the GraphDB config.
+  - This will have an effect on simulation results of new buildings (>2006).
+- added features
+  - improve shp file parsing and add option how to handle open polygons.
+  - add more options for infiltration rate when retrofitting
+  - building story height can now be set by building type
+- updated DHW demand values in variable profiles to ensure better agreement in annual demands between simulations using nominal and variable profiles
+- added cesar-p input overview to documentation
+
+- updated dependencies and small bug fixes
+
 2.3.3
 -----
 - updates for JOSS paper

@@ -28,6 +28,7 @@ from cesarp.geometry.GeometryBuilder import GeometryBuilder
 from cesarp.common.CesarpException import CesarpException
 from cesarp.geometry import csv_input_parser
 from cesarp.geometry import vertices_basics
+from cesarp.model.BldgType import BldgType
 
 __sitevertices_labels = {"gis_fid": "TARGET_FID", "height": "HEIGHT", "x": "POINT_X", "y": "POINT_Y"}
 
@@ -52,7 +53,7 @@ def stub_no_adjacencies(main_bldg, neighbours):
 
 @pytest.fixture
 def bldg_shape():
-    return cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, _set_glz_ratio, stub_get_adjacent_footprint_vertices_for_test_bldg, [], custom_config={})
+    return cesarp.geometry.building.create_bldg_shape_detailed(_test_bldg_input_data, _set_glz_ratio, 2.4, stub_get_adjacent_footprint_vertices_for_test_bldg, [], custom_config={})
 
 
 @pytest.fixture
@@ -64,7 +65,7 @@ def flat_site_vertices():
 def test_glazing_ratio_check_exception(bldg_shape, flat_site_vertices):
     custom_cfg = {"GEOMETRY": {"MAIN_BLDG_SHAPE": {"GLAZING_RATIO_CHECK": {"ALLOWED_GLZ_RATIO_DEV": 0.01, "EXCEPTION_ON_MISMATCH": True, "DO_CHECK_BLD_WITH_ADJACENCIES": True}}}}
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices)
-    geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, custom_cfg)
+    geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, BldgType.MFH, custom_cfg)
     with pytest.raises(CesarpException):
         geom_builder._check_glz_ratio(bldg_shape)
 
@@ -72,7 +73,7 @@ def test_glazing_ratio_check_exception(bldg_shape, flat_site_vertices):
 def test_glz_ratio_check_logging(bldg_shape, flat_site_vertices, caplog):
     custom_cfg = {"GEOMETRY": {"MAIN_BLDG_SHAPE": {"GLAZING_RATIO_CHECK": {"ALLOWED_GLZ_RATIO_DEV": 0.01, "EXCEPTION_ON_MISMATCH": True, "DO_CHECK_BLD_WITH_ADJACENCIES": False}}}}
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices)
-    geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, custom_cfg)
+    geom_builder = GeometryBuilder(2, site_bldgs, _set_glz_ratio, BldgType.MFH, custom_cfg)
 
     with caplog.at_level(logging.WARNING):
         geom_builder._check_glz_ratio(bldg_shape)
@@ -98,7 +99,7 @@ def test_glz_ratio_check_walls_too_small(flat_site_vertices, caplog):
     }
 
     bldg_shape_small_walls = cesarp.geometry.building.create_bldg_shape_detailed(
-        _test_bldg_small_walls_input_data, _set_glz_ratio, stub_no_adjacencies, [], custom_config=custom_cfg
+        _test_bldg_small_walls_input_data, _set_glz_ratio, 2.4, stub_no_adjacencies, [], custom_config=custom_cfg
     )
 
     site_bldgs = vertices_basics.convert_flat_site_vertices_to_per_bldg_footprint(flat_site_vertices)

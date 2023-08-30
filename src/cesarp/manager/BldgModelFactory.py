@@ -129,7 +129,7 @@ class BldgModelFactory:
         :return: BuildingModel
         """
         bldg_constr = self.__get_bldg_construction(bldg_fid)
-        geometry_builder = self._geometry_builder_factory.get_geometry_builder(bldg_fid, bldg_constr.glazing_ratio)
+        geometry_builder = self._geometry_builder_factory.get_geometry_builder(bldg_fid, bldg_constr.glazing_ratio, self._bldg_type_per_bldg[bldg_fid])
         shape = geometry_builder.get_bldg_shape_detailed()
         neighbours = geometry_builder.get_bldg_shape_of_neighbours()
         self.__add_target_glz_ratio_to_used_info_df(bldg_fid, bldg_constr.glazing_ratio)
@@ -158,9 +158,10 @@ class BldgModelFactory:
         site_vertices_filepath = self._mgr_config["SITE_VERTICES_FILE"]["PATH"]
         self._logger.info(f"loading site vertices from {site_vertices_filepath}. Takes a while depending on the size of the site. For 10'000 building ~3 Minutes on a Laptop...")
         if Path(site_vertices_filepath).suffix == ".shp":
-            from cesarp.geometry.shp_input_parser import read_sitevertices_from_shp
+            from cesarp.geometry.shp_input_parser import read_sitevertices_from_shp, OpenPolygonOption
 
-            flat_site_vertices_list = read_sitevertices_from_shp(site_vertices_filepath)
+            open_polygon_option = OpenPolygonOption(self._mgr_config["SITE_VERTICES_FILE"]["SHP_OPEN_POLYGON_OPTION"])
+            flat_site_vertices_list = read_sitevertices_from_shp(site_vertices_filepath, open_polygon_option)
         else:
             flat_site_vertices_list = cesarp.geometry.csv_input_parser.read_sitevertices_from_csv(
                 site_vertices_filepath,

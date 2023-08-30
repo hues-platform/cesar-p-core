@@ -65,6 +65,11 @@ MANAGER:
             height:   "HEIGHT"
             x:        "POINT_X"
             y:        "POINT_Y"
+        # The SHP_OPEN_POLYGON_OPTION is only relevant if you are using a *.shp file. You can chose what happens if a polygon is not closed. Default will crash the whole simulation.
+        # "CRASH" will stop the whole simulation.
+        # "SKIP" will skip this building. It will not be simulated or used for shading.
+        # "FILL" will fill the hole in the polygon.
+        SHP_OPEN_POLYGON_OPTION: "CRASH" 
     # MANDATORY list of building fids to be used as main buildings
     BLDG_FID_FILE:
         PATH: "TBD_BLDG_FID_FILE.csv"
